@@ -1,19 +1,15 @@
 package com.example.agrogestao
 
-import android.R.attr.password
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentActivity
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_login.*
 
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     var auth = FirebaseAuth.getInstance()
 
@@ -56,4 +52,20 @@ class LoginActivity : AppCompatActivity() {
     fun toast(s:String){
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show()
     }
+
+    override fun onClick(v: View) {
+        val id = v.id
+
+        if (id == R.id.loginButton) {
+        }
+
+        if (id == R.id.forgotPasswordText) {
+        }
+
+        if (id == R.id.signupButton) {
+            val i = Intent(this, CadastroActivity::class.java)
+            startActivity(i)
+        }
+    }
+
 }
