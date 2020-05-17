@@ -8,7 +8,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 import kotlinx.android.synthetic.main.activity_cadastro.*
 
-class CadastroActivity : AppCompatActivity() {
+class CadastroActivity : AppCompatActivity(), View.OnClickListener {
 
     lateinit var mAuth: FirebaseAuth
 
@@ -16,6 +16,8 @@ class CadastroActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cadastro)
         mAuth = FirebaseAuth.getInstance()
+        radioConsultorCadastro.setOnClickListener(this)
+        radioProdutorCadastro.setOnClickListener(this)
 
     }
 
@@ -46,6 +48,16 @@ class CadastroActivity : AppCompatActivity() {
         }
 
 
+    }
+
+    override fun onClick(v: View) {
+        val id = v.id
+        if (id == R.id.radioConsultorCadastro) {
+            editSenhaConsultorCadastro.visibility = View.VISIBLE
+        }
+        if (id == R.id.radioProdutorCadastro) {
+            editSenhaConsultorCadastro.visibility = View.INVISIBLE
+        }
     }
 
 
