@@ -24,6 +24,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         forgotPasswordText.setOnClickListener(this)
         signupButton.setOnClickListener(this)
 
+
     }
 
 
