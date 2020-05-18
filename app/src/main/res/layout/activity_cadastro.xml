@@ -123,7 +123,7 @@
         android:fontFamily="@font/acme"
         android:text="@string/cadastre_info_intro"
         android:textColor="@android:color/white"
-        android:textSize="40dp" />
+        android:textSize="36dp" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -132,7 +132,7 @@
         android:layout_gravity="right"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
-        app:srcCompat="@drawable/ic_person_black_24dp" />
+        app:srcCompat="@drawable/logo" />
 
     <ProgressBar
         android:id="@+id/progressBar"
