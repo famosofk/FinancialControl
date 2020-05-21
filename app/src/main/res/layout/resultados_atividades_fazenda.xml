@@ -7,61 +7,109 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="16dp">
 
         <TextView
             android:id="@+id/textView36"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:layout_marginBottom="16dp"
+            android:fontFamily="@font/acme"
+            android:text="Resultados Milho"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimary"
+            android:textSize="32sp" />
 
         <TextView
             android:id="@+id/textView37"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="indicadores economicos" />
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/acme"
+            android:text="@string/indicadores_economicos"
+            android:textColor="@color/colorPrimary"
+            android:textSize="24sp" />
 
         <TextView
             android:id="@+id/textView38"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/acme"
+            android:text="@string/lucro_fazenda"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/textView39"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/acme"
+            android:text="@string/margem_liquida"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/textView40"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/acme"
+            android:text="@string/margem_bruta"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/textView43"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/acme"
+            android:text="@string/receita_bruta_intro"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/textView41"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/acme"
+            android:text="@string/custo_total_intro"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/textView42"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/acme"
+            android:text="@string/custo_operacional_total"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/textView45"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="@font/acme"
+            android:text="@string/custo_operacional_efetivo"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/textView44"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="despesas" />
+            android:layout_marginBottom="16dp"
+            android:fontFamily="@font/acme"
+            android:text="@string/despesas_intro"
+            android:textColor="@color/colorPrimary"
+            android:textSize="24sp" />
 
         <ImageView
             android:id="@+id/imageView2"

@@ -7,43 +7,71 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="16dp">
 
         <TextView
             android:id="@+id/textView45"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="resultados fazenda" />
+            android:layout_marginBottom="16dp"
+            android:fontFamily="@font/acme"
+            android:text="@string/resultados_fazenda"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimary"
+            android:textSize="32sp" />
 
         <TextView
             android:id="@+id/textView46"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="indicadores economicos" />
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/acme"
+            android:text="@string/indicadores_economicos"
+            android:textColor="@color/colorPrimary"
+            android:textSize="24sp" />
 
         <TextView
             android:id="@+id/textView47"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="lucro" />
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/acme"
+            android:text="@string/lucro_fazenda"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/textView48"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="margem Liquida" />
+            android:layout_marginBottom="4dp"
+
+            android:fontFamily="@font/acme"
+            android:text="@string/margem_liquida"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/textView49"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Margem bruta" />
+            android:layout_marginBottom="16dp"
+            android:fontFamily="@font/acme"
+            android:text="@string/margem_bruta"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/textView50"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="resultado por atividade" />
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/acme"
+            android:text="@string/resultado_por_atividade"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimary"
+            android:textSize="24sp" />
 
         <ImageView
             android:id="@+id/imageView3"

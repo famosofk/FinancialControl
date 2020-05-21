@@ -1,24 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="16dp">
 
         <TextView
-            android:id="@+id/textView20"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:layout_marginBottom="16dp"
+            android:fontFamily="@font/acme"
+            android:text="@string/fluxo_caixa_intro"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimary"
+            android:textSize="32sp" />
 
         <TextView
-            android:id="@+id/textView21"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="data  " />
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/acme"
+            android:text="@string/data_intro"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/editText19"
@@ -26,33 +35,44 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="Name" />
+            android:layout_marginBottom="8dp"
+            android:importantForAutofill="no"
+            tools:ignore="LabelFor" />
 
         <TextView
-            android:id="@+id/textView22"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/acme"
+            android:text="@string/descricao_intro"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/editText20"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:ems="10"
+            android:importantForAutofill="no"
             android:inputType="textPersonName"
-            android:text="Name" />
+            tools:ignore="LabelFor" />
 
         <ToggleButton
             android:id="@+id/toggleButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:text="ToggleButton" />
 
         <TextView
-            android:id="@+id/textView23"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/acme"
+            android:text="@string/conta_intro"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/editText21"
@@ -60,13 +80,18 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="Name" />
+            android:layout_marginBottom="8dp"
+            android:importantForAutofill="no"
+            tools:ignore="LabelFor" />
 
         <TextView
-            android:id="@+id/textView24"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/acme"
+            android:text="@string/quantidade_inicial_intro"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/editText22"
@@ -74,13 +99,18 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="Name" />
+            android:layout_marginBottom="8dp"
+            android:importantForAutofill="no"
+            tools:ignore="LabelFor" />
 
         <TextView
-            android:id="@+id/textView25"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/acme"
+            android:text="@string/valor_unitário"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/editText23"
@@ -88,13 +118,18 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="Name" />
+            android:layout_marginBottom="8dp"
+            android:importantForAutofill="no"
+            tools:ignore="LabelFor" />
 
         <TextView
-            android:id="@+id/textView26"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/acme"
+            android:text="@string/data_vencimento_intro"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/editText24"
@@ -102,13 +137,18 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="Name" />
+            android:layout_marginBottom="8dp"
+            android:importantForAutofill="no"
+            tools:ignore="LabelFor" />
 
         <TextView
-            android:id="@+id/textView27"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/acme"
+            android:text="@string/valor_amortizado_intro"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/editText25"
@@ -116,7 +156,18 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="Name" />
+            android:layout_marginBottom="8dp"
+            android:importantForAutofill="no"
+            tools:ignore="LabelFor" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="250dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:background="@drawable/round_background_orange"
+            android:text="@string/cadastro_intro_value"
+            android:textColor="@android:color/white" />
 
     </LinearLayout>
 </ScrollView>

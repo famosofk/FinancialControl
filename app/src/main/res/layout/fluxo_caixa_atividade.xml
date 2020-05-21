@@ -7,55 +7,92 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="16dp">
 
         <TextView
             android:id="@+id/textView51"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="fluxo caixa atividade" />
+            android:layout_marginBottom="16dp"
+            android:fontFamily="@font/acme"
+            android:text="@string/fluxo_caixa_atividade"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimary"
+            android:textSize="32sp" />
 
         <TextView
             android:id="@+id/textView52"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/acme"
+            android:text="@string/saldo_fazenda"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/textView53"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:layout_marginBottom="4dp"
+
+            android:fontFamily="@font/acme"
+            android:text="@string/receitas_intro"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/textView54"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:layout_marginBottom="8dp"
+
+            android:fontFamily="@font/acme"
+            android:text="@string/despesas_intro"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/textView55"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="pendencias" />
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/acme"
+            android:text="@string/pendencias_intro"
+            android:textColor="@color/colorPrimary"
+            android:textSize="24sp" />
 
         <TextView
             android:id="@+id/textView56"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:layout_marginBottom="4dp"
+
+            android:fontFamily="@font/acme"
+            android:text="@string/a_pagar"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/textView57"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/acme"
+            android:text="@string/a_receber"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/textView58"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:layout_marginBottom="32dp"
+            android:fontFamily="@font/acme"
+            android:text="@string/lucro_fazenda"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
 
         <ImageView
             android:id="@+id/imageView4"
