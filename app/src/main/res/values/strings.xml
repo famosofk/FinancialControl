@@ -30,4 +30,10 @@
     <string name="patrimonio_liquido">Patrimonio Líquido</string>
     <string name="solvencia_intro">Solvência</string>
     <string name="liquidez_intro">liquidez</string>
+    <string name="fluxo_caixa_intro">Fluxo de caixa</string>
+    <string name="indicadores_financeiros_intro">Indicadores financeiros</string>
+    <string name="balanco_patrimonial_intro">Balanço patrimonial</string>
+    <string name="atividade_intro">Atividade</string>
+    <string name="detalhes_intro">Detalhes</string>
+    <string name="inventario_intro">Inventário</string>
 </resources>
