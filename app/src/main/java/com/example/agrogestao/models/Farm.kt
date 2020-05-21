@@ -6,8 +6,7 @@ data class Farm(var codigoFazenda: String) {
 
 
     val municipio: String = ""
-
-    //var atividades: = arrayOf(AtividadesEconomicas)
+    var atividades = arrayListOf<String>()
     var area: Float = 0f
     var metaMargemLiquida: Float = 0f
     var metaMargemBruta: Float = 0f

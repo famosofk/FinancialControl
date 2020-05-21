@@ -4,7 +4,7 @@ class BalancoPatrimonial() {
 
     var solvencia: Float = 0f
     var liquidez: Float = 0f
-    var listaItens: List<Item>? = ArrayList()
+    var listaItens = arrayListOf<Item>()
     var margemLiquida: Float = 0f
     var margemBruta: Float = 0f
     var taxaRemuneracaoCapital: Float = 0f //em porcentagem. Lido ao cadastrar fazenda.
@@ -55,8 +55,11 @@ class BalancoPatrimonial() {
             }
         }
         return total
+    }
 
-
+    fun calcularPatrimonioBens(): Float {
+        return listaItens.sumByDouble { (it.valorUnitario * it.quantidadeFinal).toDouble() }
+            .toFloat()
     }
 
 
