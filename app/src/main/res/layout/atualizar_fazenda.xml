@@ -1,228 +1,330 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="16dp">
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Atualização da fazenda" />
+            android:layout_marginBottom="16dp"
+            android:fontFamily="@font/acme"
+            android:text="@string/dados_fazenda"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimary"
+            android:textSize="24sp" />
 
         <TextView
-            android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Codigo fazenda" />
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/acme"
+            android:text="@string/codigo_fazenda"
+            android:textColor="@color/colorPrimary" />
 
         <EditText
-            android:id="@+id/editText3"
+            android:id="@+id/codigoFazendaEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:ems="10"
-            android:inputType="textPersonName" />
+            android:importantForAutofill="no"
+            android:inputType="textPersonName"
+            tools:ignore="LabelFor" />
 
         <TextView
-            android:id="@+id/textView4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Area" />
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/acme"
+            android:text="@string/area_fazenda"
+            android:textColor="@color/colorPrimary" />
 
         <EditText
-            android:id="@+id/editText4"
+            android:id="@+id/areaFazendaEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:ems="10"
-            android:inputType="textPersonName" />
+            android:importantForAutofill="no"
+            android:inputType="textPersonName"
+            tools:ignore="LabelFor" />
 
         <TextView
-            android:id="@+id/textView5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Atividades Depreciação" />
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/acme"
+            android:importantForAutofill="no"
+            android:text="@string/atividades_depreciacao"
+            android:textColor="@color/colorPrimary"
+            tools:ignore="LabelFor" />
 
         <ListView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <TextView
-            android:id="@+id/textView6"
+            android:id="@+id/atividadesListViewFazenda"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="taxa remuneração de capital" />
+            android:layout_marginBottom="8dp"
+            tools:ignore="NestedScrolling" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/acme"
+            android:text="@string/taxa_remuneracao_capital"
+            android:textColor="@color/colorPrimary" />
 
         <EditText
-            android:id="@+id/editText5"
+            android:id="@+id/TaxaCapitalFazendaEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:ems="10"
-            android:inputType="textPersonName" />
+            android:importantForAutofill="no"
+            android:inputType="textPersonName"
+            tools:ignore="LabelFor" />
 
         <TextView
-            android:id="@+id/textView7"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Custo oportunidade trabalho" />
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/acme"
+            android:text="@string/custo_oportunidade_trabalho"
+            android:textColor="@color/colorPrimary" />
 
         <EditText
-            android:id="@+id/editText6"
+            android:id="@+id/custoTrabalhoFazendaEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:ems="10"
-            android:inputType="textPersonName" />
+            android:importantForAutofill="no"
+            android:inputType="textPersonName"
+            tools:ignore="LabelFor" />
 
         <TextView
-            android:id="@+id/textView8"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="dividas longo prazo" />
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/acme"
+            android:text="@string/dividas_longo_prazo"
+            android:textColor="@color/colorPrimary" />
 
         <EditText
-            android:id="@+id/editText7"
+            android:id="@+id/dividaLongoPrazoFazendaEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:ems="10"
-            android:inputType="textPersonName" />
+            android:importantForAutofill="no"
+            android:inputType="textPersonName"
+            tools:ignore="LabelFor" />
 
         <TextView
-            android:id="@+id/textView9"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Metas" />
+            android:layout_marginBottom="16dp"
+            android:fontFamily="@font/acme"
+            android:text="@string/metas_fazenda"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimary"
+            android:textSize="24sp" />
 
         <TextView
-            android:id="@+id/textView10"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Lucro" />
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/acme"
+            android:text="@string/lucro_fazenda"
+            android:textColor="@color/colorPrimary" />
 
         <EditText
-            android:id="@+id/editText8"
+            android:id="@+id/lucroFazendaEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:ems="10"
-            android:inputType="textPersonName" />
+            android:importantForAutofill="no"
+            android:inputType="textPersonName"
+            tools:ignore="LabelFor" />
 
         <TextView
-            android:id="@+id/textView11"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="margem Liquida" />
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/acme"
+            android:text="@string/margem_liquida"
+            android:textColor="@color/colorPrimary" />
 
         <EditText
-            android:id="@+id/editText9"
+            android:id="@+id/margemLiquidaFazendaEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:ems="10"
-            android:inputType="textPersonName" />
+            android:importantForAutofill="no"
+            android:inputType="textPersonName"
+            tools:ignore="LabelFor" />
 
         <TextView
-            android:id="@+id/textView12"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Margem Bruta" />
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/acme"
+            android:text="@string/margem_bruta"
+            android:textColor="@color/colorPrimary" />
 
         <EditText
-            android:id="@+id/editText10"
+            android:id="@+id/margemBrutaFazendaEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:ems="10"
-            android:inputType="textPersonName" />
+            android:importantForAutofill="no"
+            android:inputType="textPersonName"
+            tools:ignore="LabelFor" />
 
         <TextView
-            android:id="@+id/textView13"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Renda Bruta" />
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/acme"
+            android:text="@string/renda_bruta"
+            android:textColor="@color/colorPrimary" />
 
         <EditText
-            android:id="@+id/editText11"
+            android:id="@+id/rendaBrutaFazendaEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:ems="10"
-            android:inputType="textPersonName" />
+            android:importantForAutofill="no"
+            android:inputType="textPersonName"
+            tools:ignore="LabelFor" />
 
         <TextView
-            android:id="@+id/textView14"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Saldo" />
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/acme"
+            android:text="@string/saldo_fazenda"
+            android:textColor="@color/colorPrimary" />
 
         <EditText
-            android:id="@+id/editText12"
+            android:id="@+id/saldoFazendaEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:ems="10"
-            android:inputType="textPersonName" />
+            android:importantForAutofill="no"
+            android:inputType="textPersonName"
+            tools:ignore="LabelFor" />
 
         <TextView
-            android:id="@+id/textView15"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="A pagar" />
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/acme"
+            android:text="@string/a_pagar"
+            android:textColor="@color/colorPrimary" />
 
         <EditText
-            android:id="@+id/editText13"
+            android:id="@+id/pagarFazendaEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:ems="10"
-            android:inputType="textPersonName" />
+            android:importantForAutofill="no"
+            android:inputType="textPersonName"
+            tools:ignore="LabelFor" />
 
         <TextView
-            android:id="@+id/textView16"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="a receber" />
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/acme"
+            android:text="@string/a_receber"
+            android:textColor="@color/colorPrimary" />
 
         <EditText
-            android:id="@+id/editText14"
+            android:id="@+id/receberFazendaEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:ems="10"
-            android:inputType="textPersonName" />
+            android:importantForAutofill="no"
+            android:inputType="textPersonName"
+            tools:ignore="LabelFor" />
 
         <TextView
-            android:id="@+id/textView17"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Patrimonio Liquido" />
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/acme"
+            android:text="@string/patrimonio_liquido"
+            android:textColor="@color/colorPrimary" />
 
         <EditText
-            android:id="@+id/editText15"
+            android:id="@+id/patrimonioLiquidoFazendaEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:ems="10"
-            android:inputType="textPersonName" />
+            android:importantForAutofill="no"
+            android:inputType="textPersonName"
+            tools:ignore="LabelFor" />
 
         <TextView
-            android:id="@+id/textView18"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Solvencia" />
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/acme"
+            android:text="@string/solvencia_intro"
+            android:textColor="@color/colorPrimary" />
 
         <EditText
-            android:id="@+id/editText16"
+            android:id="@+id/solvenciaFazendaEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:ems="10"
-            android:inputType="textPersonName" />
+            android:importantForAutofill="no"
+            android:inputType="textPersonName"
+            tools:ignore="LabelFor" />
 
         <TextView
-            android:id="@+id/textView19"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="liquidez" />
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/acme"
+            android:text="@string/liquidez_intro"
+            android:textColor="@color/colorPrimary" />
 
         <EditText
-            android:id="@+id/editText17"
+            android:id="@+id/liquidezFazendaEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
             android:ems="10"
-            android:inputType="textPersonName" />
+            android:importantForAutofill="no"
+            android:inputType="textPersonName"
+            tools:ignore="LabelFor" />
+
+        <Button
+            android:id="@+id/salvarFazendaButton"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/round_background"
+            android:text="@string/cadastro_intro_value"
+            android:textColor="@android:color/white" />
     </LinearLayout>
 </ScrollView>

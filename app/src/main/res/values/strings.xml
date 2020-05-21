@@ -12,4 +12,22 @@
     <string name="cadastro_intro_value">Cadastrar</string>
     <string name="senha_consultor_intro">Senha de consultor</string>
     <string name="cadastre_info_intro">Cadastre-se\nAgora</string>
+    <string name="codigo_fazenda">Código fazenda</string>
+    <string name="dados_fazenda">Dados Fazenda</string>
+    <string name="area_fazenda">Área</string>
+    <string name="atividades_depreciacao">Atividades/Depreciação</string>
+    <string name="taxa_remuneracao_capital">Taxa de remuneração de capital</string>
+    <string name="custo_oportunidade_trabalho">Custo de oportunidade de trabalho</string>
+    <string name="dividas_longo_prazo">Dívidas de longo prazo</string>
+    <string name="metas_fazenda">Metas</string>
+    <string name="lucro_fazenda">Lucro</string>
+    <string name="margem_liquida">Margem Líquida</string>
+    <string name="margem_bruta">Margem Bruta</string>
+    <string name="renda_bruta">Renda Bruta</string>
+    <string name="saldo_fazenda">Saldo</string>
+    <string name="a_pagar">A pagar</string>
+    <string name="a_receber">a receber</string>
+    <string name="patrimonio_liquido">Patrimonio Líquido</string>
+    <string name="solvencia_intro">Solvência</string>
+    <string name="liquidez_intro">liquidez</string>
 </resources>
