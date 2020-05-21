@@ -14,7 +14,7 @@
             android:id="@+id/resultadosFazendaText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView"
+            android:text="@string/descricao_intro"
             android:layout_marginBottom="16dp"
             android:fontFamily="@font/acme"
             android:textAlignment="center"
@@ -25,15 +25,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="16dp"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/acme"
                 android:text="@string/indicadores_financeiros_intro"
-
                 android:textColor="@color/colorPrimary"
                 android:textSize="24sp"
                 tools:layout_editor_absoluteX="36dp"
@@ -54,7 +54,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:text="TextView"
+            android:text="@string/lucro_fazenda"
             android:textColor="@android:color/black"
             android:textSize="16sp" />
 
@@ -62,15 +62,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:text="TextView"
+            android:text="@string/margem_bruta"
             android:textColor="@android:color/black"
             android:textSize="16sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="TextView"
+            android:text="@string/margem_liquida"
             android:textColor="@android:color/black"
             android:textSize="16sp" />
 
@@ -81,6 +80,7 @@
             android:layout_marginBottom="16dp"
             android:background="@drawable/round_background_blue"
             android:fontFamily="@font/acme"
+            android:layout_marginTop="16dp"
             android:padding="16dp"
             android:text="@string/detalhes_intro"
             android:textColor="@android:color/white" />
@@ -88,12 +88,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginBottom="16dp"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
                 android:layout_weight="1"
                 android:fontFamily="@font/acme"
                 android:text="@string/fluxo_caixa_intro"
@@ -117,7 +118,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:text="TextView"
+            android:text="@string/saldo_fazenda"
             android:textColor="@android:color/black"
             android:textSize="16sp" />
 
@@ -125,15 +126,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:text="TextView"
+            android:text="@string/a_pagar"
             android:textColor="@android:color/black"
             android:textSize="16sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:text="TextView"
+            android:layout_marginBottom="16dp"
+            android:text="@string/a_receber"
             android:textColor="@android:color/black"
             android:textSize="16sp" />
 
@@ -151,7 +152,8 @@
                 android:background="@drawable/left_button_blue_shape"
                 android:padding="16dp"
                 android:text="@string/detalhes_intro"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"
+                tools:ignore="ButtonStyle" />
 
             <Button
                 android:layout_width="match_parent"
@@ -160,7 +162,8 @@
                 android:background="@drawable/right_button_orange_shape"
                 android:padding="16dp"
                 android:text="@string/cadastro_intro_value"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"
+                tools:ignore="ButtonStyle" />
         </LinearLayout>
 
         <TextView
@@ -176,7 +179,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:text="TextView"
+            android:text="@string/patrimonio_liquido"
             android:textColor="@android:color/black"
             android:textSize="16sp" />
 
@@ -184,7 +187,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:text="TextView"
+            android:text="@string/solvencia_intro"
             android:textColor="@android:color/black"
             android:textSize="16sp" />
 
@@ -192,7 +195,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:text="TextView"
+            android:text="@string/liquidez_intro"
             android:textColor="@android:color/black"
             android:textSize="16sp" />
 
@@ -200,7 +203,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:text="TextView"
+            android:text="@string/rentabildiade_intro"
             android:textColor="@android:color/black"
             android:textSize="16sp" />
 
@@ -216,7 +219,8 @@
                 android:background="@drawable/left_button_blue_shape"
                 android:padding="16dp"
                 android:text="@string/detalhes_intro"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"
+                tools:ignore="ButtonStyle" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -225,7 +229,8 @@
                 android:background="@drawable/right_button_blue_shape"
                 android:padding="16dp"
                 android:text="@string/inventario_intro"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"
+                tools:ignore="ButtonStyle" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

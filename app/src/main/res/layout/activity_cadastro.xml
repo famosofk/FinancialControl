@@ -37,6 +37,7 @@
             android:drawablePadding="16dp"
             android:hint="@string/email_intro_value"
             android:inputType="textWebEmailAddress"
+            android:importantForAutofill="no"
             android:padding="16dp" />
 
         <EditText
@@ -51,6 +52,7 @@
             android:drawablePadding="16dp"
             android:hint="@string/senha_intro_value"
             android:inputType="textPassword"
+            android:importantForAutofill="no"
             android:padding="16dp" />
 
         <RadioGroup
@@ -95,6 +97,7 @@
             android:inputType="textPassword"
             android:padding="16dp"
             android:visibility="invisible"
+            android:importantForAutofill="no"
             tools:visibility="visible" />
 
         <Button
@@ -123,7 +126,7 @@
         android:fontFamily="@font/acme"
         android:text="@string/cadastre_info_intro"
         android:textColor="@android:color/white"
-        android:textSize="36dp" />
+        android:textSize="36sp" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -132,7 +135,9 @@
         android:layout_gravity="right"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
-        app:srcCompat="@drawable/logo" />
+        android:contentDescription="@string/agroplus_logo_description"
+        app:srcCompat="@drawable/logo"
+        tools:ignore="RtlHardcoded" />
 
     <ProgressBar
         android:id="@+id/progressBar"

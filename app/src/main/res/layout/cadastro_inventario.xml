@@ -33,7 +33,6 @@
             android:id="@+id/editText18"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
             android:ems="10"
             android:importantForAutofill="no"
             android:inputType="textPersonName"
@@ -41,8 +40,11 @@
 
         <Spinner
             android:id="@+id/spinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_width="300dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:layout_margin="16dp"
+            android:background="@drawable/spinner_shape" />
 
         <TextView
             android:layout_width="match_parent"

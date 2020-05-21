@@ -29,7 +29,7 @@
     <string name="a_receber">A receber</string>
     <string name="patrimonio_liquido">Patrimonio Líquido</string>
     <string name="solvencia_intro">Solvência</string>
-    <string name="liquidez_intro">liquidez</string>
+    <string name="liquidez_intro">Liquidez</string>
     <string name="fluxo_caixa_intro">Fluxo de caixa</string>
     <string name="indicadores_financeiros_intro">Indicadores financeiros</string>
     <string name="balanco_patrimonial_intro">Balanço patrimonial</string>
@@ -64,4 +64,7 @@
     <string name="passivo_intro">Passivo</string>
     <string name="criar_programa_intro">Criar Programa</string>
     <string name="distribuicao_patrimonio">Distribuição de patrimônio</string>
+    <string name="agroplus_logo_description">Logo marca da Agroplus</string>
+    <string name="entrada_intro">Entrada</string>
+    <string name="saida_intro">Saída</string>
 </resources>
