@@ -1,7 +1,8 @@
-package com.example.agrogestao
+package com.example.agrogestao.view
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.agrogestao.R
 
 class AtividadesActivity : AppCompatActivity() {
 
