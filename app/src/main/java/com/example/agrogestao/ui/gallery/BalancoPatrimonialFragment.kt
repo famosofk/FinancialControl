@@ -21,6 +21,8 @@ class BalancoPatrimonialFragment : Fragment() {
             ViewModelProviders.of(this).get(BalancoPatrimonialViewModel::class.java)
         val root = inflater.inflate(R.layout.apresentacao_balanco_patrimonial, container, false)
 
+
+
         return root
     }
 }
