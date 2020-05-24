@@ -1,4 +1,4 @@
-package com.example.agrogestao.ui.gallery
+package com.example.agrogestao.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.example.agrogestao.R
+import com.example.agrogestao.viewmodel.BalancoPatrimonialViewModel
 
 class BalancoPatrimonialFragment : Fragment() {
 

@@ -1,4 +1,4 @@
-package com.example.agrogestao.ui.home
+package com.example.agrogestao.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,19 +7,20 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.example.agrogestao.R
+import com.example.agrogestao.viewmodel.FluxoCaixaViewModel
 
-class ApresentacaoFazendaFragment : Fragment() {
+class FluxoCaixaFragment : Fragment() {
 
-    private lateinit var apresentacaoFazendaViewModel: ApresentacaoFazendaViewModel
+    private lateinit var fluxoCaixaViewModel: FluxoCaixaViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        apresentacaoFazendaViewModel =
-            ViewModelProviders.of(this).get(ApresentacaoFazendaViewModel::class.java)
-        val root = inflater.inflate(R.layout.apresentacao_fazenda, container, false)
+        fluxoCaixaViewModel =
+            ViewModelProviders.of(this).get(FluxoCaixaViewModel::class.java)
+        val root = inflater.inflate(R.layout.fluxo_caixa_atividade, container, false)
 
         return root
     }

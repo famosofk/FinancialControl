@@ -1,4 +1,4 @@
-package com.example.agrogestao.ui.slideshow
+package com.example.agrogestao.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

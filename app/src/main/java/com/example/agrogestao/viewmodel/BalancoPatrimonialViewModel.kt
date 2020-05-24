@@ -1,4 +1,4 @@
-package com.example.agrogestao.ui.gallery
+package com.example.agrogestao.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
