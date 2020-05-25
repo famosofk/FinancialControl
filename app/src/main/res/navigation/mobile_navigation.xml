@@ -13,36 +13,36 @@
 
 
         <action
-            android:id="@+id/action_nav_home_to_nav_slideshow"
-            app:destination="@id/nav_slideshow" />
+            android:id="@+id/toBalancoPatrimonial"
+            app:destination="@id/balanco_patrimonial" />
         <action
-            android:id="@+id/action_nav_home_to_nav_gallery"
-            app:destination="@id/nav_gallery" />
+            android:id="@+id/toFluxoCaixa"
+            app:destination="@id/fluxo_caixa" />
         <action
-            android:id="@+id/action_nav_home_to_cadastroInventarioFragment"
+            android:id="@+id/toCadastroInventarioFragment"
             app:destination="@id/cadastroInventarioFragment" />
         <action
-            android:id="@+id/action_nav_home_to_resultadosFazendaFragment"
+            android:id="@+id/toResultadosFazendaFragment"
             app:destination="@id/resultadosFazendaFragment" />
         <action
-            android:id="@+id/action_nav_home_to_cadastroFluxoCaixaFragment"
+            android:id="@+id/toCadastroFluxoCaixaFragment"
             app:destination="@id/cadastroFluxoCaixaFragment" />
         <action
-            android:id="@+id/action_nav_home_to_atualizarFazendaFragment"
+            android:id="@+id/toAtualizarFazendaFragment"
             app:destination="@id/atualizarFazendaFragment" />
         <action
-            android:id="@+id/action_nav_home_to_resultadosAtividadeFragment"
+            android:id="@+id/toResultadosAtividadeFragment"
             app:destination="@id/resultadosAtividadeFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/nav_gallery"
+        android:id="@+id/balanco_patrimonial"
         android:name="com.example.agrogestao.view.fragments.navigation.BalancoPatrimonialFragment"
         android:label="@string/balanco_patrimonial_intro"
         tools:layout="@layout/apresentacao_balanco_patrimonial" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
+        android:id="@+id/fluxo_caixa"
         android:name="com.example.agrogestao.view.fragments.navigation.FluxoCaixaFragment"
         android:label="@string/fluxo_caixa_intro"
         tools:layout="@layout/fluxo_caixa_atividade" />

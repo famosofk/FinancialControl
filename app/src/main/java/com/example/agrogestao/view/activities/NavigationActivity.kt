@@ -2,7 +2,6 @@ package com.example.agrogestao.view.activities
 
 import android.os.Bundle
 import android.view.Menu
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
@@ -32,8 +31,6 @@ class NavigationActivity : AppCompatActivity() {
                 .setAction("Action", null).show()
         }
 
-        Toast.makeText(applicationContext, "s", Toast.LENGTH_SHORT).show()
-
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment)
@@ -42,8 +39,8 @@ class NavigationActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.nav_home,
-                R.id.nav_gallery,
-                R.id.nav_slideshow
+                R.id.fluxo_caixa,
+                R.id.balanco_patrimonial
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
