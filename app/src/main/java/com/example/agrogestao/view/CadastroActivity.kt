@@ -1,5 +1,6 @@
 package com.example.agrogestao.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -39,8 +40,15 @@ class CadastroActivity : AppCompatActivity(), View.OnClickListener {
                             .build()
                         user?.updateProfile(profileUpdates)
                             ?.addOnCompleteListener { task ->
-                                if (!task.isSuccessful) {Toast.makeText(this, "erro ao atualizar dados.", Toast.LENGTH_SHORT) }
-                                //iniciar cadastroFazendas
+                                if (!task.isSuccessful) {
+                                    Toast.makeText(
+                                        this,
+                                        "erro ao atualizar dados.",
+                                        Toast.LENGTH_SHORT
+                                    )
+                                }
+                                startActivity(Intent(this, AtividadesActivity::class.java))
+                                finish()
                             }
                     } else {
                         Toast.makeText(this, "Falha ao cadastrar."+ task.exception, Toast.LENGTH_SHORT).show()
