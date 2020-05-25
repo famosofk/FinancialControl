@@ -12,6 +12,27 @@
         tools:layout="@layout/apresentacao_fazenda">
 
 
+        <action
+            android:id="@+id/action_nav_home_to_nav_slideshow"
+            app:destination="@id/nav_slideshow" />
+        <action
+            android:id="@+id/action_nav_home_to_nav_gallery"
+            app:destination="@id/nav_gallery" />
+        <action
+            android:id="@+id/action_nav_home_to_cadastroInventarioFragment"
+            app:destination="@id/cadastroInventarioFragment" />
+        <action
+            android:id="@+id/action_nav_home_to_resultadosFazendaFragment"
+            app:destination="@id/resultadosFazendaFragment" />
+        <action
+            android:id="@+id/action_nav_home_to_cadastroFluxoCaixaFragment"
+            app:destination="@id/cadastroFluxoCaixaFragment" />
+        <action
+            android:id="@+id/action_nav_home_to_atualizarFazendaFragment"
+            app:destination="@id/atualizarFazendaFragment" />
+        <action
+            android:id="@+id/action_nav_home_to_resultadosAtividadeFragment"
+            app:destination="@id/resultadosAtividadeFragment" />
     </fragment>
 
     <fragment
@@ -25,4 +46,24 @@
         android:name="com.example.agrogestao.view.fragments.navigation.FluxoCaixaFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fluxo_caixa_atividade" />
+    <fragment
+        android:id="@+id/atualizarFazendaFragment"
+        android:name="com.example.agrogestao.view.fragments.navigation.AtualizarFazendaFragment"
+        android:label="AtualizarFazendaFragment" />
+    <fragment
+        android:id="@+id/cadastroFluxoCaixaFragment"
+        android:name="com.example.agrogestao.view.fragments.navigation.CadastroFluxoCaixaFragment"
+        android:label="CadastroFluxoCaixaFragment" />
+    <fragment
+        android:id="@+id/cadastroInventarioFragment"
+        android:name="com.example.agrogestao.view.fragments.navigation.CadastroInventarioFragment"
+        android:label="CadastroInventarioFragment" />
+    <fragment
+        android:id="@+id/resultadosAtividadeFragment"
+        android:name="com.example.agrogestao.view.fragments.navigation.ResultadosAtividadeFragment"
+        android:label="ResultadosAtividadeFragment" />
+    <fragment
+        android:id="@+id/resultadosFazendaFragment"
+        android:name="com.example.agrogestao.view.fragments.navigation.ResultadosFazendaFragment"
+        android:label="ResultadosFazendaFragment" />
 </navigation>
