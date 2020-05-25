@@ -22,6 +22,8 @@ class FluxoCaixaFragment : Fragment() {
             ViewModelProviders.of(this).get(FluxoCaixaViewModel::class.java)
         val root = inflater.inflate(R.layout.fluxo_caixa_atividade, container, false)
 
+        //fazer a distinção se é por atividade ou por fazenda
+
         return root
     }
 }

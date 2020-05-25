@@ -1,4 +1,4 @@
-package com.example.agrogestao.view.fragments.atividades
+package com.example.agrogestao.view.fragments.navigation
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,19 +10,16 @@ import com.example.agrogestao.R
 /**
  * A simple [Fragment] subclass.
  */
-class CriarFazendaProgramaAtividadeFragment : Fragment() {
+class CadastroInventarioFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val root = inflater.inflate(R.layout.cadastro_programa_fazenda, container, false)
+
+        val root: View = inflater.inflate(R.layout.cadastro_inventario, container, false)
+
         return root
-
     }
-
-    /*
-    *  cadastro_programa_fazenda
-    * */
 
 }
