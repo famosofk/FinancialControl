@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.example.agrogestao.R
 import com.example.agrogestao.viewmodel.FluxoCaixaViewModel
 
@@ -19,7 +19,7 @@ class FluxoCaixaFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         fluxoCaixaViewModel =
-            ViewModelProviders.of(this).get(FluxoCaixaViewModel::class.java)
+            ViewModelProvider(this).get(FluxoCaixaViewModel::class.java)
         val root = inflater.inflate(R.layout.fluxo_caixa_atividade, container, false)
 
         //fazer a distinção se é por atividade ou por fazenda

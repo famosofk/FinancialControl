@@ -1,7 +1,8 @@
 package com.example.agrogestao.viewmodel
 
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 
-class CriarFazendaProgramaViewModel : ViewModel() {
+class CriarFazendaProgramaViewModel(application: Application) : AndroidViewModel(application) {
 
 }

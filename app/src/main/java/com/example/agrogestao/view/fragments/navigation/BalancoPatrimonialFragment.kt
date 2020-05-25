@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.example.agrogestao.R
 import com.example.agrogestao.viewmodel.BalancoPatrimonialViewModel
 
@@ -19,8 +19,10 @@ class BalancoPatrimonialFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         balancoPatrimonialViewModel =
-            ViewModelProviders.of(this).get(BalancoPatrimonialViewModel::class.java)
+            ViewModelProvider(this).get(BalancoPatrimonialViewModel::class.java)
         val root = inflater.inflate(R.layout.apresentacao_balanco_patrimonial, container, false)
+
+        //incluir listagem dos bens
 
 
 
