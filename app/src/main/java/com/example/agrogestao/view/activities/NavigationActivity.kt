@@ -38,9 +38,9 @@ class NavigationActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home,
+                R.id.nav_fazenda,
                 R.id.fluxo_caixa,
-                R.id.balanco_patrimonial
+                R.id.balanco_patrimonial_frag
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -52,6 +52,7 @@ class NavigationActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.navigation, menu)
         return true
     }
+
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)

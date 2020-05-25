@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    app:startDestination="@+id/nav_fazenda">
 
     <fragment
-        android:id="@+id/nav_home"
+        android:id="@+id/nav_fazenda"
         android:name="com.example.agrogestao.view.fragments.navigation.ApresentacaoFazendaFragment"
         android:label="@string/fazenda_intro"
         tools:layout="@layout/apresentacao_fazenda">
@@ -14,29 +14,29 @@
 
         <action
             android:id="@+id/toBalancoPatrimonial"
-            app:destination="@id/balanco_patrimonial" />
+            app:destination="@id/balanco_patrimonial_frag" />
         <action
             android:id="@+id/toFluxoCaixa"
             app:destination="@id/fluxo_caixa" />
         <action
             android:id="@+id/toCadastroInventarioFragment"
-            app:destination="@id/cadastroInventarioFragment" />
+            app:destination="@id/cadastroInventarioFrag" />
         <action
             android:id="@+id/toResultadosFazendaFragment"
-            app:destination="@id/resultadosFazendaFragment" />
+            app:destination="@id/resultadosFazendaFrag" />
         <action
             android:id="@+id/toCadastroFluxoCaixaFragment"
-            app:destination="@id/cadastroFluxoCaixaFragment" />
+            app:destination="@id/cadastroFluxoCaixaFrag" />
         <action
             android:id="@+id/toAtualizarFazendaFragment"
-            app:destination="@id/atualizarFazendaFragment" />
+            app:destination="@id/atualizarFazendaFrag" />
         <action
             android:id="@+id/toResultadosAtividadeFragment"
-            app:destination="@id/resultadosAtividadeFragment" />
+            app:destination="@id/resultadosAtividadeFrag" />
     </fragment>
 
     <fragment
-        android:id="@+id/balanco_patrimonial"
+        android:id="@+id/balanco_patrimonial_frag"
         android:name="com.example.agrogestao.view.fragments.navigation.BalancoPatrimonialFragment"
         android:label="@string/balanco_patrimonial_intro"
         tools:layout="@layout/apresentacao_balanco_patrimonial" />
@@ -47,27 +47,27 @@
         android:label="@string/fluxo_caixa_intro"
         tools:layout="@layout/fluxo_caixa_atividade" />
     <fragment
-        android:id="@+id/atualizarFazendaFragment"
+        android:id="@+id/atualizarFazendaFrag"
         android:name="com.example.agrogestao.view.fragments.navigation.AtualizarFazendaFragment"
         android:label="AtualizarFazendaFragment"
         tools:layout="@layout/atualizar_fazenda" />
     <fragment
-        android:id="@+id/cadastroFluxoCaixaFragment"
+        android:id="@+id/cadastroFluxoCaixaFrag"
         android:name="com.example.agrogestao.view.fragments.navigation.CadastroFluxoCaixaFragment"
         android:label="CadastroFluxoCaixaFragment"
         tools:layout="@layout/cadastro_fluxo_caixa" />
     <fragment
-        android:id="@+id/cadastroInventarioFragment"
+        android:id="@+id/cadastroInventarioFrag"
         android:name="com.example.agrogestao.view.fragments.navigation.CadastroInventarioFragment"
         android:label="CadastroInventarioFragment"
         tools:layout="@layout/cadastro_inventario" />
     <fragment
-        android:id="@+id/resultadosAtividadeFragment"
+        android:id="@+id/resultadosAtividadeFrag"
         android:name="com.example.agrogestao.view.fragments.navigation.ResultadosAtividadeFragment"
         android:label="ResultadosAtividadeFragment"
         tools:layout="@layout/resultados_atividades_fazenda" />
     <fragment
-        android:id="@+id/resultadosFazendaFragment"
+        android:id="@+id/resultadosFazendaFrag"
         android:name="com.example.agrogestao.view.fragments.navigation.ResultadosFazendaFragment"
         android:label="ResultadosFazendaFragment"
         tools:layout="@layout/resultados_fazenda" />
