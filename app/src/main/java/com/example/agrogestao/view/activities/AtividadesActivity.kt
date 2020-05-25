@@ -1,4 +1,4 @@
-package com.example.agrogestao.view
+package com.example.agrogestao.view.activities
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

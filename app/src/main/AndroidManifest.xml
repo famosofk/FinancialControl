@@ -10,13 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".NavigationActivity"
+            android:name=".view.activities.NavigationActivity"
             android:label="@string/title_activity_navigation"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".view.AtividadesActivity" />
-        <activity android:name=".view.CadastroActivity" />
-        <activity android:name=".view.MainActivity" />
-        <activity android:name=".view.LoginActivity">
+        <activity android:name=".view.activities.AtividadesActivity" />
+        <activity android:name=".view.activities.CadastroActivity" />
+        <activity android:name=".view.activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

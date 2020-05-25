@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.example.agrogestao.view.ApresentacaoFazendaFragment"
+        android:name="com.example.agrogestao.view.fragments.navigation.ApresentacaoFazendaFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/apresentacao_fazenda">
 
@@ -16,13 +16,13 @@
 
     <fragment
         android:id="@+id/nav_gallery"
-        android:name="com.example.agrogestao.view.BalancoPatrimonialFragment"
+        android:name="com.example.agrogestao.view.fragments.navigation.BalancoPatrimonialFragment"
         android:label="@string/menu_gallery"
         tools:layout="@layout/apresentacao_balanco_patrimonial" />
 
     <fragment
         android:id="@+id/nav_slideshow"
-        android:name="com.example.agrogestao.view.FluxoCaixaFragment"
+        android:name="com.example.agrogestao.view.fragments.navigation.FluxoCaixaFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fluxo_caixa_atividade" />
 </navigation>

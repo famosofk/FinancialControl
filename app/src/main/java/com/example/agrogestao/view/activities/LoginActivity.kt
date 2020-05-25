@@ -1,4 +1,4 @@
-package com.example.agrogestao.view
+package com.example.agrogestao.view.activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -102,7 +102,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     private fun skipLogin() {
         val user: FirebaseUser? = auth.currentUser
         if (user != null) {
-            val i = Intent(this, MainActivity::class.java)
+            val i = Intent(this, AtividadesActivity::class.java)
             startActivity(i)
             finish()
         }

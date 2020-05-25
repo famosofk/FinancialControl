@@ -1,4 +1,4 @@
-package com.example.agrogestao.view
+package com.example.agrogestao.view.fragments.navigation
 
 import android.os.Bundle
 import android.view.LayoutInflater
