@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:text="@string/descricao_intro"
             android:layout_marginBottom="16dp"
-            android:fontFamily="@font/acme"
+            android:fontFamily="@font/roboto"
             android:textAlignment="center"
             android:textColor="@color/colorPrimary"
             android:textSize="32sp" />
@@ -32,7 +32,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="@font/acme"
+                android:fontFamily="@font/roboto"
                 android:text="@string/indicadores_financeiros_intro"
                 android:textColor="@color/colorPrimary"
                 android:textSize="24sp"
@@ -82,7 +82,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
             android:background="@drawable/round_background_blue"
-            android:fontFamily="@font/acme"
+            android:fontFamily="@font/roboto"
             android:padding="16dp"
             android:text="@string/detalhes_intro"
             android:textColor="@android:color/white" />
@@ -98,7 +98,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="@font/acme"
+                android:fontFamily="@font/roboto"
                 android:text="@string/fluxo_caixa_intro"
                 android:textColor="@color/colorPrimary"
                 android:textSize="24sp"
@@ -145,7 +145,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="16dp"
-            android:fontFamily="@font/acme"
+            android:fontFamily="@font/roboto"
             android:orientation="horizontal">
 
             <Button
@@ -174,7 +174,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_marginBottom="16dp"
-            android:fontFamily="@font/acme"
+            android:fontFamily="@font/roboto"
             android:text="@string/balanco_patrimonial_intro"
             android:layout_height="wrap_content"
             android:textColor="@color/colorPrimary"

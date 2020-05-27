@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:fontFamily="@font/acme"
+            android:fontFamily="@font/roboto"
             android:text="@string/fluxo_caixa_atividade"
             android:textAlignment="center"
             android:textColor="@color/colorPrimary"
@@ -26,7 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:fontFamily="@font/acme"
+            android:fontFamily="@font/roboto"
             android:text="@string/saldo_fazenda"
             android:textColor="@android:color/black"
             android:textSize="16sp" />
@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
 
-            android:fontFamily="@font/acme"
+            android:fontFamily="@font/roboto"
             android:text="@string/receitas_intro"
             android:textColor="@android:color/black"
             android:textSize="16sp" />
@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
 
-            android:fontFamily="@font/acme"
+            android:fontFamily="@font/roboto"
             android:text="@string/despesas_intro"
             android:textColor="@android:color/black"
             android:textSize="16sp" />
@@ -58,7 +58,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:fontFamily="@font/acme"
+            android:fontFamily="@font/roboto"
             android:text="@string/pendencias_intro"
             android:textColor="@color/colorPrimary"
             android:textSize="24sp" />
@@ -69,7 +69,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
 
-            android:fontFamily="@font/acme"
+            android:fontFamily="@font/roboto"
             android:text="@string/a_pagar"
             android:textColor="@android:color/black"
             android:textSize="16sp" />
@@ -79,7 +79,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:fontFamily="@font/acme"
+            android:fontFamily="@font/roboto"
             android:text="@string/a_receber"
             android:textColor="@android:color/black"
             android:textSize="16sp" />
@@ -89,7 +89,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp"
-            android:fontFamily="@font/acme"
+            android:fontFamily="@font/roboto"
             android:text="@string/lucro_fazenda"
             android:textColor="@android:color/black"
             android:textSize="16sp" />

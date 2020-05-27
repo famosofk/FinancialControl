@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:fontFamily="@font/acme"
+            android:fontFamily="@font/roboto"
             android:textColor="@color/colorPrimary"
             android:text="@string/dados_fazenda"
             android:textAlignment="center"
@@ -25,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:fontFamily="@font/acme"
+            android:fontFamily="@font/roboto"
             android:text="@string/codigo_fazenda"
             android:textColor="@color/colorPrimary" />
 
@@ -43,7 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:fontFamily="@font/acme"
+            android:fontFamily="@font/roboto"
             android:text="@string/area_fazenda"
             android:textColor="@color/colorPrimary" />
 
@@ -61,7 +61,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:fontFamily="@font/acme"
+            android:fontFamily="@font/roboto"
             android:importantForAutofill="no"
             android:text="@string/atividades_depreciacao"
             android:textColor="@color/colorPrimary"
@@ -78,7 +78,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:fontFamily="@font/acme"
+            android:fontFamily="@font/roboto"
             android:text="@string/taxa_remuneracao_capital"
             android:textColor="@color/colorPrimary" />
 
@@ -96,7 +96,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:fontFamily="@font/acme"
+            android:fontFamily="@font/roboto"
             android:text="@string/custo_oportunidade_trabalho"
             android:textColor="@color/colorPrimary" />
 
@@ -114,7 +114,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:fontFamily="@font/acme"
+            android:fontFamily="@font/roboto"
             android:text="@string/dividas_longo_prazo"
             android:textColor="@color/colorPrimary" />
 
@@ -132,7 +132,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:fontFamily="@font/acme"
+            android:fontFamily="@font/roboto"
             android:text="@string/metas_fazenda"
             android:textAlignment="center"
             android:textColor="@color/colorPrimary"
@@ -142,7 +142,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:fontFamily="@font/acme"
+            android:fontFamily="@font/roboto"
             android:text="@string/lucro_fazenda"
             android:textColor="@color/colorPrimary" />
 
@@ -160,7 +160,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:fontFamily="@font/acme"
+            android:fontFamily="@font/roboto"
             android:text="@string/margem_liquida"
             android:textColor="@color/colorPrimary" />
 
@@ -178,7 +178,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:fontFamily="@font/acme"
+            android:fontFamily="@font/roboto"
             android:text="@string/margem_bruta"
             android:textColor="@color/colorPrimary" />
 
@@ -196,7 +196,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:fontFamily="@font/acme"
+            android:fontFamily="@font/roboto"
             android:text="@string/renda_bruta"
             android:textColor="@color/colorPrimary" />
 
@@ -214,7 +214,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:fontFamily="@font/acme"
+            android:fontFamily="@font/roboto"
             android:text="@string/saldo_fazenda"
             android:textColor="@color/colorPrimary" />
 
@@ -232,7 +232,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:fontFamily="@font/acme"
+            android:fontFamily="@font/roboto"
             android:text="@string/a_pagar"
             android:textColor="@color/colorPrimary" />
 
@@ -250,7 +250,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:fontFamily="@font/acme"
+            android:fontFamily="@font/roboto"
             android:text="@string/a_receber"
             android:textColor="@color/colorPrimary" />
 
@@ -268,7 +268,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:fontFamily="@font/acme"
+            android:fontFamily="@font/roboto"
             android:text="@string/patrimonio_liquido"
             android:textColor="@color/colorPrimary" />
 
@@ -286,7 +286,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:fontFamily="@font/acme"
+            android:fontFamily="@font/roboto"
             android:text="@string/solvencia_intro"
             android:textColor="@color/colorPrimary" />
 
@@ -304,7 +304,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:fontFamily="@font/acme"
+            android:fontFamily="@font/roboto"
             android:text="@string/liquidez_intro"
             android:textColor="@color/colorPrimary" />
 

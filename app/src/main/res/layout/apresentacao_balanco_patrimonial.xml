@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:fontFamily="@font/acme"
+            android:fontFamily="@font/roboto"
             android:text="@string/balanco_patrimonial_intro"
             android:textAlignment="center"
             android:textColor="@color/colorPrimary"
@@ -26,7 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:fontFamily="@font/acme"
+            android:fontFamily="@font/roboto"
             android:text="@string/patrimonio_liquido"
             android:textColor="@android:color/black"
             android:textSize="16sp" />
@@ -36,7 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:fontFamily="@font/acme"
+            android:fontFamily="@font/roboto"
             android:text="@string/solvencia_intro"
             android:textColor="@android:color/black"
             android:textSize="16sp" />
@@ -46,7 +46,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:fontFamily="@font/acme"
+            android:fontFamily="@font/roboto"
             android:text="@string/liquidez_intro"
             android:textColor="@android:color/black"
             android:textSize="16sp" />
@@ -56,7 +56,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:fontFamily="@font/acme"
+            android:fontFamily="@font/roboto"
             android:text="@string/rentabildiade_intro"
             android:textColor="@android:color/black"
             android:textSize="16sp" />
@@ -66,7 +66,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:fontFamily="@font/acme"
+            android:fontFamily="@font/roboto"
             android:text="@string/ativo_intro"
             android:textColor="@android:color/black"
             android:textSize="16sp" />
@@ -75,7 +75,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:fontFamily="@font/acme"
+            android:fontFamily="@font/roboto"
             android:text="@string/passivo_intro"
             android:textColor="@android:color/black"
             android:textSize="16sp" />
@@ -84,7 +84,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:fontFamily="@font/acme"
+            android:fontFamily="@font/roboto"
             android:text="@string/distribuicao_patrimonio"
             android:textColor="@color/colorPrimary"
             android:textSize="24sp" />

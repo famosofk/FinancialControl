@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:fontFamily="@font/acme"
+            android:fontFamily="@font/roboto"
             android:text="@string/cadastro_inventario_intro"
             android:textAlignment="center"
             android:textColor="@color/colorPrimary"
@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:fontFamily="@font/acme"
+            android:fontFamily="@font/roboto"
             android:text="@string/nome_intro"
             android:textColor="@color/colorPrimary"
             android:textSize="16sp" />
@@ -50,7 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:fontFamily="@font/acme"
+            android:fontFamily="@font/roboto"
             android:text="@string/atividade_intro"
             android:textColor="@color/colorPrimary"
             android:textSize="16sp" />
@@ -69,7 +69,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:fontFamily="@font/acme"
+            android:fontFamily="@font/roboto"
             android:text="@string/quantidade_inicial_intro"
             android:textColor="@color/colorPrimary"
             android:textSize="16sp" />
@@ -88,7 +88,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:fontFamily="@font/acme"
+            android:fontFamily="@font/roboto"
             android:text="@string/valor_unitário"
             android:textColor="@color/colorPrimary"
             android:textSize="16sp" />
@@ -107,7 +107,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:fontFamily="@font/acme"
+            android:fontFamily="@font/roboto"
             android:text="@string/ano_compra_intro"
             android:textColor="@color/colorPrimary"
             android:textSize="16sp" />
@@ -126,7 +126,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:fontFamily="@font/acme"
+            android:fontFamily="@font/roboto"
             android:text="@string/reforma_intro"
             android:textColor="@color/colorPrimary"
             android:textSize="16sp" />
@@ -145,7 +145,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:fontFamily="@font/acme"
+            android:fontFamily="@font/roboto"
             android:text="@string/quantidade_atual_intro"
             android:textColor="@color/colorPrimary"
             android:textSize="16sp" />
