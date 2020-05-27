@@ -34,6 +34,12 @@ class AtividadesActivity : AppCompatActivity() {
             .setView(mDialogView)
             .setTitle(title)
             .create()
+
+        //adaptar o layout
+        if (title.equals("Criar programa")) {
+        } else if (title.equals("Criar fazenda")) {
+        } else if (title.equals("Criar atividade")) {
+        }
         mBuilder.show()
         cadastrarButton.setOnClickListener {
               mBuilder.dismiss()
