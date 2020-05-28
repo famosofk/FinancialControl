@@ -3,6 +3,7 @@ package com.example.agrogestao.view.activities
 import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -30,6 +31,7 @@ class AtividadesActivity : AppCompatActivity() {
         val mDialogView =
             LayoutInflater.from(this).inflate(R.layout.cadastro_programa_fazenda, null)
         val cadastrarButton: Button = mDialogView.findViewById(R.id.cadastrarDialogButton)
+        val cancelButton: Button = mDialogView.findViewById(R.id.cancelDialogButton)
         val mBuilder = AlertDialog.Builder(this)
             .setView(mDialogView)
             .setTitle(title)
@@ -37,16 +39,24 @@ class AtividadesActivity : AppCompatActivity() {
 
         //adaptar o layout
         if (title.equals("Criar programa")) {
+            mDialogView.textComplementoDialog.visibility = View.GONE
+            mDialogView.editComplementoText.visibility = View.GONE
         } else if (title.equals("Criar fazenda")) {
+            mDialogView.editProgramaDialog.visibility = View.VISIBLE
+            mDialogView.textProgramaDialog.visibility = View.VISIBLE
         } else if (title.equals("Criar atividade")) {
+            mDialogView.textComplementoDialog.visibility = View.GONE
+            mDialogView.editComplementoText.visibility = View.GONE
         }
         mBuilder.show()
         cadastrarButton.setOnClickListener {
               mBuilder.dismiss()
               val name = mDialogView.editNomeDialog.text.toString()
               val complemento = mDialogView.editComplementoText.text.toString()
+            val programa = mDialogView.editProgramaDialog.text.toString()
               Toast.makeText(this, "" + name+complemento, Toast.LENGTH_SHORT).show()
         }
+        cancelButton.setOnClickListener { mBuilder.dismiss() }
 
     }
 }
