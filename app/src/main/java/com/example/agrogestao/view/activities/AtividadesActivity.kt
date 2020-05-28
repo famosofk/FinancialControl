@@ -9,13 +9,17 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.agrogestao.R
 import com.example.agrogestao.models.Farm
+import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.cadastro_programa_fazenda.view.*
+import java.util.*
 
 class AtividadesActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_atividades)
+
+        //preciso recuperar o usuário pra salvar ele no dispositivo e atualizar ao criar programas.
 
 
         val fabPrograma: com.github.clans.fab.FloatingActionButton =
@@ -38,7 +42,6 @@ class AtividadesActivity : AppCompatActivity() {
             .setTitle(title)
             .create()
 
-        //adaptar o layout
         if (title.equals("Criar programa")) {
             mDialogView.textComplementoDialog.visibility = View.GONE
             mDialogView.editComplementoText.visibility = View.GONE
@@ -51,16 +54,17 @@ class AtividadesActivity : AppCompatActivity() {
         }
         mBuilder.show()
         cadastrarButton.setOnClickListener {
-              mBuilder.dismiss()
+            mBuilder.dismiss()
 
             val name = mDialogView.editNomeDialog.text.toString()
             val complemento = mDialogView.editComplementoText.text.toString()
             val programa = mDialogView.editProgramaDialog.text.toString()
+            val id = UUID.randomUUID().toString()
             if (title.equals("Criar programa")) {
-                //salvar no dispositivo
             } else if (title.equals("Criar fazenda")) {
-                var farm: Farm = Farm(name, complemento)
-                //passar pro realtimedatabase e salvar no dispositivo
+                var farm = Farm(name, programa, complemento, id)
+                val db = FirebaseDatabase.getInstance().getReference().child("fazendas").child(id)
+                db.setValue(farm)
 
             } else if (title.equals("Criar atividade")) {
                 //salvar no dispositivo
