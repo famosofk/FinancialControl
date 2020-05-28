@@ -1,16 +1,19 @@
 package com.example.agrogestao.models
 
-data class Farm(
-    var codigoFazenda: String,
-    val programa: String,
-    val senha: String = "",
-    val id: String
-) {
+import io.realm.RealmList
+import io.realm.RealmObject
+
+open class Farm(
+    var codigoFazenda: String = "",
+    var programa: String = "",
+    var senha: String = "",
+    var id: String = ""
+) : RealmObject() {
 
 
     var senhaAcesso: String = ""
-    val municipio: String = ""
-    var atividades = arrayListOf<String>()
+    var municipio: String = ""
+    var atividades: RealmList<String> = RealmList()
     var area: Float = 0f
     var metaMargemLiquida: Float = 0f
     var metaMargemBruta: Float = 0f
@@ -26,23 +29,7 @@ data class Farm(
     var metaLucro: Float = 0f
     var metasaldo: Float = 0f
     var dividaLongoPrazo: Float = 0f
-
     var depreciacao: Float = 0f //Não será lido. Calculado através do inventário.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

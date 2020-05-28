@@ -1,9 +1,12 @@
 package com.example.agrogestao.models
 
-class Usuario(s: String) {
+import io.realm.RealmList
+import io.realm.RealmObject
+
+open class Usuario(s: String = "") : RealmObject() {
 
     var email: String = ""
-    val tipo = s
-    var listaFazendas: MutableList<String> = ArrayList<String>()
+    var tipo = s
+    var listaFazendas: RealmList<String> = RealmList()
 
 }

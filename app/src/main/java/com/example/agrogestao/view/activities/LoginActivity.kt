@@ -8,6 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.agrogestao.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import io.realm.Realm
+import io.realm.RealmConfiguration
 import kotlinx.android.synthetic.main.activity_login.*
 
 
@@ -18,6 +20,13 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        Realm.init(this)
+        val config = RealmConfiguration.Builder()
+            .name("myrealm.realm")
+            .build()
+        Realm.setDefaultConfiguration(config)
+
+
         auth.setLanguageCode("pt")
         skipLogin()
 

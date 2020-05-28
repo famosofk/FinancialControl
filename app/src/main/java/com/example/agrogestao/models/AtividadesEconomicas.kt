@@ -1,8 +1,9 @@
 package com.example.agrogestao.models
 
-class AtividadesEconomicas {
+import io.realm.RealmObject
 
-    var nome: String = "fazenda"
+open class AtividadesEconomicas(var nome: String = "") : RealmObject() {
+
     var rateio: Float = 0f
 
 }
