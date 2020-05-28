@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.agrogestao.R
+import com.example.agrogestao.models.Farm
 import kotlinx.android.synthetic.main.cadastro_programa_fazenda.view.*
 
 class AtividadesActivity : AppCompatActivity() {
@@ -51,9 +52,20 @@ class AtividadesActivity : AppCompatActivity() {
         mBuilder.show()
         cadastrarButton.setOnClickListener {
               mBuilder.dismiss()
-              val name = mDialogView.editNomeDialog.text.toString()
-              val complemento = mDialogView.editComplementoText.text.toString()
+
+            val name = mDialogView.editNomeDialog.text.toString()
+            val complemento = mDialogView.editComplementoText.text.toString()
             val programa = mDialogView.editProgramaDialog.text.toString()
+            if (title.equals("Criar programa")) {
+                //salvar no dispositivo
+            } else if (title.equals("Criar fazenda")) {
+                var farm: Farm = Farm(name, complemento)
+                //passar pro realtimedatabase e salvar no dispositivo
+
+            } else if (title.equals("Criar atividade")) {
+                //salvar no dispositivo
+            }
+
               Toast.makeText(this, "" + name+complemento, Toast.LENGTH_SHORT).show()
         }
         cancelButton.setOnClickListener { mBuilder.dismiss() }

@@ -1,10 +1,10 @@
 package com.example.agrogestao.models
 
-data class Farm(var codigoFazenda: String) {
+data class Farm(var codigoFazenda: String, val programa: String) {
 
     //Criar um sistema de cadastro de Atividades -> Nome + Rateio
 
-
+    val senhaAcesso: String = ""
     val municipio: String = ""
     var atividades = arrayListOf<String>()
     var area: Float = 0f
