@@ -4,11 +4,19 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.agrogestao.models.BalancoPatrimonial
+import com.example.agrogestao.models.Farm
 
 class ApresentacaoFazendaViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
+    private val mFarm = MutableLiveData<Farm>()
+    val myFarm: LiveData<Farm> = mFarm
+    private val mBalancoPatrimonial = MutableLiveData<BalancoPatrimonial>()
+    val myBalancoPatrimonial: LiveData<BalancoPatrimonial> = mBalancoPatrimonial
+
+
+    fun load() {
+        //Recuperar fazenda, balanço e fluxo de caixa
+
     }
-    val text: LiveData<String> = _text
 }

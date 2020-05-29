@@ -13,7 +13,7 @@ open class Farm(
 
     var senhaAcesso: String = ""
     var municipio: String = ""
-    var atividades: RealmList<String> = RealmList()
+    var atividades: RealmList<AtividadesEconomicas> = RealmList()
     var area: Float = 0f
     var metaMargemLiquida: Float = 0f
     var metaMargemBruta: Float = 0f

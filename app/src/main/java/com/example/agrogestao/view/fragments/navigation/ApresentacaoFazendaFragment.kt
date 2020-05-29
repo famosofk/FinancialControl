@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.example.agrogestao.R
@@ -23,14 +25,36 @@ class ApresentacaoFazendaFragment : Fragment() {
         apresentacaoFazendaViewModel =
             ViewModelProvider(this).get(ApresentacaoFazendaViewModel::class.java)
         val root = inflater.inflate(R.layout.apresentacao_fazenda, container, false)
-        inicializarListeners(root)
 
+        inicializarListeners(root)
+        observer(root)
+        apresentacaoFazendaViewModel.load()
 
         return root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    private fun observer(view: View) {
+        var lucroAtual: String = "";
+        var lucroMeta: String = "";
+        var mBrutaAtual: String = "";
+        var mBrutaMeta: String = "";
+        var mLiquidaAtual: String = "";
+        var mLiquidaMeta: String = ""
+
+        apresentacaoFazendaViewModel.myFarm.observe(viewLifecycleOwner, Observer {
+            lucroMeta = it.metaLucro.toString()
+            mLiquidaMeta = it.metaMargemLiquida.toString()
+            mBrutaMeta = it.metaMargemBruta.toString()
+            val textlucro = view.findViewById<TextView>(R.id.textLucroApresentacao)
+            val textmBruta = view.findViewById<TextView>(R.id.textMargemLiquidaApresentacao)
+            val textmLiquida = view.findViewById<TextView>(R.id.textMargemLiquidaApresentacao)
+            val stringLucro = "Lucro: $lucroAtual/$lucroMeta"
+            val stringmBruta = "Margem Bruta: $mBrutaAtual / $mBrutaMeta"
+            val stringmLiquida = "Margem Liquida: $mLiquidaAtual/$mLiquidaMeta"
+            textlucro.setText(stringLucro)
+            textmBruta.setText(stringmBruta)
+            textmLiquida.setText(stringmLiquida)
+        })
 
 
     }

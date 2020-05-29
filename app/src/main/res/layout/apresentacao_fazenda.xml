@@ -52,6 +52,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/textLucroApresentacao"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
@@ -60,6 +61,7 @@
             android:textSize="16sp" />
 
         <TextView
+            android:id="@+id/textMargemBrutaApresentacao"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
@@ -68,6 +70,7 @@
             android:textSize="16sp" />
 
         <TextView
+            android:id="@+id/textMargemLiquidaApresentacao"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/margem_liquida"
