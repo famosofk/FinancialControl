@@ -16,6 +16,13 @@ import com.example.agrogestao.viewmodel.ApresentacaoFazendaViewModel
 class ApresentacaoFazendaFragment : Fragment() {
 
     private lateinit var apresentacaoFazendaViewModel: ApresentacaoFazendaViewModel
+    var lucroAtual: String = "";
+    var lucroMeta: String = "";
+    var mBrutaAtual: String = "";
+    var mBrutaMeta: String = "";
+    var mLiquidaAtual: String = "";
+    var mLiquidaMeta: String = ""
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,28 +41,36 @@ class ApresentacaoFazendaFragment : Fragment() {
     }
 
     private fun observer(view: View) {
-        var lucroAtual: String = "";
-        var lucroMeta: String = "";
-        var mBrutaAtual: String = "";
-        var mBrutaMeta: String = "";
-        var mLiquidaAtual: String = "";
-        var mLiquidaMeta: String = ""
 
         apresentacaoFazendaViewModel.myFarm.observe(viewLifecycleOwner, Observer {
             lucroMeta = it.metaLucro.toString()
             mLiquidaMeta = it.metaMargemLiquida.toString()
             mBrutaMeta = it.metaMargemBruta.toString()
-            val textlucro = view.findViewById<TextView>(R.id.textLucroApresentacao)
-            val textmBruta = view.findViewById<TextView>(R.id.textMargemLiquidaApresentacao)
-            val textmLiquida = view.findViewById<TextView>(R.id.textMargemLiquidaApresentacao)
-            val stringLucro = "Lucro: $lucroAtual/$lucroMeta"
-            val stringmBruta = "Margem Bruta: $mBrutaAtual / $mBrutaMeta"
-            val stringmLiquida = "Margem Liquida: $mLiquidaAtual/$mLiquidaMeta"
-            textlucro.setText(stringLucro)
-            textmBruta.setText(stringmBruta)
-            textmLiquida.setText(stringmLiquida)
+            atualizarTextos(view)
+        })
+        apresentacaoFazendaViewModel.myBalancoPatrimonial.observe(viewLifecycleOwner, Observer {
+            //atualizar os valores
+            lucroAtual = it.lucro.toString()
+            mLiquidaAtual = it.margemLiquida.toString()
+            mBrutaMeta = it.margemBruta.toString()
+            atualizarTextos(view)
+
         })
 
+    }
+
+    private fun atualizarTextos(view: View) {
+
+
+        val textlucro = view.findViewById<TextView>(R.id.textLucroApresentacao)
+        val textmBruta = view.findViewById<TextView>(R.id.textMargemLiquidaApresentacao)
+        val textmLiquida = view.findViewById<TextView>(R.id.textMargemLiquidaApresentacao)
+        val stringLucro = "Lucro: $lucroAtual/$lucroMeta"
+        val stringmBruta = "Margem Bruta: $mBrutaAtual / $mBrutaMeta"
+        val stringmLiquida = "Margem Liquida: $mLiquidaAtual/$mLiquidaMeta"
+        textlucro.setText(stringLucro)
+        textmBruta.setText(stringmBruta)
+        textmLiquida.setText(stringmLiquida)
 
     }
 
