@@ -11,7 +11,6 @@
         android:padding="16dp">
 
         <TextView
-            android:id="@+id/textView59"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
@@ -22,7 +21,7 @@
             android:textSize="32sp" />
 
         <TextView
-            android:id="@+id/textView60"
+            android:id="@+id/textPatrimonioBalanco"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
@@ -32,7 +31,7 @@
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/textView61"
+            android:id="@+id/textSolvenciaBalanco"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
@@ -42,7 +41,7 @@
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/textView62"
+            android:id="@+id/textLiquidezBalanco"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
@@ -52,7 +51,7 @@
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/textView63"
+            android:id="@+id/textRentabilidadeBalanco"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
@@ -62,7 +61,7 @@
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/textView64"
+            android:id="@+id/textAtivoBalanco"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
@@ -72,6 +71,7 @@
             android:textSize="16sp" />
 
         <TextView
+            android:id="@+id/textPassivoBalanco"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
