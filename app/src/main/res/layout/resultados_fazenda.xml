@@ -11,7 +11,6 @@
         android:padding="16dp">
 
         <TextView
-            android:id="@+id/textView45"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
@@ -22,7 +21,6 @@
             android:textSize="32sp" />
 
         <TextView
-            android:id="@+id/textView46"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
@@ -32,7 +30,7 @@
             android:textSize="24sp" />
 
         <TextView
-            android:id="@+id/textView47"
+            android:id="@+id/resultadosLucroText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
@@ -42,7 +40,7 @@
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/textView48"
+            android:id="@+id/resultadosmLiquidaText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
@@ -53,7 +51,7 @@
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/textView49"
+            android:id="@+id/resultadosmBrutaText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
