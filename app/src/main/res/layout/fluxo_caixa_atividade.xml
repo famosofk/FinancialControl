@@ -11,7 +11,7 @@
         android:padding="16dp">
 
         <TextView
-            android:id="@+id/textView51"
+            android:id="@+id/fluxoCaixaText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
@@ -22,7 +22,7 @@
             android:textSize="32sp" />
 
         <TextView
-            android:id="@+id/textView52"
+            android:id="@+id/fcaixaSaldoText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
@@ -32,7 +32,7 @@
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/textView53"
+            android:id="@+id/fcaixaReceitasText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
@@ -43,7 +43,7 @@
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/textView54"
+            android:id="@+id/fcaixaDespesasText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
@@ -54,7 +54,6 @@
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/textView55"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
@@ -64,7 +63,7 @@
             android:textSize="24sp" />
 
         <TextView
-            android:id="@+id/textView56"
+            android:id="@+id/fcaixaPagarText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
@@ -75,7 +74,7 @@
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/textView57"
+            android:id="@+id/fcaixaReceberText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
@@ -85,7 +84,7 @@
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/textView58"
+            android:id="@+id/fcaixaLucroText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp"
