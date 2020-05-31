@@ -121,6 +121,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/textsSaldoApresentacao"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
@@ -129,6 +130,7 @@
             android:textSize="16sp" />
 
         <TextView
+            android:id="@+id/textsPagarApresentacao"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
@@ -137,6 +139,7 @@
             android:textSize="16sp" />
 
         <TextView
+            android:id="@+id/textReceberApresentacao"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
@@ -184,6 +187,7 @@
             android:textSize="24sp" />
 
         <TextView
+            android:id="@+id/textsPatrimonioApresentacao"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
@@ -192,6 +196,7 @@
             android:textSize="16sp" />
 
         <TextView
+            android:id="@+id/textsSolvenciaApresentacao"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
@@ -200,6 +205,7 @@
             android:textSize="16sp" />
 
         <TextView
+            android:id="@+id/textsLiquidezApresentacao"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
@@ -208,6 +214,7 @@
             android:textSize="16sp" />
 
         <TextView
+            android:id="@+id/textsRentabilidadeApresentacao"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"

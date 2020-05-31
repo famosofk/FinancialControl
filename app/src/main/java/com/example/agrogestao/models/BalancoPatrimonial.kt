@@ -18,6 +18,7 @@ class BalancoPatrimonial() {
     var passivo: Float = 0f
     var patrimonioLiquido: Float = 0f
     var totalContasPagar: Float = 0f
+    var totalContasReceber: Float = 0f
     var rentabilidade: Float = 0f
     var lucro: Float = 0f
     var saldo: Float = 0f
