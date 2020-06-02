@@ -8,8 +8,10 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.agrogestao.R
+import com.example.agrogestao.models.AtividadesEconomicas
 import com.example.agrogestao.models.Farm
 import com.google.firebase.database.FirebaseDatabase
+import io.realm.Realm
 import kotlinx.android.synthetic.main.cadastro_programa_fazenda.view.*
 import java.util.*
 
@@ -75,4 +77,23 @@ class AtividadesActivity : AppCompatActivity() {
         cancelButton.setOnClickListener { mBuilder.dismiss() }
 
     }
+
+    private fun salvarRealm(
+        farm: Farm? = null,
+        atividade: AtividadesEconomicas? = null,
+        programa: String? = null
+    ) {
+        val realm = Realm.getDefaultInstance()
+        realm.beginTransaction()
+        if (farm != null) {
+            realm.copyToRealm(farm)
+        } else if (atividade != null) {
+            realm.copyToRealm(atividade)
+        } else if (programa != null) {
+        }
+        realm.commitTransaction()
+        realm.close()
+    }
+
+
 }
