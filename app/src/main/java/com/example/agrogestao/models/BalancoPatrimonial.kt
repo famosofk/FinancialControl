@@ -2,6 +2,12 @@ package com.example.agrogestao.models
 
 class BalancoPatrimonial() {
 
+
+    /*
+    * Dívidas de longo prazo foi retirado de fazenda e adicionado a balanço.
+    * */
+
+
     var solvencia: Float = 0f
     var liquidez: Float = 0f
     var listaItens = arrayListOf<Item>()
@@ -22,6 +28,7 @@ class BalancoPatrimonial() {
     var rentabilidade: Float = 0f
     var lucro: Float = 0f
     var saldo: Float = 0f
+    var dividasLongoPrazo: Float = 0f
     var dinheiroBanco: Float = 0f
     var custoOportunidadeTrabalho: Float = 0f //valor. Lido ao cadastrar balanço.
     var trabalhoFamiliarNaoRemunerado: Float = 0f //valor. Lido ao cadastrar balanço.
@@ -30,12 +37,17 @@ class BalancoPatrimonial() {
     var pendenciasRecebimento: Float =
         0f //Será atualizado com o valor das contas não pagas do ano anterior.
 
+
     fun atualizarBalanco(contasPagar: Float, dividas: Float) {
+        calcularPatrimonioLiquido()
+        calcularSolvencia()
+        calcularLiquidez(contasPagar)
+
 
     }
 
-    fun calcularSolvencia(dividaLongoPrazo: Float) {
-        solvencia = dividaLongoPrazo / patrimonioLiquido
+    fun calcularSolvencia() {
+        solvencia = dividasLongoPrazo / patrimonioLiquido
         //divida é um atributo da fazenda.
     }
 
@@ -69,7 +81,7 @@ class BalancoPatrimonial() {
     }
 
     fun calcularLucro() {
-        lucro = receitaBruta - custoOperacionalTotal
+        lucro = receitaBruta - calcularCustoTotal()
     }
 
     fun calcularMargemLiquida() {
@@ -87,7 +99,7 @@ class BalancoPatrimonial() {
     fun calcularValorProdutos(): Float {
         var valorProdutos: Float = 0.0f
         for (item in listaItens!!) {
-            if (item.tipo.equals(Item.ITEM_PRODUTOS)) {
+            if (item.tipo.equals(Item.ITEM_PRODUTOS) && item.anoProducao.equals(2020)) {
                 valorProdutos += (item.quantidadeFinal * item.valorUnitario)
             }
         }
@@ -99,7 +111,7 @@ class BalancoPatrimonial() {
     }
 
     fun calcularOportunidadeCapital(): Float {
-        return patrimonioLiquido * taxaRemuneracaoCapital // (será inserido)
+        return patrimonioLiquido * taxaRemuneracaoCapital //Buscar em fazenda.
     }
 
     fun calcularCustoOportunidadeCapital(): Float {
@@ -134,6 +146,7 @@ class BalancoPatrimonial() {
         }
         return valorAnimais
     }
+
 
     fun calcularValorInsumos(): Float {
         var valorInsumos: Float = 0.0f

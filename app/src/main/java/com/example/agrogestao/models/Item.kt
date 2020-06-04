@@ -15,12 +15,18 @@ class Item(val nome: String, val dataCompra: String) {
     var quantidadeFinal: Float = 0f
     var receitaBruta: Float = 0f
     var valorUnitario: Float = 0f
+    var valorAtual: Float = 0f
     var valorInicial: Float = 0f
     var vidaUtil: Int = 0
     var tipo: Char = 'a'
     var depreciacao: Float = 0f
     var reforma: Float = 0f
-    var valorAtual: Float = 0f
+    var anoProducao: Int = 0
+
+    fun calcularValorAtual() {
+        calcularDepreciacao()
+        valorAtual = valorInicial - depreciacao + reforma
+    }
 
     fun calcularDepreciacao() {
         depreciacao = valorAtual / calcularVidaUtilRestante()
