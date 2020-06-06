@@ -1,6 +1,6 @@
 package com.example.agrogestao.models
 
-class Item(val nome: String, val dataCompra: String) {
+class ItemBalancoPatrimonial(val nome: String, val dataCompra: String) {
 
     companion object {
         const val ITEM_TERRA = 'a'

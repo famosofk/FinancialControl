@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.agrogestao.R
 import com.example.agrogestao.models.AtividadesEconomicas
 import com.example.agrogestao.models.Farm
+import com.example.agrogestao.models.FarmProgram
 import com.google.firebase.database.FirebaseDatabase
 import io.realm.Realm
 import kotlinx.android.synthetic.main.cadastro_programa_fazenda.view.*
@@ -20,7 +21,7 @@ class AtividadesActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_atividades)
-
+        Realm.init(applicationContext)
         //preciso recuperar o usuário pra salvar ele no dispositivo e atualizar ao criar programas.
 
 
@@ -63,16 +64,18 @@ class AtividadesActivity : AppCompatActivity() {
             val programa = mDialogView.editProgramaDialog.text.toString()
             val id = UUID.randomUUID().toString()
             if (title.equals("Criar programa")) {
-            } else if (title.equals("Criar fazenda")) {
-                var farm = Farm(name, programa, complemento, id)
-                val db = FirebaseDatabase.getInstance().getReference().child("fazendas").child(id)
+                salvarRealm(program = FarmProgram(programa))
+            }
+            else if (title.equals("Criar fazenda")) {
+                val farm = Farm(name, programa, complemento, id)
+                val db = FirebaseDatabase.getInstance().reference.child("farms").child(id)
                 db.setValue(farm)
+                salvarRealm(farm=farm)
 
             } else if (title.equals("Criar atividade")) {
-                //salvar no dispositivo
+                val atividade = AtividadesEconomicas(name)
+                salvarRealm(economicalActivity = atividade)
             }
-
-              Toast.makeText(this, "" + name+complemento, Toast.LENGTH_SHORT).show()
         }
         cancelButton.setOnClickListener { mBuilder.dismiss() }
 
@@ -80,19 +83,30 @@ class AtividadesActivity : AppCompatActivity() {
 
     private fun salvarRealm(
         farm: Farm? = null,
-        atividade: AtividadesEconomicas? = null,
-        programa: String? = null
+        economicalActivity: AtividadesEconomicas? = null,
+        program: FarmProgram? = null
     ) {
         val realm = Realm.getDefaultInstance()
         realm.beginTransaction()
-        if (farm != null) {
-            realm.copyToRealm(farm)
-        } else if (atividade != null) {
-            realm.copyToRealm(atividade)
-        } else if (programa != null) {
+        when {
+            farm != null -> {
+                realm.copyToRealm(farm)
+                createToast("fazenda criada")
+            }
+            economicalActivity != null -> {
+                realm.copyToRealm(economicalActivity)
+                createToast("atividade criada")
+            }
+            program != null -> {
+
+            }
         }
         realm.commitTransaction()
         realm.close()
+    }
+
+    private fun createToast(s: String){
+        Toast.makeText(applicationContext, s, Toast.LENGTH_SHORT).show()
     }
 
 

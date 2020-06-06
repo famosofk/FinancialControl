@@ -10,7 +10,7 @@ class BalancoPatrimonial() {
 
     var solvencia: Float = 0f
     var liquidez: Float = 0f
-    var listaItens = arrayListOf<Item>()
+    var listaItens = arrayListOf<ItemBalancoPatrimonial>()
     var margemLiquida: Float = 0f
     var margemBruta: Float = 0f
     var taxaRemuneracaoCapital: Float = 0f //em porcentagem. Lido ao cadastrar fazenda.
@@ -60,8 +60,8 @@ class BalancoPatrimonial() {
     fun calcularValorAnimaisInsumosProdutos(): Float {
         var total: Float = 0.0f
         for (item in listaItens!!) {
-            if (item.tipo.equals(Item.ITEM_ANIMAIS) || item.tipo.equals(Item.ITEM_INSUMOS) || item.tipo.equals(
-                    Item.ITEM_PRODUTOS
+            if (item.tipo.equals(ItemBalancoPatrimonial.ITEM_ANIMAIS) || item.tipo.equals(ItemBalancoPatrimonial.ITEM_INSUMOS) || item.tipo.equals(
+                    ItemBalancoPatrimonial.ITEM_PRODUTOS
                 )
             ) {
                 total += (item.quantidadeFinal * item.valorUnitario)
@@ -99,7 +99,7 @@ class BalancoPatrimonial() {
     fun calcularValorProdutos(): Float {
         var valorProdutos: Float = 0.0f
         for (item in listaItens!!) {
-            if (item.tipo.equals(Item.ITEM_PRODUTOS) && item.anoProducao.equals(2020)) {
+            if (item.tipo.equals(ItemBalancoPatrimonial.ITEM_PRODUTOS) && item.anoProducao.equals(2020)) {
                 valorProdutos += (item.quantidadeFinal * item.valorUnitario)
             }
         }
@@ -140,7 +140,7 @@ class BalancoPatrimonial() {
     fun calcularValorAnimais(): Float {
         var valorAnimais: Float = 0.0f
         for (item in listaItens!!) {
-            if (item.tipo.equals(Item.ITEM_ANIMAIS)) {
+            if (item.tipo.equals(ItemBalancoPatrimonial.ITEM_ANIMAIS)) {
                 valorAnimais += (item.quantidadeFinal * item.valorUnitario)
             }
         }
@@ -151,7 +151,7 @@ class BalancoPatrimonial() {
     fun calcularValorInsumos(): Float {
         var valorInsumos: Float = 0.0f
         for (item in listaItens!!) {
-            if (item.tipo.equals(Item.ITEM_INSUMOS)) {
+            if (item.tipo.equals(ItemBalancoPatrimonial.ITEM_INSUMOS)) {
                 valorInsumos += (item.quantidadeFinal * item.valorUnitario)
             }
         }
