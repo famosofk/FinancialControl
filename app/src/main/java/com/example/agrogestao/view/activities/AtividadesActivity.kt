@@ -13,23 +13,37 @@ import com.example.agrogestao.models.Farm
 import com.example.agrogestao.models.FarmProgram
 import com.google.firebase.database.FirebaseDatabase
 import io.realm.Realm
+import io.realm.kotlin.where
 import kotlinx.android.synthetic.main.cadastro_programa_fazenda.view.*
 import java.util.*
 
 class AtividadesActivity : AppCompatActivity() {
 
+    private lateinit var realm: Realm
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_atividades)
-        Realm.init(applicationContext)
-        //preciso recuperar o usuário pra salvar ele no dispositivo e atualizar ao criar programas.
+
+        realm = Realm.getDefaultInstance()
 
 
         val fabPrograma: com.github.clans.fab.FloatingActionButton =
             findViewById(R.id.fabAddPrograma)
-        fabPrograma.setOnClickListener { view -> createAlertDialog("Criar programa") }
+        fabPrograma.setOnClickListener { view ->
+            createAlertDialog("Criar programa")
+        }
         val fabFazenda: com.github.clans.fab.FloatingActionButton = findViewById(R.id.fabAddFazenda)
-        fabFazenda.setOnClickListener { view -> createAlertDialog("Criar fazenda") }
+        fabFazenda.setOnClickListener { view ->
+            realm = Realm.getDefaultInstance()
+            val query = realm.where<FarmProgram>()
+
+            if (query.count() < 1) {
+                createToast("Para criar uma fazenda, primeiro crie um programa.")
+            } else {
+                createAlertDialog("Criar fazenda")
+            }
+        }
         val fabAtividade: com.github.clans.fab.FloatingActionButton =
             findViewById(R.id.fabAddAtividade)
         fabAtividade.setOnClickListener { view -> createAlertDialog("Criar atividade") }
@@ -60,23 +74,23 @@ class AtividadesActivity : AppCompatActivity() {
             mBuilder.dismiss()
 
             val name = mDialogView.editNomeDialog.text.toString()
-            val complemento = mDialogView.editComplementoText.text.toString()
-            val programa = mDialogView.editProgramaDialog.text.toString()
             val id = UUID.randomUUID().toString()
+
             if (title.equals("Criar programa")) {
-                salvarRealm(program = FarmProgram(programa))
-            }
-            else if (title.equals("Criar fazenda")) {
+                salvarRealm(program = FarmProgram(name))
+            } else if (title.equals("Criar fazenda")) {
+                val complemento = mDialogView.editComplementoText.text.toString()
+                val programa = mDialogView.editProgramaDialog.text.toString()
                 val farm = Farm(name, programa, complemento, id)
                 val db = FirebaseDatabase.getInstance().reference.child("farms").child(id)
                 db.setValue(farm)
-                salvarRealm(farm=farm)
-
+                salvarRealm(farm = farm)
             } else if (title.equals("Criar atividade")) {
                 val atividade = AtividadesEconomicas(name)
                 salvarRealm(economicalActivity = atividade)
             }
         }
+
         cancelButton.setOnClickListener { mBuilder.dismiss() }
 
     }
@@ -86,27 +100,30 @@ class AtividadesActivity : AppCompatActivity() {
         economicalActivity: AtividadesEconomicas? = null,
         program: FarmProgram? = null
     ) {
-        val realm = Realm.getDefaultInstance()
+
         realm.beginTransaction()
         when {
             farm != null -> {
                 realm.copyToRealm(farm)
-                createToast("fazenda criada")
             }
             economicalActivity != null -> {
                 realm.copyToRealm(economicalActivity)
-                createToast("atividade criada")
             }
             program != null -> {
-
+                realm.copyToRealm(program)
             }
         }
         realm.commitTransaction()
-        realm.close()
     }
 
-    private fun createToast(s: String){
-        Toast.makeText(applicationContext, s, Toast.LENGTH_SHORT).show()
+    private fun createToast(info: String) {
+        Toast.makeText(applicationContext, info, Toast.LENGTH_SHORT).show()
+    }
+
+
+    override fun onStop() {
+        super.onStop()
+        realm.close()
     }
 
 
