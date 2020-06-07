@@ -11,7 +11,7 @@ import io.realm.kotlin.where
 class AtividadesViewModel(application: Application) : AndroidViewModel(application) {
 
     private val mFarms = MutableLiveData<List<Farm>>()
-    val farmtList: LiveData<List<Farm>> = mFarms
+    val farmList: LiveData<List<Farm>> = mFarms
 
     fun load(filter: Int) {
         val list = mutableListOf<Farm>()

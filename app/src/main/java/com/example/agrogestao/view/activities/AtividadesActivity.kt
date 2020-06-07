@@ -7,10 +7,12 @@ import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.example.agrogestao.R
 import com.example.agrogestao.models.AtividadesEconomicas
 import com.example.agrogestao.models.Farm
 import com.example.agrogestao.models.FarmProgram
+import com.example.agrogestao.viewmodel.AtividadesViewModel
 import com.google.firebase.database.FirebaseDatabase
 import io.realm.Realm
 import io.realm.kotlin.where
@@ -20,34 +22,30 @@ import java.util.*
 class AtividadesActivity : AppCompatActivity() {
 
     private lateinit var realm: Realm
+    private lateinit var atividadesViewModel: AtividadesViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_atividades)
+        atividadesViewModel = ViewModelProvider(this).get(AtividadesViewModel::class.java)
+
+
+        observe();
 
         realm = Realm.getDefaultInstance()
+        inicializarButtons()
 
 
-        val fabPrograma: com.github.clans.fab.FloatingActionButton =
-            findViewById(R.id.fabAddPrograma)
-        fabPrograma.setOnClickListener { view ->
-            createAlertDialog("Criar programa")
-        }
-        val fabFazenda: com.github.clans.fab.FloatingActionButton = findViewById(R.id.fabAddFazenda)
-        fabFazenda.setOnClickListener { view ->
-            realm = Realm.getDefaultInstance()
-            val query = realm.where<FarmProgram>()
-
-            if (query.count() < 1) {
-                createToast("Para criar uma fazenda, primeiro crie um programa.")
-            } else {
-                createAlertDialog("Criar fazenda")
-            }
-        }
-        val fabAtividade: com.github.clans.fab.FloatingActionButton =
-            findViewById(R.id.fabAddAtividade)
-        fabAtividade.setOnClickListener { view -> createAlertDialog("Criar atividade") }
     }
+
+    private fun observe() {
+
+        atividadesViewModel.farmList.observe(this, androidx.lifecycle.Observer {
+
+        })
+
+    }
+
 
     private fun createAlertDialog(title: String) {
         val mDialogView =
@@ -124,6 +122,28 @@ class AtividadesActivity : AppCompatActivity() {
     override fun onStop() {
         super.onStop()
         realm.close()
+    }
+
+    private fun inicializarButtons() {
+        val fabPrograma: com.github.clans.fab.FloatingActionButton =
+            findViewById(R.id.fabAddPrograma)
+        fabPrograma.setOnClickListener { view ->
+            createAlertDialog("Criar programa")
+        }
+        val fabFazenda: com.github.clans.fab.FloatingActionButton = findViewById(R.id.fabAddFazenda)
+        fabFazenda.setOnClickListener { view ->
+            realm = Realm.getDefaultInstance()
+            val query = realm.where<FarmProgram>()
+
+            if (query.count() < 1) {
+                createToast("Para criar uma fazenda, primeiro crie um programa.")
+            } else {
+                createAlertDialog("Criar fazenda")
+            }
+        }
+        val fabAtividade: com.github.clans.fab.FloatingActionButton =
+            findViewById(R.id.fabAddAtividade)
+        fabAtividade.setOnClickListener { view -> createAlertDialog("Criar atividade") }
     }
 
 
