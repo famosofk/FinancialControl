@@ -7,11 +7,10 @@
     android:layout_height="match_parent"
     tools:context=".view.activities.AtividadesActivity">
 
-    <FrameLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerAtividades"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </FrameLayout>
+        android:layout_height="match_parent" />
 
     <com.github.clans.fab.FloatingActionMenu
         android:id="@+id/menu"
