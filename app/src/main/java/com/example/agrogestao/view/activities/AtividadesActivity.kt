@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.agrogestao.R
 import com.example.agrogestao.models.AtividadesEconomicas
+import com.example.agrogestao.models.BalancoPatrimonial
 import com.example.agrogestao.models.Farm
 import com.example.agrogestao.models.FarmProgram
 import com.example.agrogestao.view.adapter.FazendasAdapter
@@ -133,6 +134,8 @@ class AtividadesActivity : AppCompatActivity() {
         when {
             farm != null -> {
                 realm.copyToRealm(farm)
+                val balancoPatrimonial = BalancoPatrimonial(farm.id)
+                realm.copyToRealm(balancoPatrimonial)
             }
             economicalActivity != null -> {
                 realm.copyToRealm(economicalActivity)

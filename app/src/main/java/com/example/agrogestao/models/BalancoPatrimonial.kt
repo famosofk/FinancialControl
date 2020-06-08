@@ -2,7 +2,7 @@ package com.example.agrogestao.models
 
 import io.realm.RealmObject
 
-open class BalancoPatrimonial() : RealmObject() {
+open class BalancoPatrimonial(fazenda: String = "") : RealmObject() {
 
 
     /*
