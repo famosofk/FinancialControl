@@ -20,7 +20,8 @@ class ApresentacaoFazendaViewModel(application: Application) : AndroidViewModel(
     fun load(id: String) {
         val realm = Realm.getDefaultInstance()
         mFarm.value = realm.where<Farm>().contains("id", id).findFirst()
-        // mBalancoPatrimonial.value =
+        mBalancoPatrimonial.value =
+            realm.where<BalancoPatrimonial>().contains("fazenda", id).findFirst()
 
 
     }

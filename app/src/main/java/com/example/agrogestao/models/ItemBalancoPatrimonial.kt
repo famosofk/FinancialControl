@@ -1,14 +1,16 @@
 package com.example.agrogestao.models
 
-class ItemBalancoPatrimonial(val nome: String, val dataCompra: String) {
+import io.realm.RealmObject
+
+open class ItemBalancoPatrimonial(nome: String = "", dataCompra: String = "") : RealmObject() {
 
     companion object {
-        const val ITEM_TERRA = 'a'
-        const val ITEM_BENFEITORIA = 'b'
-        const val ITEM_MAQUINAS = 'c'
-        const val ITEM_ANIMAIS = 'd'
-        const val ITEM_INSUMOS = 'e'
-        const val ITEM_PRODUTOS = 'f'
+        const val ITEM_TERRA = "a"
+        const val ITEM_BENFEITORIA = "b"
+        const val ITEM_MAQUINAS = "c"
+        const val ITEM_ANIMAIS = "d"
+        const val ITEM_INSUMOS = "e"
+        const val ITEM_PRODUTOS = "f"
     }
 
     var quantidadeInicial: Float = 0f
@@ -18,7 +20,7 @@ class ItemBalancoPatrimonial(val nome: String, val dataCompra: String) {
     var valorAtual: Float = 0f
     var valorInicial: Float = 0f
     var vidaUtil: Int = 0
-    var tipo: Char = 'a'
+    var tipo: String = ""
     var depreciacao: Float = 0f
     var reforma: Float = 0f
     var anoProducao: Int = 0

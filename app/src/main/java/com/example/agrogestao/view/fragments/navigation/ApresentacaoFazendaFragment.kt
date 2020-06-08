@@ -52,7 +52,7 @@ class ApresentacaoFazendaFragment : Fragment() {
         apresentacaoFazendaViewModel.myBalancoPatrimonial.observe(viewLifecycleOwner, Observer {
             lucroAtual = it.lucro.toString()
             mLiquidaAtual = it.margemLiquida.toString()
-            mBrutaMeta = it.margemBruta.toString()
+            mBrutaAtual = it.margemBruta.toString()
             atualizarTextos(view)
             val textSaldo = view.findViewById<TextView>(R.id.textsSaldoApresentacao)
             val textPagar = view.findViewById<TextView>(R.id.textsSaldoApresentacao)
