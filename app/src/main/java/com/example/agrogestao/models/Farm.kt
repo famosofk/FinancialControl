@@ -24,9 +24,8 @@ open class Farm(
     var metaPatrimonioLiquido: Float = 0f
     var metaLucro: Float = 0f
     var metasaldo: Float = 0f
-    var metaSolvencia: Float = 0f
-    var metaLiquidez: Float = 0f
-    var dividaLongoPrazo: Float = 0f
+    var metaLiquidezGeral: Float = 0f
+    var metaLiquidezCorrente: Float = 0f
     var depreciacao: Float = 0f //Não será lido. Calculado através do inventário.
 
 

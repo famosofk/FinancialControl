@@ -38,8 +38,6 @@ class AtualizarFazendaFragment : Fragment() {
             editCodigo.setText(it.codigoFazenda)
             val areaFazenda = view.findViewById<EditText>(R.id.areaFazendaEdit)
             areaFazenda.setText(it.area.toString())
-            val dividasLongoPrazo = view.findViewById<EditText>(R.id.dividaLongoPrazoFazendaEdit)
-            dividasLongoPrazo.setText(it.dividaLongoPrazo.toString())
             val metaLucroFazenda = view.findViewById<EditText>(R.id.lucroFazendaEdit)
             metaLucroFazenda.setText(it.metaLucro.toString())
             val metaMargemLiquida = view.findViewById<EditText>(R.id.margemLiquidaFazendaEdit)
@@ -57,10 +55,10 @@ class AtualizarFazendaFragment : Fragment() {
             val metaPatrimonioLiquido =
                 view.findViewById<EditText>(R.id.patrimonioLiquidoFazendaEdit)
             metaPatrimonioLiquido.setText(it.metaPatrimonioLiquido.toString())
-            val metaSolvencia = view.findViewById<EditText>(R.id.solvenciaFazendaEdit)
-            metaSolvencia.setText(it.metaSolvencia.toString())
+            val metaLiquidezGeraltext = view.findViewById<EditText>(R.id.solvenciaFazendaEdit)
+            metaLiquidezGeraltext.setText(it.metaLiquidezGeral.toString())
             val metaLiquidez = view.findViewById<EditText>(R.id.liquidezFazendaEdit)
-            metaLiquidez.setText(it.metaLiquidez.toString())
+            metaLiquidez.setText(it.metaLiquidezCorrente.toString())
         })
 
         atualizarFazendaViewModel.myBalanco.observe(viewLifecycleOwner, Observer {
@@ -69,6 +67,8 @@ class AtualizarFazendaFragment : Fragment() {
             remuneracaoCapital.setText(it.taxaRemuneracaoCapital.toString())
             val custoOportunidade = view.findViewById<EditText>(R.id.custoTrabalhoFazendaEdit)
             custoOportunidade.setText(it.custoOportunidadeTrabalho.toString())
+            val dividasLongoPrazo = view.findViewById<EditText>(R.id.dividaLongoPrazoFazendaEdit)
+            dividasLongoPrazo.setText(it.dividasLongoPrazo.toString())
 
 
         })

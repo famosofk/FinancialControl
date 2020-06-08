@@ -3,16 +3,12 @@ package com.example.agrogestao.models
 import io.realm.RealmList
 import io.realm.RealmObject
 
-open class BalancoPatrimonial() : RealmObject() {
+open class BalancoPatrimonial : RealmObject() {
 
 
-    /*
-    * Dívidas de longo prazo foi retirado de fazenda e adicionado a balanço.
-    * */
-
-    var fazenda = ""
-    var solvencia: Float = 0f
-    var liquidez: Float = 0f
+    var farm = ""
+    var liquidezGeral: Float = 0f
+    var liquidezCorrente: Float = 0f
     var listaItens = RealmList<ItemBalancoPatrimonial>()
     var margemLiquida: Float = 0f
     var margemBruta: Float = 0f
@@ -41,41 +37,49 @@ open class BalancoPatrimonial() : RealmObject() {
         0f //Será atualizado com o valor das contas não pagas do ano anterior.
 
 
-    fun atualizarBalanco(contasPagar: Float, dividas: Float) {
+    fun atualizarBalanco() {
         calcularPatrimonioLiquido()
-        calcularSolvencia()
-        //calcularLiquidez(contasPagar)
+        calcularLiquidezGeral()
+        calcularLiquidezCorrente()
     }
 
-    fun calcularSolvencia() {
-        solvencia = dividasLongoPrazo / patrimonioLiquido
-        //divida é um atributo da fazenda.
+    fun calcularPassivo() {
+        passivo = dividasLongoPrazo + totalContasPagar
     }
 
-    /*  fun calcularLiquidez(contasPagar: Float) {
+    fun calcularAtivo() {
+        ativo = totalContasReceber + saldo + calcularValorAnimaisInsumosProdutos()
+    }
 
-         liquidez = contasPagar / (saldo + calcularValorAnimaisInsumosProdutos() + dinheiroBanco)
+    fun calcularLiquidezGeral() {
+        liquidezGeral = ativo / passivo
+    }
 
-     } */
+    fun calcularLiquidezCorrente() {
 
-    /*  fun calcularValorAnimaisInsumosProdutos(): Float {
-          var total: Float = 0.0f
-          val lista = arrayOf(ItemBalancoPatrimonial)
-          for (item in lista) {
-              if (item.tipo.equals(ItemBalancoPatrimonial.ITEM_ANIMAIS) || item.tipo.equals(ItemBalancoPatrimonial.ITEM_INSUMOS) || item.tipo.equals(
-                      ItemBalancoPatrimonial.ITEM_PRODUTOS
-                  )
-              ) {
-                  total += (item.quantidadeFinal * item.valorUnitario)
-              }
-          }
-          return total
-      }  */
+        liquidezCorrente = totalContasPagar / (saldo + calcularPatrimonioBens() + dinheiroBanco)
 
-    /*   fun calcularPatrimonioBens(): Float {
-          return listaItens.sumByDouble { (it.valorUnitario * it.quantidadeFinal).toDouble() }
-              .toFloat()
-      }*/
+    }
+
+    fun calcularValorAnimaisInsumosProdutos(): Float {
+        var total: Float = 0.0f
+        for (item in listaItens) {
+            if (item.tipo.equals(ItemBalancoPatrimonial.ITEM_ANIMAIS) || item.tipo.equals(
+                    ItemBalancoPatrimonial.ITEM_INSUMOS
+                ) || item.tipo.equals(
+                    ItemBalancoPatrimonial.ITEM_PRODUTOS
+                )
+            ) {
+                total += (item.quantidadeFinal * item.valorUnitario)
+            }
+        }
+        return total
+    }
+
+    fun calcularPatrimonioBens(): Float {
+        return listaItens.sumByDouble { (it.valorUnitario * it.quantidadeFinal).toDouble() }
+            .toFloat()
+    }
 
 
     fun calcularPatrimonioLiquido() {
@@ -100,7 +104,7 @@ open class BalancoPatrimonial() : RealmObject() {
 
     fun calcularValorProdutos(): Float {
         var valorProdutos: Float = 0.0f
-        for (item in listaItens!!) {
+        for (item in listaItens) {
             if (item.tipo.equals(ItemBalancoPatrimonial.ITEM_PRODUTOS) && item.anoProducao.equals(
                     2020
                 )
@@ -144,7 +148,7 @@ open class BalancoPatrimonial() : RealmObject() {
 
     fun calcularValorAnimais(): Float {
         var valorAnimais: Float = 0.0f
-        for (item in listaItens!!) {
+        for (item in listaItens) {
             if (item.tipo.equals(ItemBalancoPatrimonial.ITEM_ANIMAIS)) {
                 valorAnimais += (item.quantidadeFinal * item.valorUnitario)
             }
@@ -155,7 +159,7 @@ open class BalancoPatrimonial() : RealmObject() {
 
     fun calcularValorInsumos(): Float {
         var valorInsumos: Float = 0.0f
-        for (item in listaItens!!) {
+        for (item in listaItens) {
             if (item.tipo.equals(ItemBalancoPatrimonial.ITEM_INSUMOS)) {
                 valorInsumos += (item.quantidadeFinal * item.valorUnitario)
             }

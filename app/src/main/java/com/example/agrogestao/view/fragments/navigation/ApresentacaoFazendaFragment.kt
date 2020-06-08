@@ -66,8 +66,8 @@ class ApresentacaoFazendaFragment : Fragment() {
             textPagar.setText(it.totalContasPagar.toString())
             textReceber.setText(it.totalContasReceber.toString())
             textPatrimonioLiquido.setText(it.patrimonioLiquido.toString())
-            textSolvencia.setText(it.solvencia.toString())
-            textLiquidez.setText(it.liquidez.toString())
+            textSolvencia.setText(it.liquidezGeral.toString())
+            textLiquidez.setText(it.liquidezCorrente.toString())
             textRentabilidade.setText(it.rentabilidade.toString())
 
         })
