@@ -34,6 +34,8 @@ class AtividadesActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_atividades)
+
+        //lembrar de remover o realm.init
         Realm.init(applicationContext)
         atividadesViewModel = ViewModelProvider(this).get(AtividadesViewModel::class.java)
 
@@ -52,11 +54,10 @@ class AtividadesActivity : AppCompatActivity() {
             override fun onClick(id: Int) {
                 val intent = Intent(applicationContext, NavigationActivity::class.java)
                 val bundle = Bundle()
-                bundle.putInt("fazenda", id)
+                bundle.putSerializable("fazenda", mAdapter.get(id))
                 intent.putExtras(bundle)
-
                 startActivity(intent)
-                createToast("" + id)
+
 
             }
 

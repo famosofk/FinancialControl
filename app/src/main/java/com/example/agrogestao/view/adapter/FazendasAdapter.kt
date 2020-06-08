@@ -38,4 +38,8 @@ class FazendasAdapter : RecyclerView.Adapter<FarmsViewHolder>() {
         mListener = listener
     }
 
+    fun get(position: Int): Farm {
+        return myFarmList.get(position)
+    }
+
 }

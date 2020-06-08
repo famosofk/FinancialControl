@@ -2,13 +2,14 @@ package com.example.agrogestao.models
 
 import io.realm.RealmList
 import io.realm.RealmObject
+import java.io.Serializable
 
 open class Farm(
     var codigoFazenda: String = "",
     var programa: String = "",
     var senha: String = "",
     var id: String = ""
-) : RealmObject() {
+) : RealmObject(), Serializable {
 
 
     var senhaAcesso: String = ""
