@@ -54,9 +54,10 @@ class AtividadesActivity : AppCompatActivity() {
             override fun onClick(id: Int) {
                 val intent = Intent(applicationContext, NavigationActivity::class.java)
                 val bundle = Bundle()
-                bundle.putSerializable("fazenda", mAdapter.get(id))
+                bundle.putString("fazenda", mAdapter.get(id).id)
                 intent.putExtras(bundle)
                 startActivity(intent)
+                // realm.close()
 
 
             }
