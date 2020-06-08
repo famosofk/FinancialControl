@@ -33,9 +33,10 @@ class ApresentacaoFazendaFragment : Fragment() {
             ViewModelProvider(this).get(ApresentacaoFazendaViewModel::class.java)
         val root = inflater.inflate(R.layout.apresentacao_fazenda, container, false)
 
+        val id = arguments?.getString("id")!!
         inicializarListeners(root)
         observer(root)
-        apresentacaoFazendaViewModel.load()
+        apresentacaoFazendaViewModel.load(id)
 
         return root
     }
@@ -77,11 +78,11 @@ class ApresentacaoFazendaFragment : Fragment() {
 
 
         val textlucro = view.findViewById<TextView>(R.id.textLucroApresentacao)
-        val textmBruta = view.findViewById<TextView>(R.id.textMargemLiquidaApresentacao)
+        val textmBruta = view.findViewById<TextView>(R.id.textMargemBrutaApresentacao)
         val textmLiquida = view.findViewById<TextView>(R.id.textMargemLiquidaApresentacao)
-        val stringLucro = "Lucro: $lucroAtual/$lucroMeta"
+        val stringLucro = "Lucro: $lucroAtual / $lucroMeta"
         val stringmBruta = "Margem Bruta: $mBrutaAtual / $mBrutaMeta"
-        val stringmLiquida = "Margem Liquida: $mLiquidaAtual/$mLiquidaMeta"
+        val stringmLiquida = "Margem Liquida: $mLiquidaAtual / $mLiquidaMeta"
         textlucro.setText(stringLucro)
         textmBruta.setText(stringmBruta)
         textmLiquida.setText(stringmLiquida)

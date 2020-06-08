@@ -14,7 +14,6 @@ import com.example.agrogestao.R
 import com.example.agrogestao.models.Farm
 import com.google.android.material.navigation.NavigationView
 import io.realm.Realm
-import io.realm.kotlin.where
 
 class NavigationActivity : AppCompatActivity() {
 
@@ -25,11 +24,19 @@ class NavigationActivity : AppCompatActivity() {
         setContentView(R.layout.activity_navigation)
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
-        loadData()
+        val navController = findNavController(R.id.nav_host_fragment)
+        val bundleRecuperado = intent.extras
+        if (bundleRecuperado != null) {
+            val id = bundleRecuperado.getString("fazenda")
+            val bundleCriado = Bundle()
+            bundleCriado.putString("id", id)
+            navController.setGraph(navController.graph, bundleCriado)
+        }
+
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
-        val navController = findNavController(R.id.nav_host_fragment)
+
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
@@ -61,7 +68,6 @@ class NavigationActivity : AppCompatActivity() {
         var farm: Farm? = null
         if (bundle != null) {
             val id = bundle.getString("fazenda")
-            farm = realm.where<Farm>().equalTo("id", id).findFirst()
         }
         return null
     }

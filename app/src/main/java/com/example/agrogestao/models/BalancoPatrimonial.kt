@@ -1,6 +1,8 @@
 package com.example.agrogestao.models
 
-class BalancoPatrimonial() {
+import io.realm.RealmObject
+
+open class BalancoPatrimonial() : RealmObject() {
 
 
     /*
@@ -10,7 +12,8 @@ class BalancoPatrimonial() {
 
     var solvencia: Float = 0f
     var liquidez: Float = 0f
-    var listaItens = arrayListOf<ItemBalancoPatrimonial>()
+
+    //   var listaItens = RealmList<ItemBalancoPatrimonial>()
     var margemLiquida: Float = 0f
     var margemBruta: Float = 0f
     var taxaRemuneracaoCapital: Float = 0f //em porcentagem. Lido ao cadastrar fazenda.
@@ -38,26 +41,26 @@ class BalancoPatrimonial() {
         0f //Será atualizado com o valor das contas não pagas do ano anterior.
 
 
-    fun atualizarBalanco(contasPagar: Float, dividas: Float) {
-        calcularPatrimonioLiquido()
-        calcularSolvencia()
-        calcularLiquidez(contasPagar)
+    /*  fun atualizarBalanco(contasPagar: Float, dividas: Float) {
+          calcularPatrimonioLiquido()
+          calcularSolvencia()
+          calcularLiquidez(contasPagar)
 
 
-    }
+      } */
 
     fun calcularSolvencia() {
         solvencia = dividasLongoPrazo / patrimonioLiquido
         //divida é um atributo da fazenda.
     }
 
-    fun calcularLiquidez(contasPagar: Float) {
+    /* fun calcularLiquidez(contasPagar: Float) {
 
         liquidez = contasPagar / (saldo + calcularValorAnimaisInsumosProdutos() + dinheiroBanco)
 
-    }
+    } */
 
-    fun calcularValorAnimaisInsumosProdutos(): Float {
+/*    fun calcularValorAnimaisInsumosProdutos(): Float {
         var total: Float = 0.0f
         for (item in listaItens!!) {
             if (item.tipo.equals(ItemBalancoPatrimonial.ITEM_ANIMAIS) || item.tipo.equals(ItemBalancoPatrimonial.ITEM_INSUMOS) || item.tipo.equals(
@@ -68,12 +71,12 @@ class BalancoPatrimonial() {
             }
         }
         return total
-    }
+    } */
 
-    fun calcularPatrimonioBens(): Float {
-        return listaItens.sumByDouble { (it.valorUnitario * it.quantidadeFinal).toDouble() }
-            .toFloat()
-    }
+    /*   fun calcularPatrimonioBens(): Float {
+          return listaItens.sumByDouble { (it.valorUnitario * it.quantidadeFinal).toDouble() }
+              .toFloat()
+      }*/
 
 
     fun calcularPatrimonioLiquido() {
@@ -92,19 +95,19 @@ class BalancoPatrimonial() {
         margemBruta = receitaBruta - custoOperacionalEfetivo
     }
 
-    fun calcularReceitaBruta() {
+    /*fun calcularReceitaBruta() {
         receitaBruta = totalReceitas + calcularValorProdutos()
-    }
+    } */
 
-    fun calcularValorProdutos(): Float {
-        var valorProdutos: Float = 0.0f
-        for (item in listaItens!!) {
-            if (item.tipo.equals(ItemBalancoPatrimonial.ITEM_PRODUTOS) && item.anoProducao.equals(2020)) {
-                valorProdutos += (item.quantidadeFinal * item.valorUnitario)
-            }
-        }
-        return valorProdutos
-    }
+    /* fun calcularValorProdutos(): Float {
+         var valorProdutos: Float = 0.0f
+         for (item in listaItens!!) {
+             if (item.tipo.equals(ItemBalancoPatrimonial.ITEM_PRODUTOS) && item.anoProducao.equals(2020)) {
+                 valorProdutos += (item.quantidadeFinal * item.valorUnitario)
+             }
+         }
+         return valorProdutos
+     } */
 
     fun calcularCustoTotal(): Float {
         return custoOperacionalTotal + calcularOportunidadeCapital() + custoOportunidadeTrabalho
@@ -137,7 +140,7 @@ class BalancoPatrimonial() {
     }
 
 
-    fun calcularValorAnimais(): Float {
+    /* fun calcularValorAnimais(): Float {
         var valorAnimais: Float = 0.0f
         for (item in listaItens!!) {
             if (item.tipo.equals(ItemBalancoPatrimonial.ITEM_ANIMAIS)) {
@@ -145,17 +148,17 @@ class BalancoPatrimonial() {
             }
         }
         return valorAnimais
-    }
+    } */
 
 
-    fun calcularValorInsumos(): Float {
-        var valorInsumos: Float = 0.0f
-        for (item in listaItens!!) {
-            if (item.tipo.equals(ItemBalancoPatrimonial.ITEM_INSUMOS)) {
-                valorInsumos += (item.quantidadeFinal * item.valorUnitario)
-            }
-        }
-        return valorInsumos
-    }
+    /* fun calcularValorInsumos(): Float {
+         var valorInsumos: Float = 0.0f
+         for (item in listaItens!!) {
+             if (item.tipo.equals(ItemBalancoPatrimonial.ITEM_INSUMOS)) {
+                 valorInsumos += (item.quantidadeFinal * item.valorUnitario)
+             }
+         }
+         return valorInsumos
+     } */
 
 }

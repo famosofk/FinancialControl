@@ -10,6 +10,9 @@
         android:name="com.example.agrogestao.view.fragments.navigation.ApresentacaoFazendaFragment"
         android:label="@string/fazenda_intro"
         tools:layout="@layout/apresentacao_fazenda">
+        <argument
+            android:name="id"
+            app:argType="string" />
 
 
         <action
