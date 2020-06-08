@@ -13,7 +13,7 @@ class AtividadesViewModel(application: Application) : AndroidViewModel(applicati
     private val mFarms = MutableLiveData<List<Farm>>()
     val farmList: LiveData<List<Farm>> = mFarms
 
-    fun load(filter: Int) {
+    fun load() {
         val list = mutableListOf<Farm>()
         val realm: Realm = Realm.getDefaultInstance()
         val query = realm.where<Farm>().findAll()

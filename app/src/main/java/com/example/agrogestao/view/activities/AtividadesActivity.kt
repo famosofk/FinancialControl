@@ -1,6 +1,7 @@
 package com.example.agrogestao.view.activities
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,10 +9,14 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.agrogestao.R
 import com.example.agrogestao.models.AtividadesEconomicas
 import com.example.agrogestao.models.Farm
 import com.example.agrogestao.models.FarmProgram
+import com.example.agrogestao.view.adapter.FazendasAdapter
+import com.example.agrogestao.view.listener.FarmListener
 import com.example.agrogestao.viewmodel.AtividadesViewModel
 import com.google.firebase.database.FirebaseDatabase
 import io.realm.Realm
@@ -23,17 +28,40 @@ class AtividadesActivity : AppCompatActivity() {
 
     private lateinit var realm: Realm
     private lateinit var atividadesViewModel: AtividadesViewModel
+    private val mAdapter = FazendasAdapter()
+    private lateinit var mListener: FarmListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_atividades)
+        Realm.init(applicationContext)
         atividadesViewModel = ViewModelProvider(this).get(AtividadesViewModel::class.java)
+
+
 
 
         observe();
 
         realm = Realm.getDefaultInstance()
         inicializarButtons()
+        val recyclerView: RecyclerView = findViewById(R.id.recyclerAtividades);
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = mAdapter
+
+        mListener = object : FarmListener {
+            override fun onClick(id: Int) {
+                val intent = Intent(applicationContext, NavigationActivity::class.java)
+                val bundle = Bundle()
+                bundle.putInt("fazenda", id)
+                intent.putExtras(bundle)
+
+                startActivity(intent)
+                createToast("" + id)
+
+            }
+
+        }
+        mAdapter.attachListener(mListener)
 
 
     }
@@ -41,7 +69,7 @@ class AtividadesActivity : AppCompatActivity() {
     private fun observe() {
 
         atividadesViewModel.farmList.observe(this, androidx.lifecycle.Observer {
-
+            mAdapter.updateFarms(it)
         })
 
     }
@@ -81,7 +109,7 @@ class AtividadesActivity : AppCompatActivity() {
                 val programa = mDialogView.editProgramaDialog.text.toString()
                 val farm = Farm(name, programa, complemento, id)
                 val db = FirebaseDatabase.getInstance().reference.child("farms").child(id)
-                db.setValue(farm)
+                //  db.setValue(farm)
                 salvarRealm(farm = farm)
             } else if (title.equals("Criar atividade")) {
                 val atividade = AtividadesEconomicas(name)
@@ -112,6 +140,7 @@ class AtividadesActivity : AppCompatActivity() {
             }
         }
         realm.commitTransaction()
+        atividadesViewModel.load()
     }
 
     private fun createToast(info: String) {
@@ -122,6 +151,11 @@ class AtividadesActivity : AppCompatActivity() {
     override fun onStop() {
         super.onStop()
         realm.close()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        atividadesViewModel.load()
     }
 
     private fun inicializarButtons() {
