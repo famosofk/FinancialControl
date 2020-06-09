@@ -21,7 +21,7 @@ class ApresentacaoFazendaViewModel(application: Application) : AndroidViewModel(
         val realm = Realm.getDefaultInstance()
         mFarm.value = realm.where<Farm>().contains("id", id).findFirst()
         mBalancoPatrimonial.value =
-            realm.where<BalancoPatrimonial>().contains("fazenda", id).findFirst()
+            realm.where<BalancoPatrimonial>().contains("farm", id).findFirst()
 
 
     }

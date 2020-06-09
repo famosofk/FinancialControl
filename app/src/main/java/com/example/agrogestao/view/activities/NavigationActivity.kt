@@ -53,11 +53,19 @@ class NavigationActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.navigation, menu)
+
         return true
     }
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
+        val bundleRecuperado = intent.extras
+        if (bundleRecuperado != null) {
+            val id = bundleRecuperado.getString("fazenda")
+            val bundleCriado = Bundle()
+            bundleCriado.putString("id", id)
+            navController.setGraph(navController.graph, bundleCriado)
+        }
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 

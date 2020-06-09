@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -32,11 +33,15 @@ class ApresentacaoFazendaFragment : Fragment() {
         apresentacaoFazendaViewModel =
             ViewModelProvider(this).get(ApresentacaoFazendaViewModel::class.java)
         val root = inflater.inflate(R.layout.apresentacao_fazenda, container, false)
-
-        val id = arguments?.getString("id")!!
         inicializarListeners(root)
         observer(root)
-        apresentacaoFazendaViewModel.load(id)
+
+        if (arguments?.get("id") != null) {
+            val id = arguments?.getString("id")!!
+            Toast.makeText(context, id, Toast.LENGTH_SHORT).show()
+            apresentacaoFazendaViewModel.load(id)
+        }
+
 
         return root
     }
@@ -44,32 +49,36 @@ class ApresentacaoFazendaFragment : Fragment() {
     private fun observer(view: View) {
 
         apresentacaoFazendaViewModel.myFarm.observe(viewLifecycleOwner, Observer {
-            lucroMeta = it.metaLucro.toString()
-            mLiquidaMeta = it.metaMargemLiquida.toString()
-            mBrutaMeta = it.metaMargemBruta.toString()
-            atualizarTextos(view)
+            if (it != null) {
+                lucroMeta = it.metaLucro.toString()
+                mLiquidaMeta = it.metaMargemLiquida.toString()
+                mBrutaMeta = it.metaMargemBruta.toString()
+                atualizarTextos(view)
+            }
         })
         apresentacaoFazendaViewModel.myBalancoPatrimonial.observe(viewLifecycleOwner, Observer {
-            lucroAtual = it.lucro.toString()
-            mLiquidaAtual = it.margemLiquida.toString()
-            mBrutaAtual = it.margemBruta.toString()
-            atualizarTextos(view)
-            val textSaldo = view.findViewById<TextView>(R.id.textsSaldoApresentacao)
-            val textPagar = view.findViewById<TextView>(R.id.textsSaldoApresentacao)
-            val textReceber = view.findViewById<TextView>(R.id.textsSaldoApresentacao)
-            val textPatrimonioLiquido =
-                view.findViewById<TextView>(R.id.textsPatrimonioApresentacao)
-            val textSolvencia = view.findViewById<TextView>(R.id.textsSolvenciaApresentacao)
-            val textLiquidez = view.findViewById<TextView>(R.id.textsLiquidezApresentacao)
-            val textRentabilidade = view.findViewById<TextView>(R.id.textsRentabilidadeApresentacao)
-            textSaldo.setText(it.saldo.toString())
-            textPagar.setText(it.totalContasPagar.toString())
-            textReceber.setText(it.totalContasReceber.toString())
-            textPatrimonioLiquido.setText(it.patrimonioLiquido.toString())
-            textSolvencia.setText(it.liquidezGeral.toString())
-            textLiquidez.setText(it.liquidezCorrente.toString())
-            textRentabilidade.setText(it.rentabilidade.toString())
-
+            if (it != null) {
+                lucroAtual = it.lucro.toString()
+                mLiquidaAtual = it.margemLiquida.toString()
+                mBrutaAtual = it.margemBruta.toString()
+                atualizarTextos(view)
+                val textSaldo = view.findViewById<TextView>(R.id.textsSaldoApresentacao)
+                val textPagar = view.findViewById<TextView>(R.id.textsSaldoApresentacao)
+                val textReceber = view.findViewById<TextView>(R.id.textsSaldoApresentacao)
+                val textPatrimonioLiquido =
+                    view.findViewById<TextView>(R.id.textsPatrimonioApresentacao)
+                val textSolvencia = view.findViewById<TextView>(R.id.textsSolvenciaApresentacao)
+                val textLiquidez = view.findViewById<TextView>(R.id.textsLiquidezApresentacao)
+                val textRentabilidade =
+                    view.findViewById<TextView>(R.id.textsRentabilidadeApresentacao)
+                textSaldo.setText(it.saldo.toString())
+                textPagar.setText(it.totalContasPagar.toString())
+                textReceber.setText(it.totalContasReceber.toString())
+                textPatrimonioLiquido.setText(it.patrimonioLiquido.toString())
+                textSolvencia.setText(it.liquidezGeral.toString())
+                textLiquidez.setText(it.liquidezCorrente.toString())
+                textRentabilidade.setText(it.rentabilidade.toString())
+            }
         })
 
     }
@@ -83,9 +92,9 @@ class ApresentacaoFazendaFragment : Fragment() {
         val stringLucro = "Lucro: $lucroAtual / $lucroMeta"
         val stringmBruta = "Margem Bruta: $mBrutaAtual / $mBrutaMeta"
         val stringmLiquida = "Margem Liquida: $mLiquidaAtual / $mLiquidaMeta"
-        textlucro.setText(stringLucro)
-        textmBruta.setText(stringmBruta)
-        textmLiquida.setText(stringmLiquida)
+        textlucro.text = stringLucro
+        textmBruta.text = stringmBruta
+        textmLiquida.text = stringmLiquida
 
     }
 

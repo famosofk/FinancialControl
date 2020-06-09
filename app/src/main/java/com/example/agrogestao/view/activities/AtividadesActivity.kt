@@ -135,7 +135,7 @@ class AtividadesActivity : AppCompatActivity() {
             farm != null -> {
                 realm.copyToRealm(farm)
                 var balancoPatrimonial = BalancoPatrimonial()
-                balancoPatrimonial.fazenda = farm.id
+                balancoPatrimonial.farm = farm.id
                 realm.copyToRealm(balancoPatrimonial)
             }
             economicalActivity != null -> {
