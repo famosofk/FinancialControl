@@ -42,7 +42,10 @@ class ApresentacaoFazendaFragment : Fragment() {
         if (arguments?.get("id") != null) {
             id = arguments?.getString("id")!!
             Toast.makeText(context, id, Toast.LENGTH_SHORT).show()
-            apresentacaoFazendaViewModel.load(id)
+            // apresentacaoFazendaViewModel.load(id)
+            apresentacaoFazendaViewModel.verificarRegistro(id)
+        } else {
+            apresentacaoFazendaViewModel.recuperacaoDrawer()
         }
 
 
@@ -154,5 +157,11 @@ class ApresentacaoFazendaFragment : Fragment() {
 */
 
 
+    }
+
+    private fun verificacaoArgs() {
+        if (arguments?.getString("id") == null) {
+
+        }
     }
 }

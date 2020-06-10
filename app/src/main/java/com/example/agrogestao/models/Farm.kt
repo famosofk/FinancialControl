@@ -27,6 +27,4 @@ open class Farm(
     var metaLiquidezGeral: Float = 0f
     var metaLiquidezCorrente: Float = 0f
     var depreciacao: Float = 0f //Não será lido. Calculado através do inventário.
-
-
 }
