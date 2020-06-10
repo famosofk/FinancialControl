@@ -5,17 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.agrogestao.R
 import com.example.agrogestao.viewmodel.AtualizarFazendaViewModel
 
-/**
- * A simple [Fragment] subclass.
- */
+
 class AtualizarFazendaFragment : Fragment() {
+
     private lateinit var atualizarFazendaViewModel: AtualizarFazendaViewModel
+    private lateinit var id: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,8 +28,13 @@ class AtualizarFazendaFragment : Fragment() {
 
 
         observer(root)
+        if (arguments?.get("id") != null) {
+            id = arguments?.getString("id")!!
+            Toast.makeText(context, id, Toast.LENGTH_SHORT).show()
+            atualizarFazendaViewModel.load(id)
+        }
 
-        return view
+        return root
     }
 
     private fun observer(view: View) {

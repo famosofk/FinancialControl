@@ -11,7 +11,6 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import com.example.agrogestao.R
 import com.example.agrogestao.viewmodel.ApresentacaoFazendaViewModel
@@ -60,6 +59,8 @@ class ApresentacaoFazendaFragment : Fragment() {
                 lucroMeta = it.metaLucro.toString()
                 mLiquidaMeta = it.metaMargemLiquida.toString()
                 mBrutaMeta = it.metaMargemBruta.toString()
+                val textNomeFazenda = view.findViewById<TextView>(R.id.resultadosFazendaText)
+                textNomeFazenda.text = it.codigoFazenda
                 atualizarTextos(view)
             }
         })
@@ -78,13 +79,13 @@ class ApresentacaoFazendaFragment : Fragment() {
                 val textLiquidez = view.findViewById<TextView>(R.id.textsLiquidezApresentacao)
                 val textRentabilidade =
                     view.findViewById<TextView>(R.id.textsRentabilidadeApresentacao)
-                textSaldo.setText(it.saldo.toString())
-                textPagar.setText(it.totalContasPagar.toString())
-                textReceber.setText(it.totalContasReceber.toString())
-                textPatrimonioLiquido.setText(it.patrimonioLiquido.toString())
-                textSolvencia.setText(it.liquidezGeral.toString())
-                textLiquidez.setText(it.liquidezCorrente.toString())
-                textRentabilidade.setText(it.rentabilidade.toString())
+                textSaldo.text = it.saldo.toString()
+                textPagar.text = it.totalContasPagar.toString()
+                textReceber.text = it.totalContasReceber.toString()
+                textPatrimonioLiquido.text = it.patrimonioLiquido.toString()
+                textSolvencia.text = it.liquidezGeral.toString()
+                textLiquidez.text = it.liquidezCorrente.toString()
+                textRentabilidade.text = it.rentabilidade.toString()
             }
         })
 
@@ -114,15 +115,21 @@ class ApresentacaoFazendaFragment : Fragment() {
         val fluxoCaixaAtividade = root.findViewById<Button>(R.id.fluxoCaixaAtividade)
         val fluxoCaixaDetalhes = root.findViewById<Button>(R.id.fluxoCaixaDetalhes)
         val fluxoCaixaCadastrar = root.findViewById<Button>(R.id.fluxoCaixaCadastrar)
+        val metasFazenda = root.findViewById<Button>(R.id.metasFazendaButton)
         val balancoPatrimonialDetalhes = root.findViewById<Button>(R.id.balancoPatrimonialDetalhes)
         val balancoPatrimonialInventario =
             root.findViewById<Button>(R.id.balancoPatrimonialInventario)
 
-        indicadoresFinanceirosAtividade.setOnClickListener(
-            Navigation.createNavigateOnClickListener(
-                R.id.toResultadosAtividadeFragment
-            )
-        )
+
+        metasFazenda.setOnClickListener {
+            val bundle = bundleOf("id" to id)
+            root.findNavController().navigate(R.id.toAtualizarFazendaFragment, bundle)
+        }
+
+        indicadoresFinanceirosAtividade.setOnClickListener {
+            val bundle = bundleOf("id" to id)
+            root.findNavController().navigate(R.id.toResultadosAtividadeFragment, bundle)
+        }
         indicadoresFinanceirosDetalhes.setOnClickListener {
             val bundle = bundleOf("id" to id)
             root.findNavController().navigate(R.id.toResultadosFazendaFragment, bundle)
@@ -159,9 +166,4 @@ class ApresentacaoFazendaFragment : Fragment() {
 
     }
 
-    private fun verificacaoArgs() {
-        if (arguments?.getString("id") == null) {
-
-        }
-    }
 }

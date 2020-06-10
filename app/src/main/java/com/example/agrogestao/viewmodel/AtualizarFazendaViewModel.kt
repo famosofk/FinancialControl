@@ -6,6 +6,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.agrogestao.models.BalancoPatrimonial
 import com.example.agrogestao.models.Farm
+import io.realm.Realm
+import io.realm.kotlin.where
 
 class AtualizarFazendaViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -16,8 +18,11 @@ class AtualizarFazendaViewModel(application: Application) : AndroidViewModel(app
     val myBalanco = mBalancoPatrimonial
 
 
-    fun load() {
-        //Recuperar fazenda, balanço e fluxo de caixa
+    fun load(id: String) {
+        val realm = Realm.getDefaultInstance()
+        mFarm.value = realm.where<Farm>().contains("id", id).findFirst()
+        mBalancoPatrimonial.value =
+            realm.where<BalancoPatrimonial>().contains("farm", id).findFirst()
 
     }
 

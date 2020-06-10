@@ -7,247 +7,298 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
-
-        <TextView
-            android:id="@+id/resultadosFazendaText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/descricao_intro"
-            android:layout_marginBottom="16dp"
-            android:fontFamily="@font/roboto"
-            android:textAlignment="center"
-            android:textColor="@color/colorPrimary"
-            android:textSize="32sp" />
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="16dp"
+            android:background="@color/colorPrimary"
+            android:elevation="15dp"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <TextView
-                android:layout_width="0dp"
+                android:id="@+id/resultadosFazendaText"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_marginTop="8dp"
                 android:fontFamily="@font/roboto"
-                android:text="@string/indicadores_financeiros_intro"
-                android:textColor="@color/colorPrimary"
-                android:textSize="24sp"
-                tools:layout_editor_absoluteX="36dp"
-                tools:layout_editor_absoluteY="51dp" />
-
-            <Button
-                android:id="@+id/indicadoresFinanceirosAtividadeButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/round_background_blue"
-                android:padding="16dp"
-                android:text="@string/atividade_intro"
+                android:text="@string/descricao_intro"
+                android:textAlignment="center"
+                android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                tools:layout_editor_absoluteX="177dp"
-                tools:layout_editor_absoluteY="22dp" />
+                android:textSize="24sp" />
+
+            <View
+                android:id="@+id/divider2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="4dp"
+                android:background="?android:attr/listDivider" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/indicadoresFinanceirosDetalhes"
+                    android:layout_width="250dp"
+                    android:layout_height="48dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:fontFamily="@font/roboto"
+                    android:padding="16dp"
+                    android:text="@string/detalhes_intro"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:id="@+id/divider"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="?android:attr/listDivider" />
+
+                <Button
+                    android:id="@+id/metasFazendaButton"
+                    android:layout_width="250dp"
+                    android:layout_height="48dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:fontFamily="@font/roboto"
+                    android:padding="16dp"
+                    android:text="@string/metas_intro"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold" />
+            </LinearLayout>
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/textLucroApresentacao"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:text="@string/lucro_fazenda"
-            android:textColor="@android:color/black"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/textMargemBrutaApresentacao"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:text="@string/margem_bruta"
-            android:textColor="@android:color/black"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/textMargemLiquidaApresentacao"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/margem_liquida"
-            android:textColor="@android:color/black"
-            android:textSize="16sp" />
-
-        <Button
-            android:id="@+id/indicadoresFinanceirosDetalhes"
-            android:layout_width="250dp"
-            android:layout_height="48dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/round_background_blue"
-            android:fontFamily="@font/roboto"
-            android:padding="16dp"
-            android:text="@string/detalhes_intro"
-            android:textColor="@android:color/white" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="16dp"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="16dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/roboto"
+                    android:text="@string/indicadores_financeiros_intro"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="24sp"
+                    tools:layout_editor_absoluteX="36dp"
+                    tools:layout_editor_absoluteY="51dp" />
+
+                <Button
+                    android:id="@+id/indicadoresFinanceirosAtividadeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/round_background_blue"
+                    android:padding="16dp"
+                    android:text="@string/atividade_intro"
+                    android:textColor="@android:color/white"
+                    tools:layout_editor_absoluteX="177dp"
+                    tools:layout_editor_absoluteY="22dp" />
+            </LinearLayout>
 
             <TextView
-                android:layout_width="0dp"
+                android:id="@+id/textLucroApresentacao"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_marginBottom="4dp"
+                android:text="@string/lucro_fazenda"
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/textMargemBrutaApresentacao"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:text="@string/margem_bruta"
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/textMargemLiquidaApresentacao"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/margem_liquida"
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="16dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/roboto"
+                    android:text="@string/fluxo_caixa_intro"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="24sp"
+                    tools:layout_editor_absoluteX="36dp"
+                    tools:layout_editor_absoluteY="51dp" />
+
+                <Button
+                    android:id="@+id/fluxoCaixaAtividade"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/round_background_blue"
+                    android:padding="16dp"
+                    android:text="@string/atividade_intro"
+                    android:textColor="@android:color/white"
+                    tools:layout_editor_absoluteX="177dp"
+                    tools:layout_editor_absoluteY="22dp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textsSaldoApresentacao"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:text="@string/saldo_fazenda"
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/textsPagarApresentacao"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:text="@string/a_pagar"
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/textReceberApresentacao"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:text="@string/a_receber"
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="16dp"
                 android:fontFamily="@font/roboto"
-                android:text="@string/fluxo_caixa_intro"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/fluxoCaixaDetalhes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/left_button_blue_shape"
+                    android:padding="16dp"
+                    android:text="@string/detalhes_intro"
+                    android:textColor="@android:color/white"
+                    tools:ignore="ButtonStyle" />
+
+                <Button
+                    android:id="@+id/fluxoCaixaCadastrar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/right_button_orange_shape"
+                    android:padding="16dp"
+                    android:text="@string/cadastro_intro_value"
+                    android:textColor="@android:color/white"
+                    tools:ignore="ButtonStyle" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="@font/roboto"
+                android:text="@string/balanco_patrimonial_intro"
                 android:textColor="@color/colorPrimary"
-                android:textSize="24sp"
-                tools:layout_editor_absoluteX="36dp"
-                tools:layout_editor_absoluteY="51dp" />
+                android:textSize="24sp" />
 
-            <Button
-                android:id="@+id/fluxoCaixaAtividade"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/round_background_blue"
-                android:padding="16dp"
-                android:text="@string/atividade_intro"
-                android:textColor="@android:color/white"
-                tools:layout_editor_absoluteX="177dp"
-                tools:layout_editor_absoluteY="22dp" />
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/textsSaldoApresentacao"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:text="@string/saldo_fazenda"
-            android:textColor="@android:color/black"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/textsPagarApresentacao"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:text="@string/a_pagar"
-            android:textColor="@android:color/black"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/textReceberApresentacao"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:text="@string/a_receber"
-            android:textColor="@android:color/black"
-            android:textSize="16sp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="16dp"
-            android:fontFamily="@font/roboto"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/fluxoCaixaDetalhes"
+            <TextView
+                android:id="@+id/textsPatrimonioApresentacao"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/left_button_blue_shape"
-                android:padding="16dp"
-                android:text="@string/detalhes_intro"
-                android:textColor="@android:color/white"
-                tools:ignore="ButtonStyle" />
+                android:layout_marginBottom="4dp"
+                android:text="@string/patrimonio_liquido"
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
 
-            <Button
-                android:id="@+id/fluxoCaixaCadastrar"
+            <TextView
+                android:id="@+id/textsSolvenciaApresentacao"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/right_button_orange_shape"
-                android:padding="16dp"
-                android:text="@string/cadastro_intro_value"
-                android:textColor="@android:color/white"
-                tools:ignore="ButtonStyle" />
-        </LinearLayout>
+                android:layout_marginBottom="4dp"
+                android:text="@string/solvencia_intro"
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_marginBottom="16dp"
-            android:fontFamily="@font/roboto"
-            android:text="@string/balanco_patrimonial_intro"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colorPrimary"
-            android:textSize="24sp" />
-
-        <TextView
-            android:id="@+id/textsPatrimonioApresentacao"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:text="@string/patrimonio_liquido"
-            android:textColor="@android:color/black"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/textsSolvenciaApresentacao"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:text="@string/solvencia_intro"
-            android:textColor="@android:color/black"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/textsLiquidezApresentacao"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:text="@string/liquidez_intro"
-            android:textColor="@android:color/black"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/textsRentabilidadeApresentacao"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:text="@string/rentabildiade_intro"
-            android:textColor="@android:color/black"
-            android:textSize="16sp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/balancoPatrimonialDetalhes"
-                android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/textsLiquidezApresentacao"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/left_button_blue_shape"
-                android:padding="16dp"
-                android:text="@string/detalhes_intro"
-                android:textColor="@android:color/white"
-                tools:ignore="ButtonStyle" />
+                android:layout_marginBottom="4dp"
+                android:text="@string/liquidez_intro"
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
 
-            <Button
-                android:id="@+id/balancoPatrimonialInventario"
-                android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/textsRentabilidadeApresentacao"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/right_button_blue_shape"
-                android:padding="16dp"
-                android:text="@string/inventario_intro"
-                android:textColor="@android:color/white"
-                tools:ignore="ButtonStyle" />
+                android:layout_marginBottom="16dp"
+                android:text="@string/rentabildiade_intro"
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/balancoPatrimonialDetalhes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/left_button_blue_shape"
+                    android:padding="16dp"
+                    android:text="@string/detalhes_intro"
+                    android:textColor="@android:color/white"
+                    tools:ignore="ButtonStyle" />
+
+                <Button
+                    android:id="@+id/balancoPatrimonialInventario"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/right_button_blue_shape"
+                    android:padding="16dp"
+                    android:text="@string/inventario_intro"
+                    android:textColor="@android:color/white"
+                    tools:ignore="ButtonStyle" />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
+
 </ScrollView>
