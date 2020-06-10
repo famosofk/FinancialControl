@@ -4,13 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.agrogestao.R
+import com.example.agrogestao.models.BalancoPatrimonial
+import com.example.agrogestao.models.Farm
 import com.example.agrogestao.viewmodel.AtualizarFazendaViewModel
+import io.realm.Realm
+import io.realm.kotlin.where
 
 
 class AtualizarFazendaFragment : Fragment() {
@@ -25,6 +30,10 @@ class AtualizarFazendaFragment : Fragment() {
         atualizarFazendaViewModel =
             ViewModelProvider(this).get(AtualizarFazendaViewModel::class.java)
         val root: View = inflater.inflate(R.layout.atualizar_fazenda, container, false)
+        val button: Button = root.findViewById(R.id.salvarFazendaButton)
+        button.setOnClickListener {
+            updateFarm(root)
+        }
 
 
         observer(root)
@@ -80,5 +89,22 @@ class AtualizarFazendaFragment : Fragment() {
         })
 
     }
+
+    private fun updateFarm(root: View) {
+        val realm = Realm.getDefaultInstance()
+        var farm = realm.where<Farm>().contains("id", id).findFirst()!!
+        var balanco = realm.where<BalancoPatrimonial>().contains("farm", id).findFirst()!!
+        val remuneracaoCapital = root.findViewById<EditText>(R.id.taxaCapitalFazendaEdit);
+        val custoOportunidade = root.findViewById<EditText>(R.id.custoTrabalhoFazendaEdit);
+        val dividasLP = root.findViewById<EditText>(R.id.dividaLongoPrazoFazendaEdit);
+        realm.beginTransaction()
+        balanco.dividasLongoPrazo = dividasLP.text.toString().toFloat()
+        balanco.taxaRemuneracaoCapital = remuneracaoCapital.text.toString().toFloat()
+        balanco.custoOportunidadeTrabalho = custoOportunidade.text.toString().toFloat()
+        realm.commitTransaction();
+
+
+    }
+
 
 }

@@ -28,8 +28,8 @@
     <string name="a_pagar">A pagar</string>
     <string name="a_receber">A receber</string>
     <string name="patrimonio_liquido">Patrimonio Líquido</string>
-    <string name="solvencia_intro">Solvência</string>
-    <string name="liquidez_intro">Liquidez</string>
+    <string name="solvencia_intro">Liquidez Geral</string>
+    <string name="liquidez_intro">Liquidez Corrente</string>
     <string name="fluxo_caixa_intro">Fluxo de caixa</string>
     <string name="indicadores_financeiros_intro">Indicadores financeiros</string>
     <string name="balanco_patrimonial_intro">Balanço patrimonial</string>
