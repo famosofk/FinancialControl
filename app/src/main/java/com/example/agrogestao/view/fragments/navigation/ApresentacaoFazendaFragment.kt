@@ -7,15 +7,18 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import com.example.agrogestao.R
 import com.example.agrogestao.viewmodel.ApresentacaoFazendaViewModel
 
 class ApresentacaoFazendaFragment : Fragment() {
 
+    private lateinit var id: String
     private lateinit var apresentacaoFazendaViewModel: ApresentacaoFazendaViewModel
     var lucroAtual: String = "";
     var lucroMeta: String = "";
@@ -37,10 +40,11 @@ class ApresentacaoFazendaFragment : Fragment() {
         observer(root)
 
         if (arguments?.get("id") != null) {
-            val id = arguments?.getString("id")!!
+            id = arguments?.getString("id")!!
             Toast.makeText(context, id, Toast.LENGTH_SHORT).show()
             apresentacaoFazendaViewModel.load(id)
         }
+
 
 
         return root
@@ -116,12 +120,38 @@ class ApresentacaoFazendaFragment : Fragment() {
                 R.id.toResultadosAtividadeFragment
             )
         )
-        indicadoresFinanceirosDetalhes.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.toResultadosFazendaFragment))
+        indicadoresFinanceirosDetalhes.setOnClickListener {
+            val bundle = bundleOf("id" to id)
+            root.findNavController().navigate(R.id.toResultadosFazendaFragment, bundle)
+        }
+        fluxoCaixaAtividade.setOnClickListener {
+            val bundle = bundleOf("id" to id)
+            root.findNavController().navigate(R.id.toFluxoCaixa, bundle)
+        }
+        fluxoCaixaDetalhes.setOnClickListener {
+            val bundle = bundleOf("id" to id)
+            root.findNavController().navigate(R.id.toFluxoCaixa, bundle)
+        }
+        fluxoCaixaCadastrar.setOnClickListener {
+            val bundle = bundleOf("id" to id)
+            root.findNavController().navigate(R.id.toCadastroFluxoCaixaFragment, bundle)
+        }
+        balancoPatrimonialDetalhes.setOnClickListener {
+            val bundle = bundleOf("id" to id)
+            root.findNavController().navigate(R.id.toBalancoPatrimonial, bundle)
+        }
+        balancoPatrimonialInventario.setOnClickListener {
+            val bundle = bundleOf("id" to id)
+            root.findNavController().navigate(R.id.toCadastroInventarioFragment, bundle)
+        }
+
+        /* indicadoresFinanceirosDetalhes.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.toResultadosFazendaFragment))
         fluxoCaixaAtividade.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.toFluxoCaixa))
         fluxoCaixaDetalhes.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.toFluxoCaixa))
         fluxoCaixaCadastrar.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.toCadastroFluxoCaixaFragment))
         balancoPatrimonialDetalhes.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.toBalancoPatrimonial))
         balancoPatrimonialInventario.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.toCadastroInventarioFragment))
+*/
 
 
     }

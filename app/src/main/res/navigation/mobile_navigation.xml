@@ -42,36 +42,71 @@
         android:id="@+id/balanco_patrimonial_frag"
         android:name="com.example.agrogestao.view.fragments.navigation.BalancoPatrimonialFragment"
         android:label="@string/balanco_patrimonial_intro"
-        tools:layout="@layout/apresentacao_balanco_patrimonial" />
+        tools:layout="@layout/apresentacao_balanco_patrimonial">
+        <argument
+            android:name="id"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
 
     <fragment
         android:id="@+id/fluxo_caixa"
         android:name="com.example.agrogestao.view.fragments.navigation.FluxoCaixaFragment"
         android:label="@string/fluxo_caixa_intro"
-        tools:layout="@layout/fluxo_caixa_atividade" />
+        tools:layout="@layout/fluxo_caixa_atividade">
+        <argument
+            android:name="id"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
     <fragment
         android:id="@+id/atualizarFazendaFrag"
         android:name="com.example.agrogestao.view.fragments.navigation.AtualizarFazendaFragment"
         android:label="AtualizarFazendaFragment"
-        tools:layout="@layout/atualizar_fazenda" />
+        tools:layout="@layout/atualizar_fazenda">
+        <argument
+            android:name="id"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
     <fragment
         android:id="@+id/cadastroFluxoCaixaFrag"
         android:name="com.example.agrogestao.view.fragments.navigation.CadastroFluxoCaixaFragment"
         android:label="CadastroFluxoCaixaFragment"
-        tools:layout="@layout/cadastro_fluxo_caixa" />
+        tools:layout="@layout/cadastro_fluxo_caixa">
+        <argument
+            android:name="id"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
     <fragment
         android:id="@+id/cadastroInventarioFrag"
         android:name="com.example.agrogestao.view.fragments.navigation.CadastroInventarioFragment"
         android:label="CadastroInventarioFragment"
-        tools:layout="@layout/cadastro_inventario" />
+        tools:layout="@layout/cadastro_inventario">
+        <argument
+            android:name="id"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
     <fragment
         android:id="@+id/resultadosAtividadeFrag"
         android:name="com.example.agrogestao.view.fragments.navigation.ResultadosAtividadeFragment"
         android:label="ResultadosAtividadeFragment"
-        tools:layout="@layout/resultados_atividades_fazenda" />
+        tools:layout="@layout/resultados_atividades_fazenda">
+        <argument
+            android:name="id"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
     <fragment
         android:id="@+id/resultadosFazendaFrag"
         android:name="com.example.agrogestao.view.fragments.navigation.ResultadosFazendaFragment"
         android:label="ResultadosFazendaFragment"
-        tools:layout="@layout/resultados_fazenda" />
+        tools:layout="@layout/resultados_fazenda">
+        <argument
+            android:name="id"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
 </navigation>
