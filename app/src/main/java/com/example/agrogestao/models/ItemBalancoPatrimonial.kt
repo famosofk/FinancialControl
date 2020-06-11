@@ -2,7 +2,7 @@ package com.example.agrogestao.models
 
 import io.realm.RealmObject
 
-open class ItemBalancoPatrimonial(nome: String = "", dataCompra: String = "") : RealmObject() {
+open class ItemBalancoPatrimonial() : RealmObject() {
 
     companion object {
         const val ITEM_TERRA = "Terra"
@@ -13,10 +13,14 @@ open class ItemBalancoPatrimonial(nome: String = "", dataCompra: String = "") : 
         const val ITEM_PRODUTOS = "Produtos"
     }
 
+    var nome: String = "";
+    var dataCompra: String = ""
+
     var quantidadeInicial: Float = 0f
     var quantidadeFinal: Float = 0f
     var receitaBruta: Float = 0f
     var valorUnitario: Float = 0f
+    var atividade: String = ""
     var valorAtual: Float = 0f
     var valorInicial: Float = 0f
     var vidaUtil: Int = 0

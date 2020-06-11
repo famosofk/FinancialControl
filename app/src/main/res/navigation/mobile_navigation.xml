@@ -91,6 +91,9 @@
             android:name="id"
             app:argType="string"
             app:nullable="true" />
+        <action
+            android:id="@+id/from_cadastroInventario_to_apresentarFazenda"
+            app:destination="@id/nav_fazenda" />
     </fragment>
     <fragment
         android:id="@+id/resultadosAtividadeFrag"
