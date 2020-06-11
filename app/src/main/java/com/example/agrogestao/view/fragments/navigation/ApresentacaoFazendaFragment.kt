@@ -6,13 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.agrogestao.R
+import com.example.agrogestao.models.AtividadesEconomicas
 import com.example.agrogestao.viewmodel.ApresentacaoFazendaViewModel
+import io.realm.Realm
+import io.realm.kotlin.where
 
 class ApresentacaoFazendaFragment : Fragment() {
 
@@ -148,8 +152,18 @@ class ApresentacaoFazendaFragment : Fragment() {
             root.findNavController().navigate(R.id.toBalancoPatrimonial, bundle)
         }
         balancoPatrimonialInventario.setOnClickListener {
-            val bundle = bundleOf("id" to id)
-            root.findNavController().navigate(R.id.toCadastroInventarioFragment, bundle)
+            val realm = Realm.getDefaultInstance()
+            val query = realm.where<AtividadesEconomicas>().findAll()
+            if (query.size > 0) {
+                val bundle = bundleOf("id" to id)
+                root.findNavController().navigate(R.id.toCadastroInventarioFragment, bundle)
+            } else {
+                Toast.makeText(
+                    context,
+                    "Para cadastrar itens, primeiro crie as atividades.",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
 
     }

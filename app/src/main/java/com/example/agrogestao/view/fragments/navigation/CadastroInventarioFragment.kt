@@ -1,6 +1,5 @@
 package com.example.agrogestao.view.fragments.navigation
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,13 +8,16 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.fragment.app.Fragment
 import com.example.agrogestao.R
+import com.example.agrogestao.models.AtividadesEconomicas
+import io.realm.Realm
+import io.realm.kotlin.where
 
 /**
  * A simple [Fragment] subclass.
  */
 class CadastroInventarioFragment : Fragment() {
 
-    private lateinit var list: List<String>
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -23,22 +25,27 @@ class CadastroInventarioFragment : Fragment() {
     ): View? {
 
         val root: View = inflater.inflate(R.layout.cadastro_inventario, container, false)
+        val realm = Realm.getDefaultInstance()
+        val resultados = realm.where<AtividadesEconomicas>().findAll()
+        val list = mutableListOf<String>()
+        for (atividade in resultados) {
+            list.add(atividade.nome)
+        }
+        val adapter = context?.let {
+            ArrayAdapter(
+                it,
+                android.R.layout.simple_spinner_dropdown_item,
+                list
+            )
+        }
 
-        inicializarSpinners(root, context)
+        val spinner: Spinner = root.findViewById(R.id.spinnerAtividadeItem)
+        spinner.adapter = adapter
 
         return root
     }
 
-    private fun inicializarSpinners(root: View, con: Context?) {
-        list = mutableListOf()
 
-        val atividadeAdapter =
-            ArrayAdapter(con!!, android.R.layout.simple_spinner_dropdown_item, list)
-        val atividadeSpinner = root.findViewById<Spinner>(R.id.spinnerAtividadeItem)
-        atividadeSpinner.adapter = atividadeAdapter
-
-
-    }
 
 
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
@@ -9,16 +9,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:orientation="vertical">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:fontFamily="@font/roboto"
-            android:text="@string/cadastro_inventario_intro"
-            android:textAlignment="center"
-            android:textColor="@color/colorPrimary"
-            android:textSize="32sp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -45,25 +35,10 @@
             android:layout_gravity="center"
             android:layout_margin="16dp"
             android:background="@drawable/spinner_shape"
+            android:dropDownWidth="wrap_content"
             android:entries="@array/tiposItem"
+            android:spinnerMode="dropdown"
             android:textAlignment="center" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:fontFamily="@font/roboto"
-            android:text="@string/atividade_intro"
-            android:textColor="@color/colorPrimary"
-            android:textSize="16sp" />
-
-        <Spinner
-            android:id="@+id/spinnerAtividadeItem"
-            android:layout_width="300dp"
-            android:layout_height="48dp"
-            android:layout_gravity="center"
-            android:layout_margin="16dp"
-            android:background="@drawable/spinner_shape" />
 
         <TextView
             android:layout_width="match_parent"
@@ -161,14 +136,56 @@
             android:inputType="textPersonName"
             tools:ignore="LabelFor" />
 
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/roboto"
+                android:text="@string/atividade_intro"
+                android:textColor="@color/colorPrimary"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/spinnerAtividadeItem"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:background="@drawable/spinner_shape"
+                android:foregroundGravity="center"
+                android:gravity="center"
+                android:padding="4dp"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
+                android:spinnerMode="dialog"
+                android:textAlignment="center" />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="16dp" />
+
         <Button
             android:id="@+id/button3"
             android:layout_width="250dp"
             android:layout_height="48dp"
             android:layout_gravity="center"
-            android:layout_margin="16dp"
             android:background="@drawable/round_background_orange"
             android:text="@string/cadastro_intro_value"
             android:textColor="@android:color/white" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="32dp" />
     </LinearLayout>
 </ScrollView>

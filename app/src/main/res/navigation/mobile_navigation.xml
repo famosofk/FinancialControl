@@ -62,7 +62,7 @@
     <fragment
         android:id="@+id/atualizarFazendaFrag"
         android:name="com.example.agrogestao.view.fragments.navigation.AtualizarFazendaFragment"
-        android:label="AtualizarFazendaFragment"
+        android:label="Dados da fazenda"
         tools:layout="@layout/atualizar_fazenda">
         <argument
             android:name="id"
@@ -75,7 +75,7 @@
     <fragment
         android:id="@+id/cadastroFluxoCaixaFrag"
         android:name="com.example.agrogestao.view.fragments.navigation.CadastroFluxoCaixaFragment"
-        android:label="CadastroFluxoCaixaFragment"
+        android:label="Movimentação"
         tools:layout="@layout/cadastro_fluxo_caixa">
         <argument
             android:name="id"
@@ -85,7 +85,7 @@
     <fragment
         android:id="@+id/cadastroInventarioFrag"
         android:name="com.example.agrogestao.view.fragments.navigation.CadastroInventarioFragment"
-        android:label="CadastroInventarioFragment"
+        android:label="Cadastro Item"
         tools:layout="@layout/cadastro_inventario">
         <argument
             android:name="id"
@@ -95,7 +95,7 @@
     <fragment
         android:id="@+id/resultadosAtividadeFrag"
         android:name="com.example.agrogestao.view.fragments.navigation.ResultadosAtividadeFragment"
-        android:label="ResultadosAtividadeFragment"
+        android:label="Resultado atividade"
         tools:layout="@layout/resultados_atividades_fazenda">
         <argument
             android:name="id"
@@ -105,7 +105,7 @@
     <fragment
         android:id="@+id/resultadosFazendaFrag"
         android:name="com.example.agrogestao.view.fragments.navigation.ResultadosFazendaFragment"
-        android:label="ResultadosFazendaFragment"
+        android:label="Resultado geral"
         tools:layout="@layout/resultados_fazenda">
         <argument
             android:name="id"

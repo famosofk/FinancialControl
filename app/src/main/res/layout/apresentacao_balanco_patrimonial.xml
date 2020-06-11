@@ -11,16 +11,6 @@
         android:padding="16dp">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:fontFamily="@font/roboto"
-            android:text="@string/balanco_patrimonial_intro"
-            android:textAlignment="center"
-            android:textColor="@color/colorPrimary"
-            android:textSize="32sp" />
-
-        <TextView
             android:id="@+id/textPatrimonioBalanco"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

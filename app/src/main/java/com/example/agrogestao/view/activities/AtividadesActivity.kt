@@ -131,7 +131,7 @@ class AtividadesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                 if (title == "Criar programa") {
                     salvarRealm(program = FarmProgram(name))
                 } else if (title == "Criar atividade") {
-                    val atividade = AtividadesEconomicas(name)
+                    val atividade = AtividadesEconomicas(name.capitalize().trim())
                     salvarRealm(economicalActivity = atividade)
                 }
             }
