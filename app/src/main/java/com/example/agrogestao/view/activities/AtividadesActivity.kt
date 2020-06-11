@@ -5,6 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -19,23 +21,23 @@ import com.example.agrogestao.models.FarmProgram
 import com.example.agrogestao.view.adapter.FazendasAdapter
 import com.example.agrogestao.view.listener.FarmListener
 import com.example.agrogestao.viewmodel.AtividadesViewModel
-import com.google.firebase.database.FirebaseDatabase
 import io.realm.Realm
 import io.realm.kotlin.where
 import kotlinx.android.synthetic.main.cadastro_programa_fazenda.view.*
 import java.util.*
 
-class AtividadesActivity : AppCompatActivity() {
+class AtividadesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     private lateinit var realm: Realm
     private lateinit var atividadesViewModel: AtividadesViewModel
     private val mAdapter = FazendasAdapter()
     private lateinit var mListener: FarmListener
+    private var list = mutableListOf<String>()
+    private var programa = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_atividades)
-
         //lembrar de remover o realm.init
         Realm.init(applicationContext)
         atividadesViewModel = ViewModelProvider(this).get(AtividadesViewModel::class.java)
@@ -43,11 +45,11 @@ class AtividadesActivity : AppCompatActivity() {
 
 
 
-        observe();
+        observe()
 
         realm = Realm.getDefaultInstance()
         inicializarButtons()
-        val recyclerView: RecyclerView = findViewById(R.id.recyclerAtividades);
+        val recyclerView: RecyclerView = findViewById(R.id.recyclerAtividades)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = mAdapter
 
@@ -58,15 +60,9 @@ class AtividadesActivity : AppCompatActivity() {
                 bundle.putString("fazenda", mAdapter.get(id).id)
                 intent.putExtras(bundle)
                 startActivity(intent)
-                // realm.close()
-
-
             }
-
         }
         mAdapter.attachListener(mListener)
-
-
     }
 
     private fun observe() {
@@ -78,7 +74,11 @@ class AtividadesActivity : AppCompatActivity() {
     }
 
 
-    private fun createAlertDialog(title: String) {
+    private fun createAlertDialog(title: String, list: List<String>?) {
+
+        if (list != null) {
+            programa = list[0]
+        }
         val mDialogView =
             LayoutInflater.from(this).inflate(R.layout.cadastro_programa_fazenda, null)
         val cadastrarButton: Button = mDialogView.findViewById(R.id.cadastrarDialogButton)
@@ -92,31 +92,44 @@ class AtividadesActivity : AppCompatActivity() {
             mDialogView.textComplementoDialog.visibility = View.GONE
             mDialogView.editComplementoText.visibility = View.GONE
         } else if (title.equals("Criar fazenda")) {
-            mDialogView.editProgramaDialog.visibility = View.VISIBLE
             mDialogView.textProgramaDialog.visibility = View.VISIBLE
+            mDialogView.spinnerPrograma.visibility = View.VISIBLE
         } else if (title.equals("Criar atividade")) {
             mDialogView.textComplementoDialog.visibility = View.GONE
             mDialogView.editComplementoText.visibility = View.GONE
         }
         mBuilder.show()
-        cadastrarButton.setOnClickListener {
-            mBuilder.dismiss()
 
-            val name = mDialogView.editNomeDialog.text.toString()
-            val id = UUID.randomUUID().toString()
+        if (list != null) {
+            val adapter = ArrayAdapter(
+                applicationContext,
+                android.R.layout.simple_spinner_dropdown_item,
+                list
+            )
+            mDialogView.spinnerPrograma.adapter = adapter
+            mDialogView.spinnerPrograma.onItemSelectedListener = this
 
-            if (title.equals("Criar programa")) {
-                salvarRealm(program = FarmProgram(name))
-            } else if (title.equals("Criar fazenda")) {
+
+            cadastrarButton.setOnClickListener {
+                mBuilder.dismiss()
+                val name = mDialogView.editNomeDialog.text.toString()
+                val id = UUID.randomUUID().toString()
                 val complemento = mDialogView.editComplementoText.text.toString()
-                val programa = mDialogView.editProgramaDialog.text.toString()
                 val farm = Farm(name, programa, complemento, id)
-                val db = FirebaseDatabase.getInstance().reference.child("farms").child(id)
-                //  db.setValue(farm)
+                //val db = FirebaseDatabase.getInstance().reference.child("farms").child(id)
+                //db.setValue(farm)
                 salvarRealm(farm = farm)
-            } else if (title.equals("Criar atividade")) {
-                val atividade = AtividadesEconomicas(name)
-                salvarRealm(economicalActivity = atividade)
+            }
+        } else {
+            cadastrarButton.setOnClickListener {
+                mBuilder.dismiss()
+                val name = mDialogView.editNomeDialog.text.toString()
+                if (title == "Criar programa") {
+                    salvarRealm(program = FarmProgram(name))
+                } else if (title == "Criar atividade") {
+                    val atividade = AtividadesEconomicas(name)
+                    salvarRealm(economicalActivity = atividade)
+                }
             }
         }
 
@@ -134,7 +147,7 @@ class AtividadesActivity : AppCompatActivity() {
         when {
             farm != null -> {
                 realm.copyToRealm(farm)
-                var balancoPatrimonial = BalancoPatrimonial()
+                val balancoPatrimonial = BalancoPatrimonial()
                 balancoPatrimonial.farm = farm.id
                 realm.copyToRealm(balancoPatrimonial)
             }
@@ -149,10 +162,35 @@ class AtividadesActivity : AppCompatActivity() {
         atividadesViewModel.load()
     }
 
-    private fun createToast(info: String) {
-        Toast.makeText(applicationContext, info, Toast.LENGTH_SHORT).show()
-    }
+    private fun inicializarButtons() {
+        val fabPrograma: com.github.clans.fab.FloatingActionButton =
+            findViewById(R.id.fabAddPrograma)
+        fabPrograma.setOnClickListener { view ->
+            createAlertDialog("Criar programa", null)
+        }
+        val fabFazenda: com.github.clans.fab.FloatingActionButton = findViewById(R.id.fabAddFazenda)
+        fabFazenda.setOnClickListener { view ->
+            realm = Realm.getDefaultInstance()
+            val query = realm.where<FarmProgram>().findAll()
 
+            if (query.count() < 1) {
+                Toast.makeText(
+                    applicationContext,
+                    "Para criar uma fazenda, primeiro crie um programa.",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+            } else {
+                for (programas in query) {
+                    list.add(programas.name)
+                }
+                createAlertDialog("Criar fazenda", list)
+            }
+        }
+        val fabAtividade: com.github.clans.fab.FloatingActionButton =
+            findViewById(R.id.fabAddAtividade)
+        fabAtividade.setOnClickListener { view -> createAlertDialog("Criar atividade", null) }
+    }
 
     override fun onStop() {
         super.onStop()
@@ -164,27 +202,14 @@ class AtividadesActivity : AppCompatActivity() {
         atividadesViewModel.load()
     }
 
-    private fun inicializarButtons() {
-        val fabPrograma: com.github.clans.fab.FloatingActionButton =
-            findViewById(R.id.fabAddPrograma)
-        fabPrograma.setOnClickListener { view ->
-            createAlertDialog("Criar programa")
-        }
-        val fabFazenda: com.github.clans.fab.FloatingActionButton = findViewById(R.id.fabAddFazenda)
-        fabFazenda.setOnClickListener { view ->
-            realm = Realm.getDefaultInstance()
-            val query = realm.where<FarmProgram>()
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+        TODO("Not yet implemented")
+    }
 
-            if (query.count() < 1) {
-                createToast("Para criar uma fazenda, primeiro crie um programa.")
-            } else {
-                createAlertDialog("Criar fazenda")
-            }
-        }
-        val fabAtividade: com.github.clans.fab.FloatingActionButton =
-            findViewById(R.id.fabAddAtividade)
-        fabAtividade.setOnClickListener { view -> createAlertDialog("Criar atividade") }
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        programa = list[position]
     }
 
 
 }
+

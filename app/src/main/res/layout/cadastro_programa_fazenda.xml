@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:padding="16dp">
 
@@ -26,11 +27,20 @@
         android:id="@+id/textProgramaDialog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
         android:fontFamily="@font/roboto"
         android:text="@string/programa_intro"
         android:textColor="@color/colorPrimary"
         android:textStyle="bold"
-        android:visibility="gone" />
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    <Spinner
+        android:id="@+id/spinnerPrograma"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        tools:visibility="visible" />
 
     <EditText
         android:id="@+id/editProgramaDialog"
@@ -45,6 +55,7 @@
         android:id="@+id/textComplementoDialog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
         android:fontFamily="@font/roboto"
         android:text="@string/senha_intro_value"
         android:textColor="@color/colorPrimary"
@@ -84,4 +95,5 @@
             android:text="@string/cadastro_intro_value"
             android:textColor="@android:color/white" />
     </LinearLayout>
+
 </LinearLayout>
