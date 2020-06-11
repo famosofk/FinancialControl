@@ -62,20 +62,6 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
             android:fontFamily="@font/roboto"
-            android:importantForAutofill="no"
-            android:text="@string/atividades_depreciacao"
-            android:textColor="@color/colorPrimary"
-            tools:ignore="LabelFor" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:fontFamily="@font/roboto"
             android:text="@string/taxa_remuneracao_capital"
             android:textColor="@color/colorPrimary" />
 

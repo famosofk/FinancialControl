@@ -17,8 +17,8 @@ class FarmsViewHolder(view: View, private val listener: FarmListener) :
         val programaText: TextView = itemView.findViewById(R.id.programaTextViewListagem)
         val linearLayout: LinearLayout = itemView.findViewById(R.id.layoutListagemFazenda)
 
-        fazendaText.setText(farm.codigoFazenda)
-        programaText.setText(farm.programa)
+        fazendaText.text = farm.codigoFazenda
+        programaText.text = farm.programa
 
         linearLayout.setOnClickListener {
             listener.onClick(position)

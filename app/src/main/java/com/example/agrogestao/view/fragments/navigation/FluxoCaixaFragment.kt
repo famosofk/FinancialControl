@@ -37,17 +37,17 @@ class FluxoCaixaFragment : Fragment() {
         //fazer como se fosse da fazenda
         fluxoCaixaViewModel.myBalancoPatrimonial.observe(viewLifecycleOwner, Observer {
             val saldo = view.findViewById<TextView>(R.id.fcaixaSaldoText)
-            saldo.setText(it.saldo.toString())
+            saldo.text = "Saldo: ${it.saldo}"
             val receitas = view.findViewById<TextView>(R.id.fcaixaReceitasText)
-            receitas.setText(it.totalReceitas.toString())
+            receitas.text = "Receitas: ${it.totalReceitas}"
             val despesas = view.findViewById<TextView>(R.id.fcaixaDespesasText)
-            despesas.setText(it.totalDespesas.toString())
+            despesas.text = "Despesas: ${it.totalDespesas}"
             val pagar = view.findViewById<TextView>(R.id.fcaixaPagarText)
-            pagar.setText(it.totalContasPagar.toString())
+            pagar.text = "Contas a pagar: ${it.totalContasReceber}"
             val receber = view.findViewById<TextView>(R.id.fcaixaReceberText)
-            receber.setText(it.totalContasReceber.toString())
+            receber.text = "Contas a receber: ${it.totalContasReceber}"
             val lucro = view.findViewById<TextView>(R.id.fcaixaLucroText)
-            lucro.setText(it.lucro.toString())
+            lucro.text = "Lucro: ${it.lucro}"
 
             //se for da atividade temos que filtrar só da atividade em questão
         })

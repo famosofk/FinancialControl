@@ -5,12 +5,12 @@ import io.realm.RealmObject
 open class ItemBalancoPatrimonial(nome: String = "", dataCompra: String = "") : RealmObject() {
 
     companion object {
-        const val ITEM_TERRA = "a"
-        const val ITEM_BENFEITORIA = "b"
-        const val ITEM_MAQUINAS = "c"
-        const val ITEM_ANIMAIS = "d"
-        const val ITEM_INSUMOS = "e"
-        const val ITEM_PRODUTOS = "f"
+        const val ITEM_TERRA = "Terra"
+        const val ITEM_BENFEITORIA = "Benfeitoria"
+        const val ITEM_MAQUINAS = "Máquinas"
+        const val ITEM_ANIMAIS = "Animais"
+        const val ITEM_INSUMOS = "Insumos"
+        const val ITEM_PRODUTOS = "Produtos"
     }
 
     var quantidadeInicial: Float = 0f

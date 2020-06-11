@@ -68,21 +68,21 @@ class ApresentacaoFazendaFragment : Fragment() {
                 mBrutaAtual = it.margemBruta.toString()
                 atualizarTextos(view)
                 val textSaldo = view.findViewById<TextView>(R.id.textsSaldoApresentacao)
-                val textPagar = view.findViewById<TextView>(R.id.textsSaldoApresentacao)
-                val textReceber = view.findViewById<TextView>(R.id.textsSaldoApresentacao)
+                val textPagar = view.findViewById<TextView>(R.id.textsPagarApresentacao)
+                val textReceber = view.findViewById<TextView>(R.id.textReceberApresentacao)
                 val textPatrimonioLiquido =
                     view.findViewById<TextView>(R.id.textsPatrimonioApresentacao)
                 val textSolvencia = view.findViewById<TextView>(R.id.textsSolvenciaApresentacao)
                 val textLiquidez = view.findViewById<TextView>(R.id.textsLiquidezApresentacao)
                 val textRentabilidade =
                     view.findViewById<TextView>(R.id.textsRentabilidadeApresentacao)
-                textSaldo.text = it.saldo.toString()
-                textPagar.text = it.totalContasPagar.toString()
-                textReceber.text = it.totalContasReceber.toString()
-                textPatrimonioLiquido.text = it.patrimonioLiquido.toString()
-                textSolvencia.text = it.liquidezGeral.toString()
-                textLiquidez.text = it.liquidezCorrente.toString()
-                textRentabilidade.text = it.rentabilidade.toString()
+                textSaldo.text = "Saldo: ${it.saldo}"
+                textPagar.text = "Contas a pagar: ${it.totalContasPagar}"
+                textReceber.text = "Contas a receber: ${it.totalContasReceber}"
+                textPatrimonioLiquido.text = "Patrimônio Líquido: ${it.patrimonioLiquido}"
+                textSolvencia.text = "Liquidez geral: ${it.liquidezGeral}"
+                textLiquidez.text = "Liquidez corrente: ${it.liquidezCorrente}"
+                textRentabilidade.text = "Rentabilidade: ${it.rentabilidade}"
             }
         })
 

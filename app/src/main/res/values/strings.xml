@@ -85,4 +85,23 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="terra_intro">Terra</string>
+    <string name="benfeitoria_intro">Benfeitoria</string>
+    <string name="maquinas_intro">Máquinas</string>
+    <string name="animais_intro">Animais</string>
+    <string name="insumos_intro">Insumos</string>
+    <string name="produtos_intro">Produtos</string>
+
+    <string-array name="tiposItem">
+        <item>Terra</item>
+        <item>Benfeitoria</item>
+        <item>Máquinas</item>
+        <item>Animais</item>
+        <item>Insumos</item>
+        <item>Produtos</item>
+
+
+    </string-array>
+
 </resources>
