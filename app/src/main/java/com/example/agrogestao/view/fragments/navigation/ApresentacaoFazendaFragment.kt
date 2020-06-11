@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -19,11 +18,11 @@ class ApresentacaoFazendaFragment : Fragment() {
 
     private lateinit var id: String
     private lateinit var apresentacaoFazendaViewModel: ApresentacaoFazendaViewModel
-    var lucroAtual: String = "";
-    var lucroMeta: String = "";
-    var mBrutaAtual: String = "";
-    var mBrutaMeta: String = "";
-    var mLiquidaAtual: String = "";
+    var lucroAtual: String = ""
+    var lucroMeta: String = ""
+    var mBrutaAtual: String = ""
+    var mBrutaMeta: String = ""
+    var mLiquidaAtual: String = ""
     var mLiquidaMeta: String = ""
 
 
@@ -40,11 +39,9 @@ class ApresentacaoFazendaFragment : Fragment() {
 
         if (arguments?.get("id") != null) {
             id = arguments?.getString("id")!!
-            Toast.makeText(context, id, Toast.LENGTH_SHORT).show()
-            // apresentacaoFazendaViewModel.load(id)
             apresentacaoFazendaViewModel.verificarRegistro(id)
         } else {
-            apresentacaoFazendaViewModel.recuperacaoDrawer()
+            id = apresentacaoFazendaViewModel.recuperacaoDrawer()
         }
 
 
@@ -155,15 +152,11 @@ class ApresentacaoFazendaFragment : Fragment() {
             root.findNavController().navigate(R.id.toCadastroInventarioFragment, bundle)
         }
 
-        /* indicadoresFinanceirosDetalhes.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.toResultadosFazendaFragment))
-        fluxoCaixaAtividade.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.toFluxoCaixa))
-        fluxoCaixaDetalhes.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.toFluxoCaixa))
-        fluxoCaixaCadastrar.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.toCadastroFluxoCaixaFragment))
-        balancoPatrimonialDetalhes.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.toBalancoPatrimonial))
-        balancoPatrimonialInventario.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.toCadastroInventarioFragment))
-*/
+    }
 
-
+    override fun onResume() {
+        super.onResume()
+        apresentacaoFazendaViewModel.recuperacaoDrawer()
     }
 
 }

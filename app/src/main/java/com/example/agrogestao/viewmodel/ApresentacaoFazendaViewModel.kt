@@ -25,10 +25,11 @@ class ApresentacaoFazendaViewModel(application: Application) : AndroidViewModel(
             realm.where<BalancoPatrimonial>().contains("farm", id).findFirst()
     }
 
-    fun recuperacaoDrawer() {
+    fun recuperacaoDrawer(): String {
         val realm = Realm.getDefaultInstance()
         val farm = realm.where<RegistradorFarm>().findFirst()!!
         load(farm.id)
+        return farm.id
     }
 
     fun verificarRegistro(id: String) {
@@ -46,6 +47,7 @@ class ApresentacaoFazendaViewModel(application: Application) : AndroidViewModel(
             realm.commitTransaction()
         }
         load(id)
+
 
     }
 }

@@ -290,7 +290,7 @@
             android:textColor="@color/colorPrimary" />
 
         <EditText
-            android:id="@+id/solvenciaFazendaEdit"
+            android:id="@+id/liquidezGeralFazendaEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
@@ -308,7 +308,7 @@
             android:textColor="@color/colorPrimary" />
 
         <EditText
-            android:id="@+id/liquidezFazendaEdit"
+            android:id="@+id/liquidezCorrenteFazendaEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
