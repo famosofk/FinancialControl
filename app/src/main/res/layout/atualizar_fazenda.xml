@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/atividadesRecycler"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -66,12 +67,9 @@
             android:textColor="@color/colorPrimary"
             tools:ignore="LabelFor" />
 
-        <ListView
-            android:id="@+id/atividadesListViewFazenda"
+        <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            tools:ignore="NestedScrolling" />
+            android:layout_height="match_parent" />
 
         <TextView
             android:layout_width="match_parent"

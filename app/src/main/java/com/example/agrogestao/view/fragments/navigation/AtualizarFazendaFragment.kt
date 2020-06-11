@@ -10,9 +10,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.agrogestao.R
 import com.example.agrogestao.models.BalancoPatrimonial
 import com.example.agrogestao.models.Farm
+import com.example.agrogestao.view.adapter.AtividadesAdapter
 import com.example.agrogestao.viewmodel.AtualizarFazendaViewModel
 import io.realm.Realm
 import io.realm.kotlin.where
@@ -22,6 +25,7 @@ class AtualizarFazendaFragment : Fragment() {
 
     private lateinit var atualizarFazendaViewModel: AtualizarFazendaViewModel
     private lateinit var id: String
+    private val mAdapter = AtividadesAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,12 +39,13 @@ class AtualizarFazendaFragment : Fragment() {
             updateFarm(root)
         }
 
-
         observer(root)
         if (arguments?.get("id") != null) {
             id = arguments?.getString("id")!!
             atualizarFazendaViewModel.load(id)
         }
+
+        updateRecycler(root)
 
         return root
     }
@@ -134,5 +139,9 @@ class AtualizarFazendaFragment : Fragment() {
 
     }
 
-
+    private fun updateRecycler(root: View) {
+        val recyclerView: RecyclerView = root.findViewById(R.id.atividadesRecycler)
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.adapter = mAdapter
+    }
 }

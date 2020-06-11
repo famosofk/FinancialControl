@@ -49,7 +49,7 @@ class AtividadesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
 
         realm = Realm.getDefaultInstance()
         inicializarButtons()
-        val recyclerView: RecyclerView = findViewById(R.id.recyclerAtividades)
+        val recyclerView: RecyclerView = findViewById(R.id.recyclerFazendas)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = mAdapter
 
@@ -88,15 +88,19 @@ class AtividadesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
             .setTitle(title)
             .create()
 
-        if (title.equals("Criar programa")) {
-            mDialogView.textComplementoDialog.visibility = View.GONE
-            mDialogView.editComplementoText.visibility = View.GONE
-        } else if (title.equals("Criar fazenda")) {
-            mDialogView.textProgramaDialog.visibility = View.VISIBLE
-            mDialogView.spinnerPrograma.visibility = View.VISIBLE
-        } else if (title.equals("Criar atividade")) {
-            mDialogView.textComplementoDialog.visibility = View.GONE
-            mDialogView.editComplementoText.visibility = View.GONE
+        when (title) {
+            "Criar programa" -> {
+                mDialogView.textComplementoDialog.visibility = View.GONE
+                mDialogView.editComplementoText.visibility = View.GONE
+            }
+            "Criar fazenda" -> {
+                mDialogView.textProgramaDialog.visibility = View.VISIBLE
+                mDialogView.spinnerPrograma.visibility = View.VISIBLE
+            }
+            "Criar atividade" -> {
+                mDialogView.textComplementoDialog.visibility = View.GONE
+                mDialogView.editComplementoText.visibility = View.GONE
+            }
         }
         mBuilder.show()
 
@@ -165,11 +169,11 @@ class AtividadesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
     private fun inicializarButtons() {
         val fabPrograma: com.github.clans.fab.FloatingActionButton =
             findViewById(R.id.fabAddPrograma)
-        fabPrograma.setOnClickListener { view ->
+        fabPrograma.setOnClickListener {
             createAlertDialog("Criar programa", null)
         }
         val fabFazenda: com.github.clans.fab.FloatingActionButton = findViewById(R.id.fabAddFazenda)
-        fabFazenda.setOnClickListener { view ->
+        fabFazenda.setOnClickListener {
             realm = Realm.getDefaultInstance()
             val query = realm.where<FarmProgram>().findAll()
 
@@ -189,7 +193,7 @@ class AtividadesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
         }
         val fabAtividade: com.github.clans.fab.FloatingActionButton =
             findViewById(R.id.fabAddAtividade)
-        fabAtividade.setOnClickListener { view -> createAlertDialog("Criar atividade", null) }
+        fabAtividade.setOnClickListener { createAlertDialog("Criar atividade", null) }
     }
 
     override fun onStop() {
@@ -202,14 +206,13 @@ class AtividadesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
         atividadesViewModel.load()
     }
 
-    override fun onNothingSelected(parent: AdapterView<*>?) {
-        TODO("Not yet implemented")
-    }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         programa = list[position]
     }
 
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {}
 
 }
 
