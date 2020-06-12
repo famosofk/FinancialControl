@@ -31,7 +31,7 @@
     <string name="solvencia_intro">Liquidez Geral</string>
     <string name="liquidez_intro">Liquidez Corrente</string>
     <string name="fluxo_caixa_intro">Fluxo de caixa</string>
-    <string name="indicadores_financeiros_intro">Indicadores financeiros</string>
+    <string name="indicadores_financeiros_intro">Indicadores econômicos</string>
     <string name="balanco_patrimonial_intro">Balanço patrimonial</string>
     <string name="atividade_intro">Atividade</string>
     <string name="detalhes_intro">Detalhes</string>
@@ -75,7 +75,7 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
     <string name="fazenda_intro">Fazenda</string>
-    <string name="metas_intro">Métricas</string>
+    <string name="metas_intro">Metas</string>
 
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>

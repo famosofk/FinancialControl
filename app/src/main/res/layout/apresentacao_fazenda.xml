@@ -123,19 +123,19 @@
                 android:textSize="16sp" />
 
             <TextView
+                android:id="@+id/textMargemLiquidaApresentacao"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/margem_liquida"
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
+
+            <TextView
                 android:id="@+id/textMargemBrutaApresentacao"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
                 android:text="@string/margem_bruta"
-                android:textColor="@android:color/black"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/textMargemLiquidaApresentacao"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/margem_liquida"
                 android:textColor="@android:color/black"
                 android:textSize="16sp" />
 
