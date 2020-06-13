@@ -146,10 +146,12 @@
             android:textSize="16sp" />
 
         <LinearLayout
+            android:id="@+id/layoutReforma"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:padding="8dp">
+            android:padding="8dp"
+            android:visibility="gone">
 
             <Spinner
                 android:id="@+id/tipoReformaSpinner"
@@ -170,7 +172,8 @@
                 android:layout_height="40dp"
                 android:layout_weight="1"
                 android:background="@drawable/spinner_shape"
-                android:spinnerMode="dialog" />
+                android:spinnerMode="dialog"
+                android:textAlignment="center" />
         </LinearLayout>
 
         <Switch
