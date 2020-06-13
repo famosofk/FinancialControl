@@ -28,5 +28,17 @@ open class FluxoCaixa() : RealmObject() {
         return total;
     }
 
+    fun calcularSaldo(): Float {
+        var total = 0f;
+        for (item in list) {
+            if (item.tipo) {
+                total -= item.valor
+            } else {
+                total += item.valor
+            }
+        }
+        return total;
+    }
+
 
 }

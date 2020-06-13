@@ -29,8 +29,8 @@ open class BalancoPatrimonial : RealmObject() {
     var saldo: Float = 0f
     var dividasLongoPrazo: Float = 0f
     var dinheiroBanco: Float = 0f
-    var custoOportunidadeTrabalho: Float = 0f //valor. Lido ao cadastrar balanço.
-    var trabalhoFamiliarNaoRemunerado: Float = 0f //valor. Lido ao cadastrar balanço.
+    var custoOportunidadeTrabalho: Float = 0f
+    var trabalhoFamiliarNaoRemunerado: Float = 0f
     var pendenciasPagamento: Float =
         0f //Será atualizado com o valor das contas não pagas do ano anterior.
     var pendenciasRecebimento: Float =
