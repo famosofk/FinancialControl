@@ -38,6 +38,8 @@ open class BalancoPatrimonial : RealmObject() {
 
 
     fun atualizarBalanco() {
+        calcularAtivo()
+        calcularPassivo()
         calcularPatrimonioLiquido()
         calcularLiquidezGeral()
         calcularLiquidezCorrente()

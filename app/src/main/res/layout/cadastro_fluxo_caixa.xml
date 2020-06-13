@@ -115,7 +115,7 @@
             android:layout_marginBottom="8dp"
             android:ems="10"
             android:importantForAutofill="no"
-            android:inputType="textPersonName"
+            android:inputType="number|numberDecimal"
             tools:ignore="LabelFor" />
 
         <TextView
@@ -134,7 +134,7 @@
             android:layout_marginBottom="8dp"
             android:ems="10"
             android:importantForAutofill="no"
-            android:inputType="textPersonName"
+            android:inputType="number|numberDecimal"
             tools:ignore="LabelFor" />
 
         <Switch
@@ -209,7 +209,7 @@
                 android:layout_marginBottom="8dp"
                 android:ems="10"
                 android:importantForAutofill="no"
-                android:inputType="number|numberDecimal"
+                android:inputType="date"
                 tools:ignore="LabelFor" />
         </LinearLayout>
 
