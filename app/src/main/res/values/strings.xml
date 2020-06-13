@@ -45,7 +45,7 @@
     <string name="valor_amortizado_intro">Valor amortizado</string>
     <string name="cadastro_inventario_intro">Cadastro item</string>
     <string name="nome_intro">Nome</string>
-    <string name="ano_compra_intro">Ano de compra</string>
+    <string name="ano_compra_intro">Ano inicial</string>
     <string name="reforma_intro">Reforma</string>
     <string name="quantidade_atual_intro">Quantidade atual</string>
     <string name="resultados_fazenda">Resultados fazenda</string>
@@ -92,6 +92,8 @@
     <string name="animais_intro">Animais</string>
     <string name="insumos_intro">Insumos</string>
     <string name="produtos_intro">Produtos</string>
+    <string name="vida_util_restante">Vida útil restante</string>
+    <string name="ano_atual">2020</string>
 
     <string-array name="tiposItem">
         <item>Terra</item>

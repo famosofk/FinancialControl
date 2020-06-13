@@ -13,6 +13,7 @@ import com.example.agrogestao.models.BalancoPatrimonial
 import com.example.agrogestao.models.ItemBalancoPatrimonial
 import io.realm.Realm
 import io.realm.kotlin.where
+import kotlinx.android.synthetic.main.cadastro_inventario.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -24,6 +25,7 @@ class CadastroInventarioFragment : Fragment(), AdapterView.OnItemSelectedListene
     private lateinit var id: String
     private var atividadeSelecionada: String = ""
     private var tipoSelecionado: String = "Terra"
+    private lateinit var root: View
     val list = mutableListOf<String>()
 
     override fun onCreateView(
@@ -31,7 +33,7 @@ class CadastroInventarioFragment : Fragment(), AdapterView.OnItemSelectedListene
         savedInstanceState: Bundle?
     ): View? {
 
-        val root: View = inflater.inflate(R.layout.cadastro_inventario, container, false)
+        root = inflater.inflate(R.layout.cadastro_inventario, container, false)
         val realm = Realm.getDefaultInstance()
         val resultados = realm.where<AtividadesEconomicas>().findAll()
         for (atividade in resultados) {
@@ -45,6 +47,8 @@ class CadastroInventarioFragment : Fragment(), AdapterView.OnItemSelectedListene
                 list
             )
         }
+
+        atividadeSelecionada = list[0]
 
         val spinner: Spinner = root.findViewById(R.id.spinnerAtividadeItem)
         spinner.adapter = adapter
@@ -69,6 +73,8 @@ class CadastroInventarioFragment : Fragment(), AdapterView.OnItemSelectedListene
     private fun processamentoDados(root: View, balanco: BalancoPatrimonial, realm: Realm) {
 
         val button: Button = root.findViewById(R.id.salvarItemInventario)
+        val linearLayout: LinearLayout = root.findViewById(R.id.layoutCompraReforma)
+
 
         button.setOnClickListener {
             var item = ItemBalancoPatrimonial()
@@ -79,25 +85,27 @@ class CadastroInventarioFragment : Fragment(), AdapterView.OnItemSelectedListene
             item.quantidadeInicial = quantidadeInicial.text.toString().trim().toFloat()
             val valorUnitario: EditText = root.findViewById(R.id.valorUnitarioItemInventario)
             item.valorUnitario = valorUnitario.text.toString().trim().toFloat()
-            val anoCompra: EditText = root.findViewById(R.id.anoCompraItemInventario)
-            item.anoProducao = anoCompra.text.toString().trim().toInt()
-            val reforma: EditText = root.findViewById(R.id.reformaItemInventario)
-            item.reforma = reforma.text.toString().trim().toFloat()
             val quantidadeAtual: EditText = root.findViewById(R.id.quantidadeAtualItemCadastro)
             item.quantidadeFinal = quantidadeAtual.text.toString().trim().toFloat()
             item.tipo = tipoSelecionado
             item.atividade = atividadeSelecionada
+            if (tipoSelecionado != "Terra") {
+                val anoCompra: EditText = root.findViewById(R.id.anoCompraItemInventario)
+                item.anoProducao = anoCompra.text.toString().trim().toInt()
+                val reforma: EditText = root.findViewById(R.id.reformaItemInventario)
+                item.reforma = reforma.text.toString().trim().toFloat()
+            }
+            if (tipoSelecionado == "Benfeitoria") {
+                val vidaUtil: EditText = root.findViewById(R.id.vidaUtilItemCadastro)
+                item.vidaUtil = vidaUtilItemCadastro.text.toString().trim().toInt()
+            }
 
             realm.beginTransaction()
             balanco.listaItens.add(item)
             realm.commitTransaction()
 
             root.findNavController().navigate(R.id.from_cadastroInventario_to_apresentarFazenda)
-
-
         }
-
-
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -109,6 +117,18 @@ class CadastroInventarioFragment : Fragment(), AdapterView.OnItemSelectedListene
                 val otherSeriesList =
                     ArrayList<String>(Arrays.asList(*resources.getStringArray(R.array.tiposItem)))
                 tipoSelecionado = otherSeriesList[position]
+                val layoutCompraReforma: LinearLayout = root.findViewById(R.id.layoutCompraReforma)
+                val layoutVidaUtil: LinearLayout = root.findViewById(R.id.layoutVidaUtil)
+                if (tipoSelecionado != otherSeriesList[0]) {
+                    layoutCompraReforma.visibility = View.VISIBLE
+                    layoutVidaUtil.visibility = View.GONE
+                    if (tipoSelecionado == otherSeriesList[1]) {
+                        layoutVidaUtil.visibility = View.VISIBLE
+                    }
+                } else {
+                    layoutCompraReforma.visibility = View.GONE
+                    layoutVidaUtil.visibility = View.GONE
+                }
             }
 
             if (parent.id == R.id.spinnerAtividadeItem) {
