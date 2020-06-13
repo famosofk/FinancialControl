@@ -14,10 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.agrogestao.R
-import com.example.agrogestao.models.AtividadesEconomicas
-import com.example.agrogestao.models.BalancoPatrimonial
-import com.example.agrogestao.models.Farm
-import com.example.agrogestao.models.FarmProgram
+import com.example.agrogestao.models.*
 import com.example.agrogestao.view.adapter.FazendasAdapter
 import com.example.agrogestao.view.listener.FarmListener
 import com.example.agrogestao.viewmodel.AtividadesViewModel
@@ -151,8 +148,11 @@ class AtividadesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
         when {
             farm != null -> {
                 realm.copyToRealm(farm)
-                val balancoPatrimonial = BalancoPatrimonial()
+                var balancoPatrimonial = BalancoPatrimonial()
                 balancoPatrimonial.farm = farm.id
+                var fluxoCaixa = FluxoCaixa()
+                fluxoCaixa.farm = farm.id
+                realm.copyToRealm(fluxoCaixa)
                 realm.copyToRealm(balancoPatrimonial)
             }
             economicalActivity != null -> {

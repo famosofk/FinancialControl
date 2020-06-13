@@ -94,6 +94,7 @@
     <string name="produtos_intro">Produtos</string>
     <string name="vida_util_restante">Vida útil restante</string>
     <string name="ano_atual">2020</string>
+    <string name="pagamento_prazo">Pagamento a prazo</string>
 
     <string-array name="tiposItem">
         <item>Terra</item>

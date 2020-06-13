@@ -2,7 +2,8 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:textAlignment="center">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -42,29 +43,10 @@
             android:id="@+id/editText19"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
             android:layout_marginBottom="8dp"
-            android:importantForAutofill="no"
-            tools:ignore="LabelFor" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:fontFamily="@font/roboto"
-            android:text="@string/descricao_intro"
-            android:textColor="@color/colorPrimary"
-            android:textSize="16sp" />
-
-        <EditText
-            android:id="@+id/editText20"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
             android:ems="10"
             android:importantForAutofill="no"
-            android:inputType="textPersonName"
+            android:inputType="date"
             tools:ignore="LabelFor" />
 
         <ToggleButton
@@ -74,6 +56,7 @@
             android:layout_gravity="center"
             android:layout_marginBottom="16dp"
             android:background="@drawable/toggle_button_shape"
+            android:checked="false"
             android:textColor="@android:color/white"
             android:textOff="@string/entrada_intro"
             android:textOn="@string/saida_intro" />
@@ -91,10 +74,10 @@
             android:id="@+id/editText21"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
             android:layout_marginBottom="8dp"
+            android:ems="10"
             android:importantForAutofill="no"
+            android:inputType="textPersonName"
             tools:ignore="LabelFor" />
 
         <TextView
@@ -110,10 +93,10 @@
             android:id="@+id/editText22"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
             android:layout_marginBottom="8dp"
+            android:ems="10"
             android:importantForAutofill="no"
+            android:inputType="numberDecimal"
             tools:ignore="LabelFor" />
 
         <TextView
@@ -129,29 +112,10 @@
             android:id="@+id/editText23"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
             android:layout_marginBottom="8dp"
-            android:importantForAutofill="no"
-            tools:ignore="LabelFor" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:fontFamily="@font/roboto"
-            android:text="@string/data_vencimento_intro"
-            android:textColor="@color/colorPrimary"
-            android:textSize="16sp" />
-
-        <EditText
-            android:id="@+id/editText24"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:layout_marginBottom="8dp"
             android:importantForAutofill="no"
+            android:inputType="textPersonName"
             tools:ignore="LabelFor" />
 
         <TextView
@@ -167,17 +131,91 @@
             android:id="@+id/editText25"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
             android:layout_marginBottom="8dp"
+            android:ems="10"
             android:importantForAutofill="no"
+            android:inputType="textPersonName"
             tools:ignore="LabelFor" />
+
+        <Switch
+            android:id="@+id/switchReforma"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/reforma_intro"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:padding="8dp">
+
+            <Spinner
+                android:id="@+id/tipoReformaSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:background="@drawable/spinner_shape"
+                android:entries="@array/tiposItem"
+                android:textAlignment="center" />
+
+            <Space
+                android:layout_width="8dp"
+                android:layout_height="wrap_content" />
+
+            <Spinner
+                android:id="@+id/objetoReformaSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:background="@drawable/spinner_shape"
+                android:spinnerMode="dialog" />
+        </LinearLayout>
+
+        <Switch
+            android:id="@+id/switchPrazo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="@string/pagamento_prazo"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:id="@+id/layoutVencimento"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:fontFamily="@font/roboto"
+                android:text="@string/data_vencimento_intro"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/editText24"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:ems="10"
+                android:importantForAutofill="no"
+                android:inputType="number|numberDecimal"
+                tools:ignore="LabelFor" />
+        </LinearLayout>
 
         <Button
             android:id="@+id/button2"
             android:layout_width="250dp"
             android:layout_height="48dp"
             android:layout_gravity="center"
+            android:layout_marginTop="16dp"
             android:background="@drawable/round_background_orange"
             android:text="@string/cadastro_intro_value"
             android:textColor="@android:color/white" />
