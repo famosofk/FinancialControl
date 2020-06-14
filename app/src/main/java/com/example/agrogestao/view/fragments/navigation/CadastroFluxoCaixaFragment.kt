@@ -8,10 +8,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
 import com.example.agrogestao.R
-import com.example.agrogestao.models.BalancoPatrimonial
-import com.example.agrogestao.models.FluxoCaixa
-import com.example.agrogestao.models.ItemBalancoPatrimonial
-import com.example.agrogestao.models.RegistradorFarm
+import com.example.agrogestao.models.*
 import io.realm.Realm
 import io.realm.kotlin.where
 import java.text.SimpleDateFormat
@@ -72,7 +69,50 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
         return root
     }
 
-    private fun salvarItem() {}
+    private fun salvarItem() {
+
+        val tipo: ToggleButton = root.findViewById(R.id.entradaSaidaButton)
+        var item = ItemFluxoCaixa(tipo.isChecked)
+        val nome: EditText = root.findViewById(R.id.nomeItemCadastrarFluxoCaixa)
+        item.nome = nome.text.toString()
+        val data: EditText = root.findViewById(R.id.dataCadastroItemFluxoCaixa)
+        item.data = data.text.toString()
+        val conta: EditText = root.findViewById(R.id.contaCadastroItemFluxoCaixa)
+        item.conta = conta.text.toString()
+        val quantidadeInicial: EditText =
+            root.findViewById(R.id.quantidadeInicialCadastroItemFluxoCaixa)
+        item.quantidadeInicial = quantidadeInicial.text.toString().toFloat()
+        val valorInicial: EditText = root.findViewById(R.id.valorUnitarioCadastroItemFluxoCaixa)
+        item.valorInicial = valorInicial.text.toString().toFloat()
+        val valorAmortizado: EditText =
+            root.findViewById(R.id.valorAmortizadoCadastroItemFluxoCaixa)
+        item.valorAmortizado = valorAmortizado.text.toString().toFloat()
+
+
+        val switchReforma: Switch = root.findViewById(R.id.switchReforma)
+        if (switchReforma.isChecked) {
+            var itemInventario: ItemBalancoPatrimonial? =
+                realm.where<ItemBalancoPatrimonial>().contains("idItem", idItem).findFirst()
+            if (itemInventario != null) {
+                realm.beginTransaction()
+                itemInventario.reforma += item.valorInicial
+                realm.commitTransaction()
+            }
+
+        }
+
+        val switchPrazo: Switch = root.findViewById(R.id.switchPrazo)
+        if (switchPrazo.isChecked) {
+            val dataVencimento: EditText =
+                root.findViewById(R.id.dataVencimentoCadastroItemFluxoCaixa)
+            item.dataPagamentoPrazo = dataVencimento.text.toString()
+        }
+
+        realm.beginTransaction()
+        fluxoCaixa.list.add(item)
+        realm.commitTransaction()
+
+    }
 
     private fun recuperarFluxoCaixa() {
         val registradorFarm = realm.where<RegistradorFarm>().findFirst()!!

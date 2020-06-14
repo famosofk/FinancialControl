@@ -4,11 +4,12 @@ import io.realm.RealmObject
 
 open class ItemFluxoCaixa(var tipo: Boolean = false) : RealmObject() {
 
-    var valor = 0f;
+    var valorAtual = 0f;
+    var valorInicial = 0f;
     var nome = ""
     var data = ""
     var conta = ""
-    var quantidadeInicial = ""
+    var quantidadeInicial = 0f
     var valorUnitario = 0f
     var valorAmortizado = 0f
     var reforma = false
