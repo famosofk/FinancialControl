@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import com.example.agrogestao.R
 import com.example.agrogestao.models.AtividadesEconomicas
 import com.example.agrogestao.models.BalancoPatrimonial
@@ -84,7 +85,6 @@ class CadastroInventarioFragment : Fragment(), AdapterView.OnItemSelectedListene
             item.quantidadeInicial = quantidadeInicial.text.toString().trim().toFloat()
             val valorUnitario: EditText = root.findViewById(R.id.valorUnitarioItemInventario)
             item.valorUnitario = valorUnitario.text.toString().trim().toFloat()
-            Toast.makeText(context, valorUnitario.text.toString(), Toast.LENGTH_SHORT).show()
             val quantidadeAtual: EditText = root.findViewById(R.id.quantidadeAtualItemCadastro)
             item.quantidadeFinal = quantidadeAtual.text.toString().trim().toFloat()
             item.tipo = tipoSelecionado
@@ -100,15 +100,15 @@ class CadastroInventarioFragment : Fragment(), AdapterView.OnItemSelectedListene
                 item.vidaUtil = vidaUtilItemCadastro.text.toString().trim().toInt()
             }
 
-            Toast.makeText(context, "" + balanco.patrimonioLiquido, Toast.LENGTH_SHORT).show()
 
-            val ativo = item.valorUnitario * item.quantidadeFinal
+
             realm.beginTransaction()
             balanco.listaItens.add(item)
-            balanco.calcularPatrimonioLiquido()
+
+            balanco.patrimonioLiquido = balanco.calcularPatrimonioLiquido()
             realm.commitTransaction()
-            // Toast.makeText(context, ""+, Toast.LENGTH_SHORT).show()
-            //root.findNavController().navigate(R.id.from_cadastroInventario_to_apresentarFazenda)
+
+            root.findNavController().navigate(R.id.from_cadastroInventario_to_apresentarFazenda)
         }
     }
 
