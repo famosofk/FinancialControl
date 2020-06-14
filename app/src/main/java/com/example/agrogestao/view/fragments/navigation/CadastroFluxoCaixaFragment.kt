@@ -1,5 +1,6 @@
 package com.example.agrogestao.view.fragments.navigation
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,7 @@ import com.example.agrogestao.models.ItemBalancoPatrimonial
 import com.example.agrogestao.models.RegistradorFarm
 import io.realm.Realm
 import io.realm.kotlin.where
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -25,7 +27,9 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
     private lateinit var fluxoCaixa: FluxoCaixa
     private lateinit var balancoPatrimonial: BalancoPatrimonial
     private var list = mutableListOf<String>()
+    private var idItem: String? = null
 
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -34,7 +38,8 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
         realm = Realm.getDefaultInstance()
         recuperarFluxoCaixa()
 
-        val resultados = realm.where<ItemBalancoPatrimonial>().contains("tipo", "Terra").findAll()
+        val resultados =
+            realm.where<ItemBalancoPatrimonial>().contains("tipo", "Benfeitoria").findAll()
         for (atividade in resultados) {
             list.add(atividade.nome)
         }
@@ -46,15 +51,28 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
                 list
             )
         }
+
         val spinner: Spinner = root.findViewById(R.id.tipoReformaSpinner)
         spinner.onItemSelectedListener = this
         val spinner2: Spinner = root.findViewById(R.id.objetoReformaSpinner)
         spinner2.adapter = adapter
         spinner2.onItemSelectedListener = this
+
+        val date = Calendar.getInstance().time
+        val sdf = SimpleDateFormat("dd/MM/yyyy")
+        val formatedDate = sdf.format(date)
+        val editText: EditText = root.findViewById(R.id.dataCadastroItemFluxoCaixa)
+        editText.setText(formatedDate)
+
         listenersAndVisibility()
+
+        val button: Button = root.findViewById(R.id.cadastrarItemFluxoCaixa)
+        button.setOnClickListener { salvarItem() }
 
         return root
     }
+
+    private fun salvarItem() {}
 
     private fun recuperarFluxoCaixa() {
         val registradorFarm = realm.where<RegistradorFarm>().findFirst()!!
@@ -66,7 +84,7 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
     private fun listenersAndVisibility() {
 
 
-        val switchPrazo: Switch = root.findViewById(R.id.switchPrazo);
+        val switchPrazo: Switch = root.findViewById(R.id.switchPrazo)
         switchPrazo.setOnClickListener {
             val layoutVencimento: LinearLayout = root.findViewById(R.id.layoutVencimento)
             if (switchPrazo.isChecked) {
@@ -98,7 +116,7 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
             if (parent.id == R.id.tipoReformaSpinner) {
                 val realm = Realm.getDefaultInstance()
                 val otherSeriesList =
-                    ArrayList<String>(Arrays.asList(*resources.getStringArray(R.array.tiposItem)))
+                    ArrayList<String>(Arrays.asList(*resources.getStringArray(R.array.bensDepreciaveis)))
                 val listaOpcoes = realm.where<ItemBalancoPatrimonial>()
                     .contains("tipo", otherSeriesList[position]).findAll()
                 if (listaOpcoes.count() > 0) {
@@ -135,7 +153,7 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
 
             }
             if (parent.id == R.id.objetoReformaSpinner) {
-
+                idItem = list[position]
             }
         }
     }

@@ -103,8 +103,12 @@
         <item>Animais</item>
         <item>Insumos</item>
         <item>Produtos</item>
+    </string-array>
 
 
+    <string-array name="bensDepreciaveis">
+        <item>Benfeitoria</item>
+        <item>Máquinas</item>
     </string-array>
 
 </resources>

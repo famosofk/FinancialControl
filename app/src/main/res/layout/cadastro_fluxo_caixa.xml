@@ -21,13 +21,15 @@
             android:textSize="16sp" />
 
         <EditText
-            android:id="@+id/editTex"
+            android:id="@+id/nomeItemCadastrarFluxoCaixa"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:ems="10"
             android:importantForAutofill="no"
             android:inputType="textPersonName"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
             tools:ignore="LabelFor" />
 
         <TextView
@@ -40,13 +42,15 @@
             android:textSize="16sp" />
 
         <EditText
-            android:id="@+id/editText19"
+            android:id="@+id/dataCadastroItemFluxoCaixa"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:ems="10"
             android:importantForAutofill="no"
             android:inputType="date"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
             tools:ignore="LabelFor" />
 
         <ToggleButton
@@ -71,13 +75,15 @@
             android:textSize="16sp" />
 
         <EditText
-            android:id="@+id/editText21"
+            android:id="@+id/contaCadastroItemFluxoCaixa"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:ems="10"
             android:importantForAutofill="no"
             android:inputType="textPersonName"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
             tools:ignore="LabelFor" />
 
         <TextView
@@ -90,13 +96,15 @@
             android:textSize="16sp" />
 
         <EditText
-            android:id="@+id/editText22"
+            android:id="@+id/quantidadeInicialCadastroItemFluxoCaixa"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:ems="10"
             android:importantForAutofill="no"
             android:inputType="numberDecimal"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
             tools:ignore="LabelFor" />
 
         <TextView
@@ -109,13 +117,15 @@
             android:textSize="16sp" />
 
         <EditText
-            android:id="@+id/editText23"
+            android:id="@+id/valorUnitarioCadastroItemFluxoCaixa"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:ems="10"
             android:importantForAutofill="no"
             android:inputType="number|numberDecimal"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
             tools:ignore="LabelFor" />
 
         <TextView
@@ -128,13 +138,15 @@
             android:textSize="16sp" />
 
         <EditText
-            android:id="@+id/editText25"
+            android:id="@+id/valorAmortizadoCadastroItemFluxoCaixa"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:ems="10"
             android:importantForAutofill="no"
             android:inputType="number|numberDecimal"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
             tools:ignore="LabelFor" />
 
         <Switch
@@ -159,7 +171,7 @@
                 android:layout_height="40dp"
                 android:layout_weight="1"
                 android:background="@drawable/spinner_shape"
-                android:entries="@array/tiposItem"
+                android:entries="@array/bensDepreciaveis"
                 android:textAlignment="center" />
 
             <Space
@@ -203,18 +215,20 @@
                 android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/editText24"
+                android:id="@+id/dataVencimentoCadastroItemFluxoCaixa"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:ems="10"
                 android:importantForAutofill="no"
                 android:inputType="date"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
                 tools:ignore="LabelFor" />
         </LinearLayout>
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/cadastrarItemFluxoCaixa"
             android:layout_width="250dp"
             android:layout_height="48dp"
             android:layout_gravity="center"

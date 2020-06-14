@@ -1,6 +1,7 @@
 package com.example.agrogestao.models
 
 import io.realm.RealmObject
+import java.util.*
 
 open class ItemBalancoPatrimonial() : RealmObject() {
 
@@ -15,7 +16,7 @@ open class ItemBalancoPatrimonial() : RealmObject() {
 
     var nome: String = "";
     var dataCompra: String = ""
-
+    var idItem = UUID.randomUUID().toString()
     var quantidadeInicial: Float = 0f
     var quantidadeFinal: Float = 0f
     var receitaBruta: Float = 0f

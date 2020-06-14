@@ -85,6 +85,7 @@ class CadastroInventarioFragment : Fragment(), AdapterView.OnItemSelectedListene
             item.quantidadeInicial = quantidadeInicial.text.toString().trim().toFloat()
             val valorUnitario: EditText = root.findViewById(R.id.valorUnitarioItemInventario)
             item.valorUnitario = valorUnitario.text.toString().trim().toFloat()
+            item.valorInicial = item.valorUnitario
             val quantidadeAtual: EditText = root.findViewById(R.id.quantidadeAtualItemCadastro)
             item.quantidadeFinal = quantidadeAtual.text.toString().trim().toFloat()
             item.tipo = tipoSelecionado

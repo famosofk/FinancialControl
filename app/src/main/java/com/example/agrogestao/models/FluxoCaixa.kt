@@ -12,7 +12,7 @@ open class FluxoCaixa() : RealmObject() {
         var total: Float = 0f;
         for (item in list) {
             if (!item.tipo) {
-                total += item.valor
+                total += item.valor - item.valorAmortizado
             }
         }
         return total;
@@ -22,7 +22,7 @@ open class FluxoCaixa() : RealmObject() {
         var total: Float = 0f;
         for (item in list) {
             if (item.tipo) {
-                total += item.valor
+                total += item.valor - item.valorAmortizado
             }
         }
         return total;
