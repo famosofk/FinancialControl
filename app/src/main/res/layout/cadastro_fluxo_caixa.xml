@@ -147,6 +147,7 @@
             android:inputType="number|numberDecimal"
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
+            android:text="0"
             tools:ignore="LabelFor" />
 
         <Switch

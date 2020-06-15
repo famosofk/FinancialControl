@@ -71,6 +71,8 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
 
     private fun salvarItem() {
 
+        Toast.makeText(context, "chamou salvar", Toast.LENGTH_SHORT).show()
+
         val tipo: ToggleButton = root.findViewById(R.id.entradaSaidaButton)
         var item = ItemFluxoCaixa(tipo.isChecked)
         val nome: EditText = root.findViewById(R.id.nomeItemCadastrarFluxoCaixa)
