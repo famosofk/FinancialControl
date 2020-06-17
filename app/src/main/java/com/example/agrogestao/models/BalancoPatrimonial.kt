@@ -46,7 +46,7 @@ open class BalancoPatrimonial : RealmObject() {
     }
 
     fun calcularLiquidezGeral(): Float {
-        return calcularAtivo() / calcularPassivo()
+        return (calcularAtivo() / calcularPassivo())
     }
 
     fun calcularLiquidezCorrente(): Float {
@@ -64,7 +64,7 @@ open class BalancoPatrimonial : RealmObject() {
                     ItemBalancoPatrimonial.ITEM_PRODUTOS
                 )
             ) {
-                total += (item.quantidadeFinal * item.valorUnitario)
+                total += (item.quantidadeFinal * item.valorUnitario + item.reforma)
             }
         }
         return total
@@ -74,14 +74,14 @@ open class BalancoPatrimonial : RealmObject() {
 
         var total = 0.0f
         for (item in listaItens) {
-            total += (item.quantidadeFinal * item.valorUnitario)
+            total += (item.quantidadeFinal * item.valorUnitario + item.reforma)
         }
         return total
     }
 
 
     fun calcularPatrimonioLiquido(): Float {
-        return calcularAtivo() - calcularPassivo()
+        return (calcularAtivo() - calcularPassivo())
     }
 
     fun calcularLucro(): Float {
@@ -107,7 +107,7 @@ open class BalancoPatrimonial : RealmObject() {
                     2020
                 )
             ) {
-                valorProdutos += (item.quantidadeFinal * item.valorUnitario)
+                valorProdutos += (item.quantidadeFinal * item.valorUnitario + item.reforma)
             }
         }
         return valorProdutos
@@ -147,7 +147,7 @@ open class BalancoPatrimonial : RealmObject() {
         var valorAnimais = 0.0f
         for (item in listaItens) {
             if (item.tipo.equals(ItemBalancoPatrimonial.ITEM_ANIMAIS)) {
-                valorAnimais += (item.quantidadeFinal * item.valorUnitario)
+                valorAnimais += (item.quantidadeFinal * item.valorUnitario + item.reforma)
             }
         }
         return valorAnimais
@@ -158,7 +158,7 @@ open class BalancoPatrimonial : RealmObject() {
         var valorInsumos = 0.0f
         for (item in listaItens) {
             if (item.tipo.equals(ItemBalancoPatrimonial.ITEM_INSUMOS)) {
-                valorInsumos += (item.quantidadeFinal * item.valorUnitario)
+                valorInsumos += (item.quantidadeFinal * item.valorUnitario + item.reforma)
             }
         }
         return valorInsumos

@@ -105,8 +105,11 @@ class CadastroInventarioFragment : Fragment(), AdapterView.OnItemSelectedListene
 
             realm.beginTransaction()
             balanco.listaItens.add(item)
-
+            Toast.makeText(context, "" + balanco.listaItens.size, Toast.LENGTH_SHORT).show()
             balanco.patrimonioLiquido = balanco.calcularPatrimonioLiquido()
+            balanco.ativo = balanco.calcularAtivo()
+            balanco.liquidezGeral = balanco.calcularLiquidezGeral()
+            balanco.passivo = balanco.calcularPassivo()
             realm.commitTransaction()
 
             root.findNavController().navigate(R.id.from_cadastroInventario_to_apresentarFazenda)
