@@ -95,6 +95,12 @@
     <string name="vida_util_restante">Vida útil restante</string>
     <string name="ano_atual">2020</string>
     <string name="pagamento_prazo">Pagamento a prazo</string>
+    <string name="saldo_bancario_hint">O capital que você possui no banco.</string>
+    <string name="contas_receber_hint">Valor contas a receber.</string>
+    <string name="contas_receber">Soma das contas a pagar.</string>
+    <string name="venda_propriedade">Item do inventário</string>
+    <string name="saldo_bancario">Saldo bancário</string>
+    <string name="saldo_hint_intro">Receitas - Despesas</string>
 
     <string-array name="tiposItem">
         <item>Terra</item>
@@ -109,6 +115,12 @@
     <string-array name="bensDepreciaveis">
         <item>Benfeitoria</item>
         <item>Máquinas</item>
+    </string-array>
+
+    <string-array name="bensCompraVenda">
+        <item>Animais</item>
+        <item>Insumos</item>
+        <item>Produtos</item>
     </string-array>
 
 </resources>

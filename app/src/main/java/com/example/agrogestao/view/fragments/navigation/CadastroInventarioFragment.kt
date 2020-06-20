@@ -106,10 +106,11 @@ class CadastroInventarioFragment : Fragment(), AdapterView.OnItemSelectedListene
             realm.beginTransaction()
             balanco.listaItens.add(item)
             Toast.makeText(context, "" + balanco.listaItens.size, Toast.LENGTH_SHORT).show()
-            balanco.patrimonioLiquido = balanco.calcularPatrimonioLiquido()
-            balanco.ativo = balanco.calcularAtivo()
-            balanco.liquidezGeral = balanco.calcularLiquidezGeral()
-            balanco.passivo = balanco.calcularPassivo()
+            balanco.calcularPassivo()
+            balanco.calcularAtivo()
+            balanco.calcularPatrimonioLiquido()
+            balanco.calcularLiquidezGeral()
+            balanco.calcularLiquidezCorrente()
             realm.commitTransaction()
 
             root.findNavController().navigate(R.id.from_cadastroInventario_to_apresentarFazenda)
@@ -127,15 +128,22 @@ class CadastroInventarioFragment : Fragment(), AdapterView.OnItemSelectedListene
                 tipoSelecionado = otherSeriesList[position]
                 val layoutCompraReforma: LinearLayout = root.findViewById(R.id.layoutCompraReforma)
                 val layoutVidaUtil: LinearLayout = root.findViewById(R.id.layoutVidaUtil)
+                val layoutReforma: LinearLayout = root.findViewById(R.id.layoutPropriedade)
                 if (tipoSelecionado != otherSeriesList[0]) {
                     layoutCompraReforma.visibility = View.VISIBLE
                     layoutVidaUtil.visibility = View.GONE
+                    layoutReforma.visibility = View.GONE
                     if (tipoSelecionado == otherSeriesList[1]) {
                         layoutVidaUtil.visibility = View.VISIBLE
+                        layoutReforma.visibility = View.VISIBLE
+                    }
+                    if (tipoSelecionado == otherSeriesList[2]) {
+                        layoutReforma.visibility = View.VISIBLE
                     }
                 } else {
                     layoutCompraReforma.visibility = View.GONE
                     layoutVidaUtil.visibility = View.GONE
+                    layoutReforma.visibility = View.GONE
                 }
             }
 

@@ -16,6 +16,7 @@ import com.example.agrogestao.models.Farm
 import com.example.agrogestao.viewmodel.AtualizarFazendaViewModel
 import io.realm.Realm
 import io.realm.kotlin.where
+import kotlinx.android.synthetic.main.atualizar_fazenda.*
 
 
 class AtualizarFazendaFragment : Fragment() {
@@ -63,10 +64,6 @@ class AtualizarFazendaFragment : Fragment() {
             metaRendaBruta.setText(it.metaRendaBruta.toString())
             val metaSaldo = view.findViewById<EditText>(R.id.saldoFazendaEdit)
             metaSaldo.setText(it.metasaldo.toString())
-            val metapagar = view.findViewById<EditText>(R.id.pagarFazendaEdit)
-            metapagar.setText(it.metaTotalPagar.toString())
-            val metareceber = view.findViewById<EditText>(R.id.receberFazendaEdit)
-            metareceber.setText(it.metaTotalReceber.toString())
             val metaPatrimonioLiquido =
                 view.findViewById<EditText>(R.id.patrimonioLiquidoFazendaEdit)
             metaPatrimonioLiquido.setText(it.metaPatrimonioLiquido.toString())
@@ -84,6 +81,14 @@ class AtualizarFazendaFragment : Fragment() {
             custoOportunidade.setText(it.custoOportunidadeTrabalho.toString())
             val dividasLongoPrazo = view.findViewById<EditText>(R.id.dividaLongoPrazoFazendaEdit)
             dividasLongoPrazo.setText(it.dividasLongoPrazo.toString())
+            val saldoAtual = view.findViewById<EditText>(R.id.saldoAtualFazendaEdit)
+            if (it.saldo != 0f) {
+                saldoAtual.setText(it.saldo.toString())
+            }
+            val metapagar = view.findViewById<EditText>(R.id.pagarFazendaEdit)
+            metapagar.setText(it.totalContasPagar.toString())
+            val metareceber = view.findViewById<EditText>(R.id.receberFazendaEdit)
+            metareceber.setText(it.totalContasReceber.toString())
 
 
         })
@@ -112,21 +117,22 @@ class AtualizarFazendaFragment : Fragment() {
         val liquidezCorrenteFazenda = root.findViewById<EditText>(R.id.liquidezCorrenteFazendaEdit)
         realm.beginTransaction()
 
-        farm.codigoFazenda = codigoFazenda.text.trim().toString()
+        farm.codigoFazenda = codigoFazenda.text.toString().trim()
         farm.area = areaFazenda.text.toString().trim().toFloat()
         farm.metaLucro = lucroFazenda.text.toString().trim().toFloat()
         farm.metaMargemLiquida = margemLiquidaFazenda.text.toString().trim().toFloat()
         farm.metaMargemBruta = margemBrutaFazenda.text.toString().trim().toFloat()
         farm.metaRendaBruta = rendaBrutaFazenda.text.toString().trim().toFloat()
         farm.metasaldo = saldoFazenda.text.toString().trim().toFloat()
-        farm.metaTotalPagar = pagarFazenda.text.toString().trim().toFloat()
-        farm.metaTotalReceber = receberFazenda.text.toString().trim().toFloat()
         farm.metaPatrimonioLiquido = patrimonioLiquidoFazenda.text.toString().trim().toFloat()
         farm.metaLiquidezGeral = liquidezGeralFazenda.text.toString().trim().toFloat()
         farm.metaLiquidezCorrente = liquidezCorrenteFazenda.text.toString().trim().toFloat()
         balanco.dividasLongoPrazo = dividasLP.text.toString().trim().toFloat()
         balanco.taxaRemuneracaoCapital = remuneracaoCapital.text.toString().trim().toFloat()
         balanco.custoOportunidadeTrabalho = custoOportunidade.text.toString().trim().toFloat()
+        balanco.totalContasPagar = pagarFazenda.text.toString().trim().toFloat()
+        balanco.totalContasReceber = receberFazenda.text.toString().trim().toFloat()
+        balanco.dinheiroBanco = saldoAtualFazendaEdit.text.toString().trim().toFloat()
 
         realm.commitTransaction()
 

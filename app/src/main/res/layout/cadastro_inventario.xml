@@ -79,6 +79,26 @@
             android:inputType="number|numberDecimal"
             tools:ignore="LabelFor" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/roboto"
+            android:text="@string/quantidade_atual_intro"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/quantidadeAtualItemCadastro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:ems="10"
+            android:importantForAutofill="no"
+            android:inputType="number|numberDecimal"
+            tools:ignore="LabelFor" />
+
+
         <LinearLayout
             android:id="@+id/layoutVidaUtil"
             android:layout_width="match_parent"
@@ -107,26 +127,6 @@
 
         </LinearLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:fontFamily="@font/roboto"
-            android:text="@string/quantidade_atual_intro"
-            android:textColor="@color/colorPrimary"
-            android:textSize="16sp" />
-
-        <EditText
-            android:id="@+id/quantidadeAtualItemCadastro"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:ems="10"
-            android:importantForAutofill="no"
-            android:inputType="number|numberDecimal"
-            tools:ignore="LabelFor" />
-
-
         <LinearLayout
             android:id="@+id/layoutCompraReforma"
             android:layout_width="match_parent"
@@ -153,6 +153,14 @@
                 android:inputType="date"
                 android:text="@string/ano_atual"
                 tools:ignore="LabelFor" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutPropriedade"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="match_parent"

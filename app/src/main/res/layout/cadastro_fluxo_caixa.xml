@@ -150,43 +150,51 @@
             android:text="0"
             tools:ignore="LabelFor" />
 
-        <Switch
-            android:id="@+id/switchReforma"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/reforma_intro"
-            android:textColor="@color/colorPrimary"
-            android:textSize="16sp" />
-
         <LinearLayout
             android:id="@+id/layoutReforma"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:padding="8dp"
+            android:orientation="vertical"
             android:visibility="gone">
 
-            <Spinner
-                android:id="@+id/tipoReformaSpinner"
+            <Switch
+                android:id="@+id/switchReforma"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_weight="1"
-                android:background="@drawable/spinner_shape"
-                android:entries="@array/bensDepreciaveis"
-                android:textAlignment="center" />
+                android:layout_height="wrap_content"
+                android:text="@string/reforma_intro"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp" />
 
-            <Space
-                android:layout_width="8dp"
-                android:layout_height="wrap_content" />
-
-            <Spinner
-                android:id="@+id/objetoReformaSpinner"
+            <LinearLayout
+                android:id="@+id/layoutInventario"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_weight="1"
-                android:background="@drawable/spinner_shape"
-                android:spinnerMode="dialog"
-                android:textAlignment="center" />
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:padding="8dp"
+                android:visibility="gone">
+
+                <Spinner
+                    android:id="@+id/tipoReformaSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/spinner_shape"
+                    android:entries="@array/bensDepreciaveis"
+                    android:textAlignment="center" />
+
+                <Space
+                    android:layout_width="8dp"
+                    android:layout_height="wrap_content" />
+
+                <Spinner
+                    android:id="@+id/objetoReformaSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/spinner_shape"
+                    android:spinnerMode="dialog"
+                    android:textAlignment="center" />
+            </LinearLayout>
         </LinearLayout>
 
         <Switch
@@ -226,6 +234,45 @@
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp"
                 tools:ignore="LabelFor" />
+        </LinearLayout>
+
+        <Switch
+            android:id="@+id/switchPropriedade"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/venda_propriedade"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:id="@+id/layoutPropriedade"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:visibility="gone">
+
+            <Spinner
+                android:id="@+id/tipoPropriedadeSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:background="@drawable/spinner_shape"
+                android:entries="@array/bensCompraVenda"
+                android:textAlignment="center" />
+
+            <Space
+                android:layout_width="8dp"
+                android:layout_height="wrap_content" />
+
+            <Spinner
+                android:id="@+id/itemInventarioSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:background="@drawable/spinner_shape"
+                android:spinnerMode="dialog"
+                android:textAlignment="center" />
         </LinearLayout>
 
         <Button

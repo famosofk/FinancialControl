@@ -19,8 +19,6 @@ open class Farm(
     var metaMargemLiquida: Float = 0f
     var metaMargemBruta: Float = 0f
     var metaRendaBruta: Float = 0f
-    var metaTotalPagar: Float = 0f
-    var metaTotalReceber: Float = 0f
     var metaPatrimonioLiquido: Float = 0f
     var metaLucro: Float = 0f
     var metasaldo: Float = 0f

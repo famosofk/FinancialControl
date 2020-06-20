@@ -18,13 +18,18 @@ import kotlin.collections.ArrayList
 /**
  * A simple [Fragment] subclass.
  */
-class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListener {
+class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListener,
+    View.OnClickListener {
     private lateinit var root: View
     private lateinit var realm: Realm
     private lateinit var fluxoCaixa: FluxoCaixa
     private lateinit var balancoPatrimonial: BalancoPatrimonial
-    private var list = mutableListOf<String>()
-    private var idItem: String? = null
+    private var listBenfeitoriasMaquinas = mutableListOf<String>()
+    private var listBens = mutableListOf<String>()
+    private var idItemReforma: String? = null
+    private var idItemTransacao: String? = null
+    private var controleEntradaSaida = false
+
 
     @SuppressLint("SetTextI18n")
     override fun onCreateView(
@@ -34,26 +39,49 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
         root = inflater.inflate(R.layout.cadastro_fluxo_caixa, container, false)
         realm = Realm.getDefaultInstance()
         recuperarFluxoCaixa()
+        val buttonCompraVenda: ToggleButton = root.findViewById(R.id.entradaSaidaButton)
+        buttonCompraVenda.setOnClickListener(this)
 
-        val resultados =
+        val resultadosBenfeitoriasMaquinas =
             realm.where<ItemBalancoPatrimonial>().contains("tipo", "Benfeitoria").findAll()
-        for (atividade in resultados) {
-            list.add(atividade.nome)
+
+        for (atividade in resultadosBenfeitoriasMaquinas) {
+            listBenfeitoriasMaquinas.add(atividade.nome)
         }
 
-        val adapter = context?.let {
+        val adapterReformaObjeto = context?.let {
             ArrayAdapter(
                 it,
                 android.R.layout.simple_spinner_dropdown_item,
-                list
+                listBenfeitoriasMaquinas
+            )
+        }
+        val resultadosTerra =
+            realm.where<ItemBalancoPatrimonial>().contains("tipo", "Animais").findAll()
+        for (itemBalancoo in resultadosTerra) {
+            listBens.add(itemBalancoo.nome)
+        }
+        val adapterPropriedades = context?.let {
+            ArrayAdapter(
+                it,
+                android.R.layout.simple_spinner_dropdown_item,
+                listBens
             )
         }
 
-        val spinner: Spinner = root.findViewById(R.id.tipoReformaSpinner)
-        spinner.onItemSelectedListener = this
-        val spinner2: Spinner = root.findViewById(R.id.objetoReformaSpinner)
-        spinner2.adapter = adapter
-        spinner2.onItemSelectedListener = this
+
+        val spinnerReformaTipo: Spinner = root.findViewById(R.id.tipoReformaSpinner)
+        spinnerReformaTipo.onItemSelectedListener = this
+        val spinnerReformaObjeto: Spinner = root.findViewById(R.id.objetoReformaSpinner)
+        spinnerReformaObjeto.adapter = adapterReformaObjeto
+        spinnerReformaObjeto.onItemSelectedListener = this
+
+        val spinnerPropriedade: Spinner = root.findViewById(R.id.tipoPropriedadeSpinner)
+        spinnerPropriedade.onItemSelectedListener = this
+        val spinnerItemPropriedade: Spinner = root.findViewById(R.id.itemInventarioSpinner)
+        spinnerItemPropriedade.onItemSelectedListener = this
+        spinnerItemPropriedade.adapter = adapterPropriedades
+
 
         val date = Calendar.getInstance().time
         val sdf = SimpleDateFormat("dd/MM/yyyy")
@@ -89,18 +117,6 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
         item.valorAmortizado = valorAmortizado.text.toString().toFloat()
 
 
-        val switchReforma: Switch = root.findViewById(R.id.switchReforma)
-        if (switchReforma.isChecked) {
-            var itemInventario: ItemBalancoPatrimonial? =
-                realm.where<ItemBalancoPatrimonial>().contains("idItem", idItem).findFirst()
-            if (itemInventario != null) {
-                realm.beginTransaction()
-                itemInventario.reforma += item.valorInicial
-                realm.commitTransaction()
-            }
-
-        }
-
         val switchPrazo: Switch = root.findViewById(R.id.switchPrazo)
         if (switchPrazo.isChecked) {
             val dataVencimento: EditText =
@@ -108,11 +124,38 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
             item.dataPagamentoPrazo = dataVencimento.text.toString()
         }
 
+        val switchReforma: Switch = root.findViewById(R.id.switchReforma)
+        if (switchReforma.isChecked) {
+            var itemInventario: ItemBalancoPatrimonial? =
+                realm.where<ItemBalancoPatrimonial>().contains("idItem", idItemReforma).findFirst()
+            if (itemInventario != null) {
+                realm.beginTransaction()
+                itemInventario.reforma += item.valorInicial
+                realm.commitTransaction()
+            }
+        }
+        val switchInventario: Switch = root.findViewById(R.id.switchPropriedade)
+
+        realizarTransacao(item, switchInventario.isChecked)
+
+
+    }
+
+    private fun realizarTransacao(item: ItemFluxoCaixa, existente: Boolean) {
+
         realm.beginTransaction()
         fluxoCaixa.list.add(item)
+        if (controleEntradaSaida) {
+            //está saindo dinheiro
+            balancoPatrimonial.saldo
+        }
+
+
+
         realm.commitTransaction()
 
     }
+
 
     private fun recuperarFluxoCaixa() {
         val registradorFarm = realm.where<RegistradorFarm>().findFirst()!!
@@ -135,14 +178,23 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
         }
 
         val switchReforma: Switch = root.findViewById(R.id.switchReforma)
-        val layoutReforma: LinearLayout = root.findViewById(R.id.layoutReforma)
+        val layoutReforma: LinearLayout = root.findViewById(R.id.layoutInventario)
         switchReforma.setOnClickListener {
             if (switchReforma.isChecked) {
                 layoutReforma.visibility = View.VISIBLE
             } else {
                 layoutReforma.visibility = View.GONE
             }
+        }
 
+        val switchPropriedade: Switch = root.findViewById(R.id.switchPropriedade)
+        val layoutPropriedade: LinearLayout = root.findViewById(R.id.layoutPropriedade)
+        switchPropriedade.setOnClickListener {
+            if (switchPropriedade.isChecked) {
+                layoutPropriedade.visibility = View.VISIBLE
+            } else {
+                layoutPropriedade.visibility = View.GONE
+            }
         }
 
 
@@ -153,49 +205,105 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
 
         if (parent != null) {
+
             if (parent.id == R.id.tipoReformaSpinner) {
                 val realm = Realm.getDefaultInstance()
                 val otherSeriesList =
                     ArrayList<String>(Arrays.asList(*resources.getStringArray(R.array.bensDepreciaveis)))
                 val listaOpcoes = realm.where<ItemBalancoPatrimonial>()
                     .contains("tipo", otherSeriesList[position]).findAll()
+                listBenfeitoriasMaquinas.clear()
                 if (listaOpcoes.count() > 0) {
-                    list.clear()
                     for (itens in listaOpcoes) {
-                        list.add(itens.nome)
+                        listBenfeitoriasMaquinas.add(itens.nome)
                     }
-                    val spinnerItens: Spinner = root.findViewById(R.id.objetoReformaSpinner)
-                    val adapter = context?.let {
-                        ArrayAdapter(
-                            it,
-                            android.R.layout.simple_spinner_dropdown_item,
-                            list
-                        )
-                    }
-                    spinnerItens.adapter = adapter
                 } else {
                     Toast.makeText(
                         context,
                         "Não há itens desse tipo cadastrados",
                         Toast.LENGTH_SHORT
                     ).show()
-                    list.clear()
-                    val adapter = context?.let {
-                        ArrayAdapter(
-                            it,
-                            android.R.layout.simple_spinner_dropdown_item,
-                            list
-                        )
-                    }
-                    val spinnerItens: Spinner = root.findViewById(R.id.objetoReformaSpinner)
-                    spinnerItens.adapter = adapter
+                }
+                val adapter = context?.let {
+                    ArrayAdapter(
+                        it,
+                        android.R.layout.simple_spinner_dropdown_item,
+                        listBenfeitoriasMaquinas
+                    )
+                }
+                val spinnerItens: Spinner = root.findViewById(R.id.objetoReformaSpinner)
+                spinnerItens.adapter = adapter
+                if (listaOpcoes.size == 0) {
+                    idItemReforma = null
+                } else {
+                    idItemReforma = listaOpcoes[0]!!.idItem
                 }
 
             }
             if (parent.id == R.id.objetoReformaSpinner) {
-                idItem = list[position]
+                idItemReforma = listBenfeitoriasMaquinas[position]
+            }
+
+            if (parent.id == R.id.itemInventarioSpinner) {
+                idItemTransacao = listBens[position]
+            }
+
+            if (parent.id == R.id.tipoPropriedadeSpinner) {
+                val realm = Realm.getDefaultInstance()
+                val otherSeriesList =
+                    ArrayList<String>(Arrays.asList(*resources.getStringArray(R.array.bensCompraVenda)))
+                val listaOpcoes = realm.where<ItemBalancoPatrimonial>()
+                    .contains("tipo", otherSeriesList[position]).findAll()
+                listBens.clear()
+                if (listaOpcoes.count() > 0) {
+                    for (itens in listaOpcoes) {
+                        listBens.add(itens.nome)
+                    }
+
+                } else {
+                    Toast.makeText(
+                        context,
+                        "Não há itens desse tipo cadastrados",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                val adapterBens = context?.let {
+                    ArrayAdapter(
+                        it,
+                        android.R.layout.simple_spinner_dropdown_item,
+                        listBens
+                    )
+                }
+                val spinnerItens: Spinner = root.findViewById(R.id.itemInventarioSpinner)
+                spinnerItens.adapter = adapterBens
+                if (listaOpcoes.size == 0) {
+                    idItemTransacao = null
+                } else {
+                    idItemTransacao = listaOpcoes[0]!!.idItem
+                }
+            }
+
+
+        }
+    }
+
+    override fun onClick(v: View?) {
+        if (v != null) {
+
+            when (v.id) {
+                R.id.entradaSaidaButton -> {
+                    controleEntradaSaida = !controleEntradaSaida
+                    if (controleEntradaSaida) {
+                        val informacoesReforma = root.findViewById<LinearLayout>(R.id.layoutReforma)
+                        informacoesReforma.visibility = View.VISIBLE
+                    } else {
+                        val informacoesReforma = root.findViewById<LinearLayout>(R.id.layoutReforma)
+                        informacoesReforma.visibility = View.GONE
+                    }
+                }
             }
         }
     }
+
 
 }

@@ -22,8 +22,6 @@ open class BalancoPatrimonial : RealmObject() {
     var ativo: Float = 0f
     var passivo: Float = 0f
     var patrimonioLiquido: Float = 0f
-    var totalContasPagar: Float = 0f
-    var totalContasReceber: Float = 0f
     var rentabilidade: Float = 0f
     var lucro: Float = 0f
     var saldo: Float = 0f
@@ -35,23 +33,29 @@ open class BalancoPatrimonial : RealmObject() {
         0f //Será atualizado com o valor das contas não pagas do ano anterior.
     var pendenciasRecebimento: Float =
         0f //Será atualizado com o valor das contas não pagas do ano anterior.
+    var totalContasPagar: Float = 0f
+    var totalContasReceber: Float = 0f
 
 
-    fun calcularPassivo(): Float {
-        return dividasLongoPrazo + totalContasPagar
+    fun calcularPassivo() {
+        passivo = dividasLongoPrazo + totalContasPagar
     }
 
-    fun calcularAtivo(): Float {
-        return totalContasReceber + saldo + calcularValorAnimaisInsumosProdutos()
+    fun calcularAtivo() {
+        ativo = totalContasReceber + saldo + calcularValorAnimaisInsumosProdutos()
     }
 
-    fun calcularLiquidezGeral(): Float {
-        return (calcularAtivo() / calcularPassivo())
+    fun calcularLiquidezGeral() {
+        liquidezGeral = (ativo / passivo)
     }
 
-    fun calcularLiquidezCorrente(): Float {
+    fun calcularSaldo() {
+        saldo = totalReceitas - totalDespesas
+    }
 
-        return totalContasPagar / (saldo + calcularPatrimonioBens() + dinheiroBanco)
+    fun calcularLiquidezCorrente() {
+
+        liquidezCorrente = totalContasPagar / (saldo + calcularPatrimonioBens() + dinheiroBanco)
 
     }
 
@@ -80,24 +84,24 @@ open class BalancoPatrimonial : RealmObject() {
     }
 
 
-    fun calcularPatrimonioLiquido(): Float {
-        return (calcularAtivo() - calcularPassivo())
+    fun calcularPatrimonioLiquido() {
+        patrimonioLiquido = (ativo - passivo)
     }
 
-    fun calcularLucro(): Float {
-        return receitaBruta - calcularCustoTotal()
+    fun calcularLucro() {
+        lucro = receitaBruta - calcularCustoTotal()
     }
 
-    fun calcularMargemLiquida(): Float {
-        return receitaBruta - custoOperacionalTotal
+    fun calcularMargemLiquida() {
+        margemLiquida = receitaBruta - custoOperacionalTotal
     }
 
-    fun calcularMargemBruta(): Float {
-        return receitaBruta - custoOperacionalEfetivo
+    fun calcularMargemBruta() {
+        margemBruta = receitaBruta - custoOperacionalEfetivo
     }
 
-    fun calcularReceitaBruta(): Float {
-        return totalReceitas + calcularValorProdutos()
+    fun calcularReceitaBruta() {
+        receitaBruta = totalReceitas + calcularValorProdutos()
     }
 
     fun calcularValorProdutos(): Float {
@@ -118,28 +122,32 @@ open class BalancoPatrimonial : RealmObject() {
     }
 
     fun calcularOportunidadeCapital(): Float {
-        return patrimonioLiquido * taxaRemuneracaoCapital //Buscar em fazenda.
+        return patrimonioLiquido * taxaRemuneracaoCapital
     }
 
     fun calcularCustoOportunidadeCapital(): Float {
         return patrimonioLiquido * taxaRemuneracaoCapital
     }
 
-    fun calcularCustoOperacionalTotal(depreciacao: Float): Float {
-        return custoOperacionalEfetivo + depreciacao + trabalhoFamiliarNaoRemunerado
+    fun calcularCustoOperacionalTotal() {
+
+        var depreciacao = 0f
+        for (item in listaItens) {
+            depreciacao += item.depreciacao
+        }
+
+        custoOperacionalTotal =
+            custoOperacionalEfetivo + depreciacao + trabalhoFamiliarNaoRemunerado
     }
 
 
-    fun calcularCustoOperacionalEfetivo(): Float {
-        return totalDespesas + totalContasPagar - pendenciasPagamento
+    fun calcularCustoOperacionalEfetivo() {
+        custoOperacionalEfetivo = totalDespesas + totalContasPagar - pendenciasPagamento
     }
 
-    fun calcularSaldo(): Float {
-        return totalReceitas - totalDespesas
-    }
 
-    fun calcularRentabilidade(): Float {
-        return receitaBruta - patrimonioLiquido
+    fun calcularRentabilidade() {
+        rentabilidade = receitaBruta - patrimonioLiquido
     }
 
 
