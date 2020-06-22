@@ -112,6 +112,7 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
         item.quantidadeInicial = quantidadeInicial.text.toString().toFloat()
         val valorInicial: EditText = root.findViewById(R.id.valorUnitarioCadastroItemFluxoCaixa)
         item.valorInicial = valorInicial.text.toString().toFloat()
+        item.valorAtual = item.valorInicial
         val valorAmortizado: EditText =
             root.findViewById(R.id.valorAmortizadoCadastroItemFluxoCaixa)
         item.valorAmortizado = valorAmortizado.text.toString().toFloat()
@@ -122,10 +123,12 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
             val dataVencimento: EditText =
                 root.findViewById(R.id.dataVencimentoCadastroItemFluxoCaixa)
             item.dataPagamentoPrazo = dataVencimento.text.toString()
+            item.pagamentoPrazo = true
         }
 
         val switchReforma: Switch = root.findViewById(R.id.switchReforma)
         if (switchReforma.isChecked) {
+            item.reforma = true
             var itemInventario: ItemBalancoPatrimonial? =
                 realm.where<ItemBalancoPatrimonial>().contains("idItem", idItemReforma).findFirst()
             if (itemInventario != null) {
@@ -143,17 +146,77 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
 
     private fun realizarTransacao(item: ItemFluxoCaixa, existente: Boolean) {
 
-        realm.beginTransaction()
-        fluxoCaixa.list.add(item)
-        if (controleEntradaSaida) {
-            //está saindo dinheiro
-            balancoPatrimonial.saldo
+
+        if (existente) {
+            if (verificarViabilidadeTransacao(item, controleEntradaSaida)) {
+                processarMovimentacao(item)
+            } else {
+                Toast.makeText(context, "Impossível movimentar.", Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            processarMovimentacao(item)
         }
 
 
+    }
 
+    private fun verificarViabilidadeTransacao(item: ItemFluxoCaixa, venda: Boolean): Boolean {
+        var bool = false
+        if (venda) {
+            var itemInventario: ItemBalancoPatrimonial? =
+                realm.where<ItemBalancoPatrimonial>().contains("idItem", idItemTransacao!!)
+                    .findFirst()
+            if (controleEntradaSaida) {
+                if (item.quantidadeInicial < itemInventario!!.quantidadeFinal) {
+                    realm.beginTransaction()
+                    itemInventario.quantidadeFinal -= item.quantidadeInicial
+                    realm.commitTransaction()
+                    bool = true
+                }
+            } else {
+                realm.beginTransaction()
+                itemInventario!!.quantidadeFinal += item.quantidadeInicial
+                realm.commitTransaction()
+                bool = true
+            }
+        } else {
+            bool = true
+        }
+        return bool
+    }
+
+    private fun processarMovimentacao(item: ItemFluxoCaixa) {
+
+        realm.beginTransaction()
+        fluxoCaixa.list.add(item)
+
+
+        /*  Eu adiciono em totaldespesas, porem se é a longo prazo, coloco em contas a pagar. Caso seja uma conta a pagar, isso deveria
+          entrar no saldo? Se não deve entrar, não podemos somar o valor em totalDespesas, pois a função calcular saldo tem
+            saldo = totalReceitas - totalDespesas */
+
+        if (controleEntradaSaida) {
+            //está saindo dinheiro
+            balancoPatrimonial.totalDespesas += item.valorInicial * item.quantidadeInicial
+            if (item.pagamentoPrazo) {
+                balancoPatrimonial.totalContasPagar += item.valorInicial * item.quantidadeInicial
+            } else {
+                balancoPatrimonial.dinheiroBanco += item.valorInicial * item.quantidadeInicial
+            }
+        } else {
+            //está entrando dinheiro
+            balancoPatrimonial.totalReceitas += item.valorInicial * item.quantidadeInicial
+            if (item.pagamentoPrazo) {
+                balancoPatrimonial.totalContasReceber += item.valorInicial * item.quantidadeInicial
+            } else {
+                balancoPatrimonial.dinheiroBanco += item.valorInicial * item.quantidadeInicial
+            }
+
+
+        }
+
+        balancoPatrimonial.atualizarBalanco()
         realm.commitTransaction()
-
     }
 
 

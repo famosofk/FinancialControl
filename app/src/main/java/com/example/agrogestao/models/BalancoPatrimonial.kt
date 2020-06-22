@@ -36,6 +36,24 @@ open class BalancoPatrimonial : RealmObject() {
     var totalContasPagar: Float = 0f
     var totalContasReceber: Float = 0f
 
+    fun atualizarBalanco() {
+        calcularAtivo()
+        calcularPassivo()
+        calcularPatrimonioLiquido()
+        calcularSaldo()
+        calcularLiquidezGeral()
+        calcularLiquidezCorrente()
+        calcularCustoOperacionalEfetivo()
+        calcularCustoOperacionalTotal()
+
+        calcularReceitaBruta()
+        calcularMargemLiquida()
+        calcularMargemBruta()
+        calcularLucro()
+        calcularRentabilidade()
+
+    }
+
 
     fun calcularPassivo() {
         passivo = dividasLongoPrazo + totalContasPagar
@@ -93,6 +111,7 @@ open class BalancoPatrimonial : RealmObject() {
     }
 
     fun calcularMargemLiquida() {
+
         margemLiquida = receitaBruta - custoOperacionalTotal
     }
 
@@ -125,14 +144,13 @@ open class BalancoPatrimonial : RealmObject() {
         return patrimonioLiquido * taxaRemuneracaoCapital
     }
 
-    fun calcularCustoOportunidadeCapital(): Float {
-        return patrimonioLiquido * taxaRemuneracaoCapital
-    }
+
 
     fun calcularCustoOperacionalTotal() {
 
         var depreciacao = 0f
         for (item in listaItens) {
+            item.calcularDepreciacao()
             depreciacao += item.depreciacao
         }
 
@@ -170,6 +188,11 @@ open class BalancoPatrimonial : RealmObject() {
             }
         }
         return valorInsumos
+    }
+
+    //nada chama esse método
+    fun calcularCustoOportunidadeCapital(): Float {
+        return patrimonioLiquido * taxaRemuneracaoCapital
     }
 
 }
