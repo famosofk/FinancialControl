@@ -65,8 +65,8 @@
     <string name="programa_intro">Programa</string>
     <string name="distribuicao_patrimonio">Distribuição de patrimônio</string>
     <string name="agroplus_logo_description">Logo marca da Agroplus</string>
-    <string name="entrada_intro">Entrada</string>
-    <string name="saida_intro">Saída</string>
+    <string name="entrada_intro">Venda</string>
+    <string name="saida_intro">Compra</string>
     <string name="title_activity_navigation">NavigationActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

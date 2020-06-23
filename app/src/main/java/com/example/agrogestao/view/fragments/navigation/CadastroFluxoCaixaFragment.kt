@@ -126,18 +126,22 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
         val itemInventario: ItemBalancoPatrimonial? =
             realm.where<ItemBalancoPatrimonial>().contains("idItem", idItemTransacao!!)
                 .findFirst()
-        if (exitingMoney) {
+        if (exitingMoney) { //compra
+            realm.beginTransaction()
+            itemInventario!!.quantidadeFinal += item.quantidadeInicial
+            realm.commitTransaction()
+            bool = true
+
+        } else { //venda
+
             if (item.quantidadeInicial < itemInventario!!.quantidadeFinal) {
                 realm.beginTransaction()
                 itemInventario.quantidadeFinal -= item.quantidadeInicial
                 realm.commitTransaction()
                 bool = true
             }
-        } else {
-            realm.beginTransaction()
-            itemInventario!!.quantidadeFinal += item.quantidadeInicial
-            realm.commitTransaction()
-            bool = true
+
+
         }
         return bool
     }
@@ -147,18 +151,18 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
         realm.beginTransaction()
         fluxoCaixa.list.add(item)
 
-        /*  Eu adiciono em totaldespesas, porem se é a longo prazo, coloco em contas a pagar. Caso seja uma conta a pagar, isso deveria
-          entrar no saldo? Se não deve entrar, não podemos somar o valor em totalDespesas, pois a função calcular saldo tem
-            saldo = totalReceitas - totalDespesas */
-
         if (exitingMoney) {
+            Toast.makeText(context, "compra", Toast.LENGTH_SHORT).show()
+
             if (item.pagamentoPrazo) {
                 balancoPatrimonial.totalContasPagar += item.valorInicial * item.quantidadeInicial
             } else {
+
                 balancoPatrimonial.totalDespesas += item.valorInicial * item.quantidadeInicial
                 balancoPatrimonial.dinheiroBanco -= item.valorInicial * item.quantidadeInicial
             }
         } else {
+            Toast.makeText(context, "venda", Toast.LENGTH_SHORT).show()
             if (item.pagamentoPrazo) {
                 balancoPatrimonial.totalContasReceber += item.valorInicial * item.quantidadeInicial
             } else {
@@ -316,7 +320,7 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
             when (v.id) {
                 R.id.entradaSaidaButton -> {
                     exitingMoney = !exitingMoney
-                    if (exitingMoney) {
+                    if (!exitingMoney) {
                         val informacoesReforma = root.findViewById<LinearLayout>(R.id.layoutReforma)
                         informacoesReforma.visibility = View.VISIBLE
                     } else {
