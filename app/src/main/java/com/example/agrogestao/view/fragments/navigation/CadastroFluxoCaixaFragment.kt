@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import com.example.agrogestao.R
 import com.example.agrogestao.models.*
 import io.realm.Realm
@@ -100,7 +101,7 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
     private fun salvarItem() {
 
         val tipo: ToggleButton = root.findViewById(R.id.entradaSaidaButton)
-        var item = ItemFluxoCaixa(tipo.isChecked)
+        val item = ItemFluxoCaixa(tipo.isChecked)
         val nome: EditText = root.findViewById(R.id.nomeItemCadastrarFluxoCaixa)
         item.nome = nome.text.toString()
         val data: EditText = root.findViewById(R.id.dataCadastroItemFluxoCaixa)
@@ -129,7 +130,7 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
         val switchReforma: Switch = root.findViewById(R.id.switchReforma)
         if (switchReforma.isChecked) {
             item.reforma = true
-            var itemInventario: ItemBalancoPatrimonial? =
+            val itemInventario: ItemBalancoPatrimonial? =
                 realm.where<ItemBalancoPatrimonial>().contains("idItem", idItemReforma).findFirst()
             if (itemInventario != null) {
                 realm.beginTransaction()
@@ -163,7 +164,7 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
     private fun verificarViabilidadeTransacao(item: ItemFluxoCaixa, venda: Boolean): Boolean {
         var bool = false
         if (venda) {
-            var itemInventario: ItemBalancoPatrimonial? =
+            val itemInventario: ItemBalancoPatrimonial? =
                 realm.where<ItemBalancoPatrimonial>().contains("idItem", idItemTransacao!!)
                     .findFirst()
             if (controleEntradaSaida) {
@@ -173,12 +174,12 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
                     realm.commitTransaction()
                     bool = true
                 }
-            } else {
+            } /*else {
                 realm.beginTransaction()
                 itemInventario!!.quantidadeFinal += item.quantidadeInicial
                 realm.commitTransaction()
                 bool = true
-            }
+            }*/
         } else {
             bool = true
         }
@@ -196,19 +197,18 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
             saldo = totalReceitas - totalDespesas */
 
         if (controleEntradaSaida) {
-            //está saindo dinheiro
-            balancoPatrimonial.totalDespesas += item.valorInicial * item.quantidadeInicial
             if (item.pagamentoPrazo) {
                 balancoPatrimonial.totalContasPagar += item.valorInicial * item.quantidadeInicial
             } else {
-                balancoPatrimonial.dinheiroBanco += item.valorInicial * item.quantidadeInicial
+                balancoPatrimonial.totalDespesas += item.valorInicial * item.quantidadeInicial
+                balancoPatrimonial.dinheiroBanco -= item.valorInicial * item.quantidadeInicial
             }
         } else {
             //está entrando dinheiro
-            balancoPatrimonial.totalReceitas += item.valorInicial * item.quantidadeInicial
             if (item.pagamentoPrazo) {
                 balancoPatrimonial.totalContasReceber += item.valorInicial * item.quantidadeInicial
             } else {
+                balancoPatrimonial.totalReceitas += item.valorInicial * item.quantidadeInicial
                 balancoPatrimonial.dinheiroBanco += item.valorInicial * item.quantidadeInicial
             }
 
@@ -217,6 +217,7 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
 
         balancoPatrimonial.atualizarBalanco()
         realm.commitTransaction()
+        root.findNavController().navigate(R.id.from_cadastrofluxo_to_nav_fazenda)
     }
 
 

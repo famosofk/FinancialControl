@@ -67,6 +67,7 @@ class ApresentacaoFazendaFragment : Fragment() {
         })
         apresentacaoFazendaViewModel.myBalancoPatrimonial.observe(viewLifecycleOwner, Observer {
             if (it != null) {
+                Toast.makeText(context, it.ativo.toString(), Toast.LENGTH_SHORT).show()
                 lucroAtual = it.lucro.toString()
                 mLiquidaAtual = it.margemLiquida.toString()
                 mBrutaAtual = it.margemBruta.toString()

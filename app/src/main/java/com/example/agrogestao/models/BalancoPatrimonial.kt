@@ -60,7 +60,7 @@ open class BalancoPatrimonial : RealmObject() {
     }
 
     fun calcularAtivo() {
-        ativo = totalContasReceber + saldo + calcularValorAnimaisInsumosProdutos()
+        ativo = totalContasReceber + calcularPatrimonioBens() + dinheiroBanco
     }
 
     fun calcularLiquidezGeral() {
@@ -68,7 +68,7 @@ open class BalancoPatrimonial : RealmObject() {
     }
 
     fun calcularSaldo() {
-        saldo = totalReceitas - totalDespesas
+        saldo = totalReceitas - (totalDespesas - totalContasPagar)
     }
 
     fun calcularLiquidezCorrente() {
@@ -120,7 +120,7 @@ open class BalancoPatrimonial : RealmObject() {
     }
 
     fun calcularReceitaBruta() {
-        receitaBruta = totalReceitas + calcularValorProdutos()
+        receitaBruta = totalReceitas + calcularValorProdutos() + totalContasReceber
     }
 
     fun calcularValorProdutos(): Float {
@@ -161,6 +161,7 @@ open class BalancoPatrimonial : RealmObject() {
 
     fun calcularCustoOperacionalEfetivo() {
         custoOperacionalEfetivo = totalDespesas + totalContasPagar - pendenciasPagamento
+        //Pendencias pagamento = despesas do ano anterior
     }
 
 

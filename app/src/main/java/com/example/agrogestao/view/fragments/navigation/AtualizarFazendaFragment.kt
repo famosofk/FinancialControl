@@ -81,9 +81,9 @@ class AtualizarFazendaFragment : Fragment() {
             custoOportunidade.setText(it.custoOportunidadeTrabalho.toString())
             val dividasLongoPrazo = view.findViewById<EditText>(R.id.dividaLongoPrazoFazendaEdit)
             dividasLongoPrazo.setText(it.dividasLongoPrazo.toString())
-            val saldoAtual = view.findViewById<EditText>(R.id.saldoAtualFazendaEdit)
-            if (it.saldo != 0f) {
-                saldoAtual.setText(it.saldo.toString())
+            val saldoAtual = view.findViewById<EditText>(R.id.dinheiroBancoFazendaEdit)
+            if (it.dinheiroBanco != 0f) {
+                saldoAtual.setText(it.dinheiroBanco.toString())
             }
             val metapagar = view.findViewById<EditText>(R.id.pagarFazendaEdit)
             metapagar.setText(it.totalContasPagar.toString())
@@ -132,7 +132,7 @@ class AtualizarFazendaFragment : Fragment() {
         balanco.custoOportunidadeTrabalho = custoOportunidade.text.toString().trim().toFloat()
         balanco.totalContasPagar = pagarFazenda.text.toString().trim().toFloat()
         balanco.totalContasReceber = receberFazenda.text.toString().trim().toFloat()
-        balanco.dinheiroBanco = saldoAtualFazendaEdit.text.toString().trim().toFloat()
+        balanco.dinheiroBanco = dinheiroBancoFazendaEdit.text.toString().trim().toFloat()
 
         realm.commitTransaction()
 
