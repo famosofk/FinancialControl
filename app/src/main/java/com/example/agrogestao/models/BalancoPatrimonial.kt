@@ -12,7 +12,7 @@ open class BalancoPatrimonial : RealmObject() {
     var listaItens = RealmList<ItemBalancoPatrimonial>()
     var margemLiquida: Float = 0f
     var margemBruta: Float = 0f
-    var taxaRemuneracaoCapital: Float = 0f //em porcentagem. Lido ao cadastrar fazenda.
+    var taxaRemuneracaoCapital: Float = 0.06f //em porcentagem. Lido ao cadastrar fazenda.
     var receitaBruta: Float = 0f
     var custoOperacionalEfetivo: Float = 0f
     var custoOperacionalTotal: Float = 0f
@@ -156,6 +156,7 @@ open class BalancoPatrimonial : RealmObject() {
 
         custoOperacionalTotal =
             custoOperacionalEfetivo + depreciacao + trabalhoFamiliarNaoRemunerado
+        custoOperacionalTotal = 0f
     }
 
 
