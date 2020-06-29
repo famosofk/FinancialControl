@@ -7,9 +7,14 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.RecyclerView
 import com.example.agrogestao.R
 import com.example.agrogestao.models.BalancoPatrimonial
+import com.example.agrogestao.models.ItemBalancoPatrimonial
+import com.example.agrogestao.view.adapter.ItemPatrimonioAdapter
 import com.example.agrogestao.viewmodel.BalancoPatrimonialViewModel
+import io.realm.Realm
+import io.realm.kotlin.where
 
 class BalancoPatrimonialFragment : Fragment() {
 
@@ -26,6 +31,10 @@ class BalancoPatrimonialFragment : Fragment() {
         val root = inflater.inflate(R.layout.apresentacao_balanco_patrimonial, container, false)
 
         //incluir listagem dos bens
+        val recyclerView: RecyclerView = root.findViewById(R.id.recyclerItensBalanco)
+        val adapter = ItemPatrimonioAdapter()
+        adapter.submitList(Realm.getDefaultInstance().where<ItemBalancoPatrimonial>().findAll())
+        recyclerView.adapter = adapter
 
 
         return root

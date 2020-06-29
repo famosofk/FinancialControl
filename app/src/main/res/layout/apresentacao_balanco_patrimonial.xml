@@ -92,6 +92,7 @@
                 android:text="@string/itens_intro" />
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerItensBalanco"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
