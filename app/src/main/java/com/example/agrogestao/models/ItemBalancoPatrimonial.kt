@@ -29,6 +29,10 @@ open class ItemBalancoPatrimonial() : RealmObject() {
     var depreciacao: Float = 0f
     var reforma: Float = 0f
     var anoProducao: Int = 0
+    var precoString: String = ""
+        get() = "R$ $valorAtual"
+    var quantidadeString: String = ""
+        get() = "$quantidadeFinal un"
 
     fun calcularValorAtual() {
         calcularDepreciacao()
@@ -43,6 +47,14 @@ open class ItemBalancoPatrimonial() : RealmObject() {
     fun calcularVidaUtilRestante(): Float {
         //return hoje - dataCompra
         return 0f
+    }
+
+    fun getQuantidadeText(): String {
+        return "$quantidadeFinal un"
+    }
+
+    fun getValorFinal(): String {
+        return "R$: $valorAtual "
     }
 
 

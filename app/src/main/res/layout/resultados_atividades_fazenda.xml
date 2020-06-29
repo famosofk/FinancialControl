@@ -103,13 +103,8 @@
 
         <TextView
             android:id="@+id/textView44"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:fontFamily="@font/roboto"
             android:text="@string/despesas_intro"
-            android:textColor="@color/colorPrimary"
-            android:textSize="24sp" />
+            style="@style/title_style" />
 
         <ImageView
             android:id="@+id/imageView2"

@@ -101,6 +101,7 @@
     <string name="venda_propriedade">Item do inventário</string>
     <string name="saldo_bancario">Saldo bancário</string>
     <string name="saldo_hint_intro">Receitas - Despesas</string>
+    <string name="itens_intro">Itens</string>
 
     <string-array name="tiposItem">
         <item>Terra</item>

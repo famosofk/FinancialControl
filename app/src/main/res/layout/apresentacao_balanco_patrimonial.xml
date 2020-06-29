@@ -1,89 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-    <LinearLayout
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/textPatrimonioBalanco"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:fontFamily="@font/roboto"
-            android:text="@string/patrimonio_liquido"
-            android:textColor="@android:color/black"
-            android:textSize="16sp" />
+            android:orientation="vertical"
+            android:padding="16dp">
 
-        <TextView
-            android:id="@+id/textSolvenciaBalanco"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:fontFamily="@font/roboto"
-            android:text="@string/solvencia_intro"
-            android:textColor="@android:color/black"
-            android:textSize="16sp" />
+            <TextView
+                android:id="@+id/textPatrimonioBalanco"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:fontFamily="@font/roboto"
+                android:text="@string/patrimonio_liquido"
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/textLiquidezBalanco"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:fontFamily="@font/roboto"
-            android:text="@string/liquidez_intro"
-            android:textColor="@android:color/black"
-            android:textSize="16sp" />
+            <TextView
+                android:id="@+id/textSolvenciaBalanco"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:fontFamily="@font/roboto"
+                android:text="@string/solvencia_intro"
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/textRentabilidadeBalanco"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:fontFamily="@font/roboto"
-            android:text="@string/rentabildiade_intro"
-            android:textColor="@android:color/black"
-            android:textSize="16sp" />
+            <TextView
+                android:id="@+id/textLiquidezBalanco"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:fontFamily="@font/roboto"
+                android:text="@string/liquidez_intro"
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/textAtivoBalanco"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:fontFamily="@font/roboto"
-            android:text="@string/ativo_intro"
-            android:textColor="@android:color/black"
-            android:textSize="16sp" />
+            <TextView
+                android:id="@+id/textRentabilidadeBalanco"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:fontFamily="@font/roboto"
+                android:text="@string/rentabildiade_intro"
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/textPassivoBalanco"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:fontFamily="@font/roboto"
-            android:text="@string/passivo_intro"
-            android:textColor="@android:color/black"
-            android:textSize="16sp" />
+            <TextView
+                android:id="@+id/textAtivoBalanco"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:fontFamily="@font/roboto"
+                android:text="@string/ativo_intro"
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:fontFamily="@font/roboto"
-            android:text="@string/distribuicao_patrimonio"
-            android:textColor="@color/colorPrimary"
-            android:textSize="24sp" />
+            <TextView
+                android:id="@+id/textPassivoBalanco"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="@font/roboto"
+                android:text="@string/passivo_intro"
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
 
-        <ImageView
-            android:id="@+id/imageView5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/agroplus_logo_description"
-            app:srcCompat="@drawable/grafico_ilustrativo" />
-    </LinearLayout>
-</ScrollView>
+            <TextView
+                android:text="@string/distribuicao_patrimonio"
+                style="@style/title_style" />
+
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/agroplus_logo_description"
+                app:srcCompat="@drawable/grafico_ilustrativo" />
+
+            <TextView
+                android:id="@+id/textView2"
+                style="@style/title_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/itens_intro" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+        </LinearLayout>
+    </ScrollView>
+</layout>

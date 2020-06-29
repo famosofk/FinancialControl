@@ -102,17 +102,28 @@ class CadastroInventarioFragment : Fragment(), AdapterView.OnItemSelectedListene
             }
 
 
+            val results =
+                realm.where<ItemBalancoPatrimonial>().contains("nome", item.nome).findAll()
+            if (results.count() != 0) {
+                Toast.makeText(
+                    context,
+                    "Impossível cadastrar. Item já consta no inventário.",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
 
-            realm.beginTransaction()
-            balanco.listaItens.add(item)
-            balanco.calcularPassivo()
-            balanco.calcularAtivo()
-            balanco.calcularPatrimonioLiquido()
-            balanco.calcularLiquidezGeral()
-            balanco.calcularLiquidezCorrente()
-            realm.commitTransaction()
 
-            root.findNavController().navigate(R.id.from_cadastroInventario_to_apresentarFazenda)
+                realm.beginTransaction()
+                balanco.listaItens.add(item)
+                balanco.calcularPassivo()
+                balanco.calcularAtivo()
+                balanco.calcularPatrimonioLiquido()
+                balanco.calcularLiquidezGeral()
+                balanco.calcularLiquidezCorrente()
+                realm.commitTransaction()
+
+                root.findNavController().navigate(R.id.from_cadastroInventario_to_apresentarFazenda)
+            }
         }
     }
 

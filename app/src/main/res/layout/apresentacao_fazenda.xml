@@ -227,13 +227,8 @@
             </LinearLayout>
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:fontFamily="@font/roboto"
                 android:text="@string/balanco_patrimonial_intro"
-                android:textColor="@color/colorPrimary"
-                android:textSize="24sp" />
+                style="@style/title_style" />
 
             <TextView
                 android:id="@+id/textsPatrimonioApresentacao"
