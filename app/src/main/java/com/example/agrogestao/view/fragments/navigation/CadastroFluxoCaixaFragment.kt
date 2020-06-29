@@ -128,6 +128,11 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
                 .findFirst()
         if (exitingMoney) { //compra
             realm.beginTransaction()
+            itemInventario!!.valorUnitario =
+                itemInventario.quantidadeFinal.times(itemInventario.valorAtual)
+                    .plus(item.quantidadeInicial.plus(item.valorAtual)).div(
+                    itemInventario.quantidadeFinal.plus(item.quantidadeInicial)
+                )
             itemInventario!!.quantidadeFinal += item.quantidadeInicial
             realm.commitTransaction()
             bool = true
@@ -320,7 +325,7 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
             when (v.id) {
                 R.id.entradaSaidaButton -> {
                     exitingMoney = !exitingMoney
-                    if (!exitingMoney) {
+                    if (exitingMoney) {
                         val informacoesReforma = root.findViewById<LinearLayout>(R.id.layoutReforma)
                         informacoesReforma.visibility = View.VISIBLE
                     } else {

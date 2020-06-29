@@ -114,6 +114,9 @@ class CadastroInventarioFragment : Fragment(), AdapterView.OnItemSelectedListene
 
 
                 realm.beginTransaction()
+                item.quantidadeFinal = item.quantidadeInicial
+                item.valorAtual = item.valorInicial
+                item.idFazenda = balanco.farm
                 balanco.listaItens.add(item)
                 balanco.calcularPassivo()
                 balanco.calcularAtivo()

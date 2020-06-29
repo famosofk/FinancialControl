@@ -19,6 +19,7 @@ import io.realm.kotlin.where
 class BalancoPatrimonialFragment : Fragment() {
 
     private lateinit var balancoPatrimonialViewModel: BalancoPatrimonialViewModel
+    var id = ""
 
 
     override fun onCreateView(
@@ -29,11 +30,17 @@ class BalancoPatrimonialFragment : Fragment() {
         balancoPatrimonialViewModel =
             ViewModelProvider(this).get(BalancoPatrimonialViewModel::class.java)
         val root = inflater.inflate(R.layout.apresentacao_balanco_patrimonial, container, false)
+        if (arguments?.get("id") != null) {
+            id = arguments?.getString("id")!!
+        }
 
         //incluir listagem dos bens
         val recyclerView: RecyclerView = root.findViewById(R.id.recyclerItensBalanco)
         val adapter = ItemPatrimonioAdapter()
-        adapter.submitList(Realm.getDefaultInstance().where<ItemBalancoPatrimonial>().findAll())
+        adapter.submitList(
+            Realm.getDefaultInstance().where<ItemBalancoPatrimonial>().contains("idFazenda", id)
+                .findAll()
+        )
         recyclerView.adapter = adapter
 
 

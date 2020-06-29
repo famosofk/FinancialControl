@@ -74,17 +74,6 @@
                 android:textSize="16sp" />
 
             <TextView
-                android:text="@string/distribuicao_patrimonio"
-                style="@style/title_style" />
-
-            <ImageView
-                android:id="@+id/imageView5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/agroplus_logo_description"
-                app:srcCompat="@drawable/grafico_ilustrativo" />
-
-            <TextView
                 android:id="@+id/textView2"
                 style="@style/title_style"
                 android:layout_width="match_parent"
@@ -95,7 +84,23 @@
                 android:id="@+id/recyclerItensBalanco"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginBottom="16dp"
+                android:minHeight="160dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+
+            <TextView
+                style="@style/title_style"
+                android:text="@string/distribuicao_patrimonio" />
+
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/agroplus_logo_description"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/grafico_ilustrativo" />
+
 
         </LinearLayout>
     </ScrollView>

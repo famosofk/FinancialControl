@@ -17,6 +17,7 @@ open class ItemBalancoPatrimonial() : RealmObject() {
     var nome: String = "";
     var dataCompra: String = ""
     var idItem = UUID.randomUUID().toString()
+    var idFazenda = ""
     var quantidadeInicial: Float = 0f
     var quantidadeFinal: Float = 0f
     var receitaBruta: Float = 0f
@@ -30,7 +31,7 @@ open class ItemBalancoPatrimonial() : RealmObject() {
     var reforma: Float = 0f
     var anoProducao: Int = 0
     var precoString: String = ""
-        get() = "R$ $valorAtual"
+        get() = "R$ ${valorUnitario * quantidadeFinal}"
     var quantidadeString: String = ""
         get() = "$quantidadeFinal un"
 

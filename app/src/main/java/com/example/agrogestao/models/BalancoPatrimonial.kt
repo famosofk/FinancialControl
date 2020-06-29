@@ -110,6 +110,10 @@ open class BalancoPatrimonial : RealmObject() {
         lucro = receitaBruta - calcularCustoTotal()
     }
 
+    fun calcularCustoTotal(): Float {
+        return custoOperacionalTotal + calcularOportunidadeCapital() + custoOportunidadeTrabalho
+    }
+
     fun calcularMargemLiquida() {
 
         margemLiquida = receitaBruta - custoOperacionalTotal
@@ -136,9 +140,6 @@ open class BalancoPatrimonial : RealmObject() {
         return valorProdutos
     }
 
-    fun calcularCustoTotal(): Float {
-        return custoOperacionalTotal + calcularOportunidadeCapital() + custoOportunidadeTrabalho
-    }
 
     fun calcularOportunidadeCapital(): Float {
         return patrimonioLiquido * taxaRemuneracaoCapital
