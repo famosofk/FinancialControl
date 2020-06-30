@@ -139,7 +139,7 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
 
         } else { //venda
 
-            if (item.quantidadeInicial < itemInventario!!.quantidadeFinal) {
+            if (item.quantidadeInicial <= itemInventario!!.quantidadeFinal) {
                 realm.beginTransaction()
                 itemInventario.quantidadeFinal -= item.quantidadeInicial
                 realm.commitTransaction()

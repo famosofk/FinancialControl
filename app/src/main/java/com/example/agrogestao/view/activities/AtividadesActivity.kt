@@ -36,9 +36,14 @@ class AtividadesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_atividades)
         //lembrar de remover o realm.init
-        Realm.init(applicationContext)
-        atividadesViewModel = ViewModelProvider(this).get(AtividadesViewModel::class.java)
+        Realm.init(this)
+        /* val config = RealmConfiguration.Builder()
+             .deleteRealmIfMigrationNeeded()
+             .build()
+        Realm.deleteRealm(config) */
 
+
+        atividadesViewModel = ViewModelProvider(this).get(AtividadesViewModel::class.java)
 
 
 

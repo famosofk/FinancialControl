@@ -162,7 +162,11 @@ open class BalancoPatrimonial : RealmObject() {
 
 
     fun calcularCustoOperacionalEfetivo() {
-        custoOperacionalEfetivo = totalDespesas + totalContasPagar - pendenciasPagamento
+        custoOperacionalEfetivo = totalDespesas + totalContasPagar
+        /*
+        * Adicionar os custos de produção
+        * */
+
         //Pendencias pagamento = despesas do ano anterior
     }
 

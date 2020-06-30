@@ -25,8 +25,8 @@
     <string name="margem_bruta">Margem Bruta</string>
     <string name="renda_bruta">Renda Bruta</string>
     <string name="saldo_fazenda">Saldo</string>
-    <string name="a_pagar">A pagar</string>
-    <string name="a_receber">A receber</string>
+    <string name="a_pagar">Contas a pagar do ano anterior</string>
+    <string name="a_receber">Contas a receber do ano anterior</string>
     <string name="patrimonio_liquido">Patrimonio Líquido</string>
     <string name="solvencia_intro">Liquidez Geral</string>
     <string name="liquidez_intro">Liquidez Corrente</string>
