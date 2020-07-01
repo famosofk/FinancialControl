@@ -8,9 +8,21 @@ import com.example.agrogestao.models.BalancoPatrimonial
 
 class ResultadosFazendaViewModel(application: Application) : AndroidViewModel(application) {
 
-    val mbalancoPatrimonial = MutableLiveData<BalancoPatrimonial>()
+    private val mbalancoPatrimonial = MutableLiveData<BalancoPatrimonial>()
     val myBalancoPatrimonial: LiveData<BalancoPatrimonial> = mbalancoPatrimonial
 
+    var inicio = 0
+
+    private val _cadastrarAtividade = MutableLiveData(false)
+    val cadastrarAtividade: LiveData<Boolean>
+        get() = _cadastrarAtividade
+
     fun load() {}
+
+    fun openDialog() {
+        if (inicio == 1) {
+            _cadastrarAtividade.value = !(_cadastrarAtividade.value!!)
+        }
+    }
 
 }

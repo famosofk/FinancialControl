@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="16dp">
 
@@ -16,7 +16,7 @@
         android:textStyle="bold" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/atividade_nome_cadastro"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -35,7 +35,7 @@
         android:textStyle="bold" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName2"
+        android:id="@+id/atividade_rateio_cadastro"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
