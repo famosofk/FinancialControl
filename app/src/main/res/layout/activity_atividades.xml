@@ -104,18 +104,6 @@
             fab:fab_label="@string/fazenda_intro"
             fab:fab_size="mini" />
 
-        <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/fabAddAtividade"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|end"
-            android:layout_marginEnd="10dp"
-            android:clickable="true"
-            android:src="@drawable/ic_add_black_24dp"
-            fab:fab_colorNormal="@color/colorPrimary"
-            fab:fab_label="@string/atividade_intro"
-            fab:fab_size="mini" />
-
 
     </com.github.clans.fab.FloatingActionMenu>
 

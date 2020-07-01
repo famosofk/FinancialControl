@@ -99,10 +99,7 @@ class AtividadesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                 mDialogView.textProgramaDialog.visibility = View.VISIBLE
                 mDialogView.spinnerPrograma.visibility = View.VISIBLE
             }
-            "Criar atividade" -> {
-                mDialogView.textComplementoDialog.visibility = View.GONE
-                mDialogView.editComplementoText.visibility = View.GONE
-            }
+
         }
         mBuilder.show()
 
@@ -115,7 +112,6 @@ class AtividadesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
             mDialogView.spinnerPrograma.adapter = adapter
             mDialogView.spinnerPrograma.onItemSelectedListener = this
 
-
             cadastrarButton.setOnClickListener {
                 mBuilder.dismiss()
                 val name = mDialogView.editNomeDialog.text.toString()
@@ -125,17 +121,18 @@ class AtividadesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                 //val db = FirebaseDatabase.getInstance().reference.child("farms").child(id)
                 //db.setValue(farm)
                 salvarRealm(farm = farm)
+                val atividade = AtividadesEconomicas("Geral")
+                atividade.fazendaID = farm.id
+                salvarRealm(economicalActivity = atividade)
+
+
             }
         } else {
             cadastrarButton.setOnClickListener {
                 mBuilder.dismiss()
                 val name = mDialogView.editNomeDialog.text.toString()
-                if (title == "Criar programa") {
                     salvarRealm(program = FarmProgram(name))
-                } else if (title == "Criar atividade") {
-                    val atividade = AtividadesEconomicas(name.capitalize().trim())
-                    salvarRealm(economicalActivity = atividade)
-                }
+
             }
         }
 
@@ -196,9 +193,7 @@ class AtividadesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                 createAlertDialog("Criar fazenda", list)
             }
         }
-        val fabAtividade: com.github.clans.fab.FloatingActionButton =
-            findViewById(R.id.fabAddAtividade)
-        fabAtividade.setOnClickListener { createAlertDialog("Criar atividade", null) }
+
     }
 
     override fun onStop() {

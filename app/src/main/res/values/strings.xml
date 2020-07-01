@@ -102,6 +102,9 @@
     <string name="saldo_bancario">Saldo bancário</string>
     <string name="saldo_hint_intro">Receitas - Despesas</string>
     <string name="itens_intro">Itens</string>
+    <string name="rateio_intro">Rateio</string>
+    <string name="atividades_info_hint">Nome da atividade econômica</string>
+    <string name="rateio_info_hint">Porcentagem custos gerais: 30,5; 47; 51.3</string>
 
     <string-array name="tiposItem">
         <item>Terra</item>
