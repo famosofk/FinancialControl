@@ -19,6 +19,7 @@ import com.example.agrogestao.view.adapter.FazendasAdapter
 import com.example.agrogestao.view.listener.FarmListener
 import com.example.agrogestao.viewmodel.AtividadesViewModel
 import io.realm.Realm
+import io.realm.RealmConfiguration
 import io.realm.kotlin.where
 import kotlinx.android.synthetic.main.cadastro_programa_fazenda.view.*
 import java.util.*
@@ -37,10 +38,11 @@ class AtividadesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
         setContentView(R.layout.activity_atividades)
         //lembrar de remover o realm.init
         Realm.init(this)
-        /* val config = RealmConfiguration.Builder()
-             .deleteRealmIfMigrationNeeded()
-             .build()
-        Realm.deleteRealm(config) */
+        val config = RealmConfiguration.Builder()
+            .deleteRealmIfMigrationNeeded()
+            .build()
+
+        Realm.setDefaultConfiguration(config)
 
 
         atividadesViewModel = ViewModelProvider(this).get(AtividadesViewModel::class.java)

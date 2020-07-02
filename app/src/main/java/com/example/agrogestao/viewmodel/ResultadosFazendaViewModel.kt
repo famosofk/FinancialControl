@@ -4,7 +4,10 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.agrogestao.models.AtividadesEconomicas
 import com.example.agrogestao.models.BalancoPatrimonial
+import io.realm.Realm
+import io.realm.kotlin.where
 
 class ResultadosFazendaViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -17,7 +20,17 @@ class ResultadosFazendaViewModel(application: Application) : AndroidViewModel(ap
     val cadastrarAtividade: LiveData<Boolean>
         get() = _cadastrarAtividade
 
-    fun load() {}
+    var list = mutableListOf<AtividadesEconomicas>()
+
+    private val _carregarAtividade = MutableLiveData(false)
+    val carregarAtividade: LiveData<Boolean>
+        get() = _carregarAtividade
+
+    fun load(idFarm: String) {
+        val realm = Realm.getDefaultInstance()
+        val results = realm.where<AtividadesEconomicas>().contains("fazendaID", idFarm).findAll()
+        list.addAll(results)
+    }
 
     fun openDialog() {
         if (inicio == 1) {

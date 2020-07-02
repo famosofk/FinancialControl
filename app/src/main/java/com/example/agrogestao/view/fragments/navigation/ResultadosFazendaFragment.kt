@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.agrogestao.R
 import com.example.agrogestao.databinding.ResultadosFazendaBinding
 import com.example.agrogestao.models.AtividadesEconomicas
+import com.example.agrogestao.view.adapter.AtividadesAdapter
 import com.example.agrogestao.viewmodel.ResultadosFazendaViewModel
 import io.realm.Realm
 import kotlinx.android.synthetic.main.cadastro_atividade_dialog.view.*
@@ -23,6 +24,7 @@ import kotlinx.android.synthetic.main.cadastro_atividade_dialog.view.*
 class ResultadosFazendaFragment : Fragment() {
 
     private lateinit var resultadosFazendaViewModel: ResultadosFazendaViewModel
+    val adapter = AtividadesAdapter()
     var farmID = ""
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,9 +42,10 @@ class ResultadosFazendaFragment : Fragment() {
             DataBindingUtil.inflate(layoutInflater, R.layout.resultados_fazenda, container, false)
         binding.lifecycleOwner = this
         binding.viewModel = resultadosFazendaViewModel
+        binding.recyclerAtividadesDetalhesFazenda.adapter = adapter
         observe(binding)
 
-
+        resultadosFazendaViewModel.load(farmID)
 
         return binding.root
     }
@@ -65,6 +68,12 @@ class ResultadosFazendaFragment : Fragment() {
             } else {
                 criarAtividadeDialog()
             }
+        })
+
+        resultadosFazendaViewModel.carregarAtividade.observe(viewLifecycleOwner, Observer {
+
+            adapter.submitList(resultadosFazendaViewModel.list)
+
 
         })
 
@@ -96,6 +105,7 @@ class ResultadosFazendaFragment : Fragment() {
             realm.copyToRealm(atividadesEconomicas)
             realm.commitTransaction()
             mBuilder.dismiss()
+            resultadosFazendaViewModel.load(farmID)
 
         }
         cancelButton.setOnClickListener { mBuilder.dismiss() }
