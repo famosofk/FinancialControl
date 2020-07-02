@@ -79,7 +79,6 @@ class CadastroInventarioFragment : Fragment(), AdapterView.OnItemSelectedListene
     private fun processamentoDados(root: View, balanco: BalancoPatrimonial, realm: Realm) {
 
         val button: Button = root.findViewById(R.id.salvarItemInventario)
-        val linearLayout: LinearLayout = root.findViewById(R.id.layoutCompraReforma)
 
 
         button.setOnClickListener {
@@ -126,7 +125,7 @@ class CadastroInventarioFragment : Fragment(), AdapterView.OnItemSelectedListene
                 item.valorAtual = item.valorInicial
                 balanco.listaItens.add(item)
 
-                if (item.tipo == "Dívidas de longo prazo") {
+                if (item.tipo == ItemBalancoPatrimonial.ITEM_DIVIDAS_LONGO_PRAZO) {
                     if (item.anoProducao == getString(R.string.ano_atual).toInt())
                         balanco.dinheiroBanco += item.quantidadeInicial * item.valorUnitario
                 }
@@ -137,7 +136,7 @@ class CadastroInventarioFragment : Fragment(), AdapterView.OnItemSelectedListene
                 balanco.calcularLiquidezGeral()
                 balanco.calcularLiquidezCorrente()
                 realm.commitTransaction()
-
+                Toast.makeText(context, "${balanco.ativo}", Toast.LENGTH_SHORT).show()
                 root.findNavController().navigate(R.id.from_cadastroInventario_to_apresentarFazenda)
             }
         }
@@ -171,10 +170,12 @@ class CadastroInventarioFragment : Fragment(), AdapterView.OnItemSelectedListene
                     layoutVidaUtil.visibility = View.GONE
                     layoutReforma.visibility = View.GONE
                 }
+
             }
 
             if (parent.id == R.id.spinnerAtividadeItem) {
                 atividadeSelecionada = list[position]
+
             }
         }
     }

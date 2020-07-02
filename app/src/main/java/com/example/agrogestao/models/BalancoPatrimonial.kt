@@ -1,6 +1,7 @@
 package com.example.agrogestao.models
 
 import android.content.res.Resources
+import android.util.Log
 import com.example.agrogestao.R
 import io.realm.RealmList
 import io.realm.RealmObject
@@ -37,7 +38,6 @@ open class BalancoPatrimonial : RealmObject() {
 
     fun atualizarBalanco() {
         calcularAtivo()
-        calcularDividasLongoPrazo()
         calcularPassivo()
         calcularPatrimonioLiquido()
         calcularSaldo()
@@ -56,6 +56,7 @@ open class BalancoPatrimonial : RealmObject() {
 
 
     fun calcularPassivo() {
+        calcularDividasLongoPrazo()
         passivo = dividasLongoPrazo + totalContasPagar
     }
 
@@ -96,7 +97,7 @@ open class BalancoPatrimonial : RealmObject() {
 
         var total = 0.0f
         for (item in listaItens) {
-            if (item.tipo != "Dívidas de longo prazo") {
+            if (item.tipo != ItemBalancoPatrimonial.ITEM_DIVIDAS_LONGO_PRAZO) {
                 total += (item.quantidadeFinal * item.valorUnitario + item.reforma)
             }
         }
@@ -204,9 +205,11 @@ open class BalancoPatrimonial : RealmObject() {
     }
 
     fun calcularDividasLongoPrazo() {
+        dividasLongoPrazo = 0f
         for (item in listaItens) {
             if (item.tipo == ItemBalancoPatrimonial.ITEM_DIVIDAS_LONGO_PRAZO) {
-                dividasLongoPrazo = item.quantidadeFinal * item.valorAtual
+                dividasLongoPrazo += item.quantidadeFinal * item.valorAtual
+                Log.e("entrou aqui: ", "true")
             }
         }
     }

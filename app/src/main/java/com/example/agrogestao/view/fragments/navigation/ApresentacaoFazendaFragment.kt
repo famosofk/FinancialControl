@@ -87,6 +87,7 @@ class ApresentacaoFazendaFragment : Fragment() {
                 textSolvencia.text = "Liquidez geral: ${it.liquidezGeral}"
                 textLiquidez.text = "Liquidez corrente: ${it.liquidezCorrente}"
                 textRentabilidade.text = "Rentabilidade: ${it.rentabilidade}"
+                Toast.makeText(context, "${it.ativo}", Toast.LENGTH_SHORT).show()
             }
         })
 
