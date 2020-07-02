@@ -1,5 +1,7 @@
 package com.example.agrogestao.models
 
+import android.content.res.Resources
+import com.example.agrogestao.R
 import io.realm.RealmList
 import io.realm.RealmObject
 
@@ -12,13 +14,12 @@ open class BalancoPatrimonial : RealmObject() {
     var listaItens = RealmList<ItemBalancoPatrimonial>()
     var margemLiquida: Float = 0f
     var margemBruta: Float = 0f
-    var taxaRemuneracaoCapital: Float = 0.06f //em porcentagem. Lido ao cadastrar fazenda.
+    var taxaRemuneracaoCapital: Float = 0.06f
     var receitaBruta: Float = 0f
     var custoOperacionalEfetivo: Float = 0f
     var custoOperacionalTotal: Float = 0f
     var totalDespesas: Float = 0f
-    var totalReceitas: Float =
-        0f  // Não será inserido. É calculado a partir de receitas e despesas cadastrados.
+    var totalReceitas: Float = 0f
     var ativo: Float = 0f
     var passivo: Float = 0f
     var patrimonioLiquido: Float = 0f
@@ -29,15 +30,14 @@ open class BalancoPatrimonial : RealmObject() {
     var dinheiroBanco: Float = 0f
     var custoOportunidadeTrabalho: Float = 0f
     var trabalhoFamiliarNaoRemunerado: Float = 0f
-    var pendenciasPagamento: Float =
-        0f //Será atualizado com o valor das contas não pagas do ano anterior.
-    var pendenciasRecebimento: Float =
-        0f //Será atualizado com o valor das contas não pagas do ano anterior.
+    var pendenciasPagamento: Float = 0f
+    var pendenciasRecebimento: Float = 0f
     var totalContasPagar: Float = 0f
     var totalContasReceber: Float = 0f
 
     fun atualizarBalanco() {
         calcularAtivo()
+        calcularDividasLongoPrazo()
         calcularPassivo()
         calcularPatrimonioLiquido()
         calcularSaldo()
@@ -96,7 +96,9 @@ open class BalancoPatrimonial : RealmObject() {
 
         var total = 0.0f
         for (item in listaItens) {
-            total += (item.quantidadeFinal * item.valorUnitario + item.reforma)
+            if (item.tipo != "Dívidas de longo prazo") {
+                total += (item.quantidadeFinal * item.valorUnitario + item.reforma)
+            }
         }
         return total
     }
@@ -129,10 +131,10 @@ open class BalancoPatrimonial : RealmObject() {
 
     fun calcularValorProdutos(): Float {
         var valorProdutos: Float = 0.0f
+        //Atualizar o valor ano a ano
         for (item in listaItens) {
-            if (item.tipo.equals(ItemBalancoPatrimonial.ITEM_PRODUTOS) && item.anoProducao.equals(
-                    2020
-                )
+            if (item.tipo.equals(ItemBalancoPatrimonial.ITEM_PRODUTOS) && item.anoProducao == Resources.getSystem()
+                    .getString(R.string.ano_atual).toInt()
             ) {
                 valorProdutos += (item.quantidadeFinal * item.valorUnitario + item.reforma)
             }
@@ -167,7 +169,6 @@ open class BalancoPatrimonial : RealmObject() {
         * Adicionar os custos de produção
         * */
 
-        //Pendencias pagamento = despesas do ano anterior
     }
 
 
@@ -201,5 +202,14 @@ open class BalancoPatrimonial : RealmObject() {
     fun calcularCustoOportunidadeCapital(): Float {
         return patrimonioLiquido * taxaRemuneracaoCapital
     }
+
+    fun calcularDividasLongoPrazo() {
+        for (item in listaItens) {
+            if (item.tipo == ItemBalancoPatrimonial.ITEM_DIVIDAS_LONGO_PRAZO) {
+                dividasLongoPrazo = item.quantidadeFinal * item.valorAtual
+            }
+        }
+    }
+
 
 }

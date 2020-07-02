@@ -27,15 +27,21 @@ class CadastroInventarioFragment : Fragment(), AdapterView.OnItemSelectedListene
     private var tipoSelecionado: String = "Terra"
     private lateinit var root: View
     val list = mutableListOf<String>()
+    var farmID = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
+        if (arguments?.get("id") != null) {
+            val id = arguments?.getString("id")!!
+            farmID = id
+        }
+
         root = inflater.inflate(R.layout.cadastro_inventario, container, false)
         val realm = Realm.getDefaultInstance()
-        val resultados = realm.where<AtividadesEconomicas>().findAll()
+        val resultados = realm.where<AtividadesEconomicas>().contains("fazendaID", farmID).findAll()
         for (atividade in resultados) {
             list.add(atividade.nome)
         }
@@ -78,6 +84,7 @@ class CadastroInventarioFragment : Fragment(), AdapterView.OnItemSelectedListene
 
         button.setOnClickListener {
             var item = ItemBalancoPatrimonial()
+            item.idFazenda = balanco.farm
             val name: EditText = root.findViewById(R.id.nomeItemInventario)
             item.nome = name.text.toString()
             val quantidadeInicial: EditText =
@@ -86,8 +93,7 @@ class CadastroInventarioFragment : Fragment(), AdapterView.OnItemSelectedListene
             val valorUnitario: EditText = root.findViewById(R.id.valorUnitarioItemInventario)
             item.valorUnitario = valorUnitario.text.toString().trim().toFloat()
             item.valorInicial = item.valorUnitario
-            val quantidadeAtual: EditText = root.findViewById(R.id.quantidadeAtualItemCadastro)
-            item.quantidadeFinal = quantidadeAtual.text.toString().trim().toFloat()
+            item.valorAtual = item.valorInicial
             item.tipo = tipoSelecionado
             item.atividade = atividadeSelecionada
             if (tipoSelecionado != "Terra") {
@@ -96,7 +102,7 @@ class CadastroInventarioFragment : Fragment(), AdapterView.OnItemSelectedListene
                 val reforma: EditText = root.findViewById(R.id.reformaItemInventario)
                 item.reforma = reforma.text.toString().trim().toFloat()
             }
-            if (tipoSelecionado == "Benfeitoria") {
+            if (tipoSelecionado == "Benfeitoria" || tipoSelecionado == "Máquinas") {
                 val vidaUtil: EditText = root.findViewById(R.id.vidaUtilItemCadastro)
                 item.vidaUtil = vidaUtilItemCadastro.text.toString().trim().toInt()
             }
@@ -104,7 +110,9 @@ class CadastroInventarioFragment : Fragment(), AdapterView.OnItemSelectedListene
 
             val results =
                 realm.where<ItemBalancoPatrimonial>().contains("nome", item.nome).findAll()
-            if (results.count() != 0) {
+            val results2 = results.where().contains("idFazenda", item.idFazenda)
+
+            if (results2.count() != 0L) {
                 Toast.makeText(
                     context,
                     "Impossível cadastrar. Item já consta no inventário.",
@@ -116,8 +124,13 @@ class CadastroInventarioFragment : Fragment(), AdapterView.OnItemSelectedListene
                 realm.beginTransaction()
                 item.quantidadeFinal = item.quantidadeInicial
                 item.valorAtual = item.valorInicial
-                item.idFazenda = balanco.farm
                 balanco.listaItens.add(item)
+
+                if (item.tipo == "Dívidas de longo prazo") {
+                    if (item.anoProducao == getString(R.string.ano_atual).toInt())
+                        balanco.dinheiroBanco += item.quantidadeInicial * item.valorUnitario
+                }
+
                 balanco.calcularPassivo()
                 balanco.calcularAtivo()
                 balanco.calcularPatrimonioLiquido()
@@ -146,7 +159,7 @@ class CadastroInventarioFragment : Fragment(), AdapterView.OnItemSelectedListene
                     layoutCompraReforma.visibility = View.VISIBLE
                     layoutVidaUtil.visibility = View.GONE
                     layoutReforma.visibility = View.GONE
-                    if (tipoSelecionado == otherSeriesList[1]) {
+                    if (tipoSelecionado == otherSeriesList[1] || tipoSelecionado == otherSeriesList[2]) {
                         layoutVidaUtil.visibility = View.VISIBLE
                         layoutReforma.visibility = View.VISIBLE
                     }

@@ -29,12 +29,20 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
     private var idItemReforma: String? = null
     private var idItemTransacao: String? = null
     private var exitingMoney = false
+    var farmID = ""
 
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+
+        if (arguments?.get("id") != null) {
+            val id = arguments?.getString("id")!!
+            farmID = id
+        }
+
         root = inflater.inflate(R.layout.cadastro_fluxo_caixa, container, false)
         realm = Realm.getDefaultInstance()
         recuperarFluxoCaixa()

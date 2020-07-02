@@ -12,6 +12,7 @@ open class ItemBalancoPatrimonial() : RealmObject() {
         const val ITEM_ANIMAIS = "Animais"
         const val ITEM_INSUMOS = "Insumos"
         const val ITEM_PRODUTOS = "Produtos"
+        const val ITEM_DIVIDAS_LONGO_PRAZO = "Dívidas de longo prazo"
     }
 
     var nome: String = "";
@@ -20,7 +21,6 @@ open class ItemBalancoPatrimonial() : RealmObject() {
     var idFazenda = ""
     var quantidadeInicial: Float = 0f
     var quantidadeFinal: Float = 0f
-    var receitaBruta: Float = 0f
     var valorUnitario: Float = 0f
     var atividade: String = ""
     var valorAtual: Float = 0f
