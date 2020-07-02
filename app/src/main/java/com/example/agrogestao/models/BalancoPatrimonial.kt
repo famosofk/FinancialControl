@@ -1,8 +1,6 @@
 package com.example.agrogestao.models
 
-import android.content.res.Resources
 import android.util.Log
-import com.example.agrogestao.R
 import io.realm.RealmList
 import io.realm.RealmObject
 
@@ -134,8 +132,7 @@ open class BalancoPatrimonial : RealmObject() {
         var valorProdutos: Float = 0.0f
         //Atualizar o valor ano a ano
         for (item in listaItens) {
-            if (item.tipo.equals(ItemBalancoPatrimonial.ITEM_PRODUTOS) && item.anoProducao == Resources.getSystem()
-                    .getString(R.string.ano_atual).toInt()
+            if (item.tipo.equals(ItemBalancoPatrimonial.ITEM_PRODUTOS) && item.anoProducao == 2020
             ) {
                 valorProdutos += (item.quantidadeFinal * item.valorUnitario + item.reforma)
             }

@@ -130,11 +130,7 @@ class CadastroInventarioFragment : Fragment(), AdapterView.OnItemSelectedListene
                         balanco.dinheiroBanco += item.quantidadeInicial * item.valorUnitario
                 }
 
-                balanco.calcularPassivo()
-                balanco.calcularAtivo()
-                balanco.calcularPatrimonioLiquido()
-                balanco.calcularLiquidezGeral()
-                balanco.calcularLiquidezCorrente()
+                balanco.atualizarBalanco()
                 realm.commitTransaction()
                 Toast.makeText(context, "${balanco.ativo}", Toast.LENGTH_SHORT).show()
                 root.findNavController().navigate(R.id.from_cadastroInventario_to_apresentarFazenda)

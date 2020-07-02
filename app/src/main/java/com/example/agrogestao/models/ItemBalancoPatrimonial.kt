@@ -16,7 +16,6 @@ open class ItemBalancoPatrimonial() : RealmObject() {
     }
 
     var nome: String = "";
-    var dataCompra: String = ""
     var idItem = UUID.randomUUID().toString()
     var idFazenda = ""
     var quantidadeInicial: Float = 0f
@@ -46,8 +45,18 @@ open class ItemBalancoPatrimonial() : RealmObject() {
 
 
     fun calcularVidaUtilRestante(): Float {
-        //return hoje - dataCompra
-        return 0f
+        var retorno = 0f
+
+        //AnoProdução == ano inicial
+        //Vida útil restante == vida útil no momento do cadastro
+
+        /*
+        *
+        *Calcular vida útil restante.
+        *
+        * */
+
+        return 1f
     }
 
     fun getQuantidadeText(): String {
