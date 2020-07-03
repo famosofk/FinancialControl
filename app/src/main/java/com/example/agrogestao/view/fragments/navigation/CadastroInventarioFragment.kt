@@ -125,10 +125,10 @@ class CadastroInventarioFragment : Fragment(), AdapterView.OnItemSelectedListene
                 item.valorAtual = item.valorInicial
                 balanco.listaItens.add(item)
 
-                if (item.tipo == ItemBalancoPatrimonial.ITEM_DIVIDAS_LONGO_PRAZO) {
+           /*     if (item.tipo == ItemBalancoPatrimonial.ITEM_DIVIDAS_LONGO_PRAZO) {
                     if (item.anoProducao == getString(R.string.ano_atual).toInt())
                         balanco.dinheiroBanco += item.quantidadeInicial * item.valorUnitario
-                }
+                }*/
 
                 balanco.atualizarBalanco()
                 realm.commitTransaction()
