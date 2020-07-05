@@ -76,8 +76,13 @@
 
         <Spinner
             android:id="@+id/contaCadastroItemFluxoCaixa"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_width="200dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/spinner_shape"
+            android:paddingStart="24dp"
+            android:textAlignment="center" />
 
         <TextView
             android:layout_width="match_parent"
@@ -276,7 +281,8 @@
             android:fontFamily="@font/roboto"
             android:text="@string/consumo_atividade"
             android:textColor="@color/colorPrimary"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:visibility="visible" />
 
         <Button
             android:id="@+id/cadastrarItemFluxoCaixa"

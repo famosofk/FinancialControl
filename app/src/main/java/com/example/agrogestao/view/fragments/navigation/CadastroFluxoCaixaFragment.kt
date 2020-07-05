@@ -28,6 +28,8 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
     private var exitingMoney = false
     private var farmID = ""
     private var atividade = ""
+    private var listaAtividades = mutableListOf<AtividadesEconomicas>()
+    private var positionAtividades = 0
 
     /*
     *
@@ -79,13 +81,19 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
         item.data = data.text.toString()
         val quantidadeInicial: EditText =
             root.findViewById(R.id.quantidadeInicialCadastroItemFluxoCaixa)
-        item.quantidadeInicial = quantidadeInicial.text.toString().toFloat()
+        if (quantidadeInicial.text.isNotEmpty()) {
+            item.quantidadeInicial = quantidadeInicial.text.toString().toFloat()
+        }
         val valorInicial: EditText = root.findViewById(R.id.valorUnitarioCadastroItemFluxoCaixa)
-        item.valorInicial = valorInicial.text.toString().toFloat()
-        item.valorAtual = item.valorInicial
+        if (valorInicial.text.isNotEmpty()) {
+            item.valorInicial = valorInicial.text.toString().toFloat()
+            item.valorAtual = item.valorInicial
+        }
         val valorAmortizado: EditText =
             root.findViewById(R.id.valorAmortizadoCadastroItemFluxoCaixa)
-        item.valorAmortizado = valorAmortizado.text.toString().toFloat()
+        if (valorAmortizado.text.isNotEmpty()) {
+            item.valorAmortizado = valorAmortizado.text.toString().toFloat()
+        }
 
 
         val switchPrazo: Switch = root.findViewById(R.id.switchPrazo)
@@ -146,9 +154,9 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
             itemInventario!!.valorUnitario =
                 itemInventario.quantidadeFinal.times(itemInventario.valorAtual)
                     .plus(item.quantidadeInicial.plus(item.valorAtual)).div(
-                    itemInventario.quantidadeFinal.plus(item.quantidadeInicial)
-                )
-            itemInventario!!.quantidadeFinal += item.quantidadeInicial
+                        itemInventario.quantidadeFinal.plus(item.quantidadeInicial)
+                    )
+            itemInventario.quantidadeFinal += item.quantidadeInicial
             realm.commitTransaction()
             bool = true
 
@@ -157,15 +165,11 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
             if (item.quantidadeInicial <= itemInventario!!.quantidadeFinal) {
 
                 val switchConsumo: Switch = root.findViewById(R.id.switchConsumo)
-                if (switchConsumo.isChecked) {
-                    //Aumentar o custo da atividade selecionada.
-                } else {
-                    //aumentar o lucro da atividade
-                }
-
-
-
                 realm.beginTransaction()
+                val atividade = listaAtividades[positionAtividades]
+                if (switchConsumo.isChecked) {/*Aumentar o custo da atividade selecionada.*/atividade.custoDeProducao += itemInventario.valorAtual * item.quantidadeInicial
+                } else {/*aumentar o lucro da atividade */atividade.vendasAtividade += itemInventario.valorAtual * item.quantidadeInicial
+                }
                 itemInventario.quantidadeFinal -= item.quantidadeInicial
                 realm.commitTransaction()
                 bool = true
@@ -182,7 +186,6 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
         fluxoCaixa.list.add(item)
 
         if (exitingMoney) {
-            Toast.makeText(context, "compra", Toast.LENGTH_SHORT).show()
 
             if (item.pagamentoPrazo) {
                 balancoPatrimonial.totalContasPagar += item.valorInicial * item.quantidadeInicial
@@ -192,12 +195,11 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
                 balancoPatrimonial.dinheiroBanco -= item.valorInicial * item.quantidadeInicial
             }
         } else {
-            Toast.makeText(context, "venda", Toast.LENGTH_SHORT).show()
             if (item.pagamentoPrazo) {
                 balancoPatrimonial.totalContasReceber += item.valorInicial * item.quantidadeInicial
             } else {
-                balancoPatrimonial.totalReceitas += item.valorInicial * item.quantidadeInicial
-                balancoPatrimonial.dinheiroBanco += item.valorInicial * item.quantidadeInicial
+                balancoPatrimonial.totalReceitas += item.valorAtual * item.quantidadeInicial
+                balancoPatrimonial.dinheiroBanco += item.valorAtual * item.quantidadeInicial
             }
         }
 
@@ -340,7 +342,9 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
                 }
             }
 
-
+            if (parent.id == R.id.contaCadastroItemFluxoCaixa) {
+                positionAtividades = position
+            }
         }
     }
 
@@ -350,12 +354,14 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
             when (v.id) {
                 R.id.entradaSaidaButton -> {
                     exitingMoney = !exitingMoney
+                    val informacoesReforma = root.findViewById<LinearLayout>(R.id.layoutReforma)
+                    val switchConsumo = root.findViewById<Switch>(R.id.switchConsumo)
                     if (exitingMoney) {
-                        val informacoesReforma = root.findViewById<LinearLayout>(R.id.layoutReforma)
+                        switchConsumo.visibility = View.GONE
                         informacoesReforma.visibility = View.VISIBLE
                     } else {
-                        val informacoesReforma = root.findViewById<LinearLayout>(R.id.layoutReforma)
                         informacoesReforma.visibility = View.GONE
+                        switchConsumo.visibility = View.VISIBLE
                     }
                 }
             }
@@ -407,10 +413,10 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
         spinnerItemPropriedade.onItemSelectedListener = this
         spinnerItemPropriedade.adapter = adapterProperties
 
-        val resultadosAtividadesEconomicas =
+        listaAtividades =
             realm.where<AtividadesEconomicas>().contains("fazendaID", farmID).findAll()
         val listAtividadesEconomicas = mutableListOf<String>()
-        for (atividade in resultadosAtividadesEconomicas) {
+        for (atividade in listaAtividades) {
             listAtividadesEconomicas.add(atividade.nome)
         }
 
@@ -425,6 +431,7 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
             root.findViewById(R.id.contaCadastroItemFluxoCaixa)
         spinnerAtividadesEconomicas.adapter = adapterAtividadesEconomicas
         atividade = listAtividadesEconomicas[0]
+        spinnerAtividadesEconomicas.onItemSelectedListener = this
 
 
     }
