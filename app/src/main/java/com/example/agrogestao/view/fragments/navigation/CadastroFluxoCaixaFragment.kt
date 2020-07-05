@@ -15,9 +15,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-/**
- * A simple [Fragment] subclass.
- */
 class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListener,
     View.OnClickListener {
     private lateinit var root: View
@@ -29,7 +26,14 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
     private var idItemReforma: String? = null
     private var idItemTransacao: String? = null
     private var exitingMoney = false
-    var farmID = ""
+    private var farmID = ""
+    private var atividade = ""
+
+    /*
+    *
+    * Preciso pegar o valor da atividade ao selecionar outra atividade e depois atualizar as mudanças na atividade.
+    *
+    * */
 
 
     override fun onCreateView(
@@ -73,8 +77,6 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
         item.nome = nome.text.toString()
         val data: EditText = root.findViewById(R.id.dataCadastroItemFluxoCaixa)
         item.data = data.text.toString()
-        val conta: EditText = root.findViewById(R.id.contaCadastroItemFluxoCaixa)
-        item.conta = conta.text.toString()
         val quantidadeInicial: EditText =
             root.findViewById(R.id.quantidadeInicialCadastroItemFluxoCaixa)
         item.quantidadeInicial = quantidadeInicial.text.toString().toFloat()
@@ -98,16 +100,21 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
         if (switchReforma.isChecked) {
             item.reforma = true
             val itemInventario: ItemBalancoPatrimonial? =
-                realm.where<ItemBalancoPatrimonial>().contains("idItem", idItemReforma).findFirst()
+                realm.where<ItemBalancoPatrimonial>().contains("idItem", idItemReforma!!)
+                    .findFirst()
             if (itemInventario != null) {
                 realm.beginTransaction()
                 itemInventario.reforma += item.valorInicial
                 realm.commitTransaction()
             }
         }
+
+        val switchConsumo: Switch = root.findViewById(R.id.switchConsumo)
+        if (switchConsumo.isChecked) {
+            item.valorAtual = 0f
+        }
+
         val switchInventario: Switch = root.findViewById(R.id.switchPropriedade)
-
-
         realizarTransacao(item, switchInventario.isChecked)
 
 
@@ -148,6 +155,16 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
         } else { //venda
 
             if (item.quantidadeInicial <= itemInventario!!.quantidadeFinal) {
+
+                val switchConsumo: Switch = root.findViewById(R.id.switchConsumo)
+                if (switchConsumo.isChecked) {
+                    //Aumentar o custo da atividade selecionada.
+                } else {
+                    //aumentar o lucro da atividade
+                }
+
+
+
                 realm.beginTransaction()
                 itemInventario.quantidadeFinal -= item.quantidadeInicial
                 realm.commitTransaction()
@@ -362,6 +379,14 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
                 listBenfeitoriasMaquinas
             )
         }
+
+        val spinnerReformaTipo: Spinner = root.findViewById(R.id.tipoReformaSpinner)
+        spinnerReformaTipo.onItemSelectedListener = this
+        val spinnerReformaObjeto: Spinner = root.findViewById(R.id.objetoReformaSpinner)
+        spinnerReformaObjeto.adapter = adapterReformaObjeto
+        spinnerReformaObjeto.onItemSelectedListener = this
+
+
         val propertiesResults =
             realm.where<ItemBalancoPatrimonial>().contains("tipo", "Animais").findAll()
         for (itemBalancoo in propertiesResults) {
@@ -375,17 +400,32 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
             )
         }
 
-        val spinnerReformaTipo: Spinner = root.findViewById(R.id.tipoReformaSpinner)
-        spinnerReformaTipo.onItemSelectedListener = this
-        val spinnerReformaObjeto: Spinner = root.findViewById(R.id.objetoReformaSpinner)
-        spinnerReformaObjeto.adapter = adapterReformaObjeto
-        spinnerReformaObjeto.onItemSelectedListener = this
 
         val spinnerPropriedade: Spinner = root.findViewById(R.id.tipoPropriedadeSpinner)
         spinnerPropriedade.onItemSelectedListener = this
         val spinnerItemPropriedade: Spinner = root.findViewById(R.id.itemInventarioSpinner)
         spinnerItemPropriedade.onItemSelectedListener = this
         spinnerItemPropriedade.adapter = adapterProperties
+
+        val resultadosAtividadesEconomicas =
+            realm.where<AtividadesEconomicas>().contains("fazendaID", farmID).findAll()
+        val listAtividadesEconomicas = mutableListOf<String>()
+        for (atividade in resultadosAtividadesEconomicas) {
+            listAtividadesEconomicas.add(atividade.nome)
+        }
+
+        val adapterAtividadesEconomicas = context?.let {
+            ArrayAdapter(
+                it,
+                android.R.layout.simple_spinner_dropdown_item,
+                listAtividadesEconomicas
+            )
+        }
+        val spinnerAtividadesEconomicas: Spinner =
+            root.findViewById(R.id.contaCadastroItemFluxoCaixa)
+        spinnerAtividadesEconomicas.adapter = adapterAtividadesEconomicas
+        atividade = listAtividadesEconomicas[0]
+
 
     }
 

@@ -103,6 +103,7 @@
     <string name="rateio_intro">Rateio</string>
     <string name="atividades_info_hint">Nome da atividade econômica</string>
     <string name="rateio_info_hint">Porcentagem custos gerais: 30,5; 47; 51.3</string>
+    <string name="consumo_atividade">Consumido na atividade</string>
 
     <string-array name="tiposItem">
         <item>Terra</item>
