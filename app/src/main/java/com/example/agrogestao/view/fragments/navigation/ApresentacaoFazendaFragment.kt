@@ -76,7 +76,7 @@ class ApresentacaoFazendaFragment : Fragment() {
                 val textLiquidez = view.findViewById<TextView>(R.id.textsLiquidezApresentacao)
                 val textRentabilidade =
                     view.findViewById<TextView>(R.id.textsRentabilidadeApresentacao)
-                textSaldo.text = "Saldo: ${it.saldo}"
+                textSaldo.text = "Saldo: ${it.dinheiroBanco}"
                 textPagar.text = "Contas a pagar: ${it.totalContasPagar}"
                 textReceber.text = "Contas a receber: ${it.totalContasReceber}"
                 textPatrimonioLiquido.text = "Patrimônio Líquido: ${it.patrimonioLiquido}"

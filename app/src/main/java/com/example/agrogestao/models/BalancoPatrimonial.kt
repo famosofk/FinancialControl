@@ -67,12 +67,13 @@ open class BalancoPatrimonial : RealmObject() {
     }
 
     fun calcularSaldo() {
-        saldo = totalReceitas - (totalDespesas - totalContasPagar)
+        //saldo = totalReceitas - (totalDespesas - totalContasPagar) + dinheiroBanco
+        saldo = dinheiroBanco
     }
 
     fun calcularLiquidezCorrente() {
 
-        liquidezCorrente = totalContasPagar / (saldo + calcularPatrimonioBens() + dinheiroBanco)
+        liquidezCorrente = (saldo + calcularValorAnimaisInsumosProdutos()) / totalContasPagar
 
     }
 
@@ -151,13 +152,17 @@ open class BalancoPatrimonial : RealmObject() {
 
         var depreciacao = 0f
         for (item in listaItens) {
-            item.calcularDepreciacao()
+            //benfeitoria e maquina
+            if (item.tipo.equals(ItemBalancoPatrimonial.ITEM_BENFEITORIA) || item.tipo.equals(
+                    ItemBalancoPatrimonial.ITEM_MAQUINAS
+                )
+            )
+                item.calcularDepreciacao()
             depreciacao += item.depreciacao
         }
 
         custoOperacionalTotal =
             custoOperacionalEfetivo + depreciacao + trabalhoFamiliarNaoRemunerado
-        custoOperacionalTotal = 0f
     }
 
 
@@ -171,7 +176,8 @@ open class BalancoPatrimonial : RealmObject() {
 
 
     fun calcularRentabilidade() {
-        rentabilidade = receitaBruta - patrimonioLiquido
+        calcularMargemBruta()
+        rentabilidade = margemBruta / patrimonioLiquido
     }
 
 

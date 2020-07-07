@@ -168,7 +168,7 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
                 realm.beginTransaction()
                 val atividade = listaAtividades[positionAtividades]
                 if (switchConsumo.isChecked) {/*Aumentar o custo da atividade selecionada.*/atividade.custoDeProducao += itemInventario.valorAtual * item.quantidadeInicial
-                } else {/*aumentar o lucro da atividade */atividade.vendasAtividade += itemInventario.valorAtual * item.quantidadeInicial
+                } else {/*aumentar o lucro da atividade */atividade.vendasAtividade += item.valorInicial * item.quantidadeInicial
                 }
                 itemInventario.quantidadeFinal -= item.quantidadeInicial
                 realm.commitTransaction()
