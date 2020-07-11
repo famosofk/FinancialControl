@@ -1,9 +1,11 @@
 package com.example.agrogestao.models
 
 import io.realm.RealmObject
+import java.util.*
 
 open class ItemFluxoCaixa(var tipo: Boolean = false) : RealmObject() {
 
+    var itemID = UUID.randomUUID().toString()
     var valorAtual = 0f;
     var valorInicial = 0f;
     var nome = ""
