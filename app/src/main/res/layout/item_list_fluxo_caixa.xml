@@ -10,12 +10,20 @@
             name="fluxoCaixa"
             type="com.example.agrogestao.models.ItemFluxoCaixa" />
 
+        <variable
+            name="clickListener"
+            type="com.example.agrogestao.view.adapter.ItemFluxoCaixaListener" />
+
+
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_margin="2dp"
+        android:onClick="@{() -> clickListener.onClick(fluxoCaixa)}"
+        android:orientation="horizontal"
+        android:padding="4dp">
 
         <TextView
             android:id="@+id/tipoMovimentacao"
@@ -23,8 +31,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1.5"
             android:text="TEXTVIEW"
+            android:textAlignment="textStart"
             android:textAllCaps="true"
-            android:textSize="16sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <TextView
@@ -32,14 +41,15 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@{fluxoCaixa.nome}"
-            android:textSize="16sp" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/valorMovimentacao"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1.5"
-            android:textSize="16sp" />
+            android:textAlignment="center"
+            android:textSize="18sp" />
     </LinearLayout>
 
 </layout>

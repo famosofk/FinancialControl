@@ -10,16 +10,10 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <TextView
-            android:id="@+id/textView36"
+        <Spinner
+            android:id="@+id/spinner"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:fontFamily="@font/roboto"
-            android:text="Resultados Milho"
-            android:textAlignment="center"
-            android:textColor="@color/colorPrimary"
-            android:textSize="32sp" />
+            android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/textView37"
@@ -111,6 +105,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:contentDescription="@string/agroplus_logo_description"
+            android:scaleType="centerCrop"
             app:srcCompat="@drawable/grafico_ilustrativo" />
     </LinearLayout>
 </ScrollView>

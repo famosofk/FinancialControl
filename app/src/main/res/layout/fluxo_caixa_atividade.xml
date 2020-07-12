@@ -91,7 +91,7 @@
                 android:id="@+id/fcaixaLucroText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="32dp"
+                android:layout_marginBottom="16dp"
                 android:fontFamily="@font/roboto"
                 android:text="@string/lucro_fazenda"
                 android:textColor="@android:color/black"
@@ -102,16 +102,39 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:fontFamily="@font/roboto"
-                android:text="@string/movimentacoes_string"
+                android:text="@string/movimentacoesvista_string"
                 android:textColor="@color/colorPrimary"
                 android:textSize="24sp" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerFluxoCaixa"
+                android:id="@+id/recyclerFluxoCaixaVista"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:minHeight="360dp"
+                android:layout_height="150dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/roboto"
+                android:text="@string/movimentacoesprazo_string"
+                android:textColor="@color/colorPrimary"
+                android:textSize="24sp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerFluxoCaixaPrazo"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/roboto"
+                android:text="@string/distribuicao_movimentacao_string"
+                android:textColor="@color/colorPrimary"
+                android:textSize="24sp" />
 
             <ImageView
                 android:id="@+id/imageView4"

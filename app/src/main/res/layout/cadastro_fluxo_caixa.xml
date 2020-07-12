@@ -76,13 +76,15 @@
 
         <Spinner
             android:id="@+id/contaCadastroItemFluxoCaixa"
-            android:layout_width="200dp"
+            android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:layout_gravity="center"
             android:layout_marginBottom="8dp"
             android:background="@drawable/spinner_shape"
-            android:paddingStart="24dp"
-            android:textAlignment="center" />
+            android:gravity="center"
+            android:minWidth="200dp"
+            android:padding="8dp"
+            android:textAlignment="gravity" />
 
         <TextView
             android:layout_width="match_parent"
@@ -124,28 +126,6 @@
             android:inputType="number|numberDecimal"
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
-            tools:ignore="LabelFor" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:fontFamily="@font/roboto"
-            android:text="@string/valor_amortizado_intro"
-            android:textColor="@color/colorPrimary"
-            android:textSize="16sp" />
-
-        <EditText
-            android:id="@+id/valorAmortizadoCadastroItemFluxoCaixa"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:ems="10"
-            android:importantForAutofill="no"
-            android:inputType="number|numberDecimal"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
-            android:text="0"
             tools:ignore="LabelFor" />
 
         <LinearLayout
@@ -283,6 +263,28 @@
             android:textColor="@color/colorPrimary"
             android:textSize="16sp"
             android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/tipoDespesaText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/roboto"
+            android:text="@string/tipo_despesa"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp"
+            android:visibility="gone" />
+
+        <Spinner
+            android:id="@+id/tipoDespesaFluxoCaixa"
+            android:layout_width="200dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/spinner_shape"
+            android:entries="@array/tiposDespesa"
+            android:textAlignment="center"
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/cadastrarItemFluxoCaixa"

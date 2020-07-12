@@ -6,15 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.example.agrogestao.R
 import com.example.agrogestao.models.BalancoPatrimonial
-import com.example.agrogestao.models.ItemBalancoPatrimonial
 import com.example.agrogestao.view.adapter.ItemPatrimonioAdapter
 import com.example.agrogestao.viewmodel.BalancoPatrimonialViewModel
-import io.realm.Realm
-import io.realm.kotlin.where
 
 class BalancoPatrimonialFragment : Fragment() {
 
@@ -33,38 +31,49 @@ class BalancoPatrimonialFragment : Fragment() {
         if (arguments?.get("id") != null) {
             id = arguments?.getString("id")!!
         }
+        balancoPatrimonialViewModel.load(id)
 
-        //incluir listagem dos bens
-        val recyclerView: RecyclerView = root.findViewById(R.id.recyclerItensBalanco)
-        val adapter = ItemPatrimonioAdapter()
-        adapter.submitList(
-            Realm.getDefaultInstance().where<ItemBalancoPatrimonial>().contains("idFazenda", id)
-                .findAll()
-        )
-        recyclerView.adapter = adapter
+        observe(root)
 
 
         return root
     }
 
 
+    private fun observe(view: View) {
+        balancoPatrimonialViewModel.myBalancoPatrimonial.observe(viewLifecycleOwner, Observer {
+            popularTextos(it, view)
+            preencherRecycler(it, view)
+        })
+    }
+
     private fun popularTextos(it: BalancoPatrimonial, view: View) {
 
         val textPatrimonio = view.findViewById<TextView>(R.id.textPatrimonioBalanco)
-        textPatrimonio.setText(it.patrimonioLiquido.toString())
+        textPatrimonio.text = "Patrimônio líquido: " + it.patrimonioLiquido.toString()
         val textSolvencia = view.findViewById<TextView>(R.id.textSolvenciaBalanco)
-        textSolvencia.setText(it.liquidezGeral.toString())
+        textSolvencia.text = "Solvência: " + it.liquidezGeral.toString()
         val textLiquidez = view.findViewById<TextView>(R.id.textLiquidezBalanco)
-        textLiquidez.setText(it.liquidezCorrente.toString())
+        textLiquidez.text = "Liquidez: " + it.liquidezCorrente.toString()
         val textRentabilidade = view.findViewById<TextView>(R.id.textRentabilidadeBalanco)
-        textRentabilidade.setText(it.rentabilidade.toString())
+        textRentabilidade.text = "Rentabilidade: " + it.rentabilidade.toString()
         val textAtivo = view.findViewById<TextView>(R.id.textAtivoBalanco)
-        textAtivo.setText(it.ativo.toString())
+        textAtivo.text = "Ativo: " + it.ativo.toString()
+        val textAtivoCirculante = view.findViewById<TextView>(R.id.textAtivoCirculanteBalanco)
+        textAtivoCirculante.text =
+            "Ativo circulante: " + (it.calcularValorAnimaisInsumosProdutos() + it.dinheiroBanco).toString()
         val textPassivo = view.findViewById<TextView>(R.id.textPassivoBalanco)
-        textPassivo.setText(it.passivo.toString())
+        textPassivo.text = "Passivo: " + it.passivo.toString()
 
         //falta configurar os gráficos
 
+    }
+
+    private fun preencherRecycler(it: BalancoPatrimonial, root: View) {
+        val recyclerView: RecyclerView = root.findViewById(R.id.recyclerItensBalanco)
+        val adapter = ItemPatrimonioAdapter()
+        adapter.submitList(it.listaItens)
+        recyclerView.adapter = adapter
     }
 
 }

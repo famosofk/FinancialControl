@@ -78,7 +78,7 @@ open class BalancoPatrimonial : RealmObject() {
     }
 
     fun calcularValorAnimaisInsumosProdutos(): Float {
-        var total: Float = 0.0f
+        var total = 0.0f
         for (item in listaItens) {
             if (item.tipo.equals(ItemBalancoPatrimonial.ITEM_ANIMAIS) || item.tipo.equals(
                     ItemBalancoPatrimonial.ITEM_INSUMOS
@@ -130,7 +130,7 @@ open class BalancoPatrimonial : RealmObject() {
     }
 
     fun calcularValorProdutos(): Float {
-        var valorProdutos: Float = 0.0f
+        var valorProdutos = 0.0f
         //Atualizar o valor ano a ano
         for (item in listaItens) {
             if (item.tipo.equals(ItemBalancoPatrimonial.ITEM_PRODUTOS) && item.anoProducao == 2020
@@ -175,7 +175,7 @@ open class BalancoPatrimonial : RealmObject() {
     }
 
 
-    fun calcularRentabilidade() {
+    private fun calcularRentabilidade() {
         calcularMargemBruta()
         rentabilidade = margemBruta / patrimonioLiquido
     }

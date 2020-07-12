@@ -11,20 +11,31 @@ import com.example.agrogestao.R
 import com.example.agrogestao.databinding.ItemListFluxoCaixaBinding
 import com.example.agrogestao.models.ItemFluxoCaixa
 
-class FluxoCaixaAdapter :
+class FluxoCaixaAdapter(val onClickListener: ItemFluxoCaixaListener) :
     ListAdapter<ItemFluxoCaixa, FluxoCaixaAdapter.ViewHolder>(FluxoCaixaDiff()) {
 
     class ViewHolder private constructor(val binding: ItemListFluxoCaixaBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: ItemFluxoCaixa) {
+        fun bind(item: ItemFluxoCaixa, onClickListener: ItemFluxoCaixaListener) {
             binding.fluxoCaixa = item
-            if (!item.tipo) {
-                binding.tipoMovimentacao.text = "Venda"
-                binding.tipoMovimentacao.setTextColor(Color.GREEN)
+            binding.clickListener = onClickListener
+            if (!item.pagamentoPrazo) {
+                if (!item.tipo) {
+                    binding.tipoMovimentacao.text = "Venda"
+                    binding.tipoMovimentacao.setTextColor(Color.GREEN)
+                } else {
+                    binding.tipoMovimentacao.text = "Compra"
+                    binding.tipoMovimentacao.setTextColor(Color.parseColor("#ff6f00"))
+                }
             } else {
-                binding.tipoMovimentacao.text = "Compra"
-                binding.tipoMovimentacao.setTextColor(Color.parseColor("#ff6f00"))
+                if (!item.tipo) {
+                    binding.tipoMovimentacao.text = item.dataPagamentoPrazo
+                    binding.tipoMovimentacao.setTextColor(Color.GREEN)
+                } else {
+                    binding.tipoMovimentacao.text = item.dataPagamentoPrazo
+                    binding.tipoMovimentacao.setTextColor(Color.parseColor("#ff6f00"))
+                }
             }
             binding.valorMovimentacao.text = (item.quantidadeInicial * item.valorInicial).toString()
         }
@@ -45,7 +56,7 @@ class FluxoCaixaAdapter :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), onClickListener)
     }
 
 
@@ -61,4 +72,8 @@ class FluxoCaixaDiff : DiffUtil.ItemCallback<ItemFluxoCaixa>() {
         return true
     }
 
+}
+
+class ItemFluxoCaixaListener(val clickListener: (itemId: String) -> Unit) {
+    fun onClick(item: ItemFluxoCaixa) = clickListener(item.itemID)
 }

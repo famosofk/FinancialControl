@@ -104,7 +104,13 @@
     <string name="atividades_info_hint">Nome da atividade econômica</string>
     <string name="rateio_info_hint">Porcentagem custos gerais: 30,5; 47; 51.3</string>
     <string name="consumo_atividade">Consumido na atividade</string>
-    <string name="movimentacoes_string">Movimentações</string>
+    <string name="movimentacoesvista_string">Movimentações a vista</string>
+    <string name="movimentacoesprazo_string">Movimentações a prazo</string>
+    <string name="distribuicao_movimentacao_string">Distribuição de movimentações</string>
+    <string name="tipo_despesa">Tipo despesa</string>
+    <string name="pagar_intro">pagar</string>
+    <string name="cancelar_intro">Cancelar</string>
+    <string name="confirmar_intro">Confirmar</string>
 
     <string-array name="tiposItem">
         <item>Terra</item>
@@ -114,6 +120,14 @@
         <item>Insumos</item>
         <item>Produtos</item>
         <item>Dívidas de longo prazo</item>
+    </string-array>
+    <string-array name="tiposDespesa">
+        <item>Semente</item>
+        <item>Fertilizante</item>
+        <item>Defensivo</item>
+        <item>Mão de obra</item>
+        <item>Máquina</item>
+        <item>Outros</item>
     </string-array>
 
 

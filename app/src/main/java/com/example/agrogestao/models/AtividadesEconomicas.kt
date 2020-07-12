@@ -11,5 +11,12 @@ open class AtividadesEconomicas(var nome: String = "") : RealmObject() {
     var lucroAtividade: String = ""
         get() = "R$: ${vendasAtividade - custoDeProducao}"
 
+    var custoSemente = 0f
+    var custoFertilizante = 0f
+    var custoDefensivo = 0f
+    var custoMaodeobra = 0f
+    var custoMaquina = 0f
+    var custoOutros = 0f
+
 
 }

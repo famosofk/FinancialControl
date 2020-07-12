@@ -17,25 +17,7 @@ import kotlin.collections.ArrayList
 
 class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListener,
     View.OnClickListener {
-    private lateinit var root: View
-    private lateinit var realm: Realm
-    private lateinit var fluxoCaixa: FluxoCaixa
-    private lateinit var balancoPatrimonial: BalancoPatrimonial
-    private var listBenfeitoriasMaquinas = mutableListOf<String>()
-    private var listBens = mutableListOf<String>()
-    private var idItemReforma: String? = null
-    private var idItemTransacao: String? = null
-    private var exitingMoney = false
-    private var farmID = ""
-    private var atividade = ""
-    private var listaAtividades = mutableListOf<AtividadesEconomicas>()
-    private var positionAtividades = 0
 
-    /*
-    *
-    * Preciso pegar o valor da atividade ao selecionar outra atividade e depois atualizar as mudanças na atividade.
-    *
-    * */
 
 
     override fun onCreateView(
@@ -75,6 +57,7 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
 
         val tipo: ToggleButton = root.findViewById(R.id.entradaSaidaButton)
         val item = ItemFluxoCaixa(tipo.isChecked)
+        item.atividade = atividade
         val nome: EditText = root.findViewById(R.id.nomeItemCadastrarFluxoCaixa)
         item.nome = nome.text.toString()
         val data: EditText = root.findViewById(R.id.dataCadastroItemFluxoCaixa)
@@ -89,11 +72,7 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
             item.valorInicial = valorInicial.text.toString().toFloat()
             item.valorAtual = item.valorInicial
         }
-        val valorAmortizado: EditText =
-            root.findViewById(R.id.valorAmortizadoCadastroItemFluxoCaixa)
-        if (valorAmortizado.text.isNotEmpty()) {
-            item.valorAmortizado = valorAmortizado.text.toString().toFloat()
-        }
+
 
 
         val switchPrazo: Switch = root.findViewById(R.id.switchPrazo)
@@ -167,7 +146,9 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
                 val switchConsumo: Switch = root.findViewById(R.id.switchConsumo)
                 realm.beginTransaction()
                 val atividade = listaAtividades[positionAtividades]
-                if (switchConsumo.isChecked) {/*Aumentar o custo da atividade selecionada.*/atividade.custoDeProducao += itemInventario.valorAtual * item.quantidadeInicial
+                if (switchConsumo.isChecked) {/*Aumentar o custo da atividade selecionada.*/
+                    atividade.custoDeProducao += itemInventario.valorAtual * item.quantidadeInicial
+
                 } else {/*aumentar o lucro da atividade */atividade.vendasAtividade += item.valorInicial * item.quantidadeInicial
                 }
                 itemInventario.quantidadeFinal -= item.quantidadeInicial
@@ -186,13 +167,29 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
         fluxoCaixa.list.add(item)
 
         if (exitingMoney) {
-
             if (item.pagamentoPrazo) {
                 balancoPatrimonial.totalContasPagar += item.valorInicial * item.quantidadeInicial
             } else {
-
                 balancoPatrimonial.totalDespesas += item.valorInicial * item.quantidadeInicial
                 balancoPatrimonial.dinheiroBanco -= item.valorInicial * item.quantidadeInicial
+                val atividade = listaAtividades[positionAtividades]
+                when (positionTipoDespesa) {
+                    0 -> {
+                        atividade.custoSemente += 0
+                    }
+                    1 -> {
+                        atividade.custoFertilizante += 0
+                    }
+                    2 -> {
+                        atividade.custoMaodeobra += 0
+                    }
+                    3 -> {
+                        atividade.custoMaquina += 0
+                    }
+                    4 -> {
+                        atividade.custoOutros += 0
+                    }
+                }
             }
         } else {
             if (item.pagamentoPrazo) {
@@ -202,6 +199,7 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
                 balancoPatrimonial.dinheiroBanco += item.valorAtual * item.quantidadeInicial
             }
         }
+
 
         balancoPatrimonial.atualizarBalanco()
         realm.commitTransaction()
@@ -345,6 +343,9 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
             if (parent.id == R.id.contaCadastroItemFluxoCaixa) {
                 positionAtividades = position
             }
+            if (parent.id == R.id.tipoDespesaFluxoCaixa) {
+                positionTipoDespesa = position
+            }
         }
     }
 
@@ -356,10 +357,18 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
                     exitingMoney = !exitingMoney
                     val informacoesReforma = root.findViewById<LinearLayout>(R.id.layoutReforma)
                     val switchConsumo = root.findViewById<Switch>(R.id.switchConsumo)
+                    val tipoMovimentacao = root.findViewById<Spinner>(R.id.tipoDespesaFluxoCaixa)
+                    val textMovimentacao = root.findViewById<TextView>(R.id.tipoDespesaText)
+
                     if (exitingMoney) {
+                        tipoMovimentacao.visibility = View.VISIBLE
+                        textMovimentacao.visibility = View.VISIBLE
                         switchConsumo.visibility = View.GONE
                         informacoesReforma.visibility = View.VISIBLE
                     } else {
+
+                        tipoMovimentacao.visibility = View.GONE
+                        textMovimentacao.visibility = View.GONE
                         informacoesReforma.visibility = View.GONE
                         switchConsumo.visibility = View.VISIBLE
                     }
@@ -435,5 +444,20 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
 
 
     }
+
+    private lateinit var root: View
+    private lateinit var realm: Realm
+    private lateinit var fluxoCaixa: FluxoCaixa
+    private lateinit var balancoPatrimonial: BalancoPatrimonial
+    private var listBenfeitoriasMaquinas = mutableListOf<String>()
+    private var listBens = mutableListOf<String>()
+    private var idItemReforma: String? = null
+    private var idItemTransacao: String? = null
+    private var exitingMoney = false
+    private var farmID = ""
+    private var atividade = ""
+    private var listaAtividades = mutableListOf<AtividadesEconomicas>()
+    private var positionAtividades = 0
+    private var positionTipoDespesa = 0
 
 }
