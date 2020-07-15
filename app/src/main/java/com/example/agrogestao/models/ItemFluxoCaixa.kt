@@ -20,4 +20,6 @@ open class ItemFluxoCaixa(var tipo: Boolean = false) : RealmObject() {
     var tipoReforma = ""
     var itemReforma = ""
     var atividade = ""
+
+
 }

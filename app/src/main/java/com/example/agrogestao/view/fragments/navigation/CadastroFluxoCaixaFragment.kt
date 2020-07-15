@@ -19,6 +19,12 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
     View.OnClickListener {
 
 
+    private fun recuperarFluxoCaixa() {
+        val registradorFarm = realm.where<RegistradorFarm>().findFirst()!!
+        fluxoCaixa = realm.where<FluxoCaixa>().contains("farm", registradorFarm.id).findFirst()!!
+        balancoPatrimonial =
+            realm.where<BalancoPatrimonial>().contains("farm", registradorFarm.id).findFirst()!!
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,6 +40,7 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
         root = inflater.inflate(R.layout.cadastro_fluxo_caixa, container, false)
         realm = Realm.getDefaultInstance()
         recuperarFluxoCaixa()
+
         val buttonCompraVenda: ToggleButton = root.findViewById(R.id.entradaSaidaButton)
         buttonCompraVenda.setOnClickListener(this)
 
@@ -62,17 +69,18 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
         item.nome = nome.text.toString()
         val data: EditText = root.findViewById(R.id.dataCadastroItemFluxoCaixa)
         item.data = data.text.toString()
+
         val quantidadeInicial: EditText =
             root.findViewById(R.id.quantidadeInicialCadastroItemFluxoCaixa)
         if (quantidadeInicial.text.isNotEmpty()) {
             item.quantidadeInicial = quantidadeInicial.text.toString().toFloat()
         }
+
         val valorInicial: EditText = root.findViewById(R.id.valorUnitarioCadastroItemFluxoCaixa)
         if (valorInicial.text.isNotEmpty()) {
             item.valorInicial = valorInicial.text.toString().toFloat()
             item.valorAtual = item.valorInicial
         }
-
 
 
         val switchPrazo: Switch = root.findViewById(R.id.switchPrazo)
@@ -207,12 +215,7 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
     }
 
 
-    private fun recuperarFluxoCaixa() {
-        val registradorFarm = realm.where<RegistradorFarm>().findFirst()!!
-        fluxoCaixa = realm.where<FluxoCaixa>().contains("farm", registradorFarm.id).findFirst()!!
-        balancoPatrimonial =
-            realm.where<BalancoPatrimonial>().contains("farm", registradorFarm.id).findFirst()!!
-    }
+
 
     private fun switchsAndVisibility() {
 
@@ -257,23 +260,24 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
         if (parent != null) {
 
             if (parent.id == R.id.tipoReformaSpinner) {
-                val realm = Realm.getDefaultInstance()
                 val otherSeriesList =
                     ArrayList<String>(Arrays.asList(*resources.getStringArray(R.array.bensDepreciaveis)))
-                val listaOpcoes = realm.where<ItemBalancoPatrimonial>()
-                    .contains("tipo", otherSeriesList[position]).findAll()
+                val listaItens = mutableListOf<ItemBalancoPatrimonial>()
                 listBenfeitoriasMaquinas.clear()
-                if (listaOpcoes.count() > 0) {
-                    for (itens in listaOpcoes) {
-                        listBenfeitoriasMaquinas.add(itens.nome)
+                for (item in balancoPatrimonial.listaItens) {
+                    if (item.tipo.equals(otherSeriesList[position])) {
+                        listaItens.add(item)
+                        listBenfeitoriasMaquinas.add(item.nome)
                     }
-                } else {
+                }
+                if (listBenfeitoriasMaquinas.size == 0) {
                     Toast.makeText(
                         context,
                         "Não há itens desse tipo cadastrados",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
+
                 val adapter = context?.let {
                     ArrayAdapter(
                         it,
@@ -283,47 +287,50 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
                 }
                 val spinnerItens: Spinner = root.findViewById(R.id.objetoReformaSpinner)
                 spinnerItens.adapter = adapter
-                if (listaOpcoes.size == 0) {
+                if (listBenfeitoriasMaquinas.size == 0) {
                     idItemReforma = null
                 } else {
-                    idItemReforma = listaOpcoes[0]!!.idItem
+                    idItemReforma = listaItens[0].idItem //era 0
                 }
 
             }
+
             if (parent.id == R.id.objetoReformaSpinner) {
-                val results = realm.where<ItemBalancoPatrimonial>()
-                    .contains("nome", listBenfeitoriasMaquinas[position]).findFirst()
-                results?.let { idItemReforma = it.idItem }
+                for (item in balancoPatrimonial.listaItens) {
+                    if (item.nome.equals(listBenfeitoriasMaquinas[position])) {
+                        idItemReforma = item.idItem
+                    }
+                }
             }
 
             if (parent.id == R.id.itemInventarioSpinner) {
-                val results =
-                    realm.where<ItemBalancoPatrimonial>().contains("nome", listBens[position])
-                        .findFirst()
-                results?.let {
-                    idItemTransacao = it.idItem
+                for (item in balancoPatrimonial.listaItens) {
+                    if (item.nome.equals(listBens[position])) {
+                        idItemTransacao = item.idItem
+                    }
                 }
+
             }
 
             if (parent.id == R.id.tipoPropriedadeSpinner) {
                 val realm = Realm.getDefaultInstance()
                 val otherSeriesList =
                     ArrayList<String>(Arrays.asList(*resources.getStringArray(R.array.bensCompraVenda)))
-                val listaOpcoes = realm.where<ItemBalancoPatrimonial>()
-                    .contains("tipo", otherSeriesList[position]).findAll()
-                listBens.clear()
-                if (listaOpcoes.count() > 0) {
-                    for (itens in listaOpcoes) {
-                        listBens.add(itens.nome)
+                val listaItens = mutableListOf<ItemBalancoPatrimonial>()
+                for (item in balancoPatrimonial.listaItens) {
+                    if (item.tipo.equals(otherSeriesList[position])) {
+                        listaItens.add(item)
+                        listBens.add(item.nome)
                     }
-
-                } else {
+                }
+                if (listaItens.size == 0) {
                     Toast.makeText(
                         context,
                         "Não há itens desse tipo cadastrados",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
+
                 val adapterBens = context?.let {
                     ArrayAdapter(
                         it,
@@ -333,10 +340,10 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
                 }
                 val spinnerItens: Spinner = root.findViewById(R.id.itemInventarioSpinner)
                 spinnerItens.adapter = adapterBens
-                if (listaOpcoes.size == 0) {
+                if (listaItens.size == 0) {
                     idItemTransacao = null
                 } else {
-                    idItemTransacao = listaOpcoes[0]!!.idItem
+                    idItemTransacao = listaItens[0].idItem //era 0
                 }
             }
 
@@ -380,11 +387,11 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
 
     private fun spinnerConfiguration() {
 
-        val resultadosBenfeitoriasMaquinas =
-            realm.where<ItemBalancoPatrimonial>().contains("tipo", "Benfeitoria").findAll()
 
-        for (atividade in resultadosBenfeitoriasMaquinas) {
-            listBenfeitoriasMaquinas.add(atividade.nome)
+        for (item in balancoPatrimonial.listaItens) {
+            if (item.tipo.equals("Benfeitoria")) {
+                listBenfeitoriasMaquinas.add(item.nome)
+            }
         }
 
         val adapterReformaObjeto = context?.let {
@@ -402,10 +409,10 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
         spinnerReformaObjeto.onItemSelectedListener = this
 
 
-        val propertiesResults =
-            realm.where<ItemBalancoPatrimonial>().contains("tipo", "Animais").findAll()
-        for (itemBalancoo in propertiesResults) {
-            listBens.add(itemBalancoo.nome)
+        for (itemBalanco in balancoPatrimonial.listaItens) {
+            if (itemBalanco.tipo.equals("Animais")) {
+                listBens.add(itemBalanco.nome)
+            }
         }
         val adapterProperties = context?.let {
             ArrayAdapter(

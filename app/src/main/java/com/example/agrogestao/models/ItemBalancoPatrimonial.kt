@@ -29,8 +29,9 @@ open class ItemBalancoPatrimonial() : RealmObject() {
     var depreciacao: Float = 0f
     var reforma: Float = 0f
     var anoProducao: Int = 0
+
     var precoString: String = ""
-        get() = "R$ ${valorAtual * quantidadeFinal + reforma}"
+        get() = "R$ ${valorInicial * quantidadeFinal + reforma - depreciacao}"
     var quantidadeString: String = ""
         get() = "$quantidadeFinal un"
 

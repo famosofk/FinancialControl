@@ -67,7 +67,6 @@ open class BalancoPatrimonial : RealmObject() {
     }
 
     fun calcularSaldo() {
-        //saldo = totalReceitas - (totalDespesas - totalContasPagar) + dinheiroBanco
         saldo = dinheiroBanco
     }
 
@@ -96,8 +95,9 @@ open class BalancoPatrimonial : RealmObject() {
 
         var total = 0.0f
         for (item in listaItens) {
+            item.calcularDepreciacao()
             if (item.tipo != ItemBalancoPatrimonial.ITEM_DIVIDAS_LONGO_PRAZO) {
-                total += (item.quantidadeFinal * item.valorUnitario + item.reforma)
+                total += (item.quantidadeFinal * item.valorAtual)
             }
         }
         return total
@@ -152,7 +152,6 @@ open class BalancoPatrimonial : RealmObject() {
 
         var depreciacao = 0f
         for (item in listaItens) {
-            //benfeitoria e maquina
             if (item.tipo.equals(ItemBalancoPatrimonial.ITEM_BENFEITORIA) || item.tipo.equals(
                     ItemBalancoPatrimonial.ITEM_MAQUINAS
                 )
@@ -168,9 +167,7 @@ open class BalancoPatrimonial : RealmObject() {
 
     fun calcularCustoOperacionalEfetivo() {
         custoOperacionalEfetivo = totalDespesas + totalContasPagar
-        /*
-        * Adicionar os custos de produção
-        * */
+
 
     }
 

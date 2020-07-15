@@ -22,8 +22,9 @@ import io.realm.kotlin.where
 class FluxoCaixaFragment : Fragment() {
 
     private lateinit var fluxoCaixaViewModel: FluxoCaixaViewModel
-    val adapterVista = FluxoCaixaAdapter(ItemFluxoCaixaListener { })
-    val adapterPrazo = FluxoCaixaAdapter(ItemFluxoCaixaListener { criarAtividadeDialog(it) })
+    private val adapterVista = FluxoCaixaAdapter(ItemFluxoCaixaListener { })
+    private val adapterPrazo =
+        FluxoCaixaAdapter(ItemFluxoCaixaListener { criarAtividadeDialog(it) })
     var id: String = ""
     override fun onCreateView(
         inflater: LayoutInflater,

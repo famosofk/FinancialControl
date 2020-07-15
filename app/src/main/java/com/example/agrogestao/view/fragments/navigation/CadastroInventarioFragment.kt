@@ -13,7 +13,6 @@ import com.example.agrogestao.models.BalancoPatrimonial
 import com.example.agrogestao.models.ItemBalancoPatrimonial
 import io.realm.Realm
 import io.realm.kotlin.where
-import kotlinx.android.synthetic.main.cadastro_inventario.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -103,7 +102,7 @@ class CadastroInventarioFragment : Fragment(), AdapterView.OnItemSelectedListene
             }
             if (tipoSelecionado == "Benfeitoria" || tipoSelecionado == "Máquinas") {
                 val vidaUtil: EditText = root.findViewById(R.id.vidaUtilItemCadastro)
-                item.vidaUtil = vidaUtilItemCadastro.text.toString().trim().toInt()
+                item.vidaUtil = vidaUtil.text.toString().trim().toInt()
             }
 
 
@@ -125,10 +124,6 @@ class CadastroInventarioFragment : Fragment(), AdapterView.OnItemSelectedListene
                 item.valorAtual = item.valorInicial
                 balanco.listaItens.add(item)
 
-           /*     if (item.tipo == ItemBalancoPatrimonial.ITEM_DIVIDAS_LONGO_PRAZO) {
-                    if (item.anoProducao == getString(R.string.ano_atual).toInt())
-                        balanco.dinheiroBanco += item.quantidadeInicial * item.valorUnitario
-                }*/
 
                 balanco.atualizarBalanco()
                 realm.commitTransaction()
