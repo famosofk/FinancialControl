@@ -188,6 +188,36 @@ open class BalancoPatrimonial : RealmObject() {
         return valorAnimais
     }
 
+    fun calcularValorTerras(): Float {
+        var valorAnimais = 0.0f
+        for (item in listaItens) {
+            if (item.tipo.equals(ItemBalancoPatrimonial.ITEM_TERRA)) {
+                valorAnimais += (item.quantidadeFinal * item.valorUnitario + item.reforma)
+            }
+        }
+        return valorAnimais
+    }
+
+    fun calcularValorMaquinas(): Float {
+        var valorAnimais = 0.0f
+        for (item in listaItens) {
+            if (item.tipo.equals(ItemBalancoPatrimonial.ITEM_MAQUINAS)) {
+                valorAnimais += (item.quantidadeFinal * item.valorAtual + item.reforma)
+            }
+        }
+        return valorAnimais
+    }
+
+    fun calcularValorBenfeitorias(): Float {
+        var valorAnimais = 0.0f
+        for (item in listaItens) {
+            if (item.tipo.equals(ItemBalancoPatrimonial.ITEM_BENFEITORIA)) {
+                valorAnimais += (item.quantidadeFinal * item.valorAtual + item.reforma)
+            }
+        }
+        return valorAnimais
+    }
+
 
     fun calcularValorInsumos(): Float {
         var valorInsumos = 0.0f

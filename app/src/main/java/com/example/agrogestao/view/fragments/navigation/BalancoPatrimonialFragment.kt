@@ -1,5 +1,6 @@
 package com.example.agrogestao.view.fragments.navigation
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,14 +12,19 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.example.agrogestao.R
 import com.example.agrogestao.models.BalancoPatrimonial
+import com.example.agrogestao.models.ItemBalancoPatrimonial
 import com.example.agrogestao.view.adapter.ItemPatrimonioAdapter
 import com.example.agrogestao.viewmodel.BalancoPatrimonialViewModel
+import com.github.mikephil.charting.charts.PieChart
+import com.github.mikephil.charting.data.PieData
+import com.github.mikephil.charting.data.PieDataSet
+import com.github.mikephil.charting.data.PieEntry
 
 class BalancoPatrimonialFragment : Fragment() {
 
     private lateinit var balancoPatrimonialViewModel: BalancoPatrimonialViewModel
     var id = ""
-
+    private lateinit var root: View
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,7 +33,7 @@ class BalancoPatrimonialFragment : Fragment() {
     ): View? {
         balancoPatrimonialViewModel =
             ViewModelProvider(this).get(BalancoPatrimonialViewModel::class.java)
-        val root = inflater.inflate(R.layout.apresentacao_balanco_patrimonial, container, false)
+        root = inflater.inflate(R.layout.apresentacao_balanco_patrimonial, container, false)
         if (arguments?.get("id") != null) {
             id = arguments?.getString("id")!!
         }
@@ -65,7 +71,32 @@ class BalancoPatrimonialFragment : Fragment() {
         val textPassivo = view.findViewById<TextView>(R.id.textPassivoBalanco)
         textPassivo.text = "Passivo: " + it.passivo.toString()
 
-        //falta configurar os gráficos
+        criarGrafico(balanco = it)
+
+    }
+
+
+    private fun criarGrafico(balanco: BalancoPatrimonial) {
+        val entries = ArrayList<PieEntry>()
+
+        entries.add(PieEntry(balanco.calcularValorAnimais(), ItemBalancoPatrimonial.ITEM_ANIMAIS))
+        entries.add(PieEntry(balanco.calcularValorInsumos(), ItemBalancoPatrimonial.ITEM_INSUMOS))
+        entries.add(PieEntry(balanco.calcularValorProdutos(), ItemBalancoPatrimonial.ITEM_PRODUTOS))
+        entries.add(
+            PieEntry(
+                balanco.calcularValorBenfeitorias(),
+                ItemBalancoPatrimonial.ITEM_BENFEITORIA
+            )
+        )
+        entries.add(PieEntry(balanco.calcularValorMaquinas(), ItemBalancoPatrimonial.ITEM_MAQUINAS))
+        entries.add(PieEntry(balanco.calcularValorTerras(), ItemBalancoPatrimonial.ITEM_TERRA))
+        val set: PieDataSet = PieDataSet(entries, "Distribuição de patrimônio.")
+        val data = PieData(set)
+        set.setColors(COLORFUL_COLORS, 255)
+        val piechart = root.findViewById<PieChart>(R.id.distribuicao_patrimonio_chart)
+        piechart.data = data
+        piechart.invalidate()
+
 
     }
 
@@ -76,4 +107,15 @@ class BalancoPatrimonialFragment : Fragment() {
         recyclerView.adapter = adapter
     }
 
+
+    val COLORFUL_COLORS = intArrayOf(
+        Color.rgb(193, 37, 82),
+        Color.rgb(255, 102, 0),
+        Color.rgb(245, 199, 0),
+        Color.rgb(106, 150, 31),
+        Color.rgb(179, 100, 53),
+        Color.rgb(0, 128, 255)
+    )
 }
+
+

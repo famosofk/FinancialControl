@@ -103,13 +103,12 @@
                 style="@style/title_style"
                 android:text="@string/distribuicao_patrimonio" />
 
-            <ImageView
-                android:id="@+id/imageView5"
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/distribuicao_patrimonio_chart"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/agroplus_logo_description"
-                android:scaleType="centerCrop"
-                app:srcCompat="@drawable/grafico_ilustrativo" />
+                android:layout_height="300dp"
+                android:layout_margin="8dp"
+                android:padding="8dp" />
 
 
         </LinearLayout>

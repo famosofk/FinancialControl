@@ -18,6 +18,7 @@ class ApresentacaoFazendaFragment : Fragment() {
 
     private lateinit var id: String
     private lateinit var apresentacaoFazendaViewModel: ApresentacaoFazendaViewModel
+    private lateinit var root: View
     var lucroAtual: String = ""
     var lucroMeta: String = ""
     var mBrutaAtual: String = ""
@@ -33,7 +34,7 @@ class ApresentacaoFazendaFragment : Fragment() {
     ): View? {
         apresentacaoFazendaViewModel =
             ViewModelProvider(this).get(ApresentacaoFazendaViewModel::class.java)
-        val root = inflater.inflate(R.layout.apresentacao_fazenda, container, false)
+        root = inflater.inflate(R.layout.apresentacao_fazenda, container, false)
         inicializarListeners(root)
         observer(root)
 
@@ -156,9 +157,11 @@ class ApresentacaoFazendaFragment : Fragment() {
 
     }
 
+
     override fun onResume() {
         super.onResume()
         apresentacaoFazendaViewModel.recuperacaoDrawer()
     }
+
 
 }
