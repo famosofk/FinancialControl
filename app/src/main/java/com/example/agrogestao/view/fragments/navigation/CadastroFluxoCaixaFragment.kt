@@ -154,10 +154,23 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
                 val switchConsumo: Switch = root.findViewById(R.id.switchConsumo)
                 realm.beginTransaction()
                 val atividade = listaAtividades[positionAtividades]
-                if (switchConsumo.isChecked) {/*Aumentar o custo da atividade selecionada.*/
-                    atividade.custoDeProducao += itemInventario.valorAtual * item.quantidadeInicial
+                val date = Calendar.getInstance().time
+                val sdf = SimpleDateFormat("dd/MM/yyyy")
+                val formatedDate = sdf.format(date)
+                val array = formatedDate.split("/")
+                val custoOperacao = itemInventario.valorAtual * item.quantidadeInicial
+                val position: Int = array[1].toInt() - 1
+                if (switchConsumo.isChecked) {
+                    /*Aumentar o custo da atividade selecionada.*/
+                    atividade.custoDeProducao += custoOperacao
+                    atividade.arrayCustos[position] =
+                        custoOperacao - atividade.arrayCustos[position]!!
 
-                } else {/*aumentar o lucro da atividade */atividade.vendasAtividade += item.valorInicial * item.quantidadeInicial
+                } else {
+                    /*aumentar o lucro da atividade */
+                    atividade.vendasAtividade += custoOperacao
+                    atividade.arrayCustos[position] =
+                        custoOperacao + atividade.arrayCustos[position]!!
                 }
                 itemInventario.quantidadeFinal -= item.quantidadeInicial
                 realm.commitTransaction()
@@ -173,38 +186,42 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
 
         realm.beginTransaction()
         fluxoCaixa.list.add(item)
+        val custoOperacao = item.valorInicial * item.quantidadeInicial
 
         if (exitingMoney) {
             if (item.pagamentoPrazo) {
-                balancoPatrimonial.totalContasPagar += item.valorInicial * item.quantidadeInicial
+                balancoPatrimonial.totalContasPagar += custoOperacao
             } else {
-                balancoPatrimonial.totalDespesas += item.valorInicial * item.quantidadeInicial
-                balancoPatrimonial.dinheiroBanco -= item.valorInicial * item.quantidadeInicial
+                balancoPatrimonial.totalDespesas += custoOperacao
+                balancoPatrimonial.dinheiroBanco -= custoOperacao
                 val atividade = listaAtividades[positionAtividades]
                 when (positionTipoDespesa) {
                     0 -> {
-                        atividade.custoSemente += 0
+                        atividade.custoSemente += custoOperacao
                     }
                     1 -> {
-                        atividade.custoFertilizante += 0
+                        atividade.custoFertilizante += custoOperacao
                     }
                     2 -> {
-                        atividade.custoMaodeobra += 0
+                        atividade.custoDefensivo += custoOperacao
                     }
                     3 -> {
-                        atividade.custoMaquina += 0
+                        atividade.custoMaodeobra += custoOperacao
                     }
                     4 -> {
-                        atividade.custoOutros += 0
+                        atividade.custoMaquina += custoOperacao
+                    }
+                    5 -> {
+                        atividade.custoOutros += custoOperacao
                     }
                 }
             }
         } else {
             if (item.pagamentoPrazo) {
-                balancoPatrimonial.totalContasReceber += item.valorInicial * item.quantidadeInicial
+                balancoPatrimonial.totalContasReceber += custoOperacao
             } else {
-                balancoPatrimonial.totalReceitas += item.valorAtual * item.quantidadeInicial
-                balancoPatrimonial.dinheiroBanco += item.valorAtual * item.quantidadeInicial
+                balancoPatrimonial.totalReceitas += custoOperacao
+                balancoPatrimonial.dinheiroBanco += custoOperacao
             }
         }
 
@@ -313,7 +330,6 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
             }
 
             if (parent.id == R.id.tipoPropriedadeSpinner) {
-                val realm = Realm.getDefaultInstance()
                 val otherSeriesList =
                     ArrayList<String>(Arrays.asList(*resources.getStringArray(R.array.bensCompraVenda)))
                 val listaItens = mutableListOf<ItemBalancoPatrimonial>()
