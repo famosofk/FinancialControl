@@ -79,18 +79,51 @@ class BalancoPatrimonialFragment : Fragment() {
     private fun criarGrafico(balanco: BalancoPatrimonial) {
         val entries = ArrayList<PieEntry>()
 
-        entries.add(PieEntry(balanco.calcularValorAnimais(), ItemBalancoPatrimonial.ITEM_ANIMAIS))
-        entries.add(PieEntry(balanco.calcularValorInsumos(), ItemBalancoPatrimonial.ITEM_INSUMOS))
-        entries.add(PieEntry(balanco.calcularValorProdutos(), ItemBalancoPatrimonial.ITEM_PRODUTOS))
-        entries.add(
-            PieEntry(
-                balanco.calcularValorBenfeitorias(),
-                ItemBalancoPatrimonial.ITEM_BENFEITORIA
+        if (balanco.calcularValorAnimais() > 1) {
+            entries.add(
+                PieEntry(
+                    balanco.calcularValorAnimais(),
+                    ItemBalancoPatrimonial.ITEM_ANIMAIS
+                )
             )
-        )
-        entries.add(PieEntry(balanco.calcularValorMaquinas(), ItemBalancoPatrimonial.ITEM_MAQUINAS))
-        entries.add(PieEntry(balanco.calcularValorTerras(), ItemBalancoPatrimonial.ITEM_TERRA))
-        val set: PieDataSet = PieDataSet(entries, "Distribuição de patrimônio.")
+        }
+        if (balanco.calcularValorInsumos() > 1) {
+            entries.add(
+                PieEntry(
+                    balanco.calcularValorInsumos(),
+                    ItemBalancoPatrimonial.ITEM_INSUMOS
+                )
+            )
+        }
+        if (balanco.calcularValorProdutos() > 1) {
+            entries.add(
+                PieEntry(
+                    balanco.calcularValorProdutos(),
+                    ItemBalancoPatrimonial.ITEM_PRODUTOS
+                )
+            )
+        }
+        if (balanco.calcularValorBenfeitorias() > 1) {
+            entries.add(
+                PieEntry(
+                    balanco.calcularValorBenfeitorias(),
+                    ItemBalancoPatrimonial.ITEM_BENFEITORIA
+                )
+            )
+        }
+        if (balanco.calcularValorMaquinas() > 1) {
+            entries.add(
+                PieEntry(
+                    balanco.calcularValorMaquinas(),
+                    ItemBalancoPatrimonial.ITEM_MAQUINAS
+                )
+            )
+        }
+        if (balanco.calcularValorTerras() > 1) {
+            entries.add(PieEntry(balanco.calcularValorTerras(), ItemBalancoPatrimonial.ITEM_TERRA))
+        }
+
+        val set = PieDataSet(entries, "Distribuição de patrimônio.")
         val data = PieData(set)
         set.setColors(COLORFUL_COLORS, 255)
         val piechart = root.findViewById<PieChart>(R.id.distribuicao_patrimonio_chart)

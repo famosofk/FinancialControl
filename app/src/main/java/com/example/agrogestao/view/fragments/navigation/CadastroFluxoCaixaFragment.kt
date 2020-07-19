@@ -116,8 +116,6 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
     }
 
     private fun realizarTransacao(item: ItemFluxoCaixa, existente: Boolean) {
-
-
         if (existente) {
             if (verificarViabilidadeTransacao(item)) {
                 processarMovimentacao(item)
@@ -127,8 +125,6 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
         } else {
             processarMovimentacao(item)
         }
-
-
     }
 
     private fun verificarViabilidadeTransacao(item: ItemFluxoCaixa): Boolean {
@@ -183,18 +179,17 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
     }
 
     private fun processarMovimentacao(item: ItemFluxoCaixa) {
-
         realm.beginTransaction()
         fluxoCaixa.list.add(item)
         val custoOperacao = item.valorInicial * item.quantidadeInicial
-
+        val atividade = listaAtividades[positionAtividades]
         if (exitingMoney) {
             if (item.pagamentoPrazo) {
                 balancoPatrimonial.totalContasPagar += custoOperacao
             } else {
                 balancoPatrimonial.totalDespesas += custoOperacao
                 balancoPatrimonial.dinheiroBanco -= custoOperacao
-                val atividade = listaAtividades[positionAtividades]
+
                 when (positionTipoDespesa) {
                     0 -> {
                         atividade.custoSemente += custoOperacao
@@ -224,8 +219,6 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
                 balancoPatrimonial.dinheiroBanco += custoOperacao
             }
         }
-
-
         balancoPatrimonial.atualizarBalanco()
         realm.commitTransaction()
         root.findNavController().navigate(R.id.from_cadastrofluxo_to_nav_fazenda)
@@ -368,6 +361,7 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
             }
             if (parent.id == R.id.tipoDespesaFluxoCaixa) {
                 positionTipoDespesa = position
+
             }
         }
     }
@@ -420,6 +414,8 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
 
         val spinnerReformaTipo: Spinner = root.findViewById(R.id.tipoReformaSpinner)
         spinnerReformaTipo.onItemSelectedListener = this
+        val spinnerTipoDespesa: Spinner = root.findViewById(R.id.tipoDespesaFluxoCaixa)
+        spinnerTipoDespesa.onItemSelectedListener = this
         val spinnerReformaObjeto: Spinner = root.findViewById(R.id.objetoReformaSpinner)
         spinnerReformaObjeto.adapter = adapterReformaObjeto
         spinnerReformaObjeto.onItemSelectedListener = this

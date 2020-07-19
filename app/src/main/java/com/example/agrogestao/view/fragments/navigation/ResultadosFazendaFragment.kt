@@ -25,7 +25,8 @@ class ResultadosFazendaFragment : Fragment() {
 
     private lateinit var resultadosFazendaViewModel: ResultadosFazendaViewModel
     val adapter = AtividadesAdapter()
-    var farmID = ""
+    private var farmID = ""
+    private lateinit var root: View
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,6 +41,7 @@ class ResultadosFazendaFragment : Fragment() {
             ViewModelProvider(this).get(ResultadosFazendaViewModel::class.java)
         val binding: ResultadosFazendaBinding =
             DataBindingUtil.inflate(layoutInflater, R.layout.resultados_fazenda, container, false)
+        root = binding.root
         binding.lifecycleOwner = this
         binding.viewModel = resultadosFazendaViewModel
         binding.recyclerAtividadesDetalhesFazenda.adapter = adapter
@@ -47,7 +49,7 @@ class ResultadosFazendaFragment : Fragment() {
 
         resultadosFazendaViewModel.load(farmID)
 
-        return binding.root
+        return root
     }
 
     private fun observe(binding: ResultadosFazendaBinding) {
@@ -59,6 +61,7 @@ class ResultadosFazendaFragment : Fragment() {
             resultadoLucro.text = it.lucro.toString()
             resultadoLiquida.text = it.margemLiquida.toString()
             resultadoBruta.text = it.margemBruta.toString()
+
         })
 
         resultadosFazendaViewModel.cadastrarAtividade.observe(viewLifecycleOwner, Observer {
@@ -71,13 +74,12 @@ class ResultadosFazendaFragment : Fragment() {
         })
 
         resultadosFazendaViewModel.carregarAtividade.observe(viewLifecycleOwner, Observer {
-
             adapter.submitList(resultadosFazendaViewModel.list)
-
 
         })
 
     }
+
 
     private fun criarAtividadeDialog() {
 
@@ -112,5 +114,6 @@ class ResultadosFazendaFragment : Fragment() {
 
 
     }
+
 
 }
