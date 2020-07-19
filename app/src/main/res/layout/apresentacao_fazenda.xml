@@ -157,16 +157,6 @@
                     tools:layout_editor_absoluteX="36dp"
                     tools:layout_editor_absoluteY="51dp" />
 
-                <Button
-                    android:id="@+id/fluxoCaixaAtividade"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/round_background_blue"
-                    android:padding="16dp"
-                    android:text="@string/atividade_intro"
-                    android:textColor="@android:color/white"
-                    tools:layout_editor_absoluteX="177dp"
-                    tools:layout_editor_absoluteY="22dp" />
             </LinearLayout>
 
             <TextView

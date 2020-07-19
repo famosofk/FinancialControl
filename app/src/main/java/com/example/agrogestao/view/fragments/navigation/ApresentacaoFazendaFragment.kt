@@ -111,7 +111,6 @@ class ApresentacaoFazendaFragment : Fragment() {
             root.findViewById<Button>(R.id.indicadoresFinanceirosAtividadeButton)
         val indicadoresFinanceirosDetalhes =
             root.findViewById<Button>(R.id.indicadoresFinanceirosDetalhes)
-        val fluxoCaixaAtividade = root.findViewById<Button>(R.id.fluxoCaixaAtividade)
         val fluxoCaixaDetalhes = root.findViewById<Button>(R.id.fluxoCaixaDetalhes)
         val fluxoCaixaCadastrar = root.findViewById<Button>(R.id.fluxoCaixaCadastrar)
         val metasFazenda = root.findViewById<Button>(R.id.metasFazendaButton)
@@ -133,10 +132,7 @@ class ApresentacaoFazendaFragment : Fragment() {
             val bundle = bundleOf("id" to id)
             root.findNavController().navigate(R.id.toResultadosFazendaFragment, bundle)
         }
-        fluxoCaixaAtividade.setOnClickListener {
-            val bundle = bundleOf("id" to id)
-            root.findNavController().navigate(R.id.toFluxoCaixa, bundle)
-        }
+
         fluxoCaixaDetalhes.setOnClickListener {
             val bundle = bundleOf("id" to id)
             root.findNavController().navigate(R.id.toFluxoCaixa, bundle)
