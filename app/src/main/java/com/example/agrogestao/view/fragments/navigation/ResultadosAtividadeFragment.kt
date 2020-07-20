@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.agrogestao.R
@@ -40,12 +42,29 @@ class ResultadosAtividadeFragment : Fragment(), AdapterView.OnItemSelectedListen
 
     }
 
-    private fun spinnerAdapter() {}
+    private fun spinnerAdapter() {
+        val realm = Realm.getDefaultInstance()
+        list = realm.where<AtividadesEconomicas>().contains("fazendaID", id).findAll()
+        val strings = mutableListOf<String>()
+        for (atividade in list) {
+            strings.add(atividade.nome)
+        }
+        val adapter = context?.let {
+            ArrayAdapter(
+                it,
+                android.R.layout.simple_spinner_dropdown_item,
+                strings
+            )
+        }
+        val spinner = root.findViewById<Spinner>(R.id.selecionarAtividadeSpinner)
+        spinner.adapter = adapter
+        spinner.onItemSelectedListener = this
+    }
 
     private fun load() {
         val realm = Realm.getDefaultInstance()
         balancoPatrimonial = realm.where<BalancoPatrimonial>().contains("farm", id).findFirst()!!
-        list = realm.where<AtividadesEconomicas>().contains("fazendaID", id).findAll()
+
         populartela()
         criarGrafico(0)
     }
@@ -80,23 +99,79 @@ class ResultadosAtividadeFragment : Fragment(), AdapterView.OnItemSelectedListen
     private fun criarGrafico(position: Int) {
         val entries = mutableListOf<PieEntry>()
         val item = list[position]
-        if (item.custoSemente > 1) {
-            entries.add(PieEntry(item.custoSemente, "Sementes"))
+        val aux = list[0]
+
+        if (item.custoSemente + aux.custoSemente > 1) {
+            if (position == 0) {
+                entries.add(PieEntry(item.custoSemente, "Sementes"))
+            } else {
+                entries.add(
+                    PieEntry(
+                        (aux.custoSemente * item.rateio).div(100f) + item.custoSemente,
+                        "Sementes"
+                    )
+                )
+            }
         }
-        if (item.custoDefensivo > 1) {
-            entries.add(PieEntry(item.custoDefensivo, "Defensivo"))
+        if (item.custoDefensivo + aux.custoDefensivo > 1) {
+            if (position == 0) {
+                entries.add(PieEntry(item.custoDefensivo, "Defensivo"))
+            } else {
+                entries.add(
+                    PieEntry(
+                        (aux.custoDefensivo * item.rateio).div(100f) + item.custoDefensivo,
+                        "Defensivo"
+                    )
+                )
+            }
         }
-        if (item.custoFertilizante > 1) {
-            entries.add(PieEntry(item.custoFertilizante, "Fetilizante"))
+        if (item.custoFertilizante + aux.custoFertilizante > 1) {
+            if (position == 0) {
+                entries.add(PieEntry(item.custoFertilizante, "Fertilizante"))
+            } else {
+                entries.add(
+                    PieEntry(
+                        (aux.custoFertilizante * item.rateio).div(100f) + item.custoFertilizante,
+                        "Fertilizante"
+                    )
+                )
+            }
         }
-        if (item.custoMaodeobra > 1) {
-            entries.add(PieEntry(item.custoMaodeobra, "Mão de obra"))
+        if (item.custoMaodeobra + aux.custoMaodeobra > 1) {
+            if (position == 0) {
+                entries.add(PieEntry(item.custoMaodeobra, "Mão de obra"))
+            } else {
+                entries.add(
+                    PieEntry(
+                        (aux.custoMaodeobra * item.rateio).div(100f) + item.custoMaodeobra,
+                        "Mão de obra"
+                    )
+                )
+            }
         }
-        if (item.custoMaquina > 1) {
-            entries.add(PieEntry(item.custoMaquina, "Máquina"))
+        if (item.custoMaquina + aux.custoMaquina > 1) {
+            if (position == 0) {
+                entries.add(PieEntry(item.custoMaquina, "Máquinas"))
+            } else {
+                entries.add(
+                    PieEntry(
+                        (aux.custoMaquina * item.rateio).div(100f) + item.custoMaquina,
+                        "Máquinas"
+                    )
+                )
+            }
         }
-        if (item.custoOutros > 1) {
-            entries.add(PieEntry(item.custoOutros, "Outros"))
+        if (item.custoOutros + aux.custoOutros > 1) {
+            if (position == 0) {
+                entries.add(PieEntry(item.custoOutros, "Outros"))
+            } else {
+                entries.add(
+                    PieEntry(
+                        (aux.custoOutros * item.rateio).div(100f) + item.custoOutros,
+                        "Outros"
+                    )
+                )
+            }
         }
 
         val piechart = root.findViewById<PieChart>(R.id.distribuicao_despesas_chart)
