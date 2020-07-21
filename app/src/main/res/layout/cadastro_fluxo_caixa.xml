@@ -60,7 +60,7 @@
             android:layout_gravity="center"
             android:layout_marginBottom="16dp"
             android:background="@drawable/toggle_button_shape"
-            android:checked="false"
+            android:checked="true"
             android:textColor="@android:color/white"
             android:textOff="@string/entrada_intro"
             android:textOn="@string/saida_intro" />
@@ -133,7 +133,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <Switch
                 android:id="@+id/switchReforma"
@@ -262,7 +262,7 @@
             android:text="@string/consumo_atividade"
             android:textColor="@color/colorPrimary"
             android:textSize="16sp"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tipoDespesaText"
@@ -273,7 +273,7 @@
             android:text="@string/tipo_despesa"
             android:textColor="@color/colorPrimary"
             android:textSize="16sp"
-            android:visibility="gone" />
+            android:visibility="visible" />
 
         <Spinner
             android:id="@+id/tipoDespesaFluxoCaixa"
@@ -284,7 +284,7 @@
             android:background="@drawable/spinner_shape"
             android:entries="@array/tiposDespesa"
             android:textAlignment="center"
-            android:visibility="gone" />
+            android:visibility="visible" />
 
         <Button
             android:id="@+id/cadastrarItemFluxoCaixa"

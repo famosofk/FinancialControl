@@ -140,6 +140,7 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
                         itemInventario.quantidadeFinal.plus(item.quantidadeInicial)
                     )
             itemInventario.quantidadeFinal += item.quantidadeInicial
+            item.anoProducao = itemInventario.anoProducao
             realm.commitTransaction()
             bool = true
 
@@ -169,6 +170,7 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
                         custoOperacao + atividade.arrayCustos[position]!!
                 }
                 itemInventario.quantidadeFinal -= item.quantidadeInicial
+                item.anoProducao = itemInventario.anoProducao
                 realm.commitTransaction()
                 bool = true
             }
@@ -215,8 +217,13 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
             if (item.pagamentoPrazo) {
                 balancoPatrimonial.totalContasReceber += custoOperacao
             } else {
-                balancoPatrimonial.totalReceitas += custoOperacao
-                balancoPatrimonial.dinheiroBanco += custoOperacao
+                //Adicionado para caso o item tenha sido produzido em outros anos só aumentar o dinheiro no banco.
+                if (item.anoProducao == 2020) {
+                    balancoPatrimonial.totalReceitas += custoOperacao
+                    balancoPatrimonial.dinheiroBanco += custoOperacao
+                } else {
+                    balancoPatrimonial.dinheiroBanco += custoOperacao
+                }
             }
         }
         balancoPatrimonial.atualizarBalanco()
@@ -382,12 +389,13 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
                         textMovimentacao.visibility = View.VISIBLE
                         switchConsumo.visibility = View.GONE
                         informacoesReforma.visibility = View.VISIBLE
-                    } else {
 
+                    } else {
                         tipoMovimentacao.visibility = View.GONE
                         textMovimentacao.visibility = View.GONE
                         informacoesReforma.visibility = View.GONE
                         switchConsumo.visibility = View.VISIBLE
+
                     }
                 }
             }
@@ -472,7 +480,7 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
     private var listBens = mutableListOf<String>()
     private var idItemReforma: String? = null
     private var idItemTransacao: String? = null
-    private var exitingMoney = false
+    private var exitingMoney = true
     private var farmID = ""
     private var atividade = ""
     private var listaAtividades = mutableListOf<AtividadesEconomicas>()

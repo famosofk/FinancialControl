@@ -94,7 +94,7 @@ class CadastroInventarioFragment : Fragment(), AdapterView.OnItemSelectedListene
             item.valorAtual = item.valorInicial
             item.tipo = tipoSelecionado
             item.atividade = atividadeSelecionada
-            if (tipoSelecionado != "Terra") {
+            if (tipoSelecionado == "Produtos") {
                 val anoCompra: EditText = root.findViewById(R.id.anoCompraItemInventario)
                 item.anoProducao = anoCompra.text.toString().trim().toInt()
                 val reforma: EditText = root.findViewById(R.id.reformaItemInventario)

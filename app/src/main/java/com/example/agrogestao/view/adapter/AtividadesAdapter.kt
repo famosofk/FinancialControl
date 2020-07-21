@@ -51,7 +51,7 @@ class AtividadesDiff : DiffUtil.ItemCallback<AtividadesEconomicas>() {
         oldItem: AtividadesEconomicas,
         newItem: AtividadesEconomicas
     ): Boolean {
-        return oldItem.rateio == newItem.rateio
+        return (oldItem.rateio == newItem.rateio && oldItem.nome == newItem.nome)
     }
 
 }

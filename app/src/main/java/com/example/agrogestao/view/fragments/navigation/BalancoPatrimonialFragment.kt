@@ -79,7 +79,7 @@ class BalancoPatrimonialFragment : Fragment() {
     private fun criarGrafico(balanco: BalancoPatrimonial) {
         val entries = ArrayList<PieEntry>()
 
-        if (balanco.calcularValorAnimais() > 1) {
+        if (balanco.calcularValorAnimais() >= 1) {
             entries.add(
                 PieEntry(
                     balanco.calcularValorAnimais(),
@@ -87,7 +87,7 @@ class BalancoPatrimonialFragment : Fragment() {
                 )
             )
         }
-        if (balanco.calcularValorInsumos() > 1) {
+        if (balanco.calcularValorInsumos() >= 1) {
             entries.add(
                 PieEntry(
                     balanco.calcularValorInsumos(),
@@ -95,7 +95,7 @@ class BalancoPatrimonialFragment : Fragment() {
                 )
             )
         }
-        if (balanco.calcularValorProdutos() > 1) {
+        if (balanco.calcularValorProdutos() >= 1) {
             entries.add(
                 PieEntry(
                     balanco.calcularValorProdutos(),
@@ -103,7 +103,7 @@ class BalancoPatrimonialFragment : Fragment() {
                 )
             )
         }
-        if (balanco.calcularValorBenfeitorias() > 1) {
+        if (balanco.calcularValorBenfeitorias() >= 1) {
             entries.add(
                 PieEntry(
                     balanco.calcularValorBenfeitorias(),
@@ -111,11 +111,10 @@ class BalancoPatrimonialFragment : Fragment() {
                 )
             )
         }
-        if (balanco.calcularValorMaquinas() > 1) {
+        if (balanco.calcularValorMaquinas() >= 1) {
             entries.add(
                 PieEntry(
-                    balanco.calcularValorMaquinas(),
-                    ItemBalancoPatrimonial.ITEM_MAQUINAS
+                    balanco.calcularValorMaquinas(), ItemBalancoPatrimonial.ITEM_MAQUINAS
                 )
             )
         }

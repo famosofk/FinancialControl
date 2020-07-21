@@ -79,7 +79,6 @@
             android:inputType="number|numberDecimal"
             tools:ignore="LabelFor" />
 
-
         <LinearLayout
             android:id="@+id/layoutVidaUtil"
             android:layout_width="match_parent"

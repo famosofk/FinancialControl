@@ -143,7 +143,7 @@ open class BalancoPatrimonial : RealmObject() {
 
 
     fun calcularOportunidadeCapital(): Float {
-        return patrimonioLiquido * taxaRemuneracaoCapital
+        return ativo * taxaRemuneracaoCapital
     }
 
 
@@ -229,10 +229,6 @@ open class BalancoPatrimonial : RealmObject() {
         return valorInsumos
     }
 
-    //nada chama esse método
-    fun calcularCustoOportunidadeCapital(): Float {
-        return patrimonioLiquido * taxaRemuneracaoCapital
-    }
 
     fun calcularDividasLongoPrazo() {
         dividasLongoPrazo = 0f

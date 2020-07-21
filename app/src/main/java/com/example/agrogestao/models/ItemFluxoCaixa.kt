@@ -10,15 +10,14 @@ open class ItemFluxoCaixa(var tipo: Boolean = false) : RealmObject() {
     var valorInicial = 0f;
     var nome = ""
     var data = ""
-    var conta = ""
+    var anoProducao = 2020
     var quantidadeInicial = 0f
-    var valorUnitario = 0f
+
     var valorAmortizado = 0f
     var reforma = false
     var pagamentoPrazo = false
     var dataPagamentoPrazo = ""
-    var tipoReforma = ""
-    var itemReforma = ""
+
     var atividade = ""
 
 
