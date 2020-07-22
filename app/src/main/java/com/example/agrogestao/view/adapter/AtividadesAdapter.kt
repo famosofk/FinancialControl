@@ -15,6 +15,7 @@ class AtividadesAdapter :
         RecyclerView.ViewHolder(binding.root) {
         fun onBind(item: AtividadesEconomicas) {
             binding.atividade = item
+            binding.lucroListagem.text = "${item.rateio}%"
         }
 
         companion object {

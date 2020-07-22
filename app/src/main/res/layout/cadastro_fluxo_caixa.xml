@@ -212,6 +212,13 @@
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp"
                 tools:ignore="LabelFor" />
+
+            <CalendarView
+                android:id="@+id/dataVencimentoPrazoCadastroFluxoCaixa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxDate="6/30/2021"
+                android:minDate="07/01/2020" />
         </LinearLayout>
 
         <Switch

@@ -58,9 +58,9 @@ class ResultadosFazendaFragment : Fragment() {
             val resultadoLucro = binding.resultadosLucroText
             val resultadoLiquida = binding.resultadosmLiquidaText
             val resultadoBruta = binding.resultadosmBrutaText
-            resultadoLucro.text = it.lucro.toString()
-            resultadoLiquida.text = it.margemLiquida.toString()
-            resultadoBruta.text = it.margemBruta.toString()
+            resultadoLucro.text = "Lucro: ${it.lucro.toString()}"
+            resultadoLiquida.text = "Margem líquida: ${it.margemLiquida.toString()}"
+            resultadoBruta.text = "Margem bruta: ${it.margemBruta.toString()}"
 
         })
 
@@ -79,6 +79,8 @@ class ResultadosFazendaFragment : Fragment() {
         })
 
     }
+
+    private fun createBarChart() {}
 
 
     private fun criarAtividadeDialog() {

@@ -42,6 +42,7 @@ class ResultadosAtividadeFragment : Fragment(), AdapterView.OnItemSelectedListen
 
     }
 
+
     private fun spinnerAdapter() {
         val realm = Realm.getDefaultInstance()
         list = realm.where<AtividadesEconomicas>().contains("fazendaID", id).findAll()

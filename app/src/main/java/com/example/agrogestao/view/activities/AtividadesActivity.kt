@@ -125,6 +125,7 @@ class AtividadesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                 salvarRealm(farm = farm)
                 val atividade = AtividadesEconomicas("Geral")
                 atividade.fazendaID = farm.id
+                atividade.rateio = 100f
                 salvarRealm(economicalActivity = atividade)
 
 

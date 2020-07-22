@@ -11,6 +11,7 @@ import com.example.agrogestao.R
 import com.example.agrogestao.models.*
 import io.realm.Realm
 import io.realm.kotlin.where
+import kotlinx.android.synthetic.main.cadastro_fluxo_caixa.*
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -51,6 +52,14 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
         val formatedDate = sdf.format(date)
         val editText: EditText = root.findViewById(R.id.dataCadastroItemFluxoCaixa)
         editText.setText(formatedDate)
+        val calendar: CalendarView = root.findViewById(R.id.dataVencimentoPrazoCadastroFluxoCaixa)
+        calendar.setOnDateChangeListener { _, year, month, day ->
+            selectedDay += day
+            selectedMonth += month
+            selectedYear += year
+
+            Toast.makeText(context, "$month", Toast.LENGTH_SHORT).show()
+        }
 
         switchsAndVisibility()
 
@@ -67,8 +76,12 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
         item.atividade = atividade
         val nome: EditText = root.findViewById(R.id.nomeItemCadastrarFluxoCaixa)
         item.nome = nome.text.toString()
-        val data: EditText = root.findViewById(R.id.dataCadastroItemFluxoCaixa)
-        item.data = data.text.toString()
+        if (switchPrazo.isChecked) {
+            item.data = " $selectedDay / $selectedMonth / $selectedYear ".trim()
+        } else {
+            val dataText: EditText = root.findViewById(R.id.dataCadastroItemFluxoCaixa)
+            item.data = dataText.text.toString()
+        }
 
         val quantidadeInicial: EditText =
             root.findViewById(R.id.quantidadeInicialCadastroItemFluxoCaixa)
@@ -130,45 +143,48 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
     private fun verificarViabilidadeTransacao(item: ItemFluxoCaixa): Boolean {
         var bool = false
         val itemInventario: ItemBalancoPatrimonial? =
-            realm.where<ItemBalancoPatrimonial>().contains("idItem", idItemTransacao!!)
-                .findFirst()
+            realm.where<ItemBalancoPatrimonial>().contains("idItem", idItemTransacao!!).findFirst()
+        val atividade = listaAtividades[positionAtividades]
+        val array = item.data.split("/")
+        val custoOperacao = itemInventario!!.valorAtual * item.quantidadeInicial
+        val position: Int = array[1].toInt() - 1
         if (exitingMoney) { //compra
             realm.beginTransaction()
-            itemInventario!!.valorUnitario =
+            itemInventario.valorUnitario =
                 itemInventario.quantidadeFinal.times(itemInventario.valorAtual)
-                    .plus(item.quantidadeInicial.plus(item.valorAtual)).div(
-                        itemInventario.quantidadeFinal.plus(item.quantidadeInicial)
-                    )
+                    .plus(item.quantidadeInicial.plus(item.valorAtual))
+                    .div(itemInventario.quantidadeFinal.plus(item.quantidadeInicial))
             itemInventario.quantidadeFinal += item.quantidadeInicial
             item.anoProducao = itemInventario.anoProducao
+            atividade.custoDeProducao += custoOperacao
+            atividade.arrayCustos[position] = atividade.arrayCustos[position]!! - custoOperacao
             realm.commitTransaction()
             bool = true
 
         } else { //venda
 
-            if (item.quantidadeInicial <= itemInventario!!.quantidadeFinal) {
+            if (item.quantidadeInicial <= itemInventario.quantidadeFinal) {
 
                 val switchConsumo: Switch = root.findViewById(R.id.switchConsumo)
-                realm.beginTransaction()
-                val atividade = listaAtividades[positionAtividades]
-                val date = Calendar.getInstance().time
-                val sdf = SimpleDateFormat("dd/MM/yyyy")
-                val formatedDate = sdf.format(date)
-                val array = formatedDate.split("/")
-                val custoOperacao = itemInventario.valorAtual * item.quantidadeInicial
-                val position: Int = array[1].toInt() - 1
+
+
                 if (switchConsumo.isChecked) {
+                    realm.beginTransaction()
                     /*Aumentar o custo da atividade selecionada.*/
                     atividade.custoDeProducao += custoOperacao
                     atividade.arrayCustos[position] =
-                        custoOperacao - atividade.arrayCustos[position]!!
+                        atividade.arrayCustos[position]!! - custoOperacao
+                    realm.commitTransaction()
 
                 } else {
                     /*aumentar o lucro da atividade */
+                    realm.beginTransaction()
                     atividade.vendasAtividade += custoOperacao
                     atividade.arrayCustos[position] =
-                        custoOperacao + atividade.arrayCustos[position]!!
+                        atividade.arrayCustos[position]!! + custoOperacao
+                    realm.commitTransaction()
                 }
+                realm.beginTransaction()
                 itemInventario.quantidadeFinal -= item.quantidadeInicial
                 item.anoProducao = itemInventario.anoProducao
                 realm.commitTransaction()
@@ -177,6 +193,7 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
 
 
         }
+
         return bool
     }
 
@@ -486,5 +503,8 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
     private var listaAtividades = mutableListOf<AtividadesEconomicas>()
     private var positionAtividades = 0
     private var positionTipoDespesa = 0
+    private var selectedYear = -1
+    private var selectedMonth = -1
+    private var selectedDay = -1;
 
 }
