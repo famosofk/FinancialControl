@@ -2,30 +2,41 @@ package com.example.agrogestao.view.fragments.navigation
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
+import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.example.agrogestao.R
+import com.example.agrogestao.models.AtividadesEconomicas
 import com.example.agrogestao.models.ItemFluxoCaixa
 import com.example.agrogestao.view.adapter.FluxoCaixaAdapter
 import com.example.agrogestao.view.adapter.ItemFluxoCaixaListener
 import com.example.agrogestao.viewmodel.FluxoCaixaViewModel
+import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.data.BarData
+import com.github.mikephil.charting.data.BarDataSet
+import com.github.mikephil.charting.data.BarEntry
 import io.realm.Realm
 import io.realm.kotlin.where
 
-class FluxoCaixaFragment : Fragment() {
+class FluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     private lateinit var fluxoCaixaViewModel: FluxoCaixaViewModel
     private val adapterVista = FluxoCaixaAdapter(ItemFluxoCaixaListener { })
     private val adapterPrazo =
         FluxoCaixaAdapter(ItemFluxoCaixaListener { criarAtividadeDialog(it) })
+    private val arrayAtividades = ArrayList<String>()
+    private lateinit var geral: AtividadesEconomicas
+    private lateinit var atividadeSelecionada: AtividadesEconomicas
     var id: String = ""
+    private lateinit var root: View
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -33,7 +44,7 @@ class FluxoCaixaFragment : Fragment() {
     ): View? {
         fluxoCaixaViewModel =
             ViewModelProvider(this).get(FluxoCaixaViewModel::class.java)
-        val root = inflater.inflate(R.layout.fluxo_caixa_atividade, container, false)
+        root = inflater.inflate(R.layout.fluxo_caixa_atividade, container, false)
 
         id = arguments?.getString("id")!!
         atualizarListas()
@@ -43,11 +54,53 @@ class FluxoCaixaFragment : Fragment() {
         val recyclerPrazo = root.findViewById<RecyclerView>(R.id.recyclerFluxoCaixaPrazo)
         recyclerPrazo.adapter = adapterPrazo
 
-
         observe(root)
         return root
     }
 
+    private fun createBarChart(position: Int = 0) {
+        val entries = ArrayList<BarEntry>()
+        var contador = 0f
+        val chart: BarChart = root.findViewById(R.id.fluxoCaixaChart)
+        Log.e("position", position.toString())
+        if (position == 0) {
+            Log.e("array", geral.arrayCustos.toString())
+            for (item in geral.arrayCustos)
+                if (contador < 6) {
+                    entries.add(BarEntry(contador + 7f, item))
+                    contador += 1f
+                } else {
+                    entries.add(BarEntry(contador - 5f, item))
+                    contador += 1f
+                }
+            atividadeSelecionada = geral
+        } else {
+            Log.e("array", atividadeSelecionada.arrayCustos.toString())
+            for (item in atividadeSelecionada.arrayCustos) {
+                if (contador < 6) {
+                    entries.add(BarEntry(contador + 7f,
+                        item + geral.arrayCustos[contador.toInt()]!!.times(atividadeSelecionada.rateio)
+                            .div(100)
+                    )
+                    )
+                    contador += 1f
+                } else {
+                    entries.add(BarEntry(contador - 5f,
+                        item + geral.arrayCustos[contador.toInt()]!!.times(atividadeSelecionada.rateio)
+                            .div(100)
+                    )
+                    )
+                    contador += 1f
+                }
+            }
+        }
+        val set = BarDataSet(entries, "Resultado ${atividadeSelecionada.nome}")
+        val data = BarData(set)
+        chart.data = data
+        chart.invalidate()
+
+
+    }
 
     private fun atualizarListas() {
         fluxoCaixaViewModel.load(id)
@@ -55,7 +108,25 @@ class FluxoCaixaFragment : Fragment() {
 
     private fun observe(view: View) {
 
-        //fazer como se fosse da fazenda
+        fluxoCaixaViewModel.myAtividades.observe(viewLifecycleOwner, Observer {
+
+            geral = fluxoCaixaViewModel.myAtividades.value!![0]
+            for (item in fluxoCaixaViewModel.myAtividades.value!!) {
+                arrayAtividades.add(item.nome)
+            }
+            val adapter = context?.let {
+                ArrayAdapter(
+                    it,
+                    android.R.layout.simple_spinner_dropdown_item,
+                    arrayAtividades
+                )
+            }
+            val spinner: Spinner = root.findViewById(R.id.spinnerResultadoFluxoCaixa)
+            spinner.adapter = adapter
+            spinner.onItemSelectedListener = this
+
+        })
+
         fluxoCaixaViewModel.myBalancoPatrimonial.observe(viewLifecycleOwner, Observer {
             val saldo = view.findViewById<TextView>(R.id.fcaixaSaldoText)
             saldo.text = "Saldo: ${it.saldo}"
@@ -70,7 +141,6 @@ class FluxoCaixaFragment : Fragment() {
             val lucro = view.findViewById<TextView>(R.id.fcaixaLucroText)
             lucro.text = "Lucro: ${it.lucro}"
 
-            //se for da atividade temos que filtrar só da atividade em questão
         })
         fluxoCaixaViewModel.myFluxoCaixa.observe(viewLifecycleOwner, Observer {
             fluxoCaixaViewModel.loadLists("Geral")
@@ -120,6 +190,15 @@ class FluxoCaixaFragment : Fragment() {
         cancelButton.setOnClickListener { mBuilder.dismiss() }
 
 
+    }
+
+    override fun onNothingSelected(p0: AdapterView<*>?) {}
+
+    override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+        if (p2 > 0) {
+            atividadeSelecionada = fluxoCaixaViewModel.myAtividades.value!![p2]
+        }
+        createBarChart(p2)
     }
 
 

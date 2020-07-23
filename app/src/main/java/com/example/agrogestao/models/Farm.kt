@@ -12,8 +12,6 @@ open class Farm(
 ) : RealmObject(), Serializable {
 
 
-    var senhaAcesso: String = ""
-    var municipio: String = ""
     var atividades: RealmList<AtividadesEconomicas> = RealmList()
     var area: Float = 0f
     var metaMargemLiquida: Float = 0f
@@ -24,5 +22,5 @@ open class Farm(
     var metasaldo: Float = 0f
     var metaLiquidezGeral: Float = 0f
     var metaLiquidezCorrente: Float = 0f
-    var depreciacao: Float = 0f //Não será lido. Calculado através do inventário.
+    var observacao: String = ""
 }

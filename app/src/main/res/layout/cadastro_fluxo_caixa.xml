@@ -192,27 +192,6 @@
             android:orientation="vertical"
             android:visibility="gone">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:fontFamily="@font/roboto"
-                android:text="@string/data_vencimento_intro"
-                android:textColor="@color/colorPrimary"
-                android:textSize="16sp" />
-
-            <EditText
-                android:id="@+id/dataVencimentoCadastroItemFluxoCaixa"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:ems="10"
-                android:importantForAutofill="no"
-                android:inputType="date"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                tools:ignore="LabelFor" />
-
             <CalendarView
                 android:id="@+id/dataVencimentoPrazoCadastroFluxoCaixa"
                 android:layout_width="match_parent"

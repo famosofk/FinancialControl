@@ -111,6 +111,7 @@
     <string name="pagar_intro">pagar</string>
     <string name="cancelar_intro">Cancelar</string>
     <string name="confirmar_intro">Confirmar</string>
+    <string name="comentarios_intro">Comentários</string>
 
     <string-array name="tiposItem">
         <item>Terra</item>

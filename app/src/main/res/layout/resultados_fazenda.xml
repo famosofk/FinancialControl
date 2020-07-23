@@ -93,12 +93,10 @@
                     android:textColor="@color/colorPrimary"
                     android:textSize="24sp" />
 
-                <ImageView
-                    android:id="@+id/imageView3"
+                <com.github.mikephil.charting.charts.BarChart
+                    android:id="@+id/resultadoAtividadeChart"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="@string/agroplus_logo_description"
-                    app:srcCompat="@drawable/grafico_ilustrativo2" />
+                    android:layout_height="300dp" />
             </LinearLayout>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton

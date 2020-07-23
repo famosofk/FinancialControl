@@ -11,7 +11,6 @@ import com.example.agrogestao.R
 import com.example.agrogestao.models.*
 import io.realm.Realm
 import io.realm.kotlin.where
-import kotlinx.android.synthetic.main.cadastro_fluxo_caixa.*
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -54,11 +53,10 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
         editText.setText(formatedDate)
         val calendar: CalendarView = root.findViewById(R.id.dataVencimentoPrazoCadastroFluxoCaixa)
         calendar.setOnDateChangeListener { _, year, month, day ->
-            selectedDay += day
-            selectedMonth += month
-            selectedYear += year
+            selectedDay = day
+            selectedMonth = month + 1
+            selectedYear = year
 
-            Toast.makeText(context, "$month", Toast.LENGTH_SHORT).show()
         }
 
         switchsAndVisibility()
@@ -76,12 +74,10 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
         item.atividade = atividade
         val nome: EditText = root.findViewById(R.id.nomeItemCadastrarFluxoCaixa)
         item.nome = nome.text.toString()
-        if (switchPrazo.isChecked) {
-            item.data = " $selectedDay / $selectedMonth / $selectedYear ".trim()
-        } else {
-            val dataText: EditText = root.findViewById(R.id.dataCadastroItemFluxoCaixa)
-            item.data = dataText.text.toString()
-        }
+
+        val dataText: EditText = root.findViewById(R.id.dataCadastroItemFluxoCaixa)
+        item.data = dataText.text.toString()
+
 
         val quantidadeInicial: EditText =
             root.findViewById(R.id.quantidadeInicialCadastroItemFluxoCaixa)
@@ -98,9 +94,9 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
 
         val switchPrazo: Switch = root.findViewById(R.id.switchPrazo)
         if (switchPrazo.isChecked) {
-            val dataVencimento: EditText =
-                root.findViewById(R.id.dataVencimentoCadastroItemFluxoCaixa)
-            item.dataPagamentoPrazo = dataVencimento.text.toString()
+
+            item.dataPagamentoPrazo = " $selectedDay/${selectedMonth}/$selectedYear"
+
             item.pagamentoPrazo = true
         }
 
@@ -129,69 +125,76 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
     }
 
     private fun realizarTransacao(item: ItemFluxoCaixa, existente: Boolean) {
-        if (existente) {
-            if (verificarViabilidadeTransacao(item)) {
-                processarMovimentacao(item)
-            } else {
-                Toast.makeText(context, "Impossível movimentar.", Toast.LENGTH_SHORT).show()
-            }
-        } else {
+
+        if (verificarViabilidadeTransacao(item, existente)) {
             processarMovimentacao(item)
+        } else {
+            Toast.makeText(context, "Impossível movimentar.", Toast.LENGTH_SHORT).show()
         }
+
     }
 
-    private fun verificarViabilidadeTransacao(item: ItemFluxoCaixa): Boolean {
+    private fun verificarViabilidadeTransacao(item: ItemFluxoCaixa, existente: Boolean): Boolean {
         var bool = false
-        val itemInventario: ItemBalancoPatrimonial? =
-            realm.where<ItemBalancoPatrimonial>().contains("idItem", idItemTransacao!!).findFirst()
         val atividade = listaAtividades[positionAtividades]
-        val array = item.data.split("/")
-        val custoOperacao = itemInventario!!.valorAtual * item.quantidadeInicial
-        val position: Int = array[1].toInt() - 1
-        if (exitingMoney) { //compra
+        var position = -1
+        if (item.pagamentoPrazo) {
+            position = selectedMonth - 1
+        } else {
+            val array = item.data.trim().split("/")
+            position = array[1].toInt() - 1
+        }
+
+        if (existente) {
+            val itemInventario: ItemBalancoPatrimonial? =
+                realm.where<ItemBalancoPatrimonial>().contains("idItem", idItemTransacao!!)
+                    .findFirst()
+            val custoOperacao = itemInventario!!.valorAtual * item.quantidadeInicial
             realm.beginTransaction()
-            itemInventario.valorUnitario =
-                itemInventario.quantidadeFinal.times(itemInventario.valorAtual)
-                    .plus(item.quantidadeInicial.plus(item.valorAtual))
-                    .div(itemInventario.quantidadeFinal.plus(item.quantidadeInicial))
-            itemInventario.quantidadeFinal += item.quantidadeInicial
-            item.anoProducao = itemInventario.anoProducao
-            atividade.custoDeProducao += custoOperacao
-            atividade.arrayCustos[position] = atividade.arrayCustos[position]!! - custoOperacao
-            realm.commitTransaction()
-            bool = true
+            if (exitingMoney) {
 
-        } else { //venda
-
-            if (item.quantidadeInicial <= itemInventario.quantidadeFinal) {
-
-                val switchConsumo: Switch = root.findViewById(R.id.switchConsumo)
-
-
-                if (switchConsumo.isChecked) {
-                    realm.beginTransaction()
-                    /*Aumentar o custo da atividade selecionada.*/
-                    atividade.custoDeProducao += custoOperacao
-                    atividade.arrayCustos[position] =
-                        atividade.arrayCustos[position]!! - custoOperacao
-                    realm.commitTransaction()
-
-                } else {
-                    /*aumentar o lucro da atividade */
-                    realm.beginTransaction()
-                    atividade.vendasAtividade += custoOperacao
-                    atividade.arrayCustos[position] =
-                        atividade.arrayCustos[position]!! + custoOperacao
-                    realm.commitTransaction()
-                }
-                realm.beginTransaction()
-                itemInventario.quantidadeFinal -= item.quantidadeInicial
+                itemInventario.valorUnitario =
+                    itemInventario.quantidadeFinal.times(itemInventario.valorAtual)
+                        .plus(item.quantidadeInicial.plus(item.valorAtual))
+                        .div(itemInventario.quantidadeFinal.plus(item.quantidadeInicial))
+                itemInventario.quantidadeFinal += item.quantidadeInicial
                 item.anoProducao = itemInventario.anoProducao
+                atividade.custoDeProducao += custoOperacao
+                atividade.arrayCustos[position] = atividade.arrayCustos[position]!! - custoOperacao
                 realm.commitTransaction()
                 bool = true
+            } else {
+                if (item.quantidadeInicial <= itemInventario.quantidadeFinal) {
+                    val switchConsumo: Switch = root.findViewById(R.id.switchConsumo)
+                    if (switchConsumo.isChecked) {
+                        atividade.custoDeProducao += custoOperacao
+                        atividade.arrayCustos[position] =
+                            atividade.arrayCustos[position]!! - custoOperacao
+                    } else {
+                        atividade.vendasAtividade += custoOperacao
+                        atividade.arrayCustos[position] =
+                            atividade.arrayCustos[position]!! + custoOperacao
+                    }
+                    itemInventario.quantidadeFinal -= item.quantidadeInicial
+                    item.anoProducao = itemInventario.anoProducao
+                    bool = true
+                }
             }
+            realm.commitTransaction()
+        } else {
+            val custoOperacao = item.valorInicial * item.quantidadeInicial
+            realm.beginTransaction()
+            if (exitingMoney) {
 
+                atividade.custoDeProducao += custoOperacao
+                atividade.arrayCustos[position] = atividade.arrayCustos[position]!! - custoOperacao
+            } else {
+                atividade.vendasAtividade += custoOperacao
+                atividade.arrayCustos[position] = atividade.arrayCustos[position]!! + custoOperacao
 
+            }
+            realm.commitTransaction()
+            bool = true
         }
 
         return bool

@@ -1,5 +1,6 @@
 package com.example.agrogestao.view.fragments.navigation
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +13,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.agrogestao.R
+import com.example.agrogestao.models.Farm
 import com.example.agrogestao.viewmodel.ApresentacaoFazendaViewModel
+import io.realm.Realm
 
 class ApresentacaoFazendaFragment : Fragment() {
 
@@ -60,6 +63,9 @@ class ApresentacaoFazendaFragment : Fragment() {
                 val textNomeFazenda = view.findViewById<TextView>(R.id.resultadosFazendaText)
                 textNomeFazenda.text = it.codigoFazenda
                 atualizarTextos(view)
+                if (!it.observacao.equals("")) {
+                    createAlertDialog(it)
+                }
             }
         })
         apresentacaoFazendaViewModel.myBalancoPatrimonial.observe(viewLifecycleOwner, Observer {
@@ -88,6 +94,32 @@ class ApresentacaoFazendaFragment : Fragment() {
             }
         })
 
+    }
+
+    private fun createAlertDialog(farm: Farm) {
+
+        val mDialogView =
+            LayoutInflater.from(context).inflate(R.layout.observacao_dialog_layout, null)
+        val confirmationButton: Button = mDialogView.findViewById(R.id.confirmation_observacao)
+        val dontshowButton: Button = mDialogView.findViewById(R.id.dontshow_observacao)
+        val message: TextView = mDialogView.findViewById(R.id.message_farm)
+        message.text = farm.observacao
+        val mBuilder = AlertDialog.Builder(context)
+            .setView(mDialogView)
+            .create()
+
+        mBuilder.show()
+
+        confirmationButton.setOnClickListener {
+            mBuilder.dismiss()
+        }
+        dontshowButton.setOnClickListener {
+            val realm = Realm.getDefaultInstance()
+            realm.beginTransaction()
+            farm.observacao = ""
+            realm.commitTransaction()
+            mBuilder.dismiss()
+        }
     }
 
     private fun atualizarTextos(view: View) {

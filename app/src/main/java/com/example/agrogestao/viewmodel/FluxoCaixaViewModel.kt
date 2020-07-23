@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.agrogestao.models.AtividadesEconomicas
 import com.example.agrogestao.models.BalancoPatrimonial
 import com.example.agrogestao.models.FluxoCaixa
 import com.example.agrogestao.models.ItemFluxoCaixa
@@ -16,10 +17,13 @@ class FluxoCaixaViewModel(application: Application) : AndroidViewModel(applicati
     val myBalancoPatrimonial: LiveData<BalancoPatrimonial> = mBalancoPatrimonial
     private val mFluxoCaixa = MutableLiveData<FluxoCaixa>()
     val myFluxoCaixa: LiveData<FluxoCaixa> = mFluxoCaixa
+    private val mAtividades = MutableLiveData<List<AtividadesEconomicas>>()
+    val myAtividades: LiveData<List<AtividadesEconomicas>> = mAtividades
     val realm = Realm.getDefaultInstance()
     val listaVista = MutableLiveData<List<ItemFluxoCaixa>>()
     val listaPrazo = MutableLiveData<List<ItemFluxoCaixa>>()
     fun load(key: String) {
+        mAtividades.value = realm.where<AtividadesEconomicas>().contains("fazendaID", key).findAll()
         mFluxoCaixa.value = realm.where<FluxoCaixa>().contains("farm", key).findFirst()
         mBalancoPatrimonial.value =
             realm.where<BalancoPatrimonial>().contains("farm", key).findFirst()

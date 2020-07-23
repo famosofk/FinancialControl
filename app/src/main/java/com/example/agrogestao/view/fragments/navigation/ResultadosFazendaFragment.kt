@@ -15,6 +15,10 @@ import com.example.agrogestao.databinding.ResultadosFazendaBinding
 import com.example.agrogestao.models.AtividadesEconomicas
 import com.example.agrogestao.view.adapter.AtividadesAdapter
 import com.example.agrogestao.viewmodel.ResultadosFazendaViewModel
+import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.data.BarData
+import com.github.mikephil.charting.data.BarDataSet
+import com.github.mikephil.charting.data.BarEntry
 import io.realm.Realm
 import kotlinx.android.synthetic.main.cadastro_atividade_dialog.view.*
 
@@ -75,12 +79,29 @@ class ResultadosFazendaFragment : Fragment() {
 
         resultadosFazendaViewModel.carregarAtividade.observe(viewLifecycleOwner, Observer {
             adapter.submitList(resultadosFazendaViewModel.list)
+            createBarChart()
 
         })
 
     }
 
-    private fun createBarChart() {}
+    private fun createBarChart() {
+        val chart: BarChart = root.findViewById(R.id.resultadoAtividadeChart)
+        val entries = ArrayList<BarEntry>()
+        val list = resultadosFazendaViewModel.list
+        var contador = 0f
+        for (item in list) {
+            entries.add(BarEntry(contador, item.vendasAtividade - item.custoDeProducao))
+            contador += 1f
+        }
+        val set = BarDataSet(entries, "Resultado atividade.")
+        val data = BarData(set)
+        data.barWidth = 0.5f
+        chart.data = data
+        chart.setFitBars(true)
+        chart.invalidate()
+
+    }
 
 
     private fun criarAtividadeDialog() {

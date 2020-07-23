@@ -115,6 +115,8 @@ class AtualizarFazendaFragment : Fragment() {
             root.findViewById<EditText>(R.id.patrimonioLiquidoFazendaEdit)
         val liquidezGeralFazenda = root.findViewById<EditText>(R.id.liquidezGeralFazendaEdit)
         val liquidezCorrenteFazenda = root.findViewById<EditText>(R.id.liquidezCorrenteFazendaEdit)
+        val comentarioFazenda = root.findViewById<EditText>(R.id.comentariosFazendaEdit)
+
         realm.beginTransaction()
 
         farm.codigoFazenda = codigoFazenda.text.toString().trim()
@@ -127,12 +129,15 @@ class AtualizarFazendaFragment : Fragment() {
         farm.metaPatrimonioLiquido = patrimonioLiquidoFazenda.text.toString().trim().toFloat()
         farm.metaLiquidezGeral = liquidezGeralFazenda.text.toString().trim().toFloat()
         farm.metaLiquidezCorrente = liquidezCorrenteFazenda.text.toString().trim().toFloat()
+        farm.observacao = comentarioFazenda.text.toString()
         balanco.dividasLongoPrazo = dividasLP.text.toString().trim().toFloat()
         balanco.taxaRemuneracaoCapital = remuneracaoCapital.text.toString().trim().toFloat()
         balanco.custoOportunidadeTrabalho = custoOportunidade.text.toString().trim().toFloat()
         balanco.pendenciasPagamento = pagarFazenda.text.toString().trim().toFloat()
         balanco.pendenciasRecebimento = receberFazenda.text.toString().trim().toFloat()
-        balanco.dinheiroBanco = dinheiroBancoFazendaEdit.text.toString().trim().toFloat()
+        if (dinheiroBancoFazendaEdit.text.toString().isNotEmpty()) {
+            balanco.dinheiroBanco = dinheiroBancoFazendaEdit.text.toString().trim().toFloat()
+        }
 
         realm.commitTransaction()
 
