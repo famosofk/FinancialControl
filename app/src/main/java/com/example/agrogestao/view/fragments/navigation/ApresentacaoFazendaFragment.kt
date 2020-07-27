@@ -57,9 +57,9 @@ class ApresentacaoFazendaFragment : Fragment() {
 
         apresentacaoFazendaViewModel.myFarm.observe(viewLifecycleOwner, Observer {
             if (it != null) {
-                lucroMeta = it.metaLucro.toString()
-                mLiquidaMeta = it.metaMargemLiquida.toString()
-                mBrutaMeta = it.metaMargemBruta.toString()
+                lucroMeta = String.format("%.2f", it.metaLucro)
+                mLiquidaMeta = String.format("%.2f", it.metaMargemLiquida)
+                mBrutaMeta = String.format("%.2f", it.metaMargemBruta)
                 val textNomeFazenda = view.findViewById<TextView>(R.id.resultadosFazendaText)
                 textNomeFazenda.text = it.codigoFazenda
                 atualizarTextos(view)
@@ -70,9 +70,9 @@ class ApresentacaoFazendaFragment : Fragment() {
         })
         apresentacaoFazendaViewModel.myBalancoPatrimonial.observe(viewLifecycleOwner, Observer {
             if (it != null) {
-                lucroAtual = it.lucro.toString()
-                mLiquidaAtual = it.margemLiquida.toString()
-                mBrutaAtual = it.margemBruta.toString()
+                lucroAtual = String.format("%.2f", it.lucro)
+                mLiquidaAtual = String.format("%.2f", it.margemLiquida)
+                mBrutaAtual = String.format("%.2f", it.margemBruta)
                 atualizarTextos(view)
                 val textSaldo = view.findViewById<TextView>(R.id.textsSaldoApresentacao)
                 val textPagar = view.findViewById<TextView>(R.id.textsPagarApresentacao)
@@ -83,13 +83,16 @@ class ApresentacaoFazendaFragment : Fragment() {
                 val textLiquidez = view.findViewById<TextView>(R.id.textsLiquidezApresentacao)
                 val textRentabilidade =
                     view.findViewById<TextView>(R.id.textsRentabilidadeApresentacao)
-                textSaldo.text = "Saldo: ${it.dinheiroBanco}"
-                textPagar.text = "Contas a pagar: ${it.totalContasPagar}"
-                textReceber.text = "Contas a receber: ${it.totalContasReceber}"
-                textPatrimonioLiquido.text = "Patrimônio Líquido: ${it.patrimonioLiquido}"
-                textSolvencia.text = "Liquidez geral: ${it.liquidezGeral}"
-                textLiquidez.text = "Liquidez corrente: ${it.liquidezCorrente}"
-                textRentabilidade.text = "Rentabilidade: ${it.rentabilidade}"
+                textSaldo.text = "Saldo: ${String.format("%.2f", it.dinheiroBanco)}"
+                textPagar.text = "Contas a pagar: ${String.format("%.2f", it.totalContasPagar)}"
+                textReceber.text =
+                    "Contas a receber: ${String.format("%.2f", it.totalContasReceber)}"
+                textPatrimonioLiquido.text =
+                    "Patrimônio Líquido: ${String.format("%.2f", it.patrimonioLiquido)}"
+                textSolvencia.text = "Liquidez geral: ${String.format("%.2f", it.liquidezGeral)}"
+                textLiquidez.text =
+                    "Liquidez corrente: ${String.format("%.2f", it.liquidezCorrente)}"
+                textRentabilidade.text = "Rentabilidade: ${String.format("%.2f", it.rentabilidade)}"
 
             }
         })

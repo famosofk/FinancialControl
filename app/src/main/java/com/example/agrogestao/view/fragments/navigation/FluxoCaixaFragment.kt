@@ -24,6 +24,7 @@ import com.github.mikephil.charting.data.BarEntry
 import io.realm.Realm
 import io.realm.kotlin.where
 
+
 class FluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     private lateinit var fluxoCaixaViewModel: FluxoCaixaViewModel
@@ -128,18 +129,20 @@ class FluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListener {
         })
 
         fluxoCaixaViewModel.myBalancoPatrimonial.observe(viewLifecycleOwner, Observer {
+
+
             val saldo = view.findViewById<TextView>(R.id.fcaixaSaldoText)
-            saldo.text = "Saldo: ${it.saldo}"
+            saldo.text = "Saldo: ${String.format("%.2f", it.saldo)}"
             val receitas = view.findViewById<TextView>(R.id.fcaixaReceitasText)
-            receitas.text = "Receitas: ${it.totalReceitas}"
+            receitas.text = "Receitas: ${String.format("%.2f", it.totalReceitas)}"
             val despesas = view.findViewById<TextView>(R.id.fcaixaDespesasText)
-            despesas.text = "Despesas: ${it.totalDespesas}"
+            despesas.text = "Despesas: ${String.format("%.2f", it.totalDespesas)}"
             val pagar = view.findViewById<TextView>(R.id.fcaixaPagarText)
-            pagar.text = "Contas a pagar: ${it.totalContasPagar}"
+            pagar.text = "Contas a pagar: ${String.format("%.2f", it.totalContasPagar)}"
             val receber = view.findViewById<TextView>(R.id.fcaixaReceberText)
-            receber.text = "Contas a receber: ${it.totalContasReceber}"
+            receber.text = "Contas a receber: ${String.format("%.2f", it.totalContasReceber)}"
             val lucro = view.findViewById<TextView>(R.id.fcaixaLucroText)
-            lucro.text = "Lucro: ${it.lucro}"
+            lucro.text = "Lucro: ${String.format("%.2f", it.lucro)}"
 
         })
         fluxoCaixaViewModel.myFluxoCaixa.observe(viewLifecycleOwner, Observer {

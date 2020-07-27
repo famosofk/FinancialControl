@@ -32,7 +32,10 @@ open class ItemBalancoPatrimonial() : RealmObject() {
     var anoProducao: Int = 0
 
     var precoString: String = ""
-        get() = "R$ ${valorInicial * quantidadeFinal + reforma - depreciacao}"
+        get() = "R$ ${String.format(
+            "%.2f",
+            valorInicial * quantidadeFinal + reforma - depreciacao
+        )}"
     var quantidadeString: String = ""
         get() = "$quantidadeFinal un"
 

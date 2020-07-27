@@ -37,7 +37,8 @@ class FluxoCaixaAdapter(val onClickListener: ItemFluxoCaixaListener) :
                     binding.tipoMovimentacao.setTextColor(Color.parseColor("#ff6f00"))
                 }
             }
-            binding.valorMovimentacao.text = (item.quantidadeInicial * item.valorInicial).toString()
+            binding.valorMovimentacao.text =
+                String.format("%.2f", (item.quantidadeInicial * item.valorInicial))
         }
 
         companion object {
