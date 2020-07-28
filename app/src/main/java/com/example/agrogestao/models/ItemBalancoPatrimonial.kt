@@ -19,16 +19,16 @@ open class ItemBalancoPatrimonial() : RealmObject() {
     var nome: String = "";
     var idItem = UUID.randomUUID().toString()
     var idFazenda = ""
-    var quantidadeInicial: Float = 0f
-    var quantidadeFinal: Float = 0f
-    var valorUnitario: Float = 0f
+    var quantidadeInicial = 0.0
+    var quantidadeFinal = 0.0
+    var valorUnitario = 0.0
     var atividade: String = ""
-    var valorAtual: Float = 0f
-    var valorInicial: Float = 0f
+    var valorAtual = 0.0
+    var valorInicial = 0.0
     var vidaUtil: Int = 99999
-    var tipo: String = ""
-    var depreciacao: Float = 0f
-    var reforma: Float = 0f
+    var tipo = ""
+    var depreciacao = 0.0
+    var reforma = 0.0
     var anoProducao: Int = 0
 
     var precoString: String = ""

@@ -13,14 +13,14 @@ open class Farm(
 
 
     var atividades: RealmList<AtividadesEconomicas> = RealmList()
-    var area: Float = 0f
-    var metaMargemLiquida: Float = 0f
-    var metaMargemBruta: Float = 0f
-    var metaRendaBruta: Float = 0f
-    var metaPatrimonioLiquido: Float = 0f
-    var metaLucro: Float = 0f
-    var metasaldo: Float = 0f
-    var metaLiquidezGeral: Float = 0f
-    var metaLiquidezCorrente: Float = 0f
+    var area = 0.0
+    var metaMargemLiquida = 0.0
+    var metaMargemBruta = 0.0
+    var metaRendaBruta = 0.0
+    var metaPatrimonioLiquido = 0.0
+    var metaLucro = 0.0
+    var metasaldo = 0.0
+    var metaLiquidezGeral = 0.0
+    var metaLiquidezCorrente = 0.0
     var observacao: String = ""
 }

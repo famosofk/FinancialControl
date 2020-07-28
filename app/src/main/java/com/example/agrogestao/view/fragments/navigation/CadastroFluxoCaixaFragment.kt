@@ -82,12 +82,12 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
         val quantidadeInicial: EditText =
             root.findViewById(R.id.quantidadeInicialCadastroItemFluxoCaixa)
         if (quantidadeInicial.text.isNotEmpty()) {
-            item.quantidadeInicial = quantidadeInicial.text.toString().toFloat()
+            item.quantidadeInicial = quantidadeInicial.text.toString().toDouble()
         }
 
         val valorInicial: EditText = root.findViewById(R.id.valorUnitarioCadastroItemFluxoCaixa)
         if (valorInicial.text.isNotEmpty()) {
-            item.valorInicial = valorInicial.text.toString().toFloat()
+            item.valorInicial = valorInicial.text.toString().toDouble()
             item.valorAtual = item.valorInicial
         }
 
@@ -115,7 +115,7 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
 
         val switchConsumo: Switch = root.findViewById(R.id.switchConsumo)
         if (switchConsumo.isChecked) {
-            item.valorAtual = 0f
+            item.valorAtual = 0.0
         }
 
         val switchInventario: Switch = root.findViewById(R.id.switchPropriedade)

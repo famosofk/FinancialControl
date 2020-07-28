@@ -85,7 +85,7 @@ class BalancoPatrimonialFragment : Fragment() {
         if (balanco.calcularValorAnimais() >= 1) {
             entries.add(
                 PieEntry(
-                    balanco.calcularValorAnimais(),
+                    balanco.calcularValorAnimais().toFloat(),
                     ItemBalancoPatrimonial.ITEM_ANIMAIS
                 )
             )
@@ -93,7 +93,7 @@ class BalancoPatrimonialFragment : Fragment() {
         if (balanco.calcularValorInsumos() >= 1) {
             entries.add(
                 PieEntry(
-                    balanco.calcularValorInsumos(),
+                    balanco.calcularValorInsumos().toFloat(),
                     ItemBalancoPatrimonial.ITEM_INSUMOS
                 )
             )
@@ -101,7 +101,7 @@ class BalancoPatrimonialFragment : Fragment() {
         if (balanco.calcularValorProdutos() >= 1) {
             entries.add(
                 PieEntry(
-                    balanco.calcularValorProdutos(),
+                    balanco.calcularValorProdutos().toFloat(),
                     ItemBalancoPatrimonial.ITEM_PRODUTOS
                 )
             )
@@ -109,7 +109,7 @@ class BalancoPatrimonialFragment : Fragment() {
         if (balanco.calcularValorBenfeitorias() >= 1) {
             entries.add(
                 PieEntry(
-                    balanco.calcularValorBenfeitorias(),
+                    balanco.calcularValorBenfeitorias().toFloat(),
                     ItemBalancoPatrimonial.ITEM_BENFEITORIA
                 )
             )
@@ -117,12 +117,17 @@ class BalancoPatrimonialFragment : Fragment() {
         if (balanco.calcularValorMaquinas() >= 1) {
             entries.add(
                 PieEntry(
-                    balanco.calcularValorMaquinas(), ItemBalancoPatrimonial.ITEM_MAQUINAS
+                    balanco.calcularValorMaquinas().toFloat(), ItemBalancoPatrimonial.ITEM_MAQUINAS
                 )
             )
         }
         if (balanco.calcularValorTerras() > 1) {
-            entries.add(PieEntry(balanco.calcularValorTerras(), ItemBalancoPatrimonial.ITEM_TERRA))
+            entries.add(
+                PieEntry(
+                    balanco.calcularValorTerras().toFloat(),
+                    ItemBalancoPatrimonial.ITEM_TERRA
+                )
+            )
         }
 
         val set = PieDataSet(entries, "Distribuição de patrimônio.")

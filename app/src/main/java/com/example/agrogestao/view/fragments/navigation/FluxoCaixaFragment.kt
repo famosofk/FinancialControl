@@ -68,10 +68,10 @@ class FluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListener {
             Log.e("array", geral.arrayCustos.toString())
             for (item in geral.arrayCustos)
                 if (contador < 6) {
-                    entries.add(BarEntry(contador + 7f, item))
+                    entries.add(BarEntry(contador + 7f, item.toFloat()))
                     contador += 1f
                 } else {
-                    entries.add(BarEntry(contador - 5f, item))
+                    entries.add(BarEntry(contador - 5f, item.toFloat()))
                     contador += 1f
                 }
             atividadeSelecionada = geral
@@ -79,16 +79,18 @@ class FluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListener {
             Log.e("array", atividadeSelecionada.arrayCustos.toString())
             for (item in atividadeSelecionada.arrayCustos) {
                 if (contador < 6) {
-                    entries.add(BarEntry(contador + 7f,
-                        item + geral.arrayCustos[contador.toInt()]!!.times(atividadeSelecionada.rateio)
-                            .div(100)
+                    entries.add(BarEntry(
+                        contador + 7f,
+                        (item + geral.arrayCustos[contador.toInt()]!!.times(atividadeSelecionada.rateio)
+                            .div(100)).toFloat()
                     )
                     )
                     contador += 1f
                 } else {
-                    entries.add(BarEntry(contador - 5f,
-                        item + geral.arrayCustos[contador.toInt()]!!.times(atividadeSelecionada.rateio)
-                            .div(100)
+                    entries.add(BarEntry(
+                        contador - 5f,
+                        (item + geral.arrayCustos[contador.toInt()]!!.times(atividadeSelecionada.rateio)
+                            .div(100)).toFloat()
                     )
                     )
                     contador += 1f

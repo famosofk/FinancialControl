@@ -8,8 +8,8 @@ open class FluxoCaixa : RealmObject() {
     var farm = ""
     var list = RealmList<ItemFluxoCaixa>()
 
-    fun calcularEntradas(): Float {
-        var total: Float = 0f;
+    fun calcularEntradas(): Double {
+        var total = 0.0
         for (item in list) {
             if (!item.tipo) {
                 total += item.valorInicial - item.valorAmortizado
@@ -18,8 +18,8 @@ open class FluxoCaixa : RealmObject() {
         return total;
     }
 
-    fun calcularSaidas(): Float {
-        var total: Float = 0f;
+    fun calcularSaidas(): Double {
+        var total = 0.0;
         for (item in list) {
             if (item.tipo) {
                 total += item.valorInicial - item.valorAmortizado
@@ -28,8 +28,8 @@ open class FluxoCaixa : RealmObject() {
         return total;
     }
 
-    fun calcularSaldo(): Float {
-        var total = 0f;
+    fun calcularSaldo(): Double {
+        var total = 0.0;
         for (item in list) {
             if (item.tipo) {
                 total -= item.valorInicial

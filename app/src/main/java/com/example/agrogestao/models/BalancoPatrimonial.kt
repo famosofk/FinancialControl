@@ -8,31 +8,31 @@ open class BalancoPatrimonial : RealmObject() {
 
 
     var farm = ""
-    var liquidezGeral: Float = 0f
-    var liquidezCorrente: Float = 0f
+    var liquidezGeral = 0.0
+    var liquidezCorrente = 0.0
     var listaItens = RealmList<ItemBalancoPatrimonial>()
-    var margemLiquida: Float = 0f
-    var margemBruta: Float = 0f
-    var taxaRemuneracaoCapital: Float = 0.06f
-    var receitaBruta: Float = 0f
-    var custoOperacionalEfetivo: Float = 0f
-    var custoOperacionalTotal: Float = 0f
-    var totalDespesas: Float = 0f
-    var totalReceitas: Float = 0f
-    var ativo: Float = 0f
-    var passivo: Float = 0f
-    var patrimonioLiquido: Float = 0f
-    var rentabilidade: Float = 0f
-    var lucro: Float = 0f
-    var saldo: Float = 0f
-    var dividasLongoPrazo: Float = 0f
-    var dinheiroBanco: Float = 0f
-    var custoOportunidadeTrabalho: Float = 0f
-    var trabalhoFamiliarNaoRemunerado: Float = 0f
-    var pendenciasPagamento: Float = 0f
-    var pendenciasRecebimento: Float = 0f
-    var totalContasPagar: Float = 0f
-    var totalContasReceber: Float = 0f
+    var margemLiquida = 0.0
+    var margemBruta = 0.0
+    var taxaRemuneracaoCapital = 0.06
+    var receitaBruta = 0.0
+    var custoOperacionalEfetivo = 0.0
+    var custoOperacionalTotal = 0.0
+    var totalDespesas = 0.0
+    var totalReceitas = 0.0
+    var ativo = 0.0
+    var passivo = 0.0
+    var patrimonioLiquido = 0.0
+    var rentabilidade = 0.0
+    var lucro = 0.0
+    var saldo = 0.0
+    var dividasLongoPrazo = 0.0
+    var dinheiroBanco = 0.0
+    var custoOportunidadeTrabalho = 0.0
+    var trabalhoFamiliarNaoRemunerado = 0.0
+    var pendenciasPagamento = 0.0
+    var pendenciasRecebimento = 0.0
+    var totalContasPagar = 0.0
+    var totalContasReceber = 0.0
 
     fun atualizarBalanco() {
         calcularAtivo()
@@ -76,8 +76,8 @@ open class BalancoPatrimonial : RealmObject() {
 
     }
 
-    fun calcularValorAnimaisInsumosProdutos(): Float {
-        var total = 0.0f
+    fun calcularValorAnimaisInsumosProdutos(): Double {
+        var total = 0.0
         for (item in listaItens) {
             if (item.tipo.equals(ItemBalancoPatrimonial.ITEM_ANIMAIS) || item.tipo.equals(
                     ItemBalancoPatrimonial.ITEM_INSUMOS
@@ -91,9 +91,9 @@ open class BalancoPatrimonial : RealmObject() {
         return total
     }
 
-    fun calcularPatrimonioBens(): Float {
+    fun calcularPatrimonioBens(): Double {
 
-        var total = 0.0f
+        var total = 0.0
         for (item in listaItens) {
             item.calcularDepreciacao()
             if (item.tipo != ItemBalancoPatrimonial.ITEM_DIVIDAS_LONGO_PRAZO) {
@@ -112,7 +112,7 @@ open class BalancoPatrimonial : RealmObject() {
         lucro = receitaBruta - calcularCustoTotal()
     }
 
-    fun calcularCustoTotal(): Float {
+    fun calcularCustoTotal(): Double {
         return custoOperacionalTotal + calcularOportunidadeCapital() + custoOportunidadeTrabalho
     }
 
@@ -129,8 +129,8 @@ open class BalancoPatrimonial : RealmObject() {
         receitaBruta = totalReceitas + calcularValorProdutos() + totalContasReceber
     }
 
-    fun calcularValorProdutos(): Float {
-        var valorProdutos = 0.0f
+    fun calcularValorProdutos(): Double {
+        var valorProdutos = 0.0
         //Atualizar o valor ano a ano
         for (item in listaItens) {
             if (item.tipo.equals(ItemBalancoPatrimonial.ITEM_PRODUTOS) && item.anoProducao == 2020
@@ -142,7 +142,7 @@ open class BalancoPatrimonial : RealmObject() {
     }
 
 
-    fun calcularOportunidadeCapital(): Float {
+    fun calcularOportunidadeCapital(): Double {
         return ativo * taxaRemuneracaoCapital
     }
 
@@ -150,7 +150,7 @@ open class BalancoPatrimonial : RealmObject() {
 
     fun calcularCustoOperacionalTotal() {
 
-        var depreciacao = 0f
+        var depreciacao = 0.0
         for (item in listaItens) {
             if (item.tipo.equals(ItemBalancoPatrimonial.ITEM_BENFEITORIA) || item.tipo.equals(
                     ItemBalancoPatrimonial.ITEM_MAQUINAS
@@ -178,8 +178,8 @@ open class BalancoPatrimonial : RealmObject() {
     }
 
 
-    fun calcularValorAnimais(): Float {
-        var valorAnimais = 0.0f
+    fun calcularValorAnimais(): Double {
+        var valorAnimais = 0.0
         for (item in listaItens) {
             if (item.tipo.equals(ItemBalancoPatrimonial.ITEM_ANIMAIS)) {
                 valorAnimais += (item.quantidadeFinal * item.valorUnitario + item.reforma)
@@ -188,8 +188,8 @@ open class BalancoPatrimonial : RealmObject() {
         return valorAnimais
     }
 
-    fun calcularValorTerras(): Float {
-        var valorAnimais = 0.0f
+    fun calcularValorTerras(): Double {
+        var valorAnimais = 0.0
         for (item in listaItens) {
             if (item.tipo.equals(ItemBalancoPatrimonial.ITEM_TERRA)) {
                 valorAnimais += (item.quantidadeFinal * item.valorUnitario + item.reforma)
@@ -198,8 +198,8 @@ open class BalancoPatrimonial : RealmObject() {
         return valorAnimais
     }
 
-    fun calcularValorMaquinas(): Float {
-        var valorAnimais = 0.0f
+    fun calcularValorMaquinas(): Double {
+        var valorAnimais = 0.0
         for (item in listaItens) {
             if (item.tipo.equals(ItemBalancoPatrimonial.ITEM_MAQUINAS)) {
                 valorAnimais += (item.quantidadeFinal * item.valorAtual + item.reforma)
@@ -208,8 +208,8 @@ open class BalancoPatrimonial : RealmObject() {
         return valorAnimais
     }
 
-    fun calcularValorBenfeitorias(): Float {
-        var valorAnimais = 0.0f
+    fun calcularValorBenfeitorias(): Double {
+        var valorAnimais = 0.0
         for (item in listaItens) {
             if (item.tipo.equals(ItemBalancoPatrimonial.ITEM_BENFEITORIA)) {
                 valorAnimais += (item.quantidadeFinal * item.valorAtual + item.reforma)
@@ -219,8 +219,8 @@ open class BalancoPatrimonial : RealmObject() {
     }
 
 
-    fun calcularValorInsumos(): Float {
-        var valorInsumos = 0.0f
+    fun calcularValorInsumos(): Double {
+        var valorInsumos = 0.0
         for (item in listaItens) {
             if (item.tipo.equals(ItemBalancoPatrimonial.ITEM_INSUMOS)) {
                 valorInsumos += (item.quantidadeFinal * item.valorUnitario + item.reforma)
@@ -231,7 +231,7 @@ open class BalancoPatrimonial : RealmObject() {
 
 
     fun calcularDividasLongoPrazo() {
-        dividasLongoPrazo = 0f
+        dividasLongoPrazo = 0.0
         for (item in listaItens) {
             if (item.tipo == ItemBalancoPatrimonial.ITEM_DIVIDAS_LONGO_PRAZO) {
                 dividasLongoPrazo += item.quantidadeFinal * item.valorAtual

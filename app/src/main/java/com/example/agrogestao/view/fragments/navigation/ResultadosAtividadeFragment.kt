@@ -113,11 +113,11 @@ class ResultadosAtividadeFragment : Fragment(), AdapterView.OnItemSelectedListen
 
         if (item.custoSemente + aux.custoSemente > 1) {
             if (position == 0) {
-                entries.add(PieEntry(item.custoSemente, "Sementes"))
+                entries.add(PieEntry(item.custoSemente.toFloat(), "Sementes"))
             } else {
                 entries.add(
                     PieEntry(
-                        (aux.custoSemente * item.rateio).div(100f) + item.custoSemente,
+                        ((aux.custoSemente * item.rateio).div(100.0) + item.custoSemente).toFloat(),
                         "Sementes"
                     )
                 )
@@ -125,11 +125,11 @@ class ResultadosAtividadeFragment : Fragment(), AdapterView.OnItemSelectedListen
         }
         if (item.custoDefensivo + aux.custoDefensivo > 1) {
             if (position == 0) {
-                entries.add(PieEntry(item.custoDefensivo, "Defensivo"))
+                entries.add(PieEntry(item.custoDefensivo.toFloat(), "Defensivo"))
             } else {
                 entries.add(
                     PieEntry(
-                        (aux.custoDefensivo * item.rateio).div(100f) + item.custoDefensivo,
+                        ((aux.custoDefensivo * item.rateio).div(100f) + item.custoDefensivo).toFloat(),
                         "Defensivo"
                     )
                 )
@@ -137,11 +137,11 @@ class ResultadosAtividadeFragment : Fragment(), AdapterView.OnItemSelectedListen
         }
         if (item.custoFertilizante + aux.custoFertilizante > 1) {
             if (position == 0) {
-                entries.add(PieEntry(item.custoFertilizante, "Fertilizante"))
+                entries.add(PieEntry(item.custoFertilizante.toFloat(), "Fertilizante"))
             } else {
                 entries.add(
                     PieEntry(
-                        (aux.custoFertilizante * item.rateio).div(100f) + item.custoFertilizante,
+                        ((aux.custoFertilizante * item.rateio).div(100.0) + item.custoFertilizante).toFloat(),
                         "Fertilizante"
                     )
                 )
@@ -149,11 +149,11 @@ class ResultadosAtividadeFragment : Fragment(), AdapterView.OnItemSelectedListen
         }
         if (item.custoMaodeobra + aux.custoMaodeobra > 1) {
             if (position == 0) {
-                entries.add(PieEntry(item.custoMaodeobra, "Mão de obra"))
+                entries.add(PieEntry(item.custoMaodeobra.toFloat(), "Mão de obra"))
             } else {
                 entries.add(
                     PieEntry(
-                        (aux.custoMaodeobra * item.rateio).div(100f) + item.custoMaodeobra,
+                        ((aux.custoMaodeobra * item.rateio).div(100.0) + item.custoMaodeobra).toFloat(),
                         "Mão de obra"
                     )
                 )
@@ -161,11 +161,11 @@ class ResultadosAtividadeFragment : Fragment(), AdapterView.OnItemSelectedListen
         }
         if (item.custoMaquina + aux.custoMaquina > 1) {
             if (position == 0) {
-                entries.add(PieEntry(item.custoMaquina, "Máquinas"))
+                entries.add(PieEntry(item.custoMaquina.toFloat(), "Máquinas"))
             } else {
                 entries.add(
                     PieEntry(
-                        (aux.custoMaquina * item.rateio).div(100f) + item.custoMaquina,
+                        ((aux.custoMaquina * item.rateio).div(100.0) + item.custoMaquina).toFloat(),
                         "Máquinas"
                     )
                 )
@@ -173,11 +173,11 @@ class ResultadosAtividadeFragment : Fragment(), AdapterView.OnItemSelectedListen
         }
         if (item.custoOutros + aux.custoOutros > 1) {
             if (position == 0) {
-                entries.add(PieEntry(item.custoOutros, "Outros"))
+                entries.add(PieEntry(item.custoOutros.toFloat(), "Outros"))
             } else {
                 entries.add(
                     PieEntry(
-                        (aux.custoOutros * item.rateio).div(100f) + item.custoOutros,
+                        ((aux.custoOutros * item.rateio).div(100.0) + item.custoOutros).toFloat(),
                         "Outros"
                     )
                 )

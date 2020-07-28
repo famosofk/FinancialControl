@@ -1,6 +1,7 @@
 package com.example.agrogestao.view.fragments.navigation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,6 +37,8 @@ class AtualizarFazendaFragment : Fragment() {
         button.setOnClickListener {
             updateFarm(root)
         }
+
+        Log.e("6000", "${10000 * 0.6}")
 
         observer(root)
         if (arguments?.get("id") != null) {
@@ -82,7 +85,7 @@ class AtualizarFazendaFragment : Fragment() {
             val dividasLongoPrazo = view.findViewById<EditText>(R.id.dividaLongoPrazoFazendaEdit)
             dividasLongoPrazo.setText(it.dividasLongoPrazo.toString())
             val saldoAtual = view.findViewById<EditText>(R.id.dinheiroBancoFazendaEdit)
-            if (it.dinheiroBanco != 0f) {
+            if (it.dinheiroBanco != 0.0) {
                 saldoAtual.setText(it.dinheiroBanco.toString())
             }
             val metapagar = view.findViewById<EditText>(R.id.pagarFazendaEdit)
@@ -120,25 +123,26 @@ class AtualizarFazendaFragment : Fragment() {
         realm.beginTransaction()
 
         farm.codigoFazenda = codigoFazenda.text.toString().trim()
-        farm.area = areaFazenda.text.toString().trim().toFloat()
-        farm.metaLucro = lucroFazenda.text.toString().trim().toFloat()
-        farm.metaMargemLiquida = margemLiquidaFazenda.text.toString().trim().toFloat()
-        farm.metaMargemBruta = margemBrutaFazenda.text.toString().trim().toFloat()
-        farm.metaRendaBruta = rendaBrutaFazenda.text.toString().trim().toFloat()
-        farm.metasaldo = saldoFazenda.text.toString().trim().toFloat()
-        farm.metaPatrimonioLiquido = patrimonioLiquidoFazenda.text.toString().trim().toFloat()
-        farm.metaLiquidezGeral = liquidezGeralFazenda.text.toString().trim().toFloat()
-        farm.metaLiquidezCorrente = liquidezCorrenteFazenda.text.toString().trim().toFloat()
+        farm.area = areaFazenda.text.toString().trim().toDouble()
+        farm.metaLucro = lucroFazenda.text.toString().trim().toDouble()
+        farm.metaMargemLiquida = margemLiquidaFazenda.text.toString().trim().toDouble()
+        farm.metaMargemBruta = margemBrutaFazenda.text.toString().trim().toDouble()
+        farm.metaRendaBruta = rendaBrutaFazenda.text.toString().trim().toDouble()
+        farm.metasaldo = saldoFazenda.text.toString().trim().toDouble()
+        farm.metaPatrimonioLiquido = patrimonioLiquidoFazenda.text.toString().trim().toDouble()
+        farm.metaLiquidezGeral = liquidezGeralFazenda.text.toString().trim().toDouble()
+        farm.metaLiquidezCorrente = liquidezCorrenteFazenda.text.toString().trim().toDouble()
         farm.observacao = comentarioFazenda.text.toString()
-        balanco.dividasLongoPrazo = dividasLP.text.toString().trim().toFloat()
-        balanco.taxaRemuneracaoCapital = remuneracaoCapital.text.toString().trim().toFloat()
-        balanco.custoOportunidadeTrabalho = custoOportunidade.text.toString().trim().toFloat()
-        balanco.pendenciasPagamento = pagarFazenda.text.toString().trim().toFloat()
-        balanco.pendenciasRecebimento = receberFazenda.text.toString().trim().toFloat()
-        if (dinheiroBancoFazendaEdit.text.toString().isNotEmpty()) {
-            balanco.dinheiroBanco = dinheiroBancoFazendaEdit.text.toString().trim().toFloat()
-        }
+        balanco.dividasLongoPrazo = dividasLP.text.toString().trim().toDouble()
+        balanco.taxaRemuneracaoCapital = remuneracaoCapital.text.toString().trim().toDouble()
+        balanco.custoOportunidadeTrabalho = custoOportunidade.text.toString().trim().toDouble()
+        balanco.pendenciasPagamento = pagarFazenda.text.toString().trim().toDouble()
+        balanco.pendenciasRecebimento = receberFazenda.text.toString().trim().toDouble()
 
+        if (dinheiroBancoFazendaEdit.text.toString().isNotEmpty()) {
+            balanco.dinheiroBanco = dinheiroBancoFazendaEdit.text.toString().trim().toDouble()
+        }
+        balanco.atualizarBalanco()
         realm.commitTransaction()
 
         root.findNavController().navigate(R.id.from_atualizar_to_Apresentar)

@@ -6,21 +6,20 @@ import io.realm.RealmObject
 open class AtividadesEconomicas(var nome: String = "") : RealmObject() {
 
     var fazendaID: String = ""
-    var rateio: Float = 1f
-    var custoDeProducao: Float = 0f
-    var vendasAtividade: Float = 0f
+    var rateio: Double = 1.0
+    var custoDeProducao: Double = 0.0
+    var vendasAtividade: Double = 0.0
     var lucroAtividade: String = ""
         get() = "R$: ${vendasAtividade - custoDeProducao}"
 
-    var arrayCustos = RealmList<Float>(0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f)
+    var arrayCustos = RealmList<Double>(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
 
-    var custoSemente = 0f
-    var custoFertilizante = 0f
-    var custoDefensivo = 0f
-    var custoMaodeobra = 0f
-    var custoMaquina = 0f
-    var custoOutros = 0f
-
+    var custoSemente = 0.0
+    var custoFertilizante = 0.0
+    var custoDefensivo = 0.0
+    var custoMaodeobra = 0.0
+    var custoMaquina = 0.0
+    var custoOutros = 0.0
 
 
 }

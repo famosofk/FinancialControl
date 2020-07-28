@@ -87,9 +87,9 @@ class CadastroInventarioFragment : Fragment(), AdapterView.OnItemSelectedListene
             item.nome = name.text.toString()
             val quantidadeInicial: EditText =
                 root.findViewById(R.id.quantidadeInicialItemInventario)
-            item.quantidadeInicial = quantidadeInicial.text.toString().trim().toFloat()
+            item.quantidadeInicial = quantidadeInicial.text.toString().trim().toDouble()
             val valorUnitario: EditText = root.findViewById(R.id.valorUnitarioItemInventario)
-            item.valorUnitario = valorUnitario.text.toString().trim().toFloat()
+            item.valorUnitario = valorUnitario.text.toString().trim().toDouble()
             item.valorInicial = item.valorUnitario
             item.valorAtual = item.valorInicial
             item.tipo = tipoSelecionado
@@ -98,7 +98,7 @@ class CadastroInventarioFragment : Fragment(), AdapterView.OnItemSelectedListene
                 val anoCompra: EditText = root.findViewById(R.id.anoCompraItemInventario)
                 item.anoProducao = anoCompra.text.toString().trim().toInt()
                 val reforma: EditText = root.findViewById(R.id.reformaItemInventario)
-                item.reforma = reforma.text.toString().trim().toFloat()
+                item.reforma = reforma.text.toString().trim().toDouble()
             }
             if (tipoSelecionado == "Benfeitoria" || tipoSelecionado == "Máquinas") {
                 val vidaUtil: EditText = root.findViewById(R.id.vidaUtilItemCadastro)

@@ -91,7 +91,7 @@ class ResultadosFazendaFragment : Fragment() {
         val list = resultadosFazendaViewModel.list
         var contador = 0f
         for (item in list) {
-            entries.add(BarEntry(contador, item.vendasAtividade - item.custoDeProducao))
+            entries.add(BarEntry(contador, (item.vendasAtividade - item.custoDeProducao).toFloat()))
             contador += 1f
         }
         val set = BarDataSet(entries, "Resultado atividade.")
@@ -121,7 +121,7 @@ class ResultadosFazendaFragment : Fragment() {
             mBuilder.dismiss()
             val name = mDialogView.atividade_nome_cadastro.text.toString()
             val id = farmID
-            val rateio = mDialogView.atividade_rateio_cadastro.text.toString().toFloat()
+            val rateio = mDialogView.atividade_rateio_cadastro.text.toString().toDouble()
             val atividadesEconomicas = AtividadesEconomicas(name)
             atividadesEconomicas.fazendaID = farmID
             atividadesEconomicas.rateio = rateio

@@ -38,12 +38,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     }
 
 
-
-
-
-
-
-
     fun toast(s:String){
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show()
     }
