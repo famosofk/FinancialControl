@@ -3,6 +3,7 @@
     <string name="account_type_consultant">Consultor</string>
     <string name="account_type_productor">Produtor</string>
     <string name="senhaConsultor">244466666</string>
+    <string name="senhaProfessor">senhaprofessor</string>
     <string name="login_intro">Já possui uma\nconta?</string>
     <string name="email_intro_value">Email</string>
     <string name="senha_intro_value">Senha</string>

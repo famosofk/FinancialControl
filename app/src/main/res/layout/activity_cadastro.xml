@@ -109,6 +109,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="32dp"
             android:background="@drawable/round_background_orange"
+            android:onClick="createUser"
             android:padding="16dp"
             android:text="@string/cadastro_intro_value"
             android:textColor="@android:color/white"

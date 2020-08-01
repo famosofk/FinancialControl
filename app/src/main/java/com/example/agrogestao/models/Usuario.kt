@@ -1,12 +1,19 @@
 package com.example.agrogestao.models
 
-import io.realm.RealmList
-import io.realm.RealmObject
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
-open class Usuario(s: String = "") : RealmObject() {
+class Usuario(s: String = "") {
 
     var email: String = ""
     var tipo = s
-    var listaFazendas: RealmList<String> = RealmList()
+    var senha = ""
+    var listaFazendas = ArrayList<String>()
+
+    fun saveToDb() {
+        val database = Firebase.database
+        val myRef = database.getReference().child("users").child(email.split('@')[0])
+        myRef.setValue(this)
+    }
 
 }

@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.agrogestao.R
+import com.example.agrogestao.models.Usuario
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 import kotlinx.android.synthetic.main.activity_cadastro.*
@@ -25,30 +26,48 @@ class CadastroActivity : AppCompatActivity(), View.OnClickListener {
 
 
     fun createUser(view: View) {
-
-        if (!editSenhaConsultorCadastro.text.toString().equals(R.string.senhaConsultor) && radioConsultorCadastro.isChecked) {
-            Toast.makeText(this, "Senha de produtor incorreta.", Toast.LENGTH_SHORT).show() }
-        else {
-            val tipoUsuario: String = if (radioConsultorCadastro.isChecked) "consultor" else "produtor"
+        val senhaInserida = editSenhaConsultorCadastro.text.toString()
+        if (!(senhaInserida.equals(getString(R.string.senhaConsultor)) || senhaInserida.equals(
+                getString(R.string.senhaProfessor)
+            )) && radioConsultorCadastro.isChecked
+        ) {
+            Toast.makeText(this, "Senha de consultor incorreta.", Toast.LENGTH_SHORT).show()
+        } else {
+            var tipoUsuario: String =
+                if (radioConsultorCadastro.isChecked) "consultor" else "produtor"
+            if (tipoUsuario == "consultor") {
+                if (senhaInserida.equals(getString(R.string.senhaProfessor))) {
+                    tipoUsuario = "professor"
+                }
+            }
+            val email = editEmailCadastro.text.toString()
+            val senha = editSenhaCadastro.text.toString()
             mAuth.createUserWithEmailAndPassword(
-                editEmailCadastro.text.toString(),
-                editSenhaCadastro.text.toString()).addOnCompleteListener(this) { task ->
-                    if (task.isSuccessful) {
-                        val user = FirebaseAuth.getInstance().currentUser
-                        val profileUpdates = UserProfileChangeRequest.Builder()
-                            .setDisplayName(tipoUsuario)
-                            .build()
-                        user?.updateProfile(profileUpdates)
-                            ?.addOnCompleteListener { task ->
-                                if (!task.isSuccessful) {
-                                    Toast.makeText(
-                                        this,
-                                        "erro ao atualizar dados.",
-                                        Toast.LENGTH_SHORT
-                                    )
-                                }
-                                startActivity(Intent(this, AtividadesActivity::class.java))
-                                finish()
+                email, senha
+            ).addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    val user = FirebaseAuth.getInstance().currentUser
+                    val profileUpdates = UserProfileChangeRequest.Builder()
+                        .setDisplayName(tipoUsuario)
+                        .build()
+                    user?.updateProfile(profileUpdates)
+                        ?.addOnCompleteListener { task ->
+                            if (!task.isSuccessful) {
+                                Toast.makeText(
+                                    this,
+                                    "erro ao atualizar dados.",
+                                    Toast.LENGTH_SHORT
+                                )
+                            }
+
+                            val usuario = Usuario(tipoUsuario)
+                            usuario.email = email
+                            usuario.senha = senha
+                            usuario.saveToDb()
+
+
+                            startActivity(Intent(this, AtividadesActivity::class.java))
+                            finish()
                             }
                     } else {
                         Toast.makeText(this, "Falha ao cadastrar."+ task.exception, Toast.LENGTH_SHORT).show()

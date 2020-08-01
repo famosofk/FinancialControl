@@ -22,8 +22,9 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(R.layout.activity_login)
         Realm.init(this)
         val config = RealmConfiguration.Builder()
-            .name("myrealm.realm")
+            .deleteRealmIfMigrationNeeded()
             .build()
+
         Realm.setDefaultConfiguration(config)
 
 

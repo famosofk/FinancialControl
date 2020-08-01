@@ -18,11 +18,15 @@ import com.example.agrogestao.models.*
 import com.example.agrogestao.view.adapter.FazendasAdapter
 import com.example.agrogestao.view.listener.FarmListener
 import com.example.agrogestao.viewmodel.AtividadesViewModel
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.ktx.Firebase
 import io.realm.Realm
-import io.realm.RealmConfiguration
 import io.realm.kotlin.where
+import kotlinx.android.synthetic.main.activity_atividades.*
 import kotlinx.android.synthetic.main.cadastro_programa_fazenda.view.*
 import java.util.*
+
 
 class AtividadesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
@@ -36,22 +40,14 @@ class AtividadesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_atividades)
-        //lembrar de remover o realm.init
-        Realm.init(this)
-        val config = RealmConfiguration.Builder()
-            .deleteRealmIfMigrationNeeded()
-            .build()
-
-        Realm.setDefaultConfiguration(config)
+        userVerification()
+        realm = Realm.getDefaultInstance()
 
 
         atividadesViewModel = ViewModelProvider(this).get(AtividadesViewModel::class.java)
 
-
-
         observe()
 
-        realm = Realm.getDefaultInstance()
         inicializarButtons()
         val recyclerView: RecyclerView = findViewById(R.id.recyclerFazendas)
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -153,12 +149,14 @@ class AtividadesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
         when {
             farm != null -> {
                 realm.copyToRealm(farm)
-                var balancoPatrimonial = BalancoPatrimonial()
+                val balancoPatrimonial = BalancoPatrimonial()
                 balancoPatrimonial.farm = farm.id
-                var fluxoCaixa = FluxoCaixa()
+                val fluxoCaixa = FluxoCaixa()
                 fluxoCaixa.farm = farm.id
                 realm.copyToRealm(fluxoCaixa)
                 realm.copyToRealm(balancoPatrimonial)
+
+                //criar
             }
             economicalActivity != null -> {
                 realm.copyToRealm(economicalActivity)
@@ -169,6 +167,11 @@ class AtividadesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
         }
         realm.commitTransaction()
         atividadesViewModel.load()
+    }
+
+    private fun salvarNoFirebase() {
+        val database = FirebaseDatabase.getInstance()
+        val myRef = database.getReference("message")
     }
 
     private fun inicializarButtons() {
@@ -197,6 +200,14 @@ class AtividadesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
             }
         }
 
+    }
+
+    private fun userVerification() {
+        val auth = Firebase.auth
+        val user = auth.currentUser
+        if (user?.displayName.equals("professor")) {
+            fabMenu.visibility = View.VISIBLE
+        }
     }
 
     override fun onStop() {
