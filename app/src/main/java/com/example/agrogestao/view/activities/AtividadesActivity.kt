@@ -168,6 +168,8 @@ class AtividadesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                 fluxoCaixa.farmID = farm.id
                 realm.copyToRealm(fluxoCaixa)
                 realm.copyToRealm(balancoPatrimonial)
+                fluxoCaixa.saveToDb()
+                balancoPatrimonial.saveToDb()
 
                 //criar
             }
@@ -175,6 +177,7 @@ class AtividadesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                 realm.copyToRealm(economicalActivity)
             }
             program != null -> {
+                program.saveToDb()
                 realm.copyToRealm(program)
             }
         }
