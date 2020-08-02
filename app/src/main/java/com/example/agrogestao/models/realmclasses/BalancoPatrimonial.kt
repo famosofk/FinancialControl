@@ -1,13 +1,16 @@
-package com.example.agrogestao.models
+package com.example.agrogestao.models.realmclasses
 
 import android.util.Log
+import com.example.agrogestao.models.ItemBalancoPatrimonial
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import io.realm.RealmList
 import io.realm.RealmObject
 
 open class BalancoPatrimonial : RealmObject() {
 
 
-    var farm = ""
+    var farmID = ""
     var liquidezGeral = 0.0
     var liquidezCorrente = 0.0
     var listaItens = RealmList<ItemBalancoPatrimonial>()
@@ -33,6 +36,12 @@ open class BalancoPatrimonial : RealmObject() {
     var pendenciasRecebimento = 0.0
     var totalContasPagar = 0.0
     var totalContasReceber = 0.0
+
+    fun saveToDb() {
+        val database = Firebase.database
+        val db = database.getReference().child("balancoPatrimonial").child(this.farmID)
+        db.setValue(this)
+    }
 
     fun atualizarBalanco() {
         calcularAtivo()

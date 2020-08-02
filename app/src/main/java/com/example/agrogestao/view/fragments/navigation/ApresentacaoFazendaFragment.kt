@@ -13,7 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.agrogestao.R
-import com.example.agrogestao.models.Farm
+import com.example.agrogestao.models.realmclasses.Farm
 import com.example.agrogestao.viewmodel.ApresentacaoFazendaViewModel
 import io.realm.Realm
 

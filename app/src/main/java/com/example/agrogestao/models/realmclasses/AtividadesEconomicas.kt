@@ -1,5 +1,7 @@
-package com.example.agrogestao.models
+package com.example.agrogestao.models.realmclasses
 
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import io.realm.RealmList
 import io.realm.RealmObject
 
@@ -21,5 +23,12 @@ open class AtividadesEconomicas(var nome: String = "") : RealmObject() {
     var custoMaquina = 0.0
     var custoOutros = 0.0
 
+    fun saveToDb() {
+        val database = Firebase.database
+        val db = Firebase.database.getReference().child("atividadesEconomicas").child(fazendaID)
+            .child(this.nome)
+        db.setValue(this)
+
+    }
 
 }

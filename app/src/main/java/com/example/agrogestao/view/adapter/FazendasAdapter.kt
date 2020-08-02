@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.agrogestao.R
-import com.example.agrogestao.models.Farm
+import com.example.agrogestao.models.realmclasses.Farm
 import com.example.agrogestao.view.listener.FarmListener
 import com.example.agrogestao.view.viewholder.FarmsViewHolder
 

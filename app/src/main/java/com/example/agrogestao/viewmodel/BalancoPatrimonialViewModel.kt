@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.agrogestao.models.BalancoPatrimonial
+import com.example.agrogestao.models.realmclasses.BalancoPatrimonial
 import io.realm.Realm
 import io.realm.kotlin.where
 

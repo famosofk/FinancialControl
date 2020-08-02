@@ -12,8 +12,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.example.agrogestao.R
-import com.example.agrogestao.models.AtividadesEconomicas
 import com.example.agrogestao.models.ItemFluxoCaixa
+import com.example.agrogestao.models.realmclasses.AtividadesEconomicas
 import com.example.agrogestao.view.adapter.FluxoCaixaAdapter
 import com.example.agrogestao.view.adapter.ItemFluxoCaixaListener
 import com.example.agrogestao.viewmodel.FluxoCaixaViewModel

@@ -1,18 +1,16 @@
-package com.example.agrogestao.models
+package com.example.agrogestao.models.realmclasses
 
-import io.realm.RealmList
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import io.realm.RealmObject
-import java.io.Serializable
 
 open class Farm(
     var codigoFazenda: String = "",
     var programa: String = "",
     var senha: String = "",
     var id: String = ""
-) : RealmObject(), Serializable {
+) : RealmObject() {
 
-
-    var atividades: RealmList<AtividadesEconomicas> = RealmList()
     var area = 0.0
     var metaMargemLiquida = 0.0
     var metaMargemBruta = 0.0
@@ -23,4 +21,10 @@ open class Farm(
     var metaLiquidezGeral = 0.0
     var metaLiquidezCorrente = 0.0
     var observacao: String = ""
+
+    fun saveToDb() {
+        val database = Firebase.database
+        val db = database.getReference().child("fazendas").child(programa).child(id)
+        db.setValue(this)
+    }
 }

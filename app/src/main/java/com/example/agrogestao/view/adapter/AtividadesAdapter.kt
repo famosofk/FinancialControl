@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.agrogestao.databinding.AtividadesListagemBinding
-import com.example.agrogestao.models.AtividadesEconomicas
+import com.example.agrogestao.models.realmclasses.AtividadesEconomicas
 
 
 class AtividadesAdapter :

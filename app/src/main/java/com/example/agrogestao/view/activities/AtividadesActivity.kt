@@ -14,12 +14,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.agrogestao.R
-import com.example.agrogestao.models.*
+import com.example.agrogestao.models.realmclasses.*
 import com.example.agrogestao.view.adapter.FazendasAdapter
 import com.example.agrogestao.view.listener.FarmListener
 import com.example.agrogestao.viewmodel.AtividadesViewModel
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
 import io.realm.Realm
 import io.realm.kotlin.where
@@ -115,11 +114,19 @@ class AtividadesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                 val name = mDialogView.editNomeDialog.text.toString()
                 val id = UUID.randomUUID().toString()
                 val complemento = mDialogView.editComplementoText.text.toString()
-                val farm = Farm(name, programa, complemento, id)
-                //val db = FirebaseDatabase.getInstance().reference.child("farms").child(id)
-                //db.setValue(farm)
+                val farm = Farm(
+                    codigoFazenda = name,
+                    programa = programa,
+                    senha = complemento,
+                    id = id
+                )
+                farm.saveToDb()
+
                 salvarRealm(farm = farm)
-                val atividade = AtividadesEconomicas("Geral")
+                val atividade =
+                    AtividadesEconomicas(
+                        "Geral"
+                    )
                 atividade.fazendaID = farm.id
                 atividade.rateio = 100.0
                 salvarRealm(economicalActivity = atividade)
@@ -130,7 +137,11 @@ class AtividadesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
             cadastrarButton.setOnClickListener {
                 mBuilder.dismiss()
                 val name = mDialogView.editNomeDialog.text.toString()
-                    salvarRealm(program = FarmProgram(name))
+                salvarRealm(
+                    program = FarmProgram(
+                        name
+                    )
+                )
 
             }
         }
@@ -149,10 +160,12 @@ class AtividadesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
         when {
             farm != null -> {
                 realm.copyToRealm(farm)
-                val balancoPatrimonial = BalancoPatrimonial()
-                balancoPatrimonial.farm = farm.id
-                val fluxoCaixa = FluxoCaixa()
-                fluxoCaixa.farm = farm.id
+                val balancoPatrimonial =
+                    BalancoPatrimonial()
+                balancoPatrimonial.farmID = farm.id
+                val fluxoCaixa =
+                    FluxoCaixa()
+                fluxoCaixa.farmID = farm.id
                 realm.copyToRealm(fluxoCaixa)
                 realm.copyToRealm(balancoPatrimonial)
 
@@ -169,10 +182,6 @@ class AtividadesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
         atividadesViewModel.load()
     }
 
-    private fun salvarNoFirebase() {
-        val database = FirebaseDatabase.getInstance()
-        val myRef = database.getReference("message")
-    }
 
     private fun inicializarButtons() {
         val fabPrograma: com.github.clans.fab.FloatingActionButton =

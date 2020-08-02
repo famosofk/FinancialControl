@@ -5,7 +5,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.agrogestao.R
-import com.example.agrogestao.models.Farm
+import com.example.agrogestao.models.realmclasses.Farm
 import com.example.agrogestao.view.listener.FarmListener
 
 class FarmsViewHolder(view: View, private val listener: FarmListener) :

@@ -12,7 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.agrogestao.R
 import com.example.agrogestao.databinding.ResultadosFazendaBinding
-import com.example.agrogestao.models.AtividadesEconomicas
+import com.example.agrogestao.models.realmclasses.AtividadesEconomicas
 import com.example.agrogestao.view.adapter.AtividadesAdapter
 import com.example.agrogestao.viewmodel.ResultadosFazendaViewModel
 import com.github.mikephil.charting.charts.BarChart
@@ -122,7 +122,10 @@ class ResultadosFazendaFragment : Fragment() {
             val name = mDialogView.atividade_nome_cadastro.text.toString()
             val id = farmID
             val rateio = mDialogView.atividade_rateio_cadastro.text.toString().toDouble()
-            val atividadesEconomicas = AtividadesEconomicas(name)
+            val atividadesEconomicas =
+                AtividadesEconomicas(
+                    name
+                )
             atividadesEconomicas.fazendaID = farmID
             atividadesEconomicas.rateio = rateio
             val realm = Realm.getDefaultInstance()

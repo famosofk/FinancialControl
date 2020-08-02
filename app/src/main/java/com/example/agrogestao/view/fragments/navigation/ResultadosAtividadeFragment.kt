@@ -11,8 +11,8 @@ import android.widget.Spinner
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.agrogestao.R
-import com.example.agrogestao.models.AtividadesEconomicas
-import com.example.agrogestao.models.BalancoPatrimonial
+import com.example.agrogestao.models.realmclasses.AtividadesEconomicas
+import com.example.agrogestao.models.realmclasses.BalancoPatrimonial
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet

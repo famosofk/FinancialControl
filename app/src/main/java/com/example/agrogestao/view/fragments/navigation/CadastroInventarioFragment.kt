@@ -8,9 +8,9 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.example.agrogestao.R
-import com.example.agrogestao.models.AtividadesEconomicas
-import com.example.agrogestao.models.BalancoPatrimonial
 import com.example.agrogestao.models.ItemBalancoPatrimonial
+import com.example.agrogestao.models.realmclasses.AtividadesEconomicas
+import com.example.agrogestao.models.realmclasses.BalancoPatrimonial
 import io.realm.Realm
 import io.realm.kotlin.where
 import java.util.*
@@ -82,7 +82,7 @@ class CadastroInventarioFragment : Fragment(), AdapterView.OnItemSelectedListene
 
         button.setOnClickListener {
             var item = ItemBalancoPatrimonial()
-            item.idFazenda = balanco.farm
+            item.idFazenda = balanco.farmID
             val name: EditText = root.findViewById(R.id.nomeItemInventario)
             item.nome = name.text.toString()
             val quantidadeInicial: EditText =

@@ -6,7 +6,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.agrogestao.R
-import com.example.agrogestao.models.Usuario
+import com.example.agrogestao.models.realmclasses.Usuario
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 import kotlinx.android.synthetic.main.activity_cadastro.*
@@ -60,7 +60,10 @@ class CadastroActivity : AppCompatActivity(), View.OnClickListener {
                                 )
                             }
 
-                            val usuario = Usuario(tipoUsuario)
+                            val usuario =
+                                Usuario(
+                                    tipoUsuario
+                                )
                             usuario.email = email
                             usuario.senha = senha
                             usuario.saveToDb()

@@ -6,7 +6,7 @@
 
         <variable
             name="atividade"
-            type="com.example.agrogestao.models.AtividadesEconomicas" />
+            type="com.example.agrogestao.models.realmclasses.AtividadesEconomicas" />
 
     </data>
 

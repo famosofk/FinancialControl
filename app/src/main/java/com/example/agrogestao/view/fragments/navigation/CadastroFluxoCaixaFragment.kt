@@ -8,7 +8,12 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.example.agrogestao.R
-import com.example.agrogestao.models.*
+import com.example.agrogestao.models.ItemBalancoPatrimonial
+import com.example.agrogestao.models.ItemFluxoCaixa
+import com.example.agrogestao.models.RegistradorFarm
+import com.example.agrogestao.models.realmclasses.AtividadesEconomicas
+import com.example.agrogestao.models.realmclasses.BalancoPatrimonial
+import com.example.agrogestao.models.realmclasses.FluxoCaixa
 import io.realm.Realm
 import io.realm.kotlin.where
 import java.text.SimpleDateFormat

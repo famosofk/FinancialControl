@@ -1,12 +1,21 @@
-package com.example.agrogestao.models
+package com.example.agrogestao.models.realmclasses
 
+import com.example.agrogestao.models.ItemFluxoCaixa
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import io.realm.RealmList
 import io.realm.RealmObject
 
 open class FluxoCaixa : RealmObject() {
 
-    var farm = ""
+    var farmID = ""
     var list = RealmList<ItemFluxoCaixa>()
+
+    fun saveToDb() {
+        val database = Firebase.database
+        val db = database.getReference().child("fluxoCaixa").child(this.farmID)
+        db.setValue(this)
+    }
 
     fun calcularEntradas(): Double {
         var total = 0.0
