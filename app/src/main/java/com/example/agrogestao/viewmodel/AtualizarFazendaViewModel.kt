@@ -22,7 +22,7 @@ class AtualizarFazendaViewModel(application: Application) : AndroidViewModel(app
         val realm = Realm.getDefaultInstance()
         mFarm.value = realm.where<Farm>().contains("id", id).findFirst()
         mBalancoPatrimonial.value =
-            realm.where<BalancoPatrimonial>().contains("farm", id).findFirst()
+            realm.where<BalancoPatrimonial>().contains("farmID", id).findFirst()
 
     }
 

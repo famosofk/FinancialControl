@@ -101,7 +101,7 @@ class AtualizarFazendaFragment : Fragment() {
     private fun updateFarm(root: View) {
         val realm = Realm.getDefaultInstance()
         val farm = realm.where<Farm>().contains("id", id).findFirst()!!
-        val balanco = realm.where<BalancoPatrimonial>().contains("farm", id).findFirst()!!
+        val balanco = realm.where<BalancoPatrimonial>().contains("farmID", id).findFirst()!!
         val remuneracaoCapital = root.findViewById<EditText>(R.id.taxaCapitalFazendaEdit)
         val custoOportunidade = root.findViewById<EditText>(R.id.custoTrabalhoFazendaEdit)
         val dividasLP = root.findViewById<EditText>(R.id.dividaLongoPrazoFazendaEdit)

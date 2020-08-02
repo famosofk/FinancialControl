@@ -24,9 +24,9 @@ class FluxoCaixaViewModel(application: Application) : AndroidViewModel(applicati
     val listaPrazo = MutableLiveData<List<ItemFluxoCaixa>>()
     fun load(key: String) {
         mAtividades.value = realm.where<AtividadesEconomicas>().contains("fazendaID", key).findAll()
-        mFluxoCaixa.value = realm.where<FluxoCaixa>().contains("farm", key).findFirst()
+        mFluxoCaixa.value = realm.where<FluxoCaixa>().contains("farmID", key).findFirst()
         mBalancoPatrimonial.value =
-            realm.where<BalancoPatrimonial>().contains("farm", key).findFirst()
+            realm.where<BalancoPatrimonial>().contains("farmID", key).findFirst()
     }
 
     fun loadLists(atividade: String) {

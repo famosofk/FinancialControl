@@ -31,7 +31,7 @@ class ResultadosFazendaViewModel(application: Application) : AndroidViewModel(ap
         val results = realm.where<AtividadesEconomicas>().contains("fazendaID", idFarm).findAll()
         list.addAll(results)
         mbalancoPatrimonial.value =
-            realm.where<BalancoPatrimonial>().contains("farm", idFarm).findFirst()
+            realm.where<BalancoPatrimonial>().contains("farmID", idFarm).findFirst()
     }
 
     fun openDialog() {

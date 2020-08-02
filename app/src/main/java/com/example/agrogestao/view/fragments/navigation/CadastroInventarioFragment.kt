@@ -65,7 +65,7 @@ class CadastroInventarioFragment : Fragment(), AdapterView.OnItemSelectedListene
         if (arguments?.get("id") != null) {
             id = arguments?.getString("id")!!
             var balanco: BalancoPatrimonial =
-                realm.where<BalancoPatrimonial>().contains("farm", id).findFirst()!!
+                realm.where<BalancoPatrimonial>().contains("farmID", id).findFirst()!!
             processamentoDados(root, balanco, realm)
         }
 
@@ -127,7 +127,6 @@ class CadastroInventarioFragment : Fragment(), AdapterView.OnItemSelectedListene
 
                 balanco.atualizarBalanco()
                 realm.commitTransaction()
-                Toast.makeText(context, "${balanco.ativo}", Toast.LENGTH_SHORT).show()
                 root.findNavController().navigate(R.id.from_cadastroInventario_to_apresentarFazenda)
             }
         }

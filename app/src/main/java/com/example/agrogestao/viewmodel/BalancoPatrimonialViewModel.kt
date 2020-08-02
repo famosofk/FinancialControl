@@ -16,7 +16,7 @@ class BalancoPatrimonialViewModel(application: Application) : AndroidViewModel(a
     fun load(key: String) {
         val realm = Realm.getDefaultInstance()
         mBalancoPatrimonial.value =
-            realm.where<BalancoPatrimonial>().contains("farm", key).findFirst()
+            realm.where<BalancoPatrimonial>().contains("farmID", key).findFirst()
     }
 
 

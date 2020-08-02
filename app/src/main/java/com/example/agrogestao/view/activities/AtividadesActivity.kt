@@ -40,6 +40,7 @@ class AtividadesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_atividades)
         userVerification()
+
         realm = Realm.getDefaultInstance()
 
 

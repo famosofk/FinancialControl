@@ -26,9 +26,9 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
 
     private fun recuperarFluxoCaixa() {
         val registradorFarm = realm.where<RegistradorFarm>().findFirst()!!
-        fluxoCaixa = realm.where<FluxoCaixa>().contains("farm", registradorFarm.id).findFirst()!!
+        fluxoCaixa = realm.where<FluxoCaixa>().contains("farmID", registradorFarm.id).findFirst()!!
         balancoPatrimonial =
-            realm.where<BalancoPatrimonial>().contains("farm", registradorFarm.id).findFirst()!!
+            realm.where<BalancoPatrimonial>().contains("farmID", registradorFarm.id).findFirst()!!
     }
 
     override fun onCreateView(
