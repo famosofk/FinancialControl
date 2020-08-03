@@ -1,4 +1,4 @@
-package com.example.agrogestao.viewmodel
+package com.example.agrogestao.viewmodel.navigation
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

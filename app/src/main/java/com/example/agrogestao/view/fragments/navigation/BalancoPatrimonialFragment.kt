@@ -14,7 +14,7 @@ import com.example.agrogestao.R
 import com.example.agrogestao.models.ItemBalancoPatrimonial
 import com.example.agrogestao.models.realmclasses.BalancoPatrimonial
 import com.example.agrogestao.view.adapter.ItemPatrimonioAdapter
-import com.example.agrogestao.viewmodel.BalancoPatrimonialViewModel
+import com.example.agrogestao.viewmodel.navigation.BalancoPatrimonialViewModel
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet

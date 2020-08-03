@@ -16,7 +16,7 @@ import com.example.agrogestao.models.ItemFluxoCaixa
 import com.example.agrogestao.models.realmclasses.AtividadesEconomicas
 import com.example.agrogestao.view.adapter.FluxoCaixaAdapter
 import com.example.agrogestao.view.adapter.ItemFluxoCaixaListener
-import com.example.agrogestao.viewmodel.FluxoCaixaViewModel
+import com.example.agrogestao.viewmodel.navigation.FluxoCaixaViewModel
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet

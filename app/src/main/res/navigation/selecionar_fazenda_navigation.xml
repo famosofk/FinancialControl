@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/selecionar_fazenda_navigation"
+    app:startDestination="@id/fazendaFragment">
+
+    <fragment
+        android:id="@+id/fazendaFragment"
+        android:name="com.example.agrogestao.view.fragments.selecionarfazenda.ProgramaFragment"
+        android:label="FazendaFragment"
+        tools:layout="@layout/programa_fragment">
+        <action
+            android:id="@+id/action_fazendaFragment_to_selecionarFazendaFragment"
+            app:destination="@id/selecionarFazendaFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/selecionarFazendaFragment"
+        android:name="com.example.agrogestao.view.fragments.selecionarfazenda.SelecionarFazendaFragment"
+        android:label="fragment_selecionar_fazenda"
+        tools:layout="@layout/fragment_selecionar_fazenda" />
+</navigation>

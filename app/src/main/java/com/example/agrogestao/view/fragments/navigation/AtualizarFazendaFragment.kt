@@ -14,7 +14,7 @@ import androidx.navigation.findNavController
 import com.example.agrogestao.R
 import com.example.agrogestao.models.realmclasses.BalancoPatrimonial
 import com.example.agrogestao.models.realmclasses.Farm
-import com.example.agrogestao.viewmodel.AtualizarFazendaViewModel
+import com.example.agrogestao.viewmodel.navigation.AtualizarFazendaViewModel
 import io.realm.Realm
 import io.realm.kotlin.where
 import kotlinx.android.synthetic.main.atualizar_fazenda.*

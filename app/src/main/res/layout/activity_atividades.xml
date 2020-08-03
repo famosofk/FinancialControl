@@ -51,7 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="200dp"
         android:layout_marginEnd="10dp"
-        android:visibility="gone"
+        android:visibility="visible"
         fab:menu_animationDelayPerItem="50"
         fab:menu_backgroundColor="@android:color/transparent"
         fab:menu_buttonSpacing="0dp"
@@ -103,6 +103,15 @@
             android:src="@drawable/ic_add_black_24dp"
             fab:fab_colorNormal="@color/colorPrimary"
             fab:fab_label="@string/fazenda_intro"
+            fab:fab_size="mini" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fabParticiparFazenda"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_add_black_24dp"
+            fab:fab_colorNormal="@color/colorPrimary"
+            fab:fab_label="@string/participar_fazenda_intro"
             fab:fab_size="mini" />
 
 

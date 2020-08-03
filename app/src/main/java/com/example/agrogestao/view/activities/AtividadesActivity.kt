@@ -17,7 +17,7 @@ import com.example.agrogestao.R
 import com.example.agrogestao.models.realmclasses.*
 import com.example.agrogestao.view.adapter.FazendasAdapter
 import com.example.agrogestao.view.listener.FarmListener
-import com.example.agrogestao.viewmodel.AtividadesViewModel
+import com.example.agrogestao.viewmodel.navigation.AtividadesViewModel
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import io.realm.Realm
@@ -124,12 +124,11 @@ class AtividadesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                 farm.saveToDb()
 
                 salvarRealm(farm = farm)
-                val atividade =
-                    AtividadesEconomicas(
-                        "Geral"
-                    )
+                val atividade = AtividadesEconomicas("Geral")
+
                 atividade.fazendaID = farm.id
                 atividade.rateio = 100.0
+                atividade.saveToDb()
                 salvarRealm(economicalActivity = atividade)
 
 
@@ -193,6 +192,11 @@ class AtividadesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
         fabPrograma.setOnClickListener {
             createAlertDialog("Criar programa", null)
         }
+        fabParticiparFazenda.setOnClickListener {
+            val i = Intent(this, FazendaActivity::class.java)
+            startActivity(i)
+            finish()
+        }
         val fabFazenda: com.github.clans.fab.FloatingActionButton = findViewById(R.id.fabAddFazenda)
         fabFazenda.setOnClickListener {
             realm = Realm.getDefaultInstance()
@@ -218,8 +222,10 @@ class AtividadesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
     private fun userVerification() {
         val auth = Firebase.auth
         val user = auth.currentUser
-        if (user?.displayName.equals("professor")) {
-            fabMenu.visibility = View.VISIBLE
+        if (!user?.displayName.equals("professor")) {
+            fabAddFazenda.visibility = View.GONE
+            fabAddPrograma.visibility = View.GONE
+
         }
     }
 
@@ -240,6 +246,7 @@ class AtividadesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
 
 
     override fun onNothingSelected(parent: AdapterView<*>?) {}
+
 
 }
 

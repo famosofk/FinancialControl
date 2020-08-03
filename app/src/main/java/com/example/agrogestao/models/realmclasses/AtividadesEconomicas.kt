@@ -24,8 +24,7 @@ open class AtividadesEconomicas(var nome: String = "") : RealmObject() {
     var custoOutros = 0.0
 
     fun saveToDb() {
-        val database = Firebase.database
-        val db = Firebase.database.getReference().child("atividadesEconomicas").child(fazendaID)
+        val db = Firebase.database.reference.child("atividadesEconomicas").child(fazendaID)
             .child(this.nome)
         db.setValue(this)
 

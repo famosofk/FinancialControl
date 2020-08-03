@@ -14,7 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.agrogestao.R
 import com.example.agrogestao.models.realmclasses.Farm
-import com.example.agrogestao.viewmodel.ApresentacaoFazendaViewModel
+import com.example.agrogestao.viewmodel.navigation.ApresentacaoFazendaViewModel
 import io.realm.Realm
 
 class ApresentacaoFazendaFragment : Fragment() {

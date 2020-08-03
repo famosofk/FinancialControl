@@ -14,7 +14,7 @@ import com.example.agrogestao.R
 import com.example.agrogestao.databinding.ResultadosFazendaBinding
 import com.example.agrogestao.models.realmclasses.AtividadesEconomicas
 import com.example.agrogestao.view.adapter.AtividadesAdapter
-import com.example.agrogestao.viewmodel.ResultadosFazendaViewModel
+import com.example.agrogestao.viewmodel.navigation.ResultadosFazendaViewModel
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet

@@ -113,6 +113,7 @@
     <string name="cancelar_intro">Cancelar</string>
     <string name="confirmar_intro">Confirmar</string>
     <string name="comentarios_intro">Comentários</string>
+    <string name="selecao_programa_intro">Escolha um programa</string>
 
     <string-array name="tiposItem">
         <item>Terra</item>
@@ -143,5 +144,9 @@
         <item>Insumos</item>
         <item>Produtos</item>
     </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="adicionar_fazenda">Adicionar fazenda.</string>
+    <string name="participar_fazenda_intro">Participar de uma fazenda</string>
 
 </resources>
