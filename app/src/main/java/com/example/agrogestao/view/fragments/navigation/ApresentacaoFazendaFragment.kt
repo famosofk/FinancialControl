@@ -30,6 +30,7 @@ class ApresentacaoFazendaFragment : Fragment() {
     var mLiquidaMeta: String = ""
 
 
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -84,9 +85,15 @@ class ApresentacaoFazendaFragment : Fragment() {
                 val textRentabilidade =
                     view.findViewById<TextView>(R.id.textsRentabilidadeApresentacao)
                 textSaldo.text = "Saldo: ${String.format("%.2f", it.dinheiroBanco)}"
-                textPagar.text = "Contas a pagar: ${String.format("%.2f", it.totalContasPagar)}"
+                textPagar.text = "Contas a pagar: ${String.format(
+                    "%.2f",
+                    it.totalContasPagar + it.pendenciasPagamento
+                )}"
                 textReceber.text =
-                    "Contas a receber: ${String.format("%.2f", it.totalContasReceber)}"
+                    "Contas a receber: ${String.format(
+                        "%.2f",
+                        it.totalContasReceber + it.pendenciasRecebimento
+                    )}"
                 textPatrimonioLiquido.text =
                     "Patrimônio Líquido: ${String.format("%.2f", it.patrimonioLiquido)}"
                 textSolvencia.text = "Liquidez geral: ${String.format("%.2f", it.liquidezGeral)}"

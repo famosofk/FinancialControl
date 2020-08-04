@@ -93,6 +93,9 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     val user = auth.currentUser
+                    val i = Intent(this, AtividadesActivity::class.java)
+                    startActivity(i)
+                    finish()
 
                 } else {
                     Toast.makeText(

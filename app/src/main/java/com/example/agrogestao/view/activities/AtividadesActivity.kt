@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.agrogestao.R
 import com.example.agrogestao.models.realmclasses.*
-import com.example.agrogestao.view.adapter.FazendasAdapter
+import com.example.agrogestao.view.adapter.MyFarmAdapter
 import com.example.agrogestao.view.listener.FarmListener
 import com.example.agrogestao.viewmodel.navigation.AtividadesViewModel
 import com.google.firebase.auth.ktx.auth
@@ -31,7 +31,7 @@ class AtividadesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
 
     private lateinit var realm: Realm
     private lateinit var atividadesViewModel: AtividadesViewModel
-    private val mAdapter = FazendasAdapter()
+    private val mAdapter = MyFarmAdapter()
     private lateinit var mListener: FarmListener
     private var list = mutableListOf<String>()
     private var programa = ""
@@ -39,7 +39,7 @@ class AtividadesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_atividades)
-        userVerification()
+        //  userVerification()
 
         realm = Realm.getDefaultInstance()
 

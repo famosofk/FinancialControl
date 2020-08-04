@@ -69,7 +69,7 @@ class BalancoPatrimonialFragment : Fragment() {
         textAtivoCirculante.text =
             "Ativo circulante: " + String.format(
                 "%.2f",
-                (it.calcularValorAnimaisInsumosProdutos() + it.dinheiroBanco)
+                (it.calcularValorAnimaisInsumosProdutos() + it.dinheiroBanco + it.pendenciasRecebimento)
             )
         val textPassivo = view.findViewById<TextView>(R.id.textPassivoBalanco)
         textPassivo.text = "Passivo: " + String.format("%.2f", it.passivo)

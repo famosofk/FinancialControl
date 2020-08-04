@@ -34,7 +34,7 @@ class ProgramaFragment : Fragment() {
 
         val db = Firebase.database.reference.child("programas")
 
-        val postListener = object : ValueEventListener {
+        val valueListener = object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {}
             override fun onDataChange(snapshot: DataSnapshot) {
                 val snap = snapshot.children
@@ -46,10 +46,8 @@ class ProgramaFragment : Fragment() {
                 }
                 adapter.submitList(listPrograms)
             }
-
         }
-
-        db.addValueEventListener(postListener)
+        db.addValueEventListener(valueListener)
 
         return root!!
     }

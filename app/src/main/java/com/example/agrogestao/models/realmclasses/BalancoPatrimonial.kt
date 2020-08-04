@@ -64,11 +64,12 @@ open class BalancoPatrimonial : RealmObject() {
 
     fun calcularPassivo() {
         calcularDividasLongoPrazo()
-        passivo = dividasLongoPrazo + totalContasPagar
+        passivo = dividasLongoPrazo + totalContasPagar + pendenciasPagamento
     }
 
     fun calcularAtivo() {
-        ativo = totalContasReceber + calcularPatrimonioBens() + dinheiroBanco
+        ativo =
+            totalContasReceber + calcularPatrimonioBens() + dinheiroBanco + pendenciasRecebimento
     }
 
     fun calcularLiquidezGeral() {
@@ -166,7 +167,7 @@ open class BalancoPatrimonial : RealmObject() {
                 )
             )
                 item.calcularDepreciacao()
-            depreciacao += item.depreciacao
+            depreciacao += item.depreciacao - item.reforma
         }
 
         custoOperacionalTotal =

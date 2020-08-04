@@ -8,7 +8,7 @@ import com.example.agrogestao.models.realmclasses.Farm
 import com.example.agrogestao.view.listener.FarmListener
 import com.example.agrogestao.view.viewholder.FarmsViewHolder
 
-class FazendasAdapter : RecyclerView.Adapter<FarmsViewHolder>() {
+class MyFarmAdapter : RecyclerView.Adapter<FarmsViewHolder>() {
 
     private var myFarmList: List<Farm> = arrayListOf()
     private lateinit var mListener: FarmListener

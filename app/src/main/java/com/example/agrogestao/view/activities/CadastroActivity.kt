@@ -21,11 +21,13 @@ class CadastroActivity : AppCompatActivity(), View.OnClickListener {
         mAuth = FirebaseAuth.getInstance()
         radioConsultorCadastro.setOnClickListener(this)
         radioProdutorCadastro.setOnClickListener(this)
+        cadastroButton.setOnClickListener { createUser() }
 
     }
 
 
-    fun createUser(view: View) {
+    fun createUser() {
+        progressBar.visibility = View.VISIBLE
         val senhaInserida = editSenhaConsultorCadastro.text.toString()
         if (!(senhaInserida.equals(getString(R.string.senhaConsultor)) || senhaInserida.equals(
                 getString(R.string.senhaProfessor)
@@ -74,6 +76,7 @@ class CadastroActivity : AppCompatActivity(), View.OnClickListener {
                             }
                     } else {
                         Toast.makeText(this, "Falha ao cadastrar."+ task.exception, Toast.LENGTH_SHORT).show()
+                    progressBar.visibility = View.GONE
                     }
                 }
         }
