@@ -54,6 +54,7 @@ class CadastroActivity : AppCompatActivity(), View.OnClickListener {
                         .build()
                     user?.updateProfile(profileUpdates)
                         ?.addOnCompleteListener { task ->
+
                             if (!task.isSuccessful) {
                                 Toast.makeText(
                                     this,
@@ -62,10 +63,7 @@ class CadastroActivity : AppCompatActivity(), View.OnClickListener {
                                 )
                             }
 
-                            val usuario =
-                                Usuario(
-                                    tipoUsuario
-                                )
+                            val usuario = Usuario(tipoUsuario)
                             usuario.email = email
                             usuario.senha = senha
                             usuario.saveToDb()

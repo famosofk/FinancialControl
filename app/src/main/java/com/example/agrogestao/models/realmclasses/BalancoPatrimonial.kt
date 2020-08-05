@@ -167,7 +167,7 @@ open class BalancoPatrimonial : RealmObject() {
                 )
             )
                 item.calcularDepreciacao()
-            depreciacao += item.depreciacao - item.reforma
+            depreciacao += item.depreciacao
         }
 
         custoOperacionalTotal =
@@ -176,7 +176,15 @@ open class BalancoPatrimonial : RealmObject() {
 
 
     fun calcularCustoOperacionalEfetivo() {
-        custoOperacionalEfetivo = totalDespesas + totalContasPagar
+        var reformas = 0.0
+        for (item in listaItens) {
+            if (item.tipo.equals(ItemBalancoPatrimonial.ITEM_BENFEITORIA) || item.tipo.equals(
+                    ItemBalancoPatrimonial.ITEM_MAQUINAS
+                )
+            )
+                reformas += item.reforma
+        }
+        custoOperacionalEfetivo = totalDespesas + totalContasPagar - reformas
 
 
     }
