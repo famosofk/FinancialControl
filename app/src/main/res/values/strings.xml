@@ -149,5 +149,6 @@
     <string name="adicionar_fazenda">Adicionar fazenda.</string>
     <string name="participar_fazenda_intro">Participar de uma fazenda</string>
     <string name="selecionar_fazenda_intro">Escolha sua fazenda</string>
+    <string name="trocar_fazenda_menu">Trocar fazenda</string>
 
 </resources>

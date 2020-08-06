@@ -2,9 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_logout"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="Sair"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_select_farm"
+        android:orderInCategory="50"
+        android:title="@string/trocar_fazenda_menu"
         app:showAsAction="never" />
 
 </menu>
