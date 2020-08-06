@@ -157,11 +157,13 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
             val custoOperacao = itemInventario!!.valorAtual * item.quantidadeInicial
             realm.beginTransaction()
             if (exitingMoney) {
-
-                itemInventario.valorUnitario =
-                    itemInventario.quantidadeFinal.times(itemInventario.valorAtual)
-                        .plus(item.quantidadeInicial.plus(item.valorAtual))
-                        .div(itemInventario.quantidadeFinal.plus(item.quantidadeInicial))
+                if (item.valorAtual != 0.toDouble()) {
+                    //Se o valor do item for diferente de 0 na compra, calcula o preço médio. Caso seja igual a 0, o sistema considera que foi fabricado na fazenda e não calcula o preço médio.
+                    itemInventario.valorUnitario =
+                        itemInventario.quantidadeFinal.times(itemInventario.valorAtual)
+                            .plus(item.quantidadeInicial.plus(item.valorAtual))
+                            .div(itemInventario.quantidadeFinal.plus(item.quantidadeInicial))
+                }
                 itemInventario.quantidadeFinal += item.quantidadeInicial
                 item.anoProducao = itemInventario.anoProducao
                 atividade.custoDeProducao += custoOperacao
