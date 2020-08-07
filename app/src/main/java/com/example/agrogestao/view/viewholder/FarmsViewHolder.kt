@@ -22,7 +22,6 @@ class FarmsViewHolder(view: View, private val listener: FarmListener) :
 
         linearLayout.setOnClickListener {
             listener.onClick(position)
-
         }
 
 

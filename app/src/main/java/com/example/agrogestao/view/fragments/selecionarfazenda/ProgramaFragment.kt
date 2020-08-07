@@ -5,10 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.agrogestao.R
 import com.example.agrogestao.models.realmclasses.FarmProgram
 import com.example.agrogestao.view.adapter.ProgramaAdapter
+import com.example.agrogestao.view.listener.FarmListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -28,9 +30,19 @@ class ProgramaFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         root = inflater.inflate(R.layout.programa_fragment, container, false)
-
         val recyclerView: RecyclerView = root!!.findViewById(R.id.recyclerProgramas)
+        val listener = object : FarmListener {
+            override fun onClick(id: Int) {
+                val bundle = Bundle()
+                bundle.putString("programa", adapter.currentList[id].name)
+                root?.findNavController()
+                    ?.navigate(R.id.action_fazendaFragment_to_selecionarFazendaFragment, bundle)
+            }
+
+        }
+        adapter.attachToAdapter(listener)
         recyclerView.adapter = adapter
+
 
         val db = Firebase.database.reference.child("programas")
 
