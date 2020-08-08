@@ -118,7 +118,6 @@ class ResultadosFazendaFragment : Fragment() {
         mBuilder.show()
 
         cadastrarButton.setOnClickListener {
-            mBuilder.dismiss()
             val name = mDialogView.atividade_nome_cadastro.text.toString()
             val id = farmID
             val rateio = mDialogView.atividade_rateio_cadastro.text.toString().toDouble()

@@ -1,11 +1,28 @@
 package com.example.agrogestao.models.realmclasses
 
+import com.example.agrogestao.models.firebaseclasses.AtividadeFirebase
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import io.realm.RealmList
 import io.realm.RealmObject
 
 open class AtividadesEconomicas(var nome: String = "") : RealmObject() {
+
+    constructor(firebase: AtividadeFirebase) : this() {
+        fazendaID = firebase.fazendaID
+        rateio = firebase.rateio
+        nome = firebase.nome
+        custoDeProducao = firebase.custoDeProducao
+        vendasAtividade = firebase.vendasAtividade
+        lucroAtividade = firebase.lucroAtividade
+        arrayCustos.addAll(firebase.arrayCustos)
+        custoSemente = firebase.custoSemente
+        custoFertilizante = firebase.custoFertilizante
+        custoDefensivo = firebase.custoDefensivo
+        custoMaodeobra = firebase.custoMaodeobra
+        custoMaquina = firebase.custoMaquina
+        custoOutros = firebase.custoOutros
+    }
 
     var fazendaID: String = ""
     var rateio: Double = 1.0
@@ -29,5 +46,6 @@ open class AtividadesEconomicas(var nome: String = "") : RealmObject() {
         db.setValue(this)
 
     }
+
 
 }

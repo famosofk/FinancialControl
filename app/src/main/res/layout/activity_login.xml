@@ -83,15 +83,6 @@
             android:textSize="18sp"
             android:textStyle="bold" />
 
-        <ProgressBar
-            android:id="@+id/progressBar2"
-            style="?android:attr/progressBarStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="48dp"
-            android:visibility="invisible"
-            tools:visibility="visible" />
-
     </LinearLayout>
 
     <Button
@@ -107,6 +98,18 @@
         android:textStyle="bold"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="479dp" />
+
+    <ProgressBar
+        android:id="@+id/progressBar2"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="96dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="48dp"
+        android:background="#95000000"
+        android:padding="8dp"
+        android:visibility="invisible"
+        tools:visibility="visible" />
 
     <ImageView
         android:id="@+id/imageView"

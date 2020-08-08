@@ -85,12 +85,15 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun loginUsuario() {
+        progressBar2.visibility = View.VISIBLE
+
 
         auth.signInWithEmailAndPassword(
             editEmailLogin.text.toString(),
             editSenhaLogin.text.toString()
         )
             .addOnCompleteListener(this) { task ->
+                progressBar2.visibility = View.GONE
                 if (task.isSuccessful) {
                     val user = auth.currentUser
                     val i = Intent(this, AtividadesActivity::class.java)
@@ -98,8 +101,9 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                     finish()
 
                 } else {
+                    val array = task.exception.toString().split(':')
                     Toast.makeText(
-                        baseContext, "Authentication failed." + task.exception,
+                        baseContext, array[1],
                         Toast.LENGTH_SHORT
                     ).show()
                 }

@@ -39,7 +39,7 @@ class AtividadesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_atividades)
-        //  userVerification()
+        userVerification()
 
         realm = Realm.getDefaultInstance()
 
@@ -57,6 +57,8 @@ class AtividadesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
             override fun onClick(id: Int) {
                 val intent = Intent(applicationContext, NavigationActivity::class.java)
                 val bundle = Bundle()
+
+                //vamos verificar se tem o balanc
                 bundle.putString("fazenda", mAdapter.get(id).id)
                 intent.putExtras(bundle)
                 startActivity(intent)

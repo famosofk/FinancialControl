@@ -2,13 +2,42 @@ package com.example.agrogestao.models.realmclasses
 
 import android.util.Log
 import com.example.agrogestao.models.ItemBalancoPatrimonial
+import com.example.agrogestao.models.firebaseclasses.BalancoFirebase
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import io.realm.RealmList
 import io.realm.RealmObject
 
-open class BalancoPatrimonial : RealmObject() {
+open class BalancoPatrimonial() : RealmObject() {
 
+    constructor(firebase: BalancoFirebase) : this() {
+        farmID = firebase.farmID
+        liquidezGeral = firebase.liquidezGeral
+        liquidezCorrente = firebase.liquidezCorrente
+        listaItens.addAll(firebase.listaItens)
+        margemBruta = firebase.margemBruta
+        margemLiquida = firebase.margemLiquida
+        taxaRemuneracaoCapital = firebase.taxaRemuneracaoCapital
+        receitaBruta = firebase.receitaBruta
+        custoOperacionalEfetivo = firebase.custoOperacionalEfetivo
+        custoOperacionalTotal = firebase.custoOperacionalTotal
+        totalDespesas = firebase.totalDespesas
+        totalReceitas = firebase.totalReceitas
+        ativo = firebase.ativo
+        passivo = firebase.passivo
+        patrimonioLiquido = firebase.patrimonioLiquido
+        rentabilidade = firebase.rentabilidade
+        lucro = firebase.lucro
+        saldo = firebase.saldo
+        dividasLongoPrazo = firebase.dividasLongoPrazo
+        dinheiroBanco = firebase.dinheiroBanco
+        custoOportunidadeTrabalho = firebase.custoOportunidadeTrabalho
+        trabalhoFamiliarNaoRemunerado = firebase.trabalhoFamiliarNaoRemunerado
+        pendenciasRecebimento = firebase.pendenciasRecebimento
+        pendenciasPagamento = firebase.pendenciasPagamento
+        totalContasPagar = firebase.totalContasPagar
+        totalContasReceber = firebase.totalContasReceber
+    }
 
     var farmID = ""
     var liquidezGeral = 0.0
@@ -36,6 +65,7 @@ open class BalancoPatrimonial : RealmObject() {
     var pendenciasRecebimento = 0.0
     var totalContasPagar = 0.0
     var totalContasReceber = 0.0
+
 
     fun saveToDb() {
         val database = Firebase.database
