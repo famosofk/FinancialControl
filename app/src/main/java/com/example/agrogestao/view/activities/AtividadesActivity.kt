@@ -1,10 +1,15 @@
 package com.example.agrogestao.view.activities
 
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.WindowManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
@@ -42,8 +47,6 @@ class AtividadesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
         userVerification()
 
         realm = Realm.getDefaultInstance()
-
-
         atividadesViewModel = ViewModelProvider(this).get(AtividadesViewModel::class.java)
 
         observe()
@@ -55,16 +58,38 @@ class AtividadesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
 
         mListener = object : FarmListener {
             override fun onClick(id: Int) {
-                val intent = Intent(applicationContext, NavigationActivity::class.java)
-                val bundle = Bundle()
-
-                //vamos verificar se tem o balanc
-                bundle.putString("fazenda", mAdapter.get(id).id)
-                intent.putExtras(bundle)
-                startActivity(intent)
+                startActivity(mAdapter.get(id).id, mAdapter.get(id).programa)
             }
         }
+
         mAdapter.attachListener(mListener)
+    }
+
+    private fun startActivity(id: String, programa: String) {
+
+        if (!isOnline(applicationContext)) {
+            Toast.makeText(applicationContext, "Sem conexão com a internet.", Toast.LENGTH_SHORT)
+                .show()
+        } else {
+            Toast.makeText(applicationContext, "Internet", Toast.LENGTH_SHORT).show()
+            //Fazer a verificação
+            getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+            )
+
+            //fazer o get
+
+            //finalizar a verificação
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+        }
+        val bundle = Bundle()
+        bundle.putString("fazenda", id)
+        val intent = Intent(applicationContext, NavigationActivity::class.java)
+        intent.putExtras(bundle)
+        startActivity(intent)
+
+
     }
 
     private fun observe() {
@@ -152,6 +177,7 @@ class AtividadesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
 
     }
 
+
     private fun salvarRealm(
         farm: Farm? = null,
         economicalActivity: AtividadesEconomicas? = null,
@@ -187,6 +213,28 @@ class AtividadesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
         atividadesViewModel.load()
     }
 
+
+    fun isOnline(context: Context): Boolean {
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        if (connectivityManager != null) {
+            val capabilities =
+                connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+            if (capabilities != null) {
+                if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
+                    Log.i("Internet", "NetworkCapabilities.TRANSPORT_CELLULAR")
+                    return true
+                } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
+                    Log.i("Internet", "NetworkCapabilities.TRANSPORT_WIFI")
+                    return true
+                } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)) {
+                    Log.i("Internet", "NetworkCapabilities.TRANSPORT_ETHERNET")
+                    return true
+                }
+            }
+        }
+        return false
+    }
 
     private fun inicializarButtons() {
         val fabPrograma: com.github.clans.fab.FloatingActionButton =

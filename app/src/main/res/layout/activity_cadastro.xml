@@ -2,6 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cadastroFrameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/backgroundColor"
@@ -36,8 +37,8 @@
             android:drawableStart="@drawable/ic_email"
             android:drawablePadding="16dp"
             android:hint="@string/email_intro_value"
-            android:inputType="textWebEmailAddress"
             android:importantForAutofill="no"
+            android:inputType="textWebEmailAddress"
             android:padding="16dp" />
 
         <EditText
@@ -51,8 +52,8 @@
             android:drawableStart="@drawable/ic_lock"
             android:drawablePadding="16dp"
             android:hint="@string/senha_intro_value"
-            android:inputType="textPassword"
             android:importantForAutofill="no"
+            android:inputType="textPassword"
             android:padding="16dp" />
 
         <RadioGroup
@@ -94,10 +95,10 @@
             android:drawableStart="@drawable/ic_lock"
             android:drawablePadding="16dp"
             android:hint="@string/senha_consultor_intro"
+            android:importantForAutofill="no"
             android:inputType="textPassword"
             android:padding="16dp"
             android:visibility="invisible"
-            android:importantForAutofill="no"
             tools:visibility="visible" />
 
         <Button

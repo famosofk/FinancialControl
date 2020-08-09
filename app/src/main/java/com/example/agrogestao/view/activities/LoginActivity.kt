@@ -1,8 +1,10 @@
 package com.example.agrogestao.view.activities
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.agrogestao.R
@@ -86,7 +88,11 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun loginUsuario() {
         progressBar2.visibility = View.VISIBLE
-
+        loginLinearLayout.setBackgroundColor(Color.parseColor("#99000000"))
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+        )
 
         auth.signInWithEmailAndPassword(
             editEmailLogin.text.toString(),
@@ -94,8 +100,9 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         )
             .addOnCompleteListener(this) { task ->
                 progressBar2.visibility = View.GONE
+                window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+                loginLinearLayout.setBackgroundColor(Color.WHITE)
                 if (task.isSuccessful) {
-                    val user = auth.currentUser
                     val i = Intent(this, AtividadesActivity::class.java)
                     startActivity(i)
                     finish()

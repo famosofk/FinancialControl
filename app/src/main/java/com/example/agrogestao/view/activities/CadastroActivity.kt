@@ -1,8 +1,10 @@
 package com.example.agrogestao.view.activities
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.agrogestao.R
@@ -28,12 +30,20 @@ class CadastroActivity : AppCompatActivity(), View.OnClickListener {
 
     fun createUser() {
         progressBar.visibility = View.VISIBLE
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+        )
+        cadastroFrameLayout.setBackgroundColor(Color.parseColor("#95000000"))
         val senhaInserida = editSenhaConsultorCadastro.text.toString()
         if (!(senhaInserida.equals(getString(R.string.senhaConsultor)) || senhaInserida.equals(
                 getString(R.string.senhaProfessor)
             )) && radioConsultorCadastro.isChecked
         ) {
             Toast.makeText(this, "Senha de consultor incorreta.", Toast.LENGTH_SHORT).show()
+            window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+            cadastroFrameLayout.setBackgroundColor(Color.WHITE)
+            progressBar.visibility = View.GONE
         } else {
             var tipoUsuario: String =
                 if (radioConsultorCadastro.isChecked) "consultor" else "produtor"
@@ -47,6 +57,9 @@ class CadastroActivity : AppCompatActivity(), View.OnClickListener {
             mAuth.createUserWithEmailAndPassword(
                 email, senha
             ).addOnCompleteListener(this) { task ->
+                window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+                cadastroFrameLayout.setBackgroundColor(Color.WHITE)
+                progressBar.visibility = View.GONE
                 if (task.isSuccessful) {
                     val user = FirebaseAuth.getInstance().currentUser
                     val profileUpdates = UserProfileChangeRequest.Builder()
@@ -71,11 +84,10 @@ class CadastroActivity : AppCompatActivity(), View.OnClickListener {
 
                             startActivity(Intent(this, AtividadesActivity::class.java))
                             finish()
-                            }
-                    } else {
-                        Toast.makeText(this, "Falha ao cadastrar."+ task.exception, Toast.LENGTH_SHORT).show()
-                    progressBar.visibility = View.GONE
-                    }
+                        }
+                } else {
+                    Toast.makeText(this, "Falha ao cadastrar."+ task.exception, Toast.LENGTH_SHORT).show()
+                }
                 }
         }
 

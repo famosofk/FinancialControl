@@ -1,13 +1,10 @@
 package com.example.agrogestao.view.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.agrogestao.R
 import com.example.agrogestao.databinding.ItemlistProgramaFazendaBinding
 import com.example.agrogestao.models.realmclasses.FarmProgram
 import com.example.agrogestao.view.listener.FarmListener
@@ -34,12 +31,11 @@ class ProgramaAdapter : ListAdapter<FarmProgram, ProgramaAdapter.Viewholder>(Pro
         }
 
         companion object {
-            fun from(context: Context, listener: FarmListener): Viewholder {
-                val layoutInflater = LayoutInflater.from(context)
-                val binding: ItemlistProgramaFazendaBinding = DataBindingUtil.inflate(
+            fun from(parent: ViewGroup, listener: FarmListener): Viewholder {
+                val layoutInflater = LayoutInflater.from(parent.context)
+                val binding = ItemlistProgramaFazendaBinding.inflate(
                     layoutInflater,
-                    R.layout.itemlist_programa_fazenda,
-                    null,
+                    parent,
                     false
                 )
                 return Viewholder(binding, listener)
@@ -49,7 +45,7 @@ class ProgramaAdapter : ListAdapter<FarmProgram, ProgramaAdapter.Viewholder>(Pro
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Viewholder {
-        return Viewholder.from(parent.context, listener)
+        return Viewholder.from(parent, listener)
     }
 
     override fun onBindViewHolder(holder: Viewholder, position: Int) {
