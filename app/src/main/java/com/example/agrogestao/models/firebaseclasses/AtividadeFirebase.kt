@@ -28,5 +28,6 @@ data class AtividadeFirebase(
     var custoDefensivo: Double = 0.0,
     var custoMaodeobra: Double = 0.0,
     var custoMaquina: Double = 0.0,
-    var custoOutros: Double = 0.0
+    var custoOutros: Double = 0.0,
+    var modificacao: String = ""
 )

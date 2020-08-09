@@ -28,7 +28,8 @@ data class BalancoFirebase(
     var pendenciasPagamento: Double = 0.0,
     var pendenciasRecebimento: Double = 0.0,
     var totalContasPagar: Double = 0.0,
-    var totalContasReceber: Double = 0.0
+    var totalContasReceber: Double = 0.0,
+    var modificacao: String = ""
 
 
 )

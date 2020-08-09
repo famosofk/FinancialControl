@@ -19,6 +19,7 @@ import io.realm.kotlin.where
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.properties.Delegates
 
 class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListener,
     View.OnClickListener {
@@ -142,7 +143,7 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
     private fun verificarViabilidadeTransacao(item: ItemFluxoCaixa, existente: Boolean): Boolean {
         var bool = false
         val atividade = listaAtividades[positionAtividades]
-        var position = -1
+        var position by Delegates.notNull<Int>()
         if (item.pagamentoPrazo) {
             position = selectedMonth - 1
         } else {
@@ -168,6 +169,7 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
                 item.anoProducao = itemInventario.anoProducao
                 atividade.custoDeProducao += custoOperacao
                 atividade.arrayCustos[position] = atividade.arrayCustos[position]!! - custoOperacao
+                atividade.attModificacao()
                 realm.commitTransaction()
                 bool = true
             } else {
@@ -200,6 +202,7 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
                 atividade.arrayCustos[position] = atividade.arrayCustos[position]!! + custoOperacao
 
             }
+            atividade.attModificacao()
             realm.commitTransaction()
             bool = true
         }
@@ -210,6 +213,8 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
     private fun processarMovimentacao(item: ItemFluxoCaixa) {
         realm.beginTransaction()
         fluxoCaixa.list.add(item)
+        fluxoCaixa.attModificacao()
+        balancoPatrimonial.attModificacao()
         val custoOperacao = item.valorInicial * item.quantidadeInicial
         val atividade = listaAtividades[positionAtividades]
         if (exitingMoney) {
@@ -515,6 +520,6 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
     private var positionTipoDespesa = 0
     private var selectedYear = -1
     private var selectedMonth = -1
-    private var selectedDay = -1;
+    private var selectedDay = -1
 
 }

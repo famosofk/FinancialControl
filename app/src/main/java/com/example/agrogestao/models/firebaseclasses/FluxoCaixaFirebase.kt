@@ -4,5 +4,6 @@ import com.example.agrogestao.models.ItemFluxoCaixa
 
 data class FluxoCaixaFirebase(
     var farmID: String = "",
-    var list: List<ItemFluxoCaixa> = listOf<ItemFluxoCaixa>()
+    var list: List<ItemFluxoCaixa> = listOf(),
+    var modificacao: String = ""
 )

@@ -1,5 +1,6 @@
 package com.example.agrogestao.models.realmclasses
 
+import android.annotation.SuppressLint
 import android.util.Log
 import com.example.agrogestao.models.ItemBalancoPatrimonial
 import com.example.agrogestao.models.firebaseclasses.BalancoFirebase
@@ -7,6 +8,8 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import io.realm.RealmList
 import io.realm.RealmObject
+import java.text.SimpleDateFormat
+import java.util.*
 
 open class BalancoPatrimonial() : RealmObject() {
 
@@ -37,6 +40,7 @@ open class BalancoPatrimonial() : RealmObject() {
         pendenciasPagamento = firebase.pendenciasPagamento
         totalContasPagar = firebase.totalContasPagar
         totalContasReceber = firebase.totalContasReceber
+        modificacao = firebase.modificacao
     }
 
     var farmID = ""
@@ -65,9 +69,11 @@ open class BalancoPatrimonial() : RealmObject() {
     var pendenciasRecebimento = 0.0
     var totalContasPagar = 0.0
     var totalContasReceber = 0.0
+    var modificacao: String = ""
 
 
     fun saveToDb() {
+        attModificacao()
         val database = Firebase.database
         val db = database.getReference().child("balancoPatrimonial").child(this.farmID)
         db.setValue(this)
@@ -82,7 +88,6 @@ open class BalancoPatrimonial() : RealmObject() {
         calcularLiquidezCorrente()
         calcularCustoOperacionalEfetivo()
         calcularCustoOperacionalTotal()
-
         calcularReceitaBruta()
         calcularMargemLiquida()
         calcularMargemBruta()
@@ -91,22 +96,30 @@ open class BalancoPatrimonial() : RealmObject() {
 
     }
 
+    @SuppressLint("SimpleDateFormat")
+    fun attModificacao() {
+        val todayDate: Date = Calendar.getInstance().getTime()
+        val formatter = SimpleDateFormat("dd/MMM/yyyy HH:mm:ss")
+        val todayString: String = formatter.format(todayDate)
+        modificacao = todayString
+    }
 
-    fun calcularPassivo() {
+
+    private fun calcularPassivo() {
         calcularDividasLongoPrazo()
         passivo = dividasLongoPrazo + totalContasPagar + pendenciasPagamento
     }
 
-    fun calcularAtivo() {
+    private fun calcularAtivo() {
         ativo =
             totalContasReceber + calcularPatrimonioBens() + dinheiroBanco + pendenciasRecebimento
     }
 
-    fun calcularLiquidezGeral() {
+    private fun calcularLiquidezGeral() {
         liquidezGeral = (ativo / passivo)
     }
 
-    fun calcularSaldo() {
+    private fun calcularSaldo() {
         saldo = dinheiroBanco
     }
 

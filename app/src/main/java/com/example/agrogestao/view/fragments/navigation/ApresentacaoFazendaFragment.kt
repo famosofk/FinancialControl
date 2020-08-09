@@ -110,7 +110,6 @@ class ApresentacaoFazendaFragment : Fragment() {
 
         val mDialogView =
             LayoutInflater.from(context).inflate(R.layout.observacao_dialog_layout, null)
-        val confirmationButton: Button = mDialogView.findViewById(R.id.confirmation_observacao)
         val dontshowButton: Button = mDialogView.findViewById(R.id.dontshow_observacao)
         val message: TextView = mDialogView.findViewById(R.id.message_farm)
         message.text = farm.observacao
@@ -120,14 +119,12 @@ class ApresentacaoFazendaFragment : Fragment() {
 
         mBuilder.show()
 
-        confirmationButton.setOnClickListener {
-            mBuilder.dismiss()
-        }
         dontshowButton.setOnClickListener {
             val realm = Realm.getDefaultInstance()
             realm.beginTransaction()
             farm.observacao = ""
             realm.commitTransaction()
+            farm.saveToDb()
             mBuilder.dismiss()
         }
     }

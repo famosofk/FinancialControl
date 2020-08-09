@@ -115,6 +115,7 @@ class SelecionarFazendaFragment : Fragment() {
                                 realm.beginTransaction()
                                 realm.copyToRealm(balanco)
                                 realm.commitTransaction()
+
                                 baixarFluxoCaixa(farm.id)
                             }
                         }
