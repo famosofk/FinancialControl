@@ -88,7 +88,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun loginUsuario() {
         progressBar2.visibility = View.VISIBLE
-        loginLinearLayout.setBackgroundColor(Color.parseColor("#99000000"))
+        loginLinearLayout.setBackgroundColor(Color.parseColor("#EF000000"))
         window.setFlags(
             WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
             WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE

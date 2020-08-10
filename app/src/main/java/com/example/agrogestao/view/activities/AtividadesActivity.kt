@@ -19,17 +19,25 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.agrogestao.R
+import com.example.agrogestao.models.firebaseclasses.AtividadeFirebase
+import com.example.agrogestao.models.firebaseclasses.BalancoFirebase
+import com.example.agrogestao.models.firebaseclasses.FluxoCaixaFirebase
 import com.example.agrogestao.models.realmclasses.*
 import com.example.agrogestao.view.adapter.MyFarmAdapter
 import com.example.agrogestao.view.listener.FarmListener
 import com.example.agrogestao.viewmodel.navigation.AtividadesViewModel
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import io.realm.Realm
 import io.realm.kotlin.where
 import kotlinx.android.synthetic.main.activity_atividades.*
 import kotlinx.android.synthetic.main.cadastro_programa_fazenda.view.*
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class AtividadesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
@@ -40,6 +48,15 @@ class AtividadesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
     private lateinit var mListener: FarmListener
     private var list = mutableListOf<String>()
     private var programa = ""
+    private lateinit var idFarm: String
+    private lateinit var farm: Farm
+    private var farmBool = false
+    private lateinit var balancoPatrimonial: BalancoPatrimonial
+    private var balancoBool = false
+    private lateinit var fluxoCaixa: FluxoCaixa
+    private var fluxoBool = false
+    private lateinit var atividadesEconomicas: List<AtividadesEconomicas>
+    private var atividadesBool = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,46 +75,169 @@ class AtividadesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
 
         mListener = object : FarmListener {
             override fun onClick(id: Int) {
-                startActivity(mAdapter.get(id).id, mAdapter.get(id).programa)
+                idFarm = mAdapter.get(id).id
+                farm = realm.where<Farm>().contains("id", idFarm).findFirst()!!
+                balancoPatrimonial =
+                    realm.where<BalancoPatrimonial>().contains("farmID", idFarm).findFirst()!!
+                fluxoCaixa = realm.where<FluxoCaixa>().contains("farmID", idFarm).findFirst()!!
+                val results =
+                    realm.where<AtividadesEconomicas>().contains("fazendaID", idFarm).findAll()
+                dataVerification(mAdapter.get(id).programa)
             }
         }
 
         mAdapter.attachListener(mListener)
     }
 
-    private fun startActivity(id: String, programa: String) {
-
+    private fun dataVerification(programa: String) {
         if (!isOnline(applicationContext)) {
-            Toast.makeText(applicationContext, "Sem conexão com a internet.", Toast.LENGTH_SHORT)
-                .show()
+            val bundle = Bundle()
+            bundle.putString("fazenda", idFarm)
+            val intent = Intent(applicationContext, NavigationActivity::class.java)
+            intent.putExtras(bundle)
+            startActivity(intent)
+            finish()
         } else {
-            Toast.makeText(applicationContext, "Internet", Toast.LENGTH_SHORT).show()
-            //Fazer a verificação
-            getWindow().setFlags(
-                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
-            )
-
-            //fazer o get
-
-            //finalizar a verificação
-            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+            habilitarLoading()
+            getFarm(programa)
+            getBalanco()
+            getAtividades()
+            getFluxo()
         }
-        val bundle = Bundle()
-        bundle.putString("fazenda", id)
-        val intent = Intent(applicationContext, NavigationActivity::class.java)
-        intent.putExtras(bundle)
-        startActivity(intent)
+    }
 
+    private fun getFarm(programa: String) {
+        val db = Firebase.database.reference.child("fazendas").child(programa).child(idFarm)
+        val listener = object : ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {}
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val firebaseFarm = snapshot.getValue(Farm::class.java)
+                if (firebaseFarm != null) {
+                    if (!farm.myEquals(firebaseFarm)) {
+                        realm.beginTransaction()
+                        val farmResult = realm.where<Farm>().contains("id", idFarm).findAll()
+                        farmResult.deleteAllFromRealm()
+                        realm.copyToRealm(firebaseFarm)
+                        realm.commitTransaction()
+                    }
+                }
+                farmBool = true
+                startActivity()
+            }
+        }
+        db.addListenerForSingleValueEvent(listener)
+    }
 
+    private fun getBalanco() {
+        val db = Firebase.database.reference.child("balancoPatrimonial").child(idFarm)
+        val listener = object : ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {}
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val firebaseFarm = snapshot.getValue(BalancoFirebase::class.java)
+                if (firebaseFarm != null) {
+                    if (balancoPatrimonial.modificacao.toLong() < firebaseFarm.modificacao.toLong()) {
+                        realm.beginTransaction()
+                        realm.where<BalancoPatrimonial>().contains("farmID", idFarm).findAll()
+                            .deleteAllFromRealm()
+                        realm.copyToRealm(BalancoPatrimonial(firebaseFarm))
+                        realm.commitTransaction()
+                    }
+                }
+                balancoBool = true
+                startActivity()
+            }
+        }
+        db.addListenerForSingleValueEvent(listener)
+    }
+
+    private fun getAtividades() {
+        val db =
+            Firebase.database.reference.child("atividadesEconomicas").child(idFarm).orderByKey()
+        val listener = object : ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {}
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val listaAtividades = ArrayList<AtividadesEconomicas>()
+                snapshot.children.forEach {
+                    val atividadeFirebase = it.getValue(AtividadeFirebase::class.java)
+                    if (atividadeFirebase != null) {
+                        listaAtividades.add(AtividadesEconomicas(atividadeFirebase))
+                    }
+                }
+                if (listaAtividades.size > 0) {
+                    var item = AtividadesEconomicas()
+                    listaAtividades.forEach {
+                        if (it.nome.equals("Geral")) {
+                            item = it
+                        }
+                    }
+
+                    val geralLocal =
+                        realm.where<AtividadesEconomicas>().contains("fazendaID", idFarm)
+                            .contains("nome", "Geral").findFirst()!!
+                    if (geralLocal.modificacao.toLong() < item.modificacao.toLong()) {
+
+                        realm.beginTransaction()
+                        val results =
+                            realm.where<AtividadesEconomicas>().contains("fazendaID", idFarm)
+                                .findAll()
+                        results.deleteAllFromRealm()
+                        listaAtividades.forEach {
+                            realm.copyToRealm(it)
+                        }
+                        realm.commitTransaction()
+                    }
+                }
+                atividadesBool = true
+                startActivity()
+            }
+        }
+        db.addListenerForSingleValueEvent(listener)
+    }
+
+    private fun getFluxo() {
+        val db = Firebase.database.reference.child("fluxoCaixa").child(idFarm)
+        val listener = object : ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {}
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val firebaseFluxo = snapshot.getValue(FluxoCaixaFirebase::class.java)
+                if (firebaseFluxo != null) {
+                    val aux = FluxoCaixaFirebase(fluxoCaixa)
+                    if (firebaseFluxo != aux) {
+
+                        if (fluxoCaixa.modificacao.toLong() < firebaseFluxo.modificacao.toLong()) {
+                            realm.beginTransaction()
+                            realm.where<FluxoCaixa>().contains("farmID", idFarm).findFirst()
+                                ?.deleteFromRealm()
+                            realm.copyToRealm(FluxoCaixa(firebaseFluxo))
+                            realm.commitTransaction()
+                        }
+                    }
+
+                }
+                fluxoBool = true
+                startActivity()
+            }
+
+        }
+        db.addListenerForSingleValueEvent(listener)
+    }
+
+    private fun startActivity() {
+        if (farmBool && fluxoBool && atividadesBool && balancoBool) {
+            desabilitarLoading()
+            val bundle = Bundle()
+            bundle.putString("fazenda", idFarm)
+            val intent = Intent(applicationContext, NavigationActivity::class.java)
+            intent.putExtras(bundle)
+            startActivity(intent)
+            finish()
+        }
     }
 
     private fun observe() {
-
         atividadesViewModel.farmList.observe(this, androidx.lifecycle.Observer {
             mAdapter.updateFarms(it)
         })
-
     }
 
 
@@ -187,21 +327,21 @@ class AtividadesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
         realm.beginTransaction()
         when {
             farm != null -> {
+                farm.attModificacao()
                 realm.copyToRealm(farm)
-                val balancoPatrimonial =
-                    BalancoPatrimonial()
+                val balancoPatrimonial = BalancoPatrimonial()
                 balancoPatrimonial.farmID = farm.id
-                val fluxoCaixa =
-                    FluxoCaixa()
+                balancoPatrimonial.attModificacao()
+                val fluxoCaixa = FluxoCaixa()
                 fluxoCaixa.farmID = farm.id
+                fluxoCaixa.attModificacao()
                 realm.copyToRealm(fluxoCaixa)
                 realm.copyToRealm(balancoPatrimonial)
                 fluxoCaixa.saveToDb()
                 balancoPatrimonial.saveToDb()
-
-                //criar
             }
             economicalActivity != null -> {
+                economicalActivity.attModificacao()
                 realm.copyToRealm(economicalActivity)
             }
             program != null -> {
@@ -214,7 +354,7 @@ class AtividadesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
     }
 
 
-    fun isOnline(context: Context): Boolean {
+    private fun isOnline(context: Context): Boolean {
         val connectivityManager =
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         if (connectivityManager != null) {
@@ -234,6 +374,32 @@ class AtividadesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
             }
         }
         return false
+    }
+
+    private fun downloadProgramas() {
+        if (isOnline(applicationContext)) {
+            habilitarLoading()
+            val db = Firebase.database.reference.child("programas")
+            val listener = object : ValueEventListener {
+                override fun onCancelled(error: DatabaseError) {}
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    realm.beginTransaction()
+                    val result = realm.where<FarmProgram>().findAll()
+                    if (snapshot.children.count() > result.size) {
+                        realm.delete(FarmProgram::class.java)
+                        snapshot.children.forEach {
+                            val programa = it.getValue(FarmProgram::class.java)
+                            if (programa != null) {
+                                realm.copyToRealm(programa)
+                            }
+                        }
+                    }
+                    realm.commitTransaction()
+                    desabilitarLoading()
+                }
+            }
+            db.addListenerForSingleValueEvent(listener)
+        }
     }
 
     private fun inicializarButtons() {
@@ -276,6 +442,8 @@ class AtividadesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
             fabAddFazenda.visibility = View.GONE
             fabAddPrograma.visibility = View.GONE
 
+        } else {
+            downloadProgramas()
         }
     }
 
@@ -296,6 +464,19 @@ class AtividadesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
 
 
     override fun onNothingSelected(parent: AdapterView<*>?) {}
+
+    private fun habilitarLoading() {
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+        )
+        atividadesLoadingLayout.visibility = View.VISIBLE
+    }
+
+    private fun desabilitarLoading() {
+        window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+        atividadesLoadingLayout.visibility = View.GONE
+    }
 
 
 }

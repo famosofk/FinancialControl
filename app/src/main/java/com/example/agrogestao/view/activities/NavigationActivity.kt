@@ -13,15 +13,27 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.agrogestao.R
+import com.example.agrogestao.models.firebaseclasses.AtividadeFirebase
+import com.example.agrogestao.models.firebaseclasses.BalancoFirebase
+import com.example.agrogestao.models.firebaseclasses.FarmFirebase
+import com.example.agrogestao.models.firebaseclasses.FluxoCaixaFirebase
+import com.example.agrogestao.models.realmclasses.AtividadesEconomicas
+import com.example.agrogestao.models.realmclasses.BalancoPatrimonial
+import com.example.agrogestao.models.realmclasses.Farm
+import com.example.agrogestao.models.realmclasses.FluxoCaixa
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import io.realm.Realm
+import io.realm.kotlin.where
 
 
 class NavigationActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var id: String
+    val realm = Realm.getDefaultInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,10 +52,6 @@ class NavigationActivity : AppCompatActivity() {
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
-
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-
 
         appBarConfiguration = AppBarConfiguration(
             setOf(
@@ -83,6 +91,67 @@ class NavigationActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
 
     }
+
+    override fun onStop() {
+
+        salvarFazenda()
+
+        salvarBalanco()
+        salvarFluxoCaixa()
+        salvarAtividades()
+
+        //
+
+        super.onStop()
+    }
+
+    private fun salvarFazenda() {
+        realm.beginTransaction()
+        val farm: Farm = realm.where<Farm>().contains("id", id).findFirst()!!
+        farm.attModificacao()
+        val farmAux = FarmFirebase(farm)
+        val db = Firebase.database.reference.child("fazendas").child(farm.programa).child(farm.id)
+        db.setValue(farmAux)
+        realm.commitTransaction()
+
+    }
+
+    private fun salvarAtividades() {
+        val results = realm.where<AtividadesEconomicas>().contains("fazendaID", id).findAll()
+        results.forEach {
+            realm.beginTransaction()
+            it.attModificacao()
+            val atividade = AtividadeFirebase(it)
+            val db = Firebase.database.reference.child("atividadesEconomicas").child(id)
+                .child(atividade.nome)
+            db.setValue(atividade)
+            realm.commitTransaction()
+        }
+    }
+
+    private fun salvarFluxoCaixa() {
+
+        realm.beginTransaction()
+        val fluxoCaixa: FluxoCaixa = realm.where<FluxoCaixa>().contains("farmID", id).findFirst()!!
+        fluxoCaixa.attModificacao()
+        val fluxoaux = FluxoCaixaFirebase(fluxoCaixa)
+        val dbfluxo = Firebase.database.reference.child("fluxoCaixa").child(fluxoaux.farmID)
+        dbfluxo.setValue(fluxoaux)
+        realm.commitTransaction()
+    }
+
+    private fun salvarBalanco() {
+        realm.beginTransaction()
+        val balancoPatrimonial =
+            realm.where<BalancoPatrimonial>().contains("farmID", id).findFirst()!!
+        balancoPatrimonial.attModificacao()
+        val balancoAux = BalancoFirebase(balancoPatrimonial)
+        val dbBalanco =
+            Firebase.database.reference.child("balancoPatrimonial").child(balancoAux.farmID)
+        dbBalanco.setValue(balancoAux)
+        realm.commitTransaction()
+    }
+
 
 }
 

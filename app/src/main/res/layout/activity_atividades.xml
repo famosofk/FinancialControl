@@ -117,4 +117,20 @@
 
     </com.github.clans.fab.FloatingActionMenu>
 
+    <LinearLayout
+        android:id="@+id/atividadesLoadingLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#EF000000"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ProgressBar
+            android:id="@+id/progressBar3"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="96dp"
+            android:visibility="visible" />
+    </LinearLayout>
+
 </FrameLayout>

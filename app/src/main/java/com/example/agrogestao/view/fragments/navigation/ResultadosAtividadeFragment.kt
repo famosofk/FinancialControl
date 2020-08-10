@@ -64,7 +64,7 @@ class ResultadosAtividadeFragment : Fragment(), AdapterView.OnItemSelectedListen
 
     private fun load() {
         val realm = Realm.getDefaultInstance()
-        balancoPatrimonial = realm.where<BalancoPatrimonial>().contains("farm", id).findFirst()!!
+        balancoPatrimonial = realm.where<BalancoPatrimonial>().contains("farmID", id).findFirst()!!
 
         populartela()
         criarGrafico(0)

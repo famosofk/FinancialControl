@@ -1,5 +1,7 @@
 package com.example.agrogestao.models.firebaseclasses
 
+import com.example.agrogestao.models.realmclasses.AtividadesEconomicas
+
 data class AtividadeFirebase(
     var nome: String = "",
     var fazendaID: String = "",
@@ -30,4 +32,24 @@ data class AtividadeFirebase(
     var custoMaquina: Double = 0.0,
     var custoOutros: Double = 0.0,
     var modificacao: String = ""
-)
+) {
+    constructor(atividade: AtividadesEconomicas) : this() {
+
+        nome = atividade.nome
+        fazendaID = atividade.fazendaID
+        rateio = atividade.rateio
+        custoDeProducao = atividade.custoDeProducao
+        vendasAtividade = atividade.vendasAtividade
+        lucroAtividade = atividade.lucroAtividade
+
+        arrayCustos = atividade.arrayCustos
+        custoSemente = atividade.custoSemente
+        custoFertilizante = atividade.custoFertilizante
+        custoDefensivo = atividade.custoDefensivo
+        custoMaodeobra = atividade.custoMaodeobra
+        custoMaquina = atividade.custoMaquina
+        custoOutros = atividade.custoOutros
+        modificacao = atividade.modificacao
+
+    }
+}

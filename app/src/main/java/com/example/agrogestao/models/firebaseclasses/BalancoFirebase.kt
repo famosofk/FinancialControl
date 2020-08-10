@@ -1,6 +1,7 @@
 package com.example.agrogestao.models.firebaseclasses
 
 import com.example.agrogestao.models.ItemBalancoPatrimonial
+import com.example.agrogestao.models.realmclasses.BalancoPatrimonial
 
 data class BalancoFirebase(
     var farmID: String = "",
@@ -30,6 +31,35 @@ data class BalancoFirebase(
     var totalContasPagar: Double = 0.0,
     var totalContasReceber: Double = 0.0,
     var modificacao: String = ""
+) {
+    constructor(balanco: BalancoPatrimonial) : this() {
+        farmID = balanco.farmID
+        liquidezGeral = balanco.liquidezGeral
+        liquidezCorrente = balanco.liquidezCorrente
+        listaItens = balanco.listaItens
+        margemLiquida = balanco.margemLiquida
+        margemBruta = balanco.margemBruta
+        taxaRemuneracaoCapital = balanco.taxaRemuneracaoCapital
+        receitaBruta = balanco.receitaBruta
+        custoOperacionalEfetivo = balanco.custoOperacionalEfetivo
+        custoOperacionalTotal = balanco.custoOperacionalTotal
+        totalDespesas = balanco.totalDespesas
+        totalReceitas = balanco.totalReceitas
+        ativo = balanco.ativo
+        passivo = balanco.passivo
+        patrimonioLiquido = balanco.patrimonioLiquido
+        rentabilidade = balanco.rentabilidade
+        lucro = balanco.lucro
+        saldo = balanco.saldo
+        dividasLongoPrazo = balanco.dividasLongoPrazo
+        dinheiroBanco = balanco.dinheiroBanco
+        custoOportunidadeTrabalho = balanco.custoOportunidadeTrabalho
+        trabalhoFamiliarNaoRemunerado = balanco.trabalhoFamiliarNaoRemunerado
+        pendenciasPagamento = balanco.pendenciasPagamento
+        pendenciasRecebimento = balanco.pendenciasRecebimento
+        totalContasPagar = balanco.totalContasPagar
+        totalContasReceber = balanco.totalContasReceber
+        modificacao = balanco.modificacao
+    }
+}
 
-
-)

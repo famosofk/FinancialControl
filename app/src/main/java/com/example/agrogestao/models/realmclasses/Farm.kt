@@ -1,10 +1,9 @@
 package com.example.agrogestao.models.realmclasses
 
-import android.annotation.SuppressLint
+import com.google.firebase.database.Exclude
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import io.realm.RealmObject
-import java.text.SimpleDateFormat
 import java.util.*
 
 open class Farm(
@@ -26,18 +25,38 @@ open class Farm(
     var observacao: String = ""
     var modificacao: String = ""
 
-    @SuppressLint("SimpleDateFormat")
-    fun attModificacao() {
-        val todayDate: Date = Calendar.getInstance().getTime()
-        val formatter = SimpleDateFormat("dd/MMM/yyyy HH:mm:ss")
-        val todayString: String = formatter.format(todayDate)
-        modificacao = todayString
+
+    fun myEquals(farm: Farm): Boolean {
+        if (codigoFazenda == farm.codigoFazenda
+            && programa == farm.programa
+            && senha == farm.senha
+            && id == farm.id
+            && area == farm.area
+            && metaMargemLiquida == farm.metaMargemLiquida
+            && metaMargemBruta == farm.metaMargemBruta
+            && metaRendaBruta == farm.metaRendaBruta
+            && metaPatrimonioLiquido == farm.metaPatrimonioLiquido
+            && metaLucro == farm.metaLucro
+            && metasaldo == farm.metasaldo
+            && metaLiquidezGeral == farm.metaLiquidezGeral
+            && metaLiquidezCorrente == farm.metaLiquidezCorrente
+            && observacao == farm.observacao
+        ) {
+            return true
+        }
+        return false
     }
 
+    @Exclude
+    fun attModificacao() {
+        val todayDate: Date = Calendar.getInstance().getTime()
+        modificacao = todayDate.time.toString()
+    }
+
+    @Exclude
     fun saveToDb() {
         attModificacao()
-        val database = Firebase.database
-        val db = database.getReference().child("fazendas").child(programa).child(id)
+        val db = Firebase.database.reference.child("fazendas").child(programa).child(id)
         db.setValue(this)
     }
 }

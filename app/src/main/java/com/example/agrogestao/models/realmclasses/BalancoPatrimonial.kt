@@ -8,7 +8,6 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import io.realm.RealmList
 import io.realm.RealmObject
-import java.text.SimpleDateFormat
 import java.util.*
 
 open class BalancoPatrimonial() : RealmObject() {
@@ -80,6 +79,7 @@ open class BalancoPatrimonial() : RealmObject() {
     }
 
     fun atualizarBalanco() {
+        attModificacao()
         calcularAtivo()
         calcularPassivo()
         calcularPatrimonioLiquido()
@@ -99,9 +99,7 @@ open class BalancoPatrimonial() : RealmObject() {
     @SuppressLint("SimpleDateFormat")
     fun attModificacao() {
         val todayDate: Date = Calendar.getInstance().getTime()
-        val formatter = SimpleDateFormat("dd/MMM/yyyy HH:mm:ss")
-        val todayString: String = formatter.format(todayDate)
-        modificacao = todayString
+        modificacao = todayDate.time.toString()
     }
 
 

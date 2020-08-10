@@ -34,7 +34,7 @@ class CadastroActivity : AppCompatActivity(), View.OnClickListener {
             WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
             WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
         )
-        cadastroFrameLayout.setBackgroundColor(Color.parseColor("#95000000"))
+        cadastroFrameLayout.setBackgroundColor(Color.parseColor("#EF000000"))
         val senhaInserida = editSenhaConsultorCadastro.text.toString()
         if (!(senhaInserida.equals(getString(R.string.senhaConsultor)) || senhaInserida.equals(
                 getString(R.string.senhaProfessor)
