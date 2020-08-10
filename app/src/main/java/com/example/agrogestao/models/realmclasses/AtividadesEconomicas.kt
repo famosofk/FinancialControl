@@ -43,7 +43,7 @@ open class AtividadesEconomicas(var nome: String = "") : RealmObject() {
     var custoMaquina = 0.0
     var custoOutros = 0.0
     var modificacao: String = ""
-
+    var atualizado = false
     @SuppressLint("SimpleDateFormat")
     fun attModificacao() {
         val todayDate: Date = Calendar.getInstance().getTime()

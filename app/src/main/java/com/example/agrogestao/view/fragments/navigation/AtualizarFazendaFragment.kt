@@ -122,6 +122,7 @@ class AtualizarFazendaFragment : Fragment() {
 
         realm.beginTransaction()
         farm.attModificacao()
+        farm.atualizado = true
         farm.codigoFazenda = codigoFazenda.text.toString().trim()
         farm.area = areaFazenda.text.toString().trim().toDouble()
         farm.metaLucro = lucroFazenda.text.toString().trim().toDouble()
@@ -139,7 +140,6 @@ class AtualizarFazendaFragment : Fragment() {
         balanco.custoOportunidadeTrabalho = custoOportunidade.text.toString().trim().toDouble()
         balanco.pendenciasPagamento = pagarFazenda.text.toString().trim().toDouble()
         balanco.pendenciasRecebimento = receberFazenda.text.toString().trim().toDouble()
-        balanco.attModificacao()
 
         if (dinheiroBancoFazendaEdit.text.toString().isNotEmpty()) {
             balanco.dinheiroBanco = dinheiroBancoFazendaEdit.text.toString().trim().toDouble()

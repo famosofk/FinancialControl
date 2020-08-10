@@ -3,6 +3,7 @@ package com.example.agrogestao.models.realmclasses
 import android.annotation.SuppressLint
 import com.example.agrogestao.models.ItemFluxoCaixa
 import com.example.agrogestao.models.firebaseclasses.FluxoCaixaFirebase
+import com.google.firebase.database.Exclude
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import io.realm.RealmList
@@ -15,6 +16,10 @@ open class FluxoCaixa() : RealmObject() {
     var list = RealmList<ItemFluxoCaixa>()
     var modificacao: String = ""
 
+    @Exclude
+    var atualizado: Boolean = false
+
+
     constructor(firebase: FluxoCaixaFirebase) : this() {
         farmID = firebase.farmID
         list.addAll(firebase.list)
@@ -23,8 +28,7 @@ open class FluxoCaixa() : RealmObject() {
 
     fun saveToDb() {
         attModificacao()
-        val database = Firebase.database
-        val db = database.getReference().child("fluxoCaixa").child(this.farmID)
+        val db = Firebase.database.reference.child("fluxoCaixa").child(this.farmID)
         db.setValue(this)
     }
 
@@ -35,37 +39,6 @@ open class FluxoCaixa() : RealmObject() {
         modificacao = todayDate.time.toString()
     }
 
-    fun calcularEntradas(): Double {
-        var total = 0.0
-        for (item in list) {
-            if (!item.tipo) {
-                total += item.valorInicial - item.valorAmortizado
-            }
-        }
-        return total;
-    }
-
-    fun calcularSaidas(): Double {
-        var total = 0.0;
-        for (item in list) {
-            if (item.tipo) {
-                total += item.valorInicial - item.valorAmortizado
-            }
-        }
-        return total;
-    }
-
-    fun calcularSaldo(): Double {
-        var total = 0.0;
-        for (item in list) {
-            if (item.tipo) {
-                total -= item.valorInicial
-            } else {
-                total += item.valorInicial
-            }
-        }
-        return total;
-    }
 
 
 }

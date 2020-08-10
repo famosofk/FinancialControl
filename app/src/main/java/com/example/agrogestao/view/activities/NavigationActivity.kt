@@ -106,13 +106,17 @@ class NavigationActivity : AppCompatActivity() {
     }
 
     private fun salvarFazenda() {
-        realm.beginTransaction()
         val farm: Farm = realm.where<Farm>().contains("id", id).findFirst()!!
-        farm.attModificacao()
-        val farmAux = FarmFirebase(farm)
-        val db = Firebase.database.reference.child("fazendas").child(farm.programa).child(farm.id)
-        db.setValue(farmAux)
-        realm.commitTransaction()
+        if (farm.atualizado) {
+            realm.beginTransaction()
+            farm.attModificacao()
+            val farmAux = FarmFirebase(farm)
+            val db =
+                Firebase.database.reference.child("fazendas").child(farm.programa).child(farm.id)
+            db.setValue(farmAux)
+            farm.atualizado = false
+            realm.commitTransaction()
+        }
 
     }
 
@@ -120,36 +124,47 @@ class NavigationActivity : AppCompatActivity() {
         val results = realm.where<AtividadesEconomicas>().contains("fazendaID", id).findAll()
         results.forEach {
             realm.beginTransaction()
-            it.attModificacao()
-            val atividade = AtividadeFirebase(it)
-            val db = Firebase.database.reference.child("atividadesEconomicas").child(id)
-                .child(atividade.nome)
-            db.setValue(atividade)
+            if (it.atualizado) {
+                it.attModificacao()
+                val atividade = AtividadeFirebase(it)
+                val db = Firebase.database.reference.child("atividadesEconomicas").child(id)
+                    .child(atividade.nome)
+                db.setValue(atividade)
+                it.atualizado = false
+            }
             realm.commitTransaction()
         }
     }
 
     private fun salvarFluxoCaixa() {
 
-        realm.beginTransaction()
+
         val fluxoCaixa: FluxoCaixa = realm.where<FluxoCaixa>().contains("farmID", id).findFirst()!!
-        fluxoCaixa.attModificacao()
-        val fluxoaux = FluxoCaixaFirebase(fluxoCaixa)
-        val dbfluxo = Firebase.database.reference.child("fluxoCaixa").child(fluxoaux.farmID)
-        dbfluxo.setValue(fluxoaux)
-        realm.commitTransaction()
+        if (fluxoCaixa.atualizado) {
+            realm.beginTransaction()
+            fluxoCaixa.attModificacao()
+            val fluxoaux = FluxoCaixaFirebase(fluxoCaixa)
+            val dbfluxo = Firebase.database.reference.child("fluxoCaixa").child(fluxoaux.farmID)
+            dbfluxo.setValue(fluxoaux)
+            fluxoCaixa.atualizado = false
+            realm.commitTransaction()
+        }
     }
 
     private fun salvarBalanco() {
-        realm.beginTransaction()
+
         val balancoPatrimonial =
             realm.where<BalancoPatrimonial>().contains("farmID", id).findFirst()!!
-        balancoPatrimonial.attModificacao()
-        val balancoAux = BalancoFirebase(balancoPatrimonial)
-        val dbBalanco =
-            Firebase.database.reference.child("balancoPatrimonial").child(balancoAux.farmID)
-        dbBalanco.setValue(balancoAux)
-        realm.commitTransaction()
+        if (balancoPatrimonial.atualizado) {
+            realm.beginTransaction()
+            balancoPatrimonial.attModificacao()
+            val balancoAux = BalancoFirebase(balancoPatrimonial)
+            val dbBalanco =
+                Firebase.database.reference.child("balancoPatrimonial").child(balancoAux.farmID)
+            dbBalanco.setValue(balancoAux)
+            balancoPatrimonial.atualizado = false
+            realm.commitTransaction()
+        }
     }
 
 

@@ -69,12 +69,12 @@ open class BalancoPatrimonial() : RealmObject() {
     var totalContasPagar = 0.0
     var totalContasReceber = 0.0
     var modificacao: String = ""
+    var atualizado = false
 
 
     fun saveToDb() {
         attModificacao()
-        val database = Firebase.database
-        val db = database.getReference().child("balancoPatrimonial").child(this.farmID)
+        val db = Firebase.database.reference.child("balancoPatrimonial").child(this.farmID)
         db.setValue(this)
     }
 
@@ -93,6 +93,7 @@ open class BalancoPatrimonial() : RealmObject() {
         calcularMargemBruta()
         calcularLucro()
         calcularRentabilidade()
+        atualizado = true
 
     }
 

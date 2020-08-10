@@ -24,6 +24,7 @@ open class Farm(
     var metaLiquidezCorrente = 0.0
     var observacao: String = ""
     var modificacao: String = ""
+    var atualizado = false
 
 
     fun myEquals(farm: Farm): Boolean {

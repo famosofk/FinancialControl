@@ -170,6 +170,7 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
                 atividade.custoDeProducao += custoOperacao
                 atividade.arrayCustos[position] = atividade.arrayCustos[position]!! - custoOperacao
                 atividade.attModificacao()
+                atividade.atualizado = true
                 realm.commitTransaction()
                 bool = true
             } else {
