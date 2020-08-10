@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.util.Log
 import com.example.agrogestao.models.ItemBalancoPatrimonial
 import com.example.agrogestao.models.firebaseclasses.BalancoFirebase
+import com.google.firebase.database.Exclude
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import io.realm.RealmList
@@ -69,6 +70,8 @@ open class BalancoPatrimonial() : RealmObject() {
     var totalContasPagar = 0.0
     var totalContasReceber = 0.0
     var modificacao: String = ""
+
+    @Exclude
     var atualizado = false
 
 

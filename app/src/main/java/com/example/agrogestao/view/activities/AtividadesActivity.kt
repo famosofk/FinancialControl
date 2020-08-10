@@ -136,11 +136,13 @@ class AtividadesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                 val firebaseFarm = snapshot.getValue(BalancoFirebase::class.java)
                 if (firebaseFarm != null) {
                     if (balancoPatrimonial.modificacao.toLong() < firebaseFarm.modificacao.toLong()) {
-                        realm.beginTransaction()
-                        realm.where<BalancoPatrimonial>().contains("farmID", idFarm).findAll()
-                            .deleteAllFromRealm()
-                        realm.copyToRealm(BalancoPatrimonial(firebaseFarm))
-                        realm.commitTransaction()
+                        if (firebaseFarm.listaItens.size > balancoPatrimonial.listaItens.size) {
+                            realm.beginTransaction()
+                            realm.where<BalancoPatrimonial>().contains("farmID", idFarm).findAll()
+                                .deleteAllFromRealm()
+                            realm.copyToRealm(BalancoPatrimonial(firebaseFarm))
+                            realm.commitTransaction()
+                        }
                     }
                 }
                 balancoBool = true
@@ -205,11 +207,13 @@ class AtividadesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                     if (firebaseFluxo != aux) {
 
                         if (fluxoCaixa.modificacao.toLong() < firebaseFluxo.modificacao.toLong()) {
-                            realm.beginTransaction()
-                            realm.where<FluxoCaixa>().contains("farmID", idFarm).findFirst()
-                                ?.deleteFromRealm()
-                            realm.copyToRealm(FluxoCaixa(firebaseFluxo))
-                            realm.commitTransaction()
+                            if (firebaseFluxo.list.size > fluxoCaixa.list.size) {
+                                realm.beginTransaction()
+                                realm.where<FluxoCaixa>().contains("farmID", idFarm).findFirst()
+                                    ?.deleteFromRealm()
+                                realm.copyToRealm(FluxoCaixa(firebaseFluxo))
+                                realm.commitTransaction()
+                            }
                         }
                     }
 

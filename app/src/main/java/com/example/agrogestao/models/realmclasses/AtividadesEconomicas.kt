@@ -2,6 +2,7 @@ package com.example.agrogestao.models.realmclasses
 
 import android.annotation.SuppressLint
 import com.example.agrogestao.models.firebaseclasses.AtividadeFirebase
+import com.google.firebase.database.Exclude
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import io.realm.RealmList
@@ -31,6 +32,8 @@ open class AtividadesEconomicas(var nome: String = "") : RealmObject() {
     var rateio: Double = 1.0
     var custoDeProducao: Double = 0.0
     var vendasAtividade: Double = 0.0
+
+    @Exclude
     var lucroAtividade: String = ""
         get() = "R$: ${vendasAtividade - custoDeProducao}"
 
@@ -43,6 +46,8 @@ open class AtividadesEconomicas(var nome: String = "") : RealmObject() {
     var custoMaquina = 0.0
     var custoOutros = 0.0
     var modificacao: String = ""
+
+    @Exclude
     var atualizado = false
     @SuppressLint("SimpleDateFormat")
     fun attModificacao() {
