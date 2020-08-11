@@ -171,7 +171,7 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
                 atividade.arrayCustos[position] = atividade.arrayCustos[position]!! - custoOperacao
                 atividade.attModificacao()
                 atividade.atualizado = true
-                realm.commitTransaction()
+
                 bool = true
             } else {
                 if (item.quantidadeInicial <= itemInventario.quantidadeFinal) {

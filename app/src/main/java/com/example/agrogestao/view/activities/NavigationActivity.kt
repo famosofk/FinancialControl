@@ -2,6 +2,7 @@ package com.example.agrogestao.view.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
@@ -17,10 +18,7 @@ import com.example.agrogestao.models.firebaseclasses.AtividadeFirebase
 import com.example.agrogestao.models.firebaseclasses.BalancoFirebase
 import com.example.agrogestao.models.firebaseclasses.FarmFirebase
 import com.example.agrogestao.models.firebaseclasses.FluxoCaixaFirebase
-import com.example.agrogestao.models.realmclasses.AtividadesEconomicas
-import com.example.agrogestao.models.realmclasses.BalancoPatrimonial
-import com.example.agrogestao.models.realmclasses.Farm
-import com.example.agrogestao.models.realmclasses.FluxoCaixa
+import com.example.agrogestao.models.realmclasses.*
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ktx.database
@@ -93,14 +91,12 @@ class NavigationActivity : AppCompatActivity() {
     }
 
     override fun onStop() {
-
-        salvarFazenda()
-
-        salvarBalanco()
-        salvarFluxoCaixa()
-        salvarAtividades()
-
-        //
+        if (Usuario.isOnline(applicationContext)) {
+            salvarFazenda()
+            salvarBalanco()
+            salvarFluxoCaixa()
+            salvarAtividades()
+        }
 
         super.onStop()
     }
@@ -108,6 +104,7 @@ class NavigationActivity : AppCompatActivity() {
     private fun salvarFazenda() {
         val farm: Farm = realm.where<Farm>().contains("id", id).findFirst()!!
         if (farm.atualizado) {
+            Log.e("Fazenda", "salvou ")
             realm.beginTransaction()
             farm.attModificacao()
             val farmAux = FarmFirebase(farm)
@@ -125,6 +122,7 @@ class NavigationActivity : AppCompatActivity() {
         results.forEach {
             realm.beginTransaction()
             if (it.atualizado) {
+                Log.e("Atividade", "salvou ")
                 it.attModificacao()
                 val atividade = AtividadeFirebase(it)
                 val db = Firebase.database.reference.child("atividadesEconomicas").child(id)
@@ -141,6 +139,7 @@ class NavigationActivity : AppCompatActivity() {
 
         val fluxoCaixa: FluxoCaixa = realm.where<FluxoCaixa>().contains("farmID", id).findFirst()!!
         if (fluxoCaixa.atualizado) {
+            Log.e("Fluxo", "salvou ")
             realm.beginTransaction()
             fluxoCaixa.attModificacao()
             val fluxoaux = FluxoCaixaFirebase(fluxoCaixa)
@@ -156,6 +155,7 @@ class NavigationActivity : AppCompatActivity() {
         val balancoPatrimonial =
             realm.where<BalancoPatrimonial>().contains("farmID", id).findFirst()!!
         if (balancoPatrimonial.atualizado) {
+            Log.e("Balanco", "salvou ")
             realm.beginTransaction()
             balancoPatrimonial.attModificacao()
             val balancoAux = BalancoFirebase(balancoPatrimonial)

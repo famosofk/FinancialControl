@@ -1,12 +1,8 @@
 package com.example.agrogestao.view.activities
 
 import android.app.AlertDialog
-import android.content.Context
 import android.content.Intent
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
@@ -55,7 +51,6 @@ class AtividadesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
     private var balancoBool = false
     private lateinit var fluxoCaixa: FluxoCaixa
     private var fluxoBool = false
-    private lateinit var atividadesEconomicas: List<AtividadesEconomicas>
     private var atividadesBool = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -80,8 +75,6 @@ class AtividadesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                 balancoPatrimonial =
                     realm.where<BalancoPatrimonial>().contains("farmID", idFarm).findFirst()!!
                 fluxoCaixa = realm.where<FluxoCaixa>().contains("farmID", idFarm).findFirst()!!
-                val results =
-                    realm.where<AtividadesEconomicas>().contains("fazendaID", idFarm).findAll()
                 dataVerification(mAdapter.get(id).programa)
             }
         }
@@ -90,7 +83,7 @@ class AtividadesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
     }
 
     private fun dataVerification(programa: String) {
-        if (!isOnline(applicationContext)) {
+        if (!Usuario.isOnline(applicationContext)) {
             val bundle = Bundle()
             bundle.putString("fazenda", idFarm)
             val intent = Intent(applicationContext, NavigationActivity::class.java)
@@ -358,30 +351,10 @@ class AtividadesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
     }
 
 
-    private fun isOnline(context: Context): Boolean {
-        val connectivityManager =
-            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        if (connectivityManager != null) {
-            val capabilities =
-                connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
-            if (capabilities != null) {
-                if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
-                    Log.i("Internet", "NetworkCapabilities.TRANSPORT_CELLULAR")
-                    return true
-                } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
-                    Log.i("Internet", "NetworkCapabilities.TRANSPORT_WIFI")
-                    return true
-                } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)) {
-                    Log.i("Internet", "NetworkCapabilities.TRANSPORT_ETHERNET")
-                    return true
-                }
-            }
-        }
-        return false
-    }
+
 
     private fun downloadProgramas() {
-        if (isOnline(applicationContext)) {
+        if (Usuario.isOnline(applicationContext)) {
             habilitarLoading()
             val db = Firebase.database.reference.child("programas")
             val listener = object : ValueEventListener {

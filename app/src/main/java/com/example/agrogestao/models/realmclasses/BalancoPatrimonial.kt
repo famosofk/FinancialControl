@@ -96,8 +96,7 @@ open class BalancoPatrimonial() : RealmObject() {
         calcularMargemBruta()
         calcularLucro()
         calcularRentabilidade()
-        atualizado = true
-
+        Log.e("ativo", "${ativo}")
     }
 
     @SuppressLint("SimpleDateFormat")
@@ -113,12 +112,29 @@ open class BalancoPatrimonial() : RealmObject() {
     }
 
     private fun calcularAtivo() {
-        ativo =
-            totalContasReceber + calcularPatrimonioBens() + dinheiroBanco + pendenciasRecebimento
+        var valorAtual = 0.0
+        if (totalContasReceber > 1) {
+            valorAtual += totalContasReceber
+        }
+        if (dinheiroBanco > 1) {
+            valorAtual += dinheiroBanco
+        }
+        if (pendenciasRecebimento > 1) {
+            valorAtual += pendenciasRecebimento
+        }
+        val patrimoniobens = calcularPatrimonioBens()
+        if (patrimoniobens > 0) {
+            valorAtual += patrimoniobens
+        }
+        ativo = valorAtual
     }
 
     private fun calcularLiquidezGeral() {
-        liquidezGeral = (ativo / passivo)
+        if (passivo > 1) {
+            liquidezGeral = (ativo / passivo)
+        } else {
+            liquidezGeral = 0.0
+        }
     }
 
     private fun calcularSaldo() {
@@ -126,8 +142,11 @@ open class BalancoPatrimonial() : RealmObject() {
     }
 
     fun calcularLiquidezCorrente() {
-
-        liquidezCorrente = (saldo + calcularValorAnimaisInsumosProdutos()) / totalContasPagar
+        if (totalContasPagar > 1) {
+            liquidezCorrente = (saldo + calcularValorAnimaisInsumosProdutos()) / totalContasPagar
+        } else {
+            liquidezCorrente = 0.0
+        }
 
     }
 
@@ -160,7 +179,11 @@ open class BalancoPatrimonial() : RealmObject() {
 
 
     fun calcularPatrimonioLiquido() {
-        patrimonioLiquido = (ativo - passivo)
+        if (passivo > 1) {
+            patrimonioLiquido = (ativo - passivo)
+        } else {
+            patrimonioLiquido = ativo
+        }
     }
 
     fun calcularLucro() {
@@ -186,11 +209,10 @@ open class BalancoPatrimonial() : RealmObject() {
 
     fun calcularValorProdutos(): Double {
         var valorProdutos = 0.0
-        //Atualizar o valor ano a ano
         for (item in listaItens) {
-            if (item.tipo.equals(ItemBalancoPatrimonial.ITEM_PRODUTOS) && item.anoProducao == 2020
+            if (item.tipo == ItemBalancoPatrimonial.ITEM_PRODUTOS && item.anoProducao == 2020
             ) {
-                valorProdutos += (item.quantidadeFinal * item.valorUnitario + item.reforma)
+                valorProdutos += (item.quantidadeFinal * item.valorUnitario)
             }
         }
         return valorProdutos
@@ -214,6 +236,9 @@ open class BalancoPatrimonial() : RealmObject() {
                 item.calcularDepreciacao()
             depreciacao += item.depreciacao
         }
+        if (depreciacao < 1) {
+            depreciacao = 0.0
+        }
 
         custoOperacionalTotal =
             custoOperacionalEfetivo + depreciacao + trabalhoFamiliarNaoRemunerado
@@ -228,6 +253,10 @@ open class BalancoPatrimonial() : RealmObject() {
                 )
             )
                 reformas += item.reforma
+        }
+
+        if (reformas < 1) {
+            reformas = 0.0
         }
         custoOperacionalEfetivo = totalDespesas + totalContasPagar - reformas
 

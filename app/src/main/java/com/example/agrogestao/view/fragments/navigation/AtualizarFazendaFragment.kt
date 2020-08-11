@@ -1,7 +1,6 @@
 package com.example.agrogestao.view.fragments.navigation
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,7 +37,6 @@ class AtualizarFazendaFragment : Fragment() {
             updateFarm(root)
         }
 
-        Log.e("6000", "${10000 * 0.6}")
 
         observer(root)
         if (arguments?.get("id") != null) {
@@ -123,6 +121,7 @@ class AtualizarFazendaFragment : Fragment() {
         realm.beginTransaction()
         farm.attModificacao()
         farm.atualizado = true
+        balanco.atualizado = true
         farm.codigoFazenda = codigoFazenda.text.toString().trim()
         farm.area = areaFazenda.text.toString().trim().toDouble()
         farm.metaLucro = lucroFazenda.text.toString().trim().toDouble()

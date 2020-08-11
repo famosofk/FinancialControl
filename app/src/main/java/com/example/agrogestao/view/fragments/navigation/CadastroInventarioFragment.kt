@@ -13,6 +13,7 @@ import com.example.agrogestao.models.realmclasses.AtividadesEconomicas
 import com.example.agrogestao.models.realmclasses.BalancoPatrimonial
 import io.realm.Realm
 import io.realm.kotlin.where
+import java.math.BigDecimal
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -89,7 +90,8 @@ class CadastroInventarioFragment : Fragment(), AdapterView.OnItemSelectedListene
                 root.findViewById(R.id.quantidadeInicialItemInventario)
             item.quantidadeInicial = quantidadeInicial.text.toString().trim().toDouble()
             val valorUnitario: EditText = root.findViewById(R.id.valorUnitarioItemInventario)
-            item.valorUnitario = valorUnitario.text.toString().trim().toDouble()
+
+            item.valorUnitario = BigDecimal(valorUnitario.text.toString().trim()).toDouble()
             item.valorInicial = item.valorUnitario
             item.valorAtual = item.valorInicial
             item.tipo = tipoSelecionado
@@ -97,12 +99,13 @@ class CadastroInventarioFragment : Fragment(), AdapterView.OnItemSelectedListene
             if (tipoSelecionado == "Produtos") {
                 val anoCompra: EditText = root.findViewById(R.id.anoCompraItemInventario)
                 item.anoProducao = anoCompra.text.toString().trim().toInt()
-                val reforma: EditText = root.findViewById(R.id.reformaItemInventario)
-                item.reforma = reforma.text.toString().trim().toDouble()
+
             }
             if (tipoSelecionado == "Benfeitoria" || tipoSelecionado == "Máquinas") {
                 val vidaUtil: EditText = root.findViewById(R.id.vidaUtilItemCadastro)
                 item.vidaUtil = vidaUtil.text.toString().trim().toInt()
+                val reforma: EditText = root.findViewById(R.id.reformaItemInventario)
+                item.reforma = reforma.text.toString().trim().toDouble()
             }
 
 
@@ -124,9 +127,10 @@ class CadastroInventarioFragment : Fragment(), AdapterView.OnItemSelectedListene
                 item.valorAtual = item.valorInicial
                 balanco.listaItens.add(item)
 
-
+                balanco.atualizado = true
                 balanco.atualizarBalanco()
                 realm.commitTransaction()
+
                 root.findNavController().navigate(R.id.from_cadastroInventario_to_apresentarFazenda)
             }
         }

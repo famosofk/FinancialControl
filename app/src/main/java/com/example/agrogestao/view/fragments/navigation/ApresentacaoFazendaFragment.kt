@@ -95,7 +95,7 @@ class ApresentacaoFazendaFragment : Fragment() {
                         it.totalContasReceber + it.pendenciasRecebimento
                     )}"
                 textPatrimonioLiquido.text =
-                    "Patrimônio Líquido: ${String.format("%.2f", it.patrimonioLiquido)}"
+                    "Patrimônio Líquido: ${String.format("%.2f", it.patrimonioLiquido.toFloat())}"
                 textSolvencia.text = "Liquidez geral: ${String.format("%.2f", it.liquidezGeral)}"
                 textLiquidez.text =
                     "Liquidez corrente: ${String.format("%.2f", it.liquidezCorrente)}"
@@ -124,13 +124,11 @@ class ApresentacaoFazendaFragment : Fragment() {
             realm.beginTransaction()
             farm.observacao = ""
             realm.commitTransaction()
-            farm.saveToDb()
             mBuilder.dismiss()
         }
     }
 
     private fun atualizarTextos(view: View) {
-
 
         val textlucro = view.findViewById<TextView>(R.id.textLucroApresentacao)
         val textmBruta = view.findViewById<TextView>(R.id.textMargemBrutaApresentacao)

@@ -18,7 +18,7 @@
     <string name="area_fazenda">Área</string>
     <string name="atividades_depreciacao">Atividades/Depreciação</string>
     <string name="taxa_remuneracao_capital">Taxa de remuneração de capital</string>
-    <string name="custo_oportunidade_trabalho">Custo de oportunidade de trabalho</string>
+    <string name="custo_oportunidade_trabalho">Custo de oportunidade de trabalho gerencial</string>
     <string name="dividas_longo_prazo">Dívidas de longo prazo</string>
     <string name="metas_fazenda">Metas</string>
     <string name="lucro_fazenda">Lucro</string>
