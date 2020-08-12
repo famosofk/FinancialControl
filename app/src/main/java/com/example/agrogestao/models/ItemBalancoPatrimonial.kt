@@ -19,32 +19,36 @@ open class ItemBalancoPatrimonial() : RealmObject() {
     var nome: String = "";
     var idItem = UUID.randomUUID().toString()
     var idFazenda = ""
-    var quantidadeInicial = 0.0
-    var quantidadeFinal = 0.0
-    var valorUnitario = 0.0
+    var quantidadeInicial = 0
+    var quantidadeFinal = 0
+    var valorUnitario = "0.00"
     var atividade: String = ""
-    var valorAtual = 0.0
-    var valorInicial = 0.0
+    var valorAtual = "0.00"
+    var valorInicial = "0.00"
     var vidaUtil: Int = 99999
     var tipo = ""
-    var depreciacao = 0.0
-    var reforma = 0.0
+    var depreciacao = "0.00"
+    var reforma = "0.00"
     var anoProducao: Int = 0
-
     var precoString: String = ""
-        get() = "R$ ${String.format(
-            "%.2f",
-            valorInicial * quantidadeFinal + reforma - depreciacao
-        )}"
+        get() = "R$ ${valorInicial.toBigDecimal().times(quantidadeFinal.toBigDecimal())
+            .plus(reforma.toBigDecimal()).min(depreciacao.toBigDecimal())}"
+
+    /* var precoString: String = ""
+         get() = "R$ ${String.format(
+             "%.2f",
+             valorInicial * quantidadeFinal + reforma - depreciacao
+         )}" */
     var quantidadeString: String = ""
         get() = "$quantidadeFinal un"
 
     fun calcularValorAtual() {
-        valorAtual = valorInicial - depreciacao + reforma
+        valorAtual =
+            (valorInicial.toBigDecimal() - depreciacao.toBigDecimal() + reforma.toBigDecimal()).toString()
     }
 
     fun calcularDepreciacao() {
-        depreciacao = valorInicial / vidaUtil
+        depreciacao = (valorInicial.toBigDecimal() / vidaUtil.toBigDecimal()).toString()
         calcularValorAtual()
     }
 
@@ -53,7 +57,7 @@ open class ItemBalancoPatrimonial() : RealmObject() {
     }
 
     fun getValorFinal(): String {
-        return "R$: ${valorAtual + reforma}) "
+        return "R$: ${valorAtual.toBigDecimal() + reforma.toBigDecimal()}) "
     }
 
 

@@ -71,9 +71,9 @@ class ApresentacaoFazendaFragment : Fragment() {
         })
         apresentacaoFazendaViewModel.myBalancoPatrimonial.observe(viewLifecycleOwner, Observer {
             if (it != null) {
-                lucroAtual = String.format("%.2f", it.lucro)
-                mLiquidaAtual = String.format("%.2f", it.margemLiquida)
-                mBrutaAtual = String.format("%.2f", it.margemBruta)
+                lucroAtual = it.lucro
+                mLiquidaAtual = it.margemLiquida
+                mBrutaAtual = it.margemBruta
                 atualizarTextos(view)
                 val textSaldo = view.findViewById<TextView>(R.id.textsSaldoApresentacao)
                 val textPagar = view.findViewById<TextView>(R.id.textsPagarApresentacao)
@@ -84,23 +84,22 @@ class ApresentacaoFazendaFragment : Fragment() {
                 val textLiquidez = view.findViewById<TextView>(R.id.textsLiquidezApresentacao)
                 val textRentabilidade =
                     view.findViewById<TextView>(R.id.textsRentabilidadeApresentacao)
-                textSaldo.text = "Saldo: ${String.format("%.2f", it.dinheiroBanco)}"
-                textPagar.text = "Contas a pagar: ${String.format(
-                    "%.2f",
-                    it.totalContasPagar + it.pendenciasPagamento
-                )}"
+                textSaldo.text = "Saldo: ${it.dinheiroBanco}"
+                textPagar.text = "Contas a pagar: ${
+                it.totalContasPagar + it.pendenciasPagamento
+                }"
                 textReceber.text =
-                    "Contas a receber: ${String.format(
-                        "%.2f",
-                        it.totalContasReceber + it.pendenciasRecebimento
-                    )}"
+                    "Contas a receber: ${
+                    it.totalContasReceber + it.pendenciasRecebimento
+                    }"
                 textPatrimonioLiquido.text =
-                    "Patrimônio Líquido: ${String.format("%.2f", it.patrimonioLiquido.toFloat())}"
-                textSolvencia.text = "Liquidez geral: ${String.format("%.2f", it.liquidezGeral)}"
+                    "Patrimônio Líquido: ${it.patrimonioLiquido}"
+                textSolvencia.text = "Liquidez geral:  ${it.liquidezGeral}"
                 textLiquidez.text =
-                    "Liquidez corrente: ${String.format("%.2f", it.liquidezCorrente)}"
-                textRentabilidade.text = "Rentabilidade: ${String.format("%.2f", it.rentabilidade)}"
+                    "Liquidez corrente: ${it.liquidezCorrente}"
+                textRentabilidade.text = "Rentabilidade: ${it.rentabilidade}"
 
+                // ${String.format("%.2f", it.patrimonioLiquido.toFloat())
             }
         })
 

@@ -72,37 +72,35 @@ class ResultadosAtividadeFragment : Fragment(), AdapterView.OnItemSelectedListen
 
     private fun populartela() {
         val lucroText: TextView = root.findViewById(R.id.lucroResultadoAtivideFazenda)
-        val lucroString = "Lucro:  ${String.format("%.2f", balancoPatrimonial.lucro)}"
+        val lucroString = "Lucro:  ${balancoPatrimonial.lucro}"
         lucroText.text = lucroString
         val liquida: TextView = root.findViewById(R.id.margemLiquidaAtividadeFazenda)
         val liquidaString =
-            "Margem líquida: ${String.format("%.2f", balancoPatrimonial.margemLiquida)}"
+            "Margem líquida: ${balancoPatrimonial.margemLiquida}"
         liquida.text = liquidaString
         val bruta: TextView = root.findViewById(R.id.margemBrutaAtividadeFazenda)
-        val brutaString = "Margem bruta: ${String.format("%.2f", balancoPatrimonial.margemBruta)}"
+        val brutaString = "Margem bruta: ${balancoPatrimonial.margemBruta}"
         bruta.text = brutaString
         val receitaBruta: TextView = root.findViewById(R.id.receitaBrutaAtividadeFazenda)
         val receitaString =
-            "Receita bruta: ${String.format("%.2f", balancoPatrimonial.receitaBruta)}"
+            "Receita bruta: ${balancoPatrimonial.receitaBruta}"
         receitaBruta.text = receitaString
         val custoTotal: TextView = root.findViewById(R.id.custoTotalAtividadeFazenda)
         val custotString =
-            "Custo total: ${String.format("%.2f", balancoPatrimonial.calcularCustoTotal())}"
+            "Custo total: ${balancoPatrimonial.calcularCustoTotal()}"
         custoTotal.text = custotString
         val custoOperacionalTotal: TextView =
             root.findViewById(R.id.custoOperacionalTotalAtividadeFazenda)
-        val custooptString = "Custo operacional total: ${String.format(
-            "%.2f",
-            balancoPatrimonial.custoOperacionalTotal
-        )}"
+        val custooptString = "Custo operacional total: ${
+        balancoPatrimonial.custoOperacionalTotal
+        }"
         custoOperacionalTotal.text = custooptString
         val custoOperacionalEfetivo: TextView =
             root.findViewById(R.id.custoOperacionalEfetivoAtividadeFazenda)
         val custoopeString =
-            "Custo operacional efetivo: ${String.format(
-                "%.2f",
-                balancoPatrimonial.custoOperacionalEfetivo
-            )}"
+            "Custo operacional efetivo: ${
+            balancoPatrimonial.custoOperacionalEfetivo
+            }"
         custoOperacionalEfetivo.text = custoopeString
     }
 

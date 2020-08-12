@@ -62,9 +62,9 @@ class ResultadosFazendaFragment : Fragment() {
             val resultadoLucro = binding.resultadosLucroText
             val resultadoLiquida = binding.resultadosmLiquidaText
             val resultadoBruta = binding.resultadosmBrutaText
-            resultadoLucro.text = "Lucro: ${String.format("%.2f", it.lucro)}"
-            resultadoLiquida.text = "Margem líquida: ${String.format("%.2f", it.margemLiquida)}"
-            resultadoBruta.text = "Margem bruta: ${String.format("%.2f", it.margemBruta)}"
+            resultadoLucro.text = "Lucro: ${it.lucro}"
+            resultadoLiquida.text = "Margem líquida: ${it.margemLiquida}"
+            resultadoBruta.text = "Margem bruta: ${it.margemBruta}"
 
         })
 

@@ -56,23 +56,24 @@ class BalancoPatrimonialFragment : Fragment() {
     private fun popularTextos(it: BalancoPatrimonial, view: View) {
 
         val textPatrimonio = view.findViewById<TextView>(R.id.textPatrimonioBalanco)
-        textPatrimonio.text = "Patrimônio líquido: " + String.format("%.2f", it.patrimonioLiquido)
+        textPatrimonio.text = "Patrimônio líquido: " + it.patrimonioLiquido
         val textSolvencia = view.findViewById<TextView>(R.id.textSolvenciaBalanco)
-        textSolvencia.text = "Solvência: " + String.format("%.2f", it.liquidezGeral)
+        textSolvencia.text = "Solvência: " + it.liquidezGeral
         val textLiquidez = view.findViewById<TextView>(R.id.textLiquidezBalanco)
-        textLiquidez.text = "Liquidez: " + String.format("%.2f", it.liquidezCorrente)
+        textLiquidez.text = "Liquidez: " + it.liquidezCorrente
         val textRentabilidade = view.findViewById<TextView>(R.id.textRentabilidadeBalanco)
-        textRentabilidade.text = "Rentabilidade: " + String.format("%.2f", it.rentabilidade)
+        textRentabilidade.text = "Rentabilidade: " + it.rentabilidade
         val textAtivo = view.findViewById<TextView>(R.id.textAtivoBalanco)
-        textAtivo.text = "Ativo: " + String.format("%.2f", it.ativo)
+        textAtivo.text = "Ativo: " + it.ativo
         val textAtivoCirculante = view.findViewById<TextView>(R.id.textAtivoCirculanteBalanco)
         textAtivoCirculante.text =
             "Ativo circulante: " + String.format(
                 "%.2f",
-                (it.calcularValorAnimaisInsumosProdutos() + it.dinheiroBanco + it.pendenciasRecebimento)
+                (it.calcularValorAnimaisInsumosProdutos()
+                    .toFloat() + it.dinheiroBanco.toFloat() + it.pendenciasRecebimento.toFloat())
             )
         val textPassivo = view.findViewById<TextView>(R.id.textPassivoBalanco)
-        textPassivo.text = "Passivo: " + String.format("%.2f", it.passivo)
+        textPassivo.text = "Passivo: " + it.passivo
 
         criarGrafico(balanco = it)
 
@@ -98,7 +99,7 @@ class BalancoPatrimonialFragment : Fragment() {
                 )
             )
         }
-        if (balanco.calcularValorProdutos() >= 1) {
+        if (balanco.calcularValorProdutos() >= 1.toBigDecimal()) {
             entries.add(
                 PieEntry(
                     balanco.calcularValorProdutos().toFloat(),

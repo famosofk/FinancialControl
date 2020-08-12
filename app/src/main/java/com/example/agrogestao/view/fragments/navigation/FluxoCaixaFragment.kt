@@ -134,17 +134,17 @@ class FluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
 
             val saldo = view.findViewById<TextView>(R.id.fcaixaSaldoText)
-            saldo.text = "Saldo: ${String.format("%.2f", it.saldo)}"
+            saldo.text = "Saldo: ${it.saldo}"
             val receitas = view.findViewById<TextView>(R.id.fcaixaReceitasText)
-            receitas.text = "Receitas: ${String.format("%.2f", it.totalReceitas)}"
+            receitas.text = "Receitas: ${it.totalReceitas}"
             val despesas = view.findViewById<TextView>(R.id.fcaixaDespesasText)
-            despesas.text = "Despesas: ${String.format("%.2f", it.totalDespesas)}"
+            despesas.text = "Despesas: ${it.totalDespesas}"
             val pagar = view.findViewById<TextView>(R.id.fcaixaPagarText)
-            pagar.text = "Contas a pagar: ${String.format("%.2f", it.totalContasPagar)}"
+            pagar.text = "Contas a pagar: ${it.totalContasPagar}"
             val receber = view.findViewById<TextView>(R.id.fcaixaReceberText)
-            receber.text = "Contas a receber: ${String.format("%.2f", it.totalContasReceber)}"
+            receber.text = "Contas a receber: ${it.totalContasReceber}"
             val lucro = view.findViewById<TextView>(R.id.fcaixaLucroText)
-            lucro.text = "Lucro: ${String.format("%.2f", it.lucro)}"
+            lucro.text = "Lucro: ${it.lucro}"
 
         })
         fluxoCaixaViewModel.myFluxoCaixa.observe(viewLifecycleOwner, Observer {
@@ -180,12 +180,16 @@ class FluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListener {
             item?.pagamentoPrazo = false
             if (item?.tipo!!) {
                 val balanco = fluxoCaixaViewModel.myBalancoPatrimonial.value!!
-                balanco.totalContasPagar -= item.quantidadeInicial * item.valorInicial
-                balanco.dinheiroBanco -= item.quantidadeInicial * item.valorInicial
+                balanco.totalContasPagar =
+                    (balanco.totalContasPagar.toDouble() - item.quantidadeInicial * item.valorInicial).toString()
+                balanco.dinheiroBanco =
+                    (balanco.dinheiroBanco.toDouble() - item.quantidadeInicial * item.valorInicial).toString()
             } else {
                 val balanco = fluxoCaixaViewModel.myBalancoPatrimonial.value!!
-                balanco.totalContasReceber -= item.quantidadeInicial * item.valorInicial
-                balanco.dinheiroBanco += item.quantidadeInicial * item.valorInicial
+                balanco.totalContasReceber =
+                    (balanco.totalContasReceber.toDouble() - item.quantidadeInicial * item.valorInicial).toString()
+                balanco.dinheiroBanco =
+                    (balanco.dinheiroBanco.toDouble() + item.quantidadeInicial * item.valorInicial).toString()
             }
             realm.commitTransaction()
             mBuilder.dismiss()

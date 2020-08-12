@@ -88,7 +88,7 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
         val quantidadeInicial: EditText =
             root.findViewById(R.id.quantidadeInicialCadastroItemFluxoCaixa)
         if (quantidadeInicial.text.isNotEmpty()) {
-            item.quantidadeInicial = quantidadeInicial.text.toString().toDouble()
+            item.quantidadeInicial = quantidadeInicial.text.toString().toInt()
         }
 
         val valorInicial: EditText = root.findViewById(R.id.valorUnitarioCadastroItemFluxoCaixa)
@@ -155,15 +155,17 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
             val itemInventario: ItemBalancoPatrimonial? =
                 realm.where<ItemBalancoPatrimonial>().contains("idItem", idItemTransacao!!)
                     .findFirst()
-            val custoOperacao = itemInventario!!.valorAtual * item.quantidadeInicial
+            val custoOperacao = itemInventario!!.valorAtual.toDouble() * item.quantidadeInicial
             realm.beginTransaction()
             if (exitingMoney) {
                 if (item.valorAtual != 0.toDouble()) {
                     //Se o valor do item for diferente de 0 na compra, calcula o preço médio. Caso seja igual a 0, o sistema considera que foi fabricado na fazenda e não calcula o preço médio.
                     itemInventario.valorUnitario =
-                        itemInventario.quantidadeFinal.times(itemInventario.valorAtual)
+                        itemInventario.quantidadeFinal.toDouble()
+                            .times(itemInventario.valorAtual.toDouble())
                             .plus(item.quantidadeInicial.plus(item.valorAtual))
                             .div(itemInventario.quantidadeFinal.plus(item.quantidadeInicial))
+                            .toString()
                 }
                 itemInventario.quantidadeFinal += item.quantidadeInicial
                 item.anoProducao = itemInventario.anoProducao
@@ -220,10 +222,11 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
         val atividade = listaAtividades[positionAtividades]
         if (exitingMoney) {
             if (item.pagamentoPrazo) {
-                balancoPatrimonial.totalContasPagar += custoOperacao
+                balancoPatrimonial.totalContasPagar += (balancoPatrimonial.totalContasPagar.toDouble() + custoOperacao).toString()
             } else {
-                balancoPatrimonial.totalDespesas += custoOperacao
-                balancoPatrimonial.dinheiroBanco -= custoOperacao
+                balancoPatrimonial.totalDespesas += (balancoPatrimonial.totalDespesas.toDouble() + custoOperacao).toString()
+                balancoPatrimonial.dinheiroBanco =
+                    (balancoPatrimonial.dinheiroBanco.toDouble() - custoOperacao).toString()
 
                 when (positionTipoDespesa) {
                     0 -> {

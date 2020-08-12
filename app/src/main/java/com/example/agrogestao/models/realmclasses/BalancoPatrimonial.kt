@@ -9,6 +9,7 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import io.realm.RealmList
 import io.realm.RealmObject
+import java.math.BigDecimal
 import java.util.*
 
 open class BalancoPatrimonial() : RealmObject() {
@@ -44,31 +45,31 @@ open class BalancoPatrimonial() : RealmObject() {
     }
 
     var farmID = ""
-    var liquidezGeral = 0.0
-    var liquidezCorrente = 0.0
+    var liquidezGeral = "0.00"
+    var liquidezCorrente = "0.00"
     var listaItens = RealmList<ItemBalancoPatrimonial>()
-    var margemLiquida = 0.0
-    var margemBruta = 0.0
-    var taxaRemuneracaoCapital = 0.06
-    var receitaBruta = 0.0
-    var custoOperacionalEfetivo = 0.0
-    var custoOperacionalTotal = 0.0
-    var totalDespesas = 0.0
-    var totalReceitas = 0.0
-    var ativo = 0.0
-    var passivo = 0.0
-    var patrimonioLiquido = 0.0
-    var rentabilidade = 0.0
-    var lucro = 0.0
-    var saldo = 0.0
-    var dividasLongoPrazo = 0.0
-    var dinheiroBanco = 0.0
-    var custoOportunidadeTrabalho = 0.0
-    var trabalhoFamiliarNaoRemunerado = 0.0
-    var pendenciasPagamento = 0.0
-    var pendenciasRecebimento = 0.0
-    var totalContasPagar = 0.0
-    var totalContasReceber = 0.0
+    var margemLiquida = "0.00"
+    var margemBruta = "0.00"
+    var taxaRemuneracaoCapital = "0.06"
+    var receitaBruta = "0.00"
+    var custoOperacionalEfetivo = "0.00"
+    var custoOperacionalTotal = "0.00"
+    var totalDespesas = "0.00"
+    var totalReceitas = "0.00"
+    var ativo = "0.00"
+    var passivo = "0.00"
+    var patrimonioLiquido = "0.00"
+    var rentabilidade = "0.00"
+    var lucro = "0.00"
+    var saldo = "0.00"
+    var dividasLongoPrazo = "0.00"
+    var dinheiroBanco = "0.00"
+    var custoOportunidadeTrabalho = "0.00"
+    var trabalhoFamiliarNaoRemunerado = "0.00"
+    var pendenciasPagamento = "0.00"
+    var pendenciasRecebimento = "0.00"
+    var totalContasPagar = "0.00"
+    var totalContasReceber = "0.00"
     var modificacao: String = ""
 
     @Exclude
@@ -108,32 +109,21 @@ open class BalancoPatrimonial() : RealmObject() {
 
     private fun calcularPassivo() {
         calcularDividasLongoPrazo()
-        passivo = dividasLongoPrazo + totalContasPagar + pendenciasPagamento
+        passivo =
+            (dividasLongoPrazo.toBigDecimal() + totalContasPagar.toBigDecimal() + pendenciasPagamento.toBigDecimal()).toString()
     }
 
     private fun calcularAtivo() {
-        var valorAtual = 0.0
-        if (totalContasReceber > 1) {
-            valorAtual += totalContasReceber
-        }
-        if (dinheiroBanco > 1) {
-            valorAtual += dinheiroBanco
-        }
-        if (pendenciasRecebimento > 1) {
-            valorAtual += pendenciasRecebimento
-        }
-        val patrimoniobens = calcularPatrimonioBens()
-        if (patrimoniobens > 0) {
-            valorAtual += patrimoniobens
-        }
-        ativo = valorAtual
+
+        ativo =
+            (calcularPatrimonioBens().toBigDecimal() + pendenciasRecebimento.toBigDecimal() + dinheiroBanco.toBigDecimal() + totalContasReceber.toBigDecimal()).toString()
     }
 
     private fun calcularLiquidezGeral() {
-        if (passivo > 1) {
-            liquidezGeral = (ativo / passivo)
+        if (passivo.toBigDecimal() > 1.toBigDecimal()) {
+            liquidezGeral = (ativo.toBigDecimal() / passivo.toBigDecimal()).toString()
         } else {
-            liquidezGeral = 0.0
+            liquidezGeral = "0.00"
         }
     }
 
@@ -142,16 +132,17 @@ open class BalancoPatrimonial() : RealmObject() {
     }
 
     fun calcularLiquidezCorrente() {
-        if (totalContasPagar > 1) {
-            liquidezCorrente = (saldo + calcularValorAnimaisInsumosProdutos()) / totalContasPagar
+        if (totalContasPagar.toBigDecimal() > 1.toBigDecimal()) {
+            liquidezCorrente =
+                ((saldo.toBigDecimal() + calcularValorAnimaisInsumosProdutos().toBigDecimal()) / totalContasPagar.toBigDecimal()).toString()
         } else {
-            liquidezCorrente = 0.0
+            liquidezCorrente = "0.00"
         }
 
     }
 
-    fun calcularValorAnimaisInsumosProdutos(): Double {
-        var total = 0.0
+    fun calcularValorAnimaisInsumosProdutos(): String {
+        var total = BigDecimal.ZERO
         for (item in listaItens) {
             if (item.tipo.equals(ItemBalancoPatrimonial.ITEM_ANIMAIS) || item.tipo.equals(
                     ItemBalancoPatrimonial.ITEM_INSUMOS
@@ -159,106 +150,109 @@ open class BalancoPatrimonial() : RealmObject() {
                     ItemBalancoPatrimonial.ITEM_PRODUTOS
                 )
             ) {
-                total += (item.quantidadeFinal * item.valorUnitario + item.reforma)
+                total += (item.quantidadeFinal.toBigDecimal() * item.valorUnitario.toBigDecimal() + item.reforma.toBigDecimal())
             }
         }
-        return total
+        return total.toString()
     }
 
-    fun calcularPatrimonioBens(): Double {
+    fun calcularPatrimonioBens(): String {
 
-        var total = 0.0
+        var total = BigDecimal.ZERO
         for (item in listaItens) {
             item.calcularDepreciacao()
             if (item.tipo != ItemBalancoPatrimonial.ITEM_DIVIDAS_LONGO_PRAZO) {
-                total += (item.quantidadeFinal * item.valorAtual)
+                total += (item.quantidadeFinal.toBigDecimal() * item.valorAtual.toBigDecimal())
             }
         }
-        return total
+        return total.toString()
     }
 
 
     fun calcularPatrimonioLiquido() {
-        if (passivo > 1) {
-            patrimonioLiquido = (ativo - passivo)
+        if (passivo.toBigDecimal() != BigDecimal.ZERO) {
+            patrimonioLiquido = (ativo.toBigDecimal() - passivo.toBigDecimal()).toString()
         } else {
             patrimonioLiquido = ativo
         }
     }
 
     fun calcularLucro() {
-        lucro = receitaBruta - calcularCustoTotal()
+        lucro = (receitaBruta.toBigDecimal() - calcularCustoTotal()).toString()
     }
 
-    fun calcularCustoTotal(): Double {
-        return custoOperacionalTotal + calcularOportunidadeCapital() + custoOportunidadeTrabalho
+    fun calcularCustoTotal(): BigDecimal {
+        return custoOperacionalTotal.toBigDecimal() + calcularOportunidadeCapital() + custoOportunidadeTrabalho.toBigDecimal()
     }
 
     fun calcularMargemLiquida() {
 
-        margemLiquida = receitaBruta - custoOperacionalTotal
+        margemLiquida =
+            (receitaBruta.toBigDecimal() - custoOperacionalTotal.toBigDecimal()).toString()
     }
 
     fun calcularMargemBruta() {
-        margemBruta = receitaBruta - custoOperacionalEfetivo
+        margemBruta =
+            (receitaBruta.toBigDecimal() - custoOperacionalEfetivo.toBigDecimal()).toString()
     }
 
     fun calcularReceitaBruta() {
-        receitaBruta = totalReceitas + calcularValorProdutos() + totalContasReceber
+        receitaBruta =
+            (totalReceitas.toBigDecimal() + calcularValorProdutos() + totalContasReceber.toBigDecimal()).toString()
     }
 
-    fun calcularValorProdutos(): Double {
-        var valorProdutos = 0.0
+    fun calcularValorProdutos(): BigDecimal {
+        var valorProdutos = BigDecimal.ZERO
         for (item in listaItens) {
             if (item.tipo == ItemBalancoPatrimonial.ITEM_PRODUTOS && item.anoProducao == 2020
             ) {
-                valorProdutos += (item.quantidadeFinal * item.valorUnitario)
+                valorProdutos += (item.quantidadeFinal.toBigDecimal() * item.valorUnitario.toBigDecimal())
             }
         }
         return valorProdutos
     }
 
 
-    fun calcularOportunidadeCapital(): Double {
-        return ativo * taxaRemuneracaoCapital
+    fun calcularOportunidadeCapital(): BigDecimal {
+        return ativo.toBigDecimal() * taxaRemuneracaoCapital.toBigDecimal()
     }
-
 
 
     fun calcularCustoOperacionalTotal() {
 
-        var depreciacao = 0.0
+        var depreciacao = BigDecimal.ZERO
         for (item in listaItens) {
             if (item.tipo.equals(ItemBalancoPatrimonial.ITEM_BENFEITORIA) || item.tipo.equals(
                     ItemBalancoPatrimonial.ITEM_MAQUINAS
                 )
             )
                 item.calcularDepreciacao()
-            depreciacao += item.depreciacao
+            depreciacao += item.depreciacao.toBigDecimal()
         }
-        if (depreciacao < 1) {
-            depreciacao = 0.0
+        if (depreciacao < 1.toBigDecimal()) {
+            depreciacao = 0.toBigDecimal()
         }
 
         custoOperacionalTotal =
-            custoOperacionalEfetivo + depreciacao + trabalhoFamiliarNaoRemunerado
+            (custoOperacionalEfetivo.toBigDecimal() + depreciacao + trabalhoFamiliarNaoRemunerado.toBigDecimal()).toString()
     }
 
 
     fun calcularCustoOperacionalEfetivo() {
-        var reformas = 0.0
+        var reformas = BigDecimal.ZERO
         for (item in listaItens) {
             if (item.tipo.equals(ItemBalancoPatrimonial.ITEM_BENFEITORIA) || item.tipo.equals(
                     ItemBalancoPatrimonial.ITEM_MAQUINAS
                 )
             )
-                reformas += item.reforma
+                reformas += item.reforma.toBigDecimal()
         }
 
-        if (reformas < 1) {
-            reformas = 0.0
+        if (reformas < 1.toBigDecimal()) {
+            reformas = 0.toBigDecimal()
         }
-        custoOperacionalEfetivo = totalDespesas + totalContasPagar - reformas
+        custoOperacionalEfetivo =
+            (totalDespesas.toBigDecimal() + totalContasPagar.toBigDecimal() - reformas).toString()
 
 
     }
@@ -266,7 +260,7 @@ open class BalancoPatrimonial() : RealmObject() {
 
     private fun calcularRentabilidade() {
         calcularMargemBruta()
-        rentabilidade = margemBruta / patrimonioLiquido
+        rentabilidade = (margemBruta.toBigDecimal() / patrimonioLiquido.toBigDecimal()).toString()
     }
 
 
@@ -274,7 +268,7 @@ open class BalancoPatrimonial() : RealmObject() {
         var valorAnimais = 0.0
         for (item in listaItens) {
             if (item.tipo.equals(ItemBalancoPatrimonial.ITEM_ANIMAIS)) {
-                valorAnimais += (item.quantidadeFinal * item.valorUnitario + item.reforma)
+                valorAnimais += (item.quantidadeFinal.toDouble() * item.valorUnitario.toDouble() + item.reforma.toDouble())
             }
         }
         return valorAnimais
@@ -284,7 +278,7 @@ open class BalancoPatrimonial() : RealmObject() {
         var valorAnimais = 0.0
         for (item in listaItens) {
             if (item.tipo.equals(ItemBalancoPatrimonial.ITEM_TERRA)) {
-                valorAnimais += (item.quantidadeFinal * item.valorUnitario + item.reforma)
+                valorAnimais += (item.quantidadeFinal.toDouble() * item.valorUnitario.toDouble() + item.reforma.toDouble())
             }
         }
         return valorAnimais
@@ -294,7 +288,7 @@ open class BalancoPatrimonial() : RealmObject() {
         var valorAnimais = 0.0
         for (item in listaItens) {
             if (item.tipo.equals(ItemBalancoPatrimonial.ITEM_MAQUINAS)) {
-                valorAnimais += (item.quantidadeFinal * item.valorAtual + item.reforma)
+                valorAnimais += (item.quantidadeFinal.toDouble() * item.valorAtual.toDouble() + item.reforma.toDouble())
             }
         }
         return valorAnimais
@@ -304,7 +298,7 @@ open class BalancoPatrimonial() : RealmObject() {
         var valorAnimais = 0.0
         for (item in listaItens) {
             if (item.tipo.equals(ItemBalancoPatrimonial.ITEM_BENFEITORIA)) {
-                valorAnimais += (item.quantidadeFinal * item.valorAtual + item.reforma)
+                valorAnimais += (item.quantidadeFinal.toDouble() * item.valorAtual.toDouble() + item.reforma.toDouble())
             }
         }
         return valorAnimais
@@ -315,7 +309,7 @@ open class BalancoPatrimonial() : RealmObject() {
         var valorInsumos = 0.0
         for (item in listaItens) {
             if (item.tipo.equals(ItemBalancoPatrimonial.ITEM_INSUMOS)) {
-                valorInsumos += (item.quantidadeFinal * item.valorUnitario + item.reforma)
+                valorInsumos += (item.quantidadeFinal.toDouble() * item.valorUnitario.toDouble() + item.reforma.toDouble())
             }
         }
         return valorInsumos
@@ -323,12 +317,15 @@ open class BalancoPatrimonial() : RealmObject() {
 
 
     fun calcularDividasLongoPrazo() {
-        dividasLongoPrazo = 0.0
+        var valor = BigDecimal.ZERO
         for (item in listaItens) {
             if (item.tipo == ItemBalancoPatrimonial.ITEM_DIVIDAS_LONGO_PRAZO) {
-                dividasLongoPrazo += item.quantidadeFinal * item.valorAtual
-                Log.e("entrou aqui: ", "true")
+                valor += item.quantidadeFinal.toBigDecimal() * item.valorAtual.toBigDecimal()
+
             }
+        }
+        if (valor != BigDecimal.ZERO) {
+            dividasLongoPrazo = valor.toString()
         }
     }
 

@@ -77,19 +77,19 @@ class AtualizarFazendaFragment : Fragment() {
         atualizarFazendaViewModel.myBalanco.observe(viewLifecycleOwner, Observer {
 
             val remuneracaoCapital = view.findViewById<EditText>(R.id.taxaCapitalFazendaEdit)
-            remuneracaoCapital.setText(it.taxaRemuneracaoCapital.toString())
+            remuneracaoCapital.setText(it.taxaRemuneracaoCapital)
             val custoOportunidade = view.findViewById<EditText>(R.id.custoTrabalhoFazendaEdit)
-            custoOportunidade.setText(it.custoOportunidadeTrabalho.toString())
+            custoOportunidade.setText(it.custoOportunidadeTrabalho)
             val dividasLongoPrazo = view.findViewById<EditText>(R.id.dividaLongoPrazoFazendaEdit)
-            dividasLongoPrazo.setText(it.dividasLongoPrazo.toString())
+            dividasLongoPrazo.setText(it.dividasLongoPrazo)
             val saldoAtual = view.findViewById<EditText>(R.id.dinheiroBancoFazendaEdit)
-            if (it.dinheiroBanco != 0.0) {
-                saldoAtual.setText(it.dinheiroBanco.toString())
+            if (it.dinheiroBanco != "0.00") {
+                saldoAtual.setText(it.dinheiroBanco)
             }
             val metapagar = view.findViewById<EditText>(R.id.pagarFazendaEdit)
-            metapagar.setText(it.pendenciasPagamento.toString())
+            metapagar.setText(it.pendenciasPagamento)
             val metareceber = view.findViewById<EditText>(R.id.receberFazendaEdit)
-            metareceber.setText(it.pendenciasRecebimento.toString())
+            metareceber.setText(it.pendenciasRecebimento)
 
 
         })
@@ -117,6 +117,8 @@ class AtualizarFazendaFragment : Fragment() {
         val liquidezGeralFazenda = root.findViewById<EditText>(R.id.liquidezGeralFazendaEdit)
         val liquidezCorrenteFazenda = root.findViewById<EditText>(R.id.liquidezCorrenteFazendaEdit)
         val comentarioFazenda = root.findViewById<EditText>(R.id.comentariosFazendaEdit)
+        val trabalhofamiliarnaoremunerado =
+            root.findViewById<EditText>(R.id.custoTrabalhoFamiliarNaoRemuneradoFazendaEdit)
 
         realm.beginTransaction()
         farm.attModificacao()
@@ -134,14 +136,15 @@ class AtualizarFazendaFragment : Fragment() {
         farm.metaLiquidezCorrente = liquidezCorrenteFazenda.text.toString().trim().toDouble()
         farm.observacao = comentarioFazenda.text.toString()
 
-        balanco.dividasLongoPrazo = dividasLP.text.toString().trim().toDouble()
-        balanco.taxaRemuneracaoCapital = remuneracaoCapital.text.toString().trim().toDouble()
-        balanco.custoOportunidadeTrabalho = custoOportunidade.text.toString().trim().toDouble()
-        balanco.pendenciasPagamento = pagarFazenda.text.toString().trim().toDouble()
-        balanco.pendenciasRecebimento = receberFazenda.text.toString().trim().toDouble()
+        balanco.dividasLongoPrazo = dividasLP.text.toString().trim()
+        balanco.taxaRemuneracaoCapital = remuneracaoCapital.text.toString().trim()
+        balanco.custoOportunidadeTrabalho = custoOportunidade.text.toString().trim()
+        balanco.pendenciasPagamento = pagarFazenda.text.toString().trim()
+        balanco.pendenciasRecebimento = receberFazenda.text.toString().trim()
+        balanco.trabalhoFamiliarNaoRemunerado = trabalhofamiliarnaoremunerado.text.toString().trim()
 
         if (dinheiroBancoFazendaEdit.text.toString().isNotEmpty()) {
-            balanco.dinheiroBanco = dinheiroBancoFazendaEdit.text.toString().trim().toDouble()
+            balanco.dinheiroBanco = dinheiroBancoFazendaEdit.text.toString().trim()
         }
         balanco.atualizarBalanco()
         realm.commitTransaction()
