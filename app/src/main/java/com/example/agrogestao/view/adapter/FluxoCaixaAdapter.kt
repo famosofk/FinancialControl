@@ -38,7 +38,7 @@ class FluxoCaixaAdapter(val onClickListener: ItemFluxoCaixaListener) :
                 }
             }
             binding.valorMovimentacao.text =
-                String.format("%.2f", (item.quantidadeInicial * item.valorInicial))
+                String.format("%.2f", (item.quantidadeInicial * item.valorInicial.toFloat()))
         }
 
         companion object {

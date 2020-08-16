@@ -181,15 +181,15 @@ class FluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListener {
             if (item?.tipo!!) {
                 val balanco = fluxoCaixaViewModel.myBalancoPatrimonial.value!!
                 balanco.totalContasPagar =
-                    (balanco.totalContasPagar.toDouble() - item.quantidadeInicial * item.valorInicial).toString()
+                    (balanco.totalContasPagar.toDouble() - item.quantidadeInicial * item.valorInicial.toDouble()).toString()
                 balanco.dinheiroBanco =
-                    (balanco.dinheiroBanco.toDouble() - item.quantidadeInicial * item.valorInicial).toString()
+                    (balanco.dinheiroBanco.toDouble() - item.quantidadeInicial * item.valorInicial.toDouble()).toString()
             } else {
                 val balanco = fluxoCaixaViewModel.myBalancoPatrimonial.value!!
                 balanco.totalContasReceber =
-                    (balanco.totalContasReceber.toDouble() - item.quantidadeInicial * item.valorInicial).toString()
+                    (balanco.totalContasReceber.toDouble() - item.quantidadeInicial * item.valorInicial.toDouble()).toString()
                 balanco.dinheiroBanco =
-                    (balanco.dinheiroBanco.toDouble() + item.quantidadeInicial * item.valorInicial).toString()
+                    (balanco.dinheiroBanco.toDouble() + item.quantidadeInicial * item.valorInicial.toDouble()).toString()
             }
             realm.commitTransaction()
             mBuilder.dismiss()

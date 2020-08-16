@@ -93,7 +93,7 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
 
         val valorInicial: EditText = root.findViewById(R.id.valorUnitarioCadastroItemFluxoCaixa)
         if (valorInicial.text.isNotEmpty()) {
-            item.valorInicial = valorInicial.text.toString().toDouble()
+            item.valorInicial = valorInicial.text.toString()
             item.valorAtual = item.valorInicial
         }
 
@@ -114,14 +114,15 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
                     .findFirst()
             if (itemInventario != null) {
                 realm.beginTransaction()
-                itemInventario.reforma += item.valorInicial
+                itemInventario.reforma =
+                    (itemInventario.reforma.toDouble() + item.valorInicial.toDouble()).toString()
                 realm.commitTransaction()
             }
         }
 
         val switchConsumo: Switch = root.findViewById(R.id.switchConsumo)
         if (switchConsumo.isChecked) {
-            item.valorAtual = 0.0
+            item.valorAtual = "0.00"
         }
 
         val switchInventario: Switch = root.findViewById(R.id.switchPropriedade)
@@ -155,22 +156,24 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
             val itemInventario: ItemBalancoPatrimonial? =
                 realm.where<ItemBalancoPatrimonial>().contains("idItem", idItemTransacao!!)
                     .findFirst()
-            val custoOperacao = itemInventario!!.valorAtual.toDouble() * item.quantidadeInicial
+            val custoOperacao =
+                itemInventario!!.valorAtual.toBigDecimal() * item.quantidadeInicial.toBigDecimal()
             realm.beginTransaction()
             if (exitingMoney) {
-                if (item.valorAtual != 0.toDouble()) {
+                if (item.valorAtual != "0.00") {
                     //Se o valor do item for diferente de 0 na compra, calcula o preço médio. Caso seja igual a 0, o sistema considera que foi fabricado na fazenda e não calcula o preço médio.
                     itemInventario.valorUnitario =
                         itemInventario.quantidadeFinal.toDouble()
                             .times(itemInventario.valorAtual.toDouble())
-                            .plus(item.quantidadeInicial.plus(item.valorAtual))
+                            .plus(item.quantidadeInicial.plus(item.valorAtual.toDouble()))
                             .div(itemInventario.quantidadeFinal.plus(item.quantidadeInicial))
                             .toString()
                 }
                 itemInventario.quantidadeFinal += item.quantidadeInicial
                 item.anoProducao = itemInventario.anoProducao
-                atividade.custoDeProducao += custoOperacao
-                atividade.arrayCustos[position] = atividade.arrayCustos[position]!! - custoOperacao
+                atividade.custoDeProducao += custoOperacao.toDouble()
+                atividade.arrayCustos[position] =
+                    atividade.arrayCustos[position]!! - custoOperacao.toDouble()
                 atividade.attModificacao()
                 atividade.atualizado = true
 
@@ -179,13 +182,13 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
                 if (item.quantidadeInicial <= itemInventario.quantidadeFinal) {
                     val switchConsumo: Switch = root.findViewById(R.id.switchConsumo)
                     if (switchConsumo.isChecked) {
-                        atividade.custoDeProducao += custoOperacao
+                        atividade.custoDeProducao += custoOperacao.toDouble()
                         atividade.arrayCustos[position] =
-                            atividade.arrayCustos[position]!! - custoOperacao
+                            atividade.arrayCustos[position]!! - custoOperacao.toDouble()
                     } else {
-                        atividade.vendasAtividade += custoOperacao
+                        atividade.vendasAtividade += custoOperacao.toDouble()
                         atividade.arrayCustos[position] =
-                            atividade.arrayCustos[position]!! + custoOperacao
+                            atividade.arrayCustos[position]!! + custoOperacao.toDouble()
                     }
                     itemInventario.quantidadeFinal -= item.quantidadeInicial
                     item.anoProducao = itemInventario.anoProducao
@@ -194,7 +197,7 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
             }
             realm.commitTransaction()
         } else {
-            val custoOperacao = item.valorInicial * item.quantidadeInicial
+            val custoOperacao = item.valorInicial.toDouble() * item.quantidadeInicial
             realm.beginTransaction()
             if (exitingMoney) {
 
@@ -218,13 +221,15 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
         fluxoCaixa.list.add(item)
         fluxoCaixa.attModificacao()
         balancoPatrimonial.attModificacao()
-        val custoOperacao = item.valorInicial * item.quantidadeInicial
+        val custoOperacao = item.valorInicial.toDouble() * item.quantidadeInicial
         val atividade = listaAtividades[positionAtividades]
         if (exitingMoney) {
             if (item.pagamentoPrazo) {
-                balancoPatrimonial.totalContasPagar += (balancoPatrimonial.totalContasPagar.toDouble() + custoOperacao).toString()
+                balancoPatrimonial.totalContasPagar =
+                    (balancoPatrimonial.totalContasPagar.toDouble() + custoOperacao).toString()
             } else {
-                balancoPatrimonial.totalDespesas += (balancoPatrimonial.totalDespesas.toDouble() + custoOperacao).toString()
+                balancoPatrimonial.totalDespesas =
+                    (balancoPatrimonial.totalDespesas.toBigDecimal() + custoOperacao.toBigDecimal()).toString()
                 balancoPatrimonial.dinheiroBanco =
                     (balancoPatrimonial.dinheiroBanco.toDouble() - custoOperacao).toString()
 
@@ -251,14 +256,18 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
             }
         } else {
             if (item.pagamentoPrazo) {
-                balancoPatrimonial.totalContasReceber += custoOperacao
+                balancoPatrimonial.totalContasReceber =
+                    (balancoPatrimonial.totalContasReceber.toDouble() + custoOperacao).toString()
             } else {
                 //Adicionado para caso o item tenha sido produzido em outros anos só aumentar o dinheiro no banco.
                 if (item.anoProducao == 2020) {
-                    balancoPatrimonial.totalReceitas += custoOperacao
-                    balancoPatrimonial.dinheiroBanco += custoOperacao
+                    balancoPatrimonial.totalReceitas =
+                        (balancoPatrimonial.totalReceitas.toDouble() + custoOperacao).toString()
+                    balancoPatrimonial.dinheiroBanco =
+                        (balancoPatrimonial.dinheiroBanco.toDouble() + custoOperacao).toString()
                 } else {
-                    balancoPatrimonial.dinheiroBanco += custoOperacao
+                    balancoPatrimonial.dinheiroBanco =
+                        (balancoPatrimonial.dinheiroBanco.toDouble() + custoOperacao).toString()
                 }
             }
         }

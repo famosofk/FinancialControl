@@ -84,13 +84,15 @@ class ApresentacaoFazendaFragment : Fragment() {
                 val textLiquidez = view.findViewById<TextView>(R.id.textsLiquidezApresentacao)
                 val textRentabilidade =
                     view.findViewById<TextView>(R.id.textsRentabilidadeApresentacao)
-                textSaldo.text = "Saldo: ${it.dinheiroBanco}"
+                textSaldo.text = "Saldo: ${String.format("%.2f", it.dinheiroBanco.toFloat())}"
+
+
                 textPagar.text = "Contas a pagar: ${
-                it.totalContasPagar + it.pendenciasPagamento
+                it.totalContasPagar.toBigDecimal() + it.pendenciasPagamento.toBigDecimal()
                 }"
                 textReceber.text =
                     "Contas a receber: ${
-                    it.totalContasReceber + it.pendenciasRecebimento
+                    it.totalContasReceber.toBigDecimal() + it.pendenciasRecebimento.toBigDecimal()
                     }"
                 textPatrimonioLiquido.text =
                     "Patrimônio Líquido: ${it.patrimonioLiquido}"

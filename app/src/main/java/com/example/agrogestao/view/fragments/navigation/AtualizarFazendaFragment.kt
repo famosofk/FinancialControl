@@ -24,7 +24,6 @@ class AtualizarFazendaFragment : Fragment() {
     private lateinit var atualizarFazendaViewModel: AtualizarFazendaViewModel
     private lateinit var id: String
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -43,7 +42,6 @@ class AtualizarFazendaFragment : Fragment() {
             id = arguments?.getString("id")!!
             atualizarFazendaViewModel.load(id)
         }
-
 
         return root
     }
@@ -125,15 +123,6 @@ class AtualizarFazendaFragment : Fragment() {
         farm.atualizado = true
         balanco.atualizado = true
         farm.codigoFazenda = codigoFazenda.text.toString().trim()
-        farm.area = areaFazenda.text.toString().trim().toDouble()
-        farm.metaLucro = lucroFazenda.text.toString().trim().toDouble()
-        farm.metaMargemLiquida = margemLiquidaFazenda.text.toString().trim().toDouble()
-        farm.metaMargemBruta = margemBrutaFazenda.text.toString().trim().toDouble()
-        farm.metaRendaBruta = rendaBrutaFazenda.text.toString().trim().toDouble()
-        farm.metasaldo = saldoFazenda.text.toString().trim().toDouble()
-        farm.metaPatrimonioLiquido = patrimonioLiquidoFazenda.text.toString().trim().toDouble()
-        farm.metaLiquidezGeral = liquidezGeralFazenda.text.toString().trim().toDouble()
-        farm.metaLiquidezCorrente = liquidezCorrenteFazenda.text.toString().trim().toDouble()
         farm.observacao = comentarioFazenda.text.toString()
 
         balanco.dividasLongoPrazo = dividasLP.text.toString().trim()
@@ -141,7 +130,23 @@ class AtualizarFazendaFragment : Fragment() {
         balanco.custoOportunidadeTrabalho = custoOportunidade.text.toString().trim()
         balanco.pendenciasPagamento = pagarFazenda.text.toString().trim()
         balanco.pendenciasRecebimento = receberFazenda.text.toString().trim()
-        balanco.trabalhoFamiliarNaoRemunerado = trabalhofamiliarnaoremunerado.text.toString().trim()
+        if (trabalhofamiliarnaoremunerado.text.trim().isNotEmpty()) {
+            balanco.trabalhoFamiliarNaoRemunerado =
+                trabalhofamiliarnaoremunerado.text.toString().trim()
+        }
+        try {
+            farm.area = areaFazenda.text.toString().trim().toDouble()
+            farm.metaLucro = lucroFazenda.text.toString().trim().toDouble()
+            farm.metaMargemLiquida = margemLiquidaFazenda.text.toString().trim().toDouble()
+            farm.metaMargemBruta = margemBrutaFazenda.text.toString().trim().toDouble()
+            farm.metaRendaBruta = rendaBrutaFazenda.text.toString().trim().toDouble()
+            farm.metasaldo = saldoFazenda.text.toString().trim().toDouble()
+            farm.metaPatrimonioLiquido = patrimonioLiquidoFazenda.text.toString().trim().toDouble()
+            farm.metaLiquidezGeral = liquidezGeralFazenda.text.toString().trim().toDouble()
+            farm.metaLiquidezCorrente = liquidezCorrenteFazenda.text.toString().trim().toDouble()
+
+        } catch (e: Exception) {
+        }
 
         if (dinheiroBancoFazendaEdit.text.toString().isNotEmpty()) {
             balanco.dinheiroBanco = dinheiroBancoFazendaEdit.text.toString().trim()

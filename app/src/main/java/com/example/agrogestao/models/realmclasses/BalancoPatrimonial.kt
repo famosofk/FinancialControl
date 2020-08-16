@@ -97,7 +97,7 @@ open class BalancoPatrimonial() : RealmObject() {
         calcularMargemBruta()
         calcularLucro()
         calcularRentabilidade()
-        Log.e("ativo", "${ativo}")
+
     }
 
     @SuppressLint("SimpleDateFormat")
@@ -116,7 +116,10 @@ open class BalancoPatrimonial() : RealmObject() {
     private fun calcularAtivo() {
 
         ativo =
-            (calcularPatrimonioBens().toBigDecimal() + pendenciasRecebimento.toBigDecimal() + dinheiroBanco.toBigDecimal() + totalContasReceber.toBigDecimal()).toString()
+            (calcularPatrimonioBens().toBigDecimal() +
+                    pendenciasRecebimento.toBigDecimal() +
+                    dinheiroBanco.toBigDecimal() +
+                    totalContasReceber.toBigDecimal()).toString()
     }
 
     private fun calcularLiquidezGeral() {
@@ -239,20 +242,20 @@ open class BalancoPatrimonial() : RealmObject() {
 
 
     fun calcularCustoOperacionalEfetivo() {
-        var reformas = BigDecimal.ZERO
+        var reformas = 0f
         for (item in listaItens) {
             if (item.tipo.equals(ItemBalancoPatrimonial.ITEM_BENFEITORIA) || item.tipo.equals(
                     ItemBalancoPatrimonial.ITEM_MAQUINAS
                 )
             )
-                reformas += item.reforma.toBigDecimal()
+                reformas += item.reforma.toFloat()
         }
 
-        if (reformas < 1.toBigDecimal()) {
-            reformas = 0.toBigDecimal()
-        }
+        Log.e("despesas:", totalDespesas)
         custoOperacionalEfetivo =
-            (totalDespesas.toBigDecimal() + totalContasPagar.toBigDecimal() - reformas).toString()
+            (totalDespesas.toFloat() +
+                    totalContasPagar.toFloat()
+                    - reformas).toString()
 
 
     }
@@ -260,7 +263,13 @@ open class BalancoPatrimonial() : RealmObject() {
 
     private fun calcularRentabilidade() {
         calcularMargemBruta()
-        rentabilidade = (margemBruta.toBigDecimal() / patrimonioLiquido.toBigDecimal()).toString()
+        try {
+            rentabilidade =
+                (margemBruta.toBigDecimal() / patrimonioLiquido.toBigDecimal()).toString()
+        } catch (e: Exception) {
+            rentabilidade = "0.00"
+        }
+
     }
 
 

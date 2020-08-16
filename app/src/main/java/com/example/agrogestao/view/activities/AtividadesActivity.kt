@@ -56,7 +56,7 @@ class AtividadesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_atividades)
-        userVerification()
+      //  userVerification()
 
         realm = Realm.getDefaultInstance()
         atividadesViewModel = ViewModelProvider(this).get(AtividadesViewModel::class.java)
