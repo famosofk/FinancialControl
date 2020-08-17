@@ -11,9 +11,7 @@ data class FluxoCaixaFirebase(
     constructor(fluxo: FluxoCaixa) : this() {
         farmID = fluxo.farmID
         modificacao = fluxo.modificacao
-        val auxList = ArrayList<ItemFluxoCaixa>()
-        auxList.addAll(fluxo.list)
-        list = auxList
+
 
     }
 }

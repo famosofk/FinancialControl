@@ -2,13 +2,14 @@ package com.example.agrogestao.models.firebaseclasses
 
 import com.example.agrogestao.models.ItemBalancoPatrimonial
 import com.example.agrogestao.models.realmclasses.BalancoPatrimonial
+import java.util.*
 
 data class BalancoFirebase(
     var farmID: String = "",
     var liquidezGeral: String = "0.00",
     var liquidezCorrente: String = "0.00",
-    var listaItens: List<ItemBalancoPatrimonial> = ArrayList(),
     var margemLiquida: String = "0.00",
+    var listaItens: ArrayList<ItemBalancoPatrimonial> = ArrayList(),
     var margemBruta: String = "0.00",
     var taxaRemuneracaoCapital: String = "0.06",
     var receitaBruta: String = "0.00",
@@ -36,7 +37,6 @@ data class BalancoFirebase(
         farmID = balanco.farmID
         liquidezGeral = balanco.liquidezGeral
         liquidezCorrente = balanco.liquidezCorrente
-        listaItens = balanco.listaItens
         margemLiquida = balanco.margemLiquida
         margemBruta = balanco.margemBruta
         taxaRemuneracaoCapital = balanco.taxaRemuneracaoCapital

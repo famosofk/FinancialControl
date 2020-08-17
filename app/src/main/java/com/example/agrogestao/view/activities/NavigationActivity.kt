@@ -14,6 +14,8 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.agrogestao.R
+import com.example.agrogestao.models.ItemBalancoPatrimonial
+import com.example.agrogestao.models.ItemFluxoCaixa
 import com.example.agrogestao.models.firebaseclasses.AtividadeFirebase
 import com.example.agrogestao.models.firebaseclasses.BalancoFirebase
 import com.example.agrogestao.models.firebaseclasses.FarmFirebase
@@ -103,17 +105,16 @@ class NavigationActivity : AppCompatActivity() {
 
     private fun salvarFazenda() {
         val farm: Farm = realm.where<Farm>().contains("id", id).findFirst()!!
-        if (farm.atualizado) {
+
             Log.e("Fazenda", "salvou ")
             realm.beginTransaction()
             farm.attModificacao()
-            val farmAux = FarmFirebase(farm)
-            val db =
-                Firebase.database.reference.child("fazendas").child(farm.programa).child(farm.id)
+        val farmAux = FarmFirebase(farm)
+        val db = Firebase.database.reference.child("fazendas").child(farm.programa).child(farm.id)
             db.setValue(farmAux)
-            farm.atualizado = false
-            realm.commitTransaction()
-        }
+
+        realm.commitTransaction()
+
 
     }
 
@@ -121,15 +122,15 @@ class NavigationActivity : AppCompatActivity() {
         val results = realm.where<AtividadesEconomicas>().contains("fazendaID", id).findAll()
         results.forEach {
             realm.beginTransaction()
-            if (it.atualizado) {
-                Log.e("Atividade", "salvou ")
+
+            Log.e("Atividade", "salvou ")
                 it.attModificacao()
                 val atividade = AtividadeFirebase(it)
                 val db = Firebase.database.reference.child("atividadesEconomicas").child(id)
                     .child(atividade.nome)
                 db.setValue(atividade)
                 it.atualizado = false
-            }
+
             realm.commitTransaction()
         }
     }
@@ -138,8 +139,8 @@ class NavigationActivity : AppCompatActivity() {
 
 
         val fluxoCaixa: FluxoCaixa = realm.where<FluxoCaixa>().contains("farmID", id).findFirst()!!
-        if (fluxoCaixa.atualizado) {
-            Log.e("Fluxo", "salvou ")
+
+        Log.e("Fluxo", "salvou ")
             realm.beginTransaction()
             fluxoCaixa.attModificacao()
             val fluxoaux = FluxoCaixaFirebase(fluxoCaixa)
@@ -147,24 +148,80 @@ class NavigationActivity : AppCompatActivity() {
             dbfluxo.setValue(fluxoaux)
             fluxoCaixa.atualizado = false
             realm.commitTransaction()
-        }
+
     }
 
     private fun salvarBalanco() {
 
         val balancoPatrimonial =
             realm.where<BalancoPatrimonial>().contains("farmID", id).findFirst()!!
-        if (balancoPatrimonial.atualizado) {
-            Log.e("Balanco", "salvou ")
-            realm.beginTransaction()
-            balancoPatrimonial.attModificacao()
-            val balancoAux = BalancoFirebase(balancoPatrimonial)
-            val dbBalanco =
-                Firebase.database.reference.child("balancoPatrimonial").child(balancoAux.farmID)
-            dbBalanco.setValue(balancoAux)
-            balancoPatrimonial.atualizado = false
-            realm.commitTransaction()
+        Log.e("Balanco", "salvou ")
+        realm.beginTransaction()
+        balancoPatrimonial.attModificacao()
+        val balancoAux = BalancoFirebase(balancoPatrimonial)
+        val dbBalanco =
+            Firebase.database.reference.child("balancoPatrimonial").child(balancoAux.farmID)
+        dbBalanco.setValue(balancoAux)
+        salvarListaItensBalancoPatrimonial(balancoPatrimonial.listaItens, balancoAux.farmID)
+
+        realm.commitTransaction()
+
+
+    }
+
+    private fun salvarListaItensBalancoPatrimonial(
+        listaItens: List<ItemBalancoPatrimonial>,
+        id: String
+    ) {
+        val dbBalanco = Firebase.database.reference.child("balancoPatrimonial").child(id)
+        var position = 0;
+        listaItens.forEach {
+            val data = dbBalanco.child("listaItens").child(position.toString())
+            val item = ItemBalancoPatrimonial()
+            item.nome = it.nome
+            item.atividade = it.atividade
+            item.valorAtual = it.valorAtual
+            item.valorInicial = it.valorInicial
+            item.valorUnitario = it.valorUnitario
+            item.depreciacao = it.depreciacao
+            item.reforma = it.reforma
+            item.vidaUtil = it.vidaUtil
+            item.anoProducao = it.anoProducao
+            item.tipo = it.tipo
+            item.idFazenda = it.idFazenda
+            item.idItem = it.idItem
+            item.quantidadeFinal = item.quantidadeFinal
+
+            item.quantidadeInicial = item.quantidadeInicial
+            data.setValue(item)
+            position++
         }
+    }
+
+    private fun salvarListaMovimentacoes(listaItens: List<ItemFluxoCaixa>, id: String) {
+
+        val dbfluxo = Firebase.database.reference.child("fluxoCaixa").child(id)
+        var position = 0;
+        listaItens.forEach {
+            val data = dbfluxo.child("list").child(position.toString())
+            val item = ItemFluxoCaixa()
+            item.dataPagamentoPrazo = it.dataPagamentoPrazo
+            item.data = it.data
+            item.anoProducao = it.anoProducao
+            item.pagamentoPrazo = it.pagamentoPrazo
+            item.atividade = it.atividade
+            item.reforma = it.reforma
+            item.itemID = it.itemID
+            item.nome = it.nome
+            item.quantidadeInicial = it.quantidadeInicial
+            item.tipo = item.tipo
+            item.valorAtual = item.valorAtual
+            item.valorInicial = item.valorInicial
+            data.setValue(item)
+            position++
+        }
+
+
     }
 
 

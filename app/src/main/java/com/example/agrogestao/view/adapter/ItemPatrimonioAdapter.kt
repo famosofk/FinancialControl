@@ -21,6 +21,7 @@ class ItemPatrimonioAdapter :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: ItemBalancoPatrimonial, position: Int) {
             binding.itemBalanco = item
+            binding.textView4.text = "${item.quantidadeFinal} un"
             binding.precoItemListagem.text = (item.valorInicial.toFloat()
                 .times(item.quantidadeFinal) + item.reforma.toFloat() - item.depreciacao.toFloat()).toString()
             binding.linearItemListener.setOnClickListener {

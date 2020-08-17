@@ -129,7 +129,7 @@ class AtividadesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                 val firebaseFarm = snapshot.getValue(BalancoFirebase::class.java)
                 if (firebaseFarm != null) {
                     if (balancoPatrimonial.modificacao.toLong() < firebaseFarm.modificacao.toLong()) {
-                        if (firebaseFarm.listaItens.size > balancoPatrimonial.listaItens.size) {
+                        if (firebaseFarm.listaItens.size >= balancoPatrimonial.listaItens.size) {
                             realm.beginTransaction()
                             realm.where<BalancoPatrimonial>().contains("farmID", idFarm).findAll()
                                 .deleteAllFromRealm()
