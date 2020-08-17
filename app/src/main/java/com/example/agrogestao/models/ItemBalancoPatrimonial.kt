@@ -30,11 +30,11 @@ open class ItemBalancoPatrimonial() : RealmObject() {
     var depreciacao = "0.00"
     var reforma = "0.00"
     var anoProducao: Int = 0
-    var precoString: String = ""
+   /* var precoString: String = ""
         get() = "R$ ${valorInicial.toBigDecimal().times(quantidadeFinal.toBigDecimal())
             .plus(reforma.toBigDecimal()).min(depreciacao.toBigDecimal())}"
 
-    /* var precoString: String = ""
+     var precoString: String = ""
          get() = "R$ ${String.format(
              "%.2f",
              valorInicial * quantidadeFinal + reforma - depreciacao

@@ -1,30 +1,38 @@
 package com.example.agrogestao.view.fragments.navigation
 
+import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.agrogestao.R
 import com.example.agrogestao.models.ItemBalancoPatrimonial
 import com.example.agrogestao.models.realmclasses.BalancoPatrimonial
 import com.example.agrogestao.view.adapter.ItemPatrimonioAdapter
+import com.example.agrogestao.view.listener.FarmListener
 import com.example.agrogestao.viewmodel.navigation.BalancoPatrimonialViewModel
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
+import io.realm.Realm
+import io.realm.kotlin.where
 
 class BalancoPatrimonialFragment : Fragment() {
 
     private lateinit var balancoPatrimonialViewModel: BalancoPatrimonialViewModel
     var id = ""
     private lateinit var root: View
+    val adapter = ItemPatrimonioAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -143,11 +151,51 @@ class BalancoPatrimonialFragment : Fragment() {
 
     private fun preencherRecycler(it: BalancoPatrimonial, root: View) {
         val recyclerView: RecyclerView = root.findViewById(R.id.recyclerItensBalanco)
-        val adapter = ItemPatrimonioAdapter()
+        val clickListener = object : FarmListener {
+            override fun onClick(id: Int) {
+                alertDialog(it.listaItens[id]!!, it)
+            }
+        }
+
+        adapter.attachListener(clickListener)
         adapter.submitList(it.listaItens)
         recyclerView.adapter = adapter
     }
 
+    @SuppressLint("SetTextI18n")
+    private fun alertDialog(item: ItemBalancoPatrimonial, balanco: BalancoPatrimonial) {
+
+        val mDialogView =
+            LayoutInflater.from(context).inflate(R.layout.observacao_dialog_layout, null)
+        val dontshowButton: Button = mDialogView.findViewById(R.id.dontshow_observacao)
+        val message: TextView = mDialogView.findViewById(R.id.message_farm)
+        val title: TextView = mDialogView.findViewById(R.id.title_dialog_view)
+        title.text = "Excluir item inventário?"
+        message.text =
+            "Nome: ${item.nome}\n" + "Preço: ${item.valorAtual}\n" + "Atividade: ${item.atividade}\n" + "Essa operação não pode ser desfeita. \n  " +
+                    "Para cancelar, clique fora deste popup."
+        dontshowButton.text = "Excluir item!"
+        val mBuilder = AlertDialog.Builder(context)
+            .setView(mDialogView)
+            .create()
+
+        mBuilder.show()
+
+        dontshowButton.setOnClickListener {
+            val realm = Realm.getDefaultInstance()
+            realm.beginTransaction()
+            realm.where<ItemBalancoPatrimonial>().contains("idItem", item.idItem).findAll()
+                .deleteAllFromRealm()
+            balanco.atualizarBalanco()
+            realm.commitTransaction()
+            mBuilder.dismiss()
+            val bundle = Bundle()
+            bundle.putString("id", balanco.farmID)
+            root.findNavController()
+                .navigate(R.id.action_balanco_patrimonial_frag_to_nav_fazenda, bundle)
+        }
+
+    }
 
     val COLORFUL_COLORS = intArrayOf(
         Color.rgb(193, 37, 82),

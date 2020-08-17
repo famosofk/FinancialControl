@@ -2,13 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-
         <variable
             name="itemBalanco"
             type="com.example.agrogestao.models.ItemBalancoPatrimonial" />
     </data>
 
     <LinearLayout
+        android:id="@+id/linearItemListener"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="1dp"
@@ -36,11 +36,10 @@
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/precoItemListagem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1.5"
-            android:text="@{itemBalanco.precoString}"
             android:textAlignment="center"
             android:textColor="@android:color/black"
             android:textSize="16sp" />
