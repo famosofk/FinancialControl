@@ -148,6 +148,7 @@ class NavigationActivity : AppCompatActivity() {
             dbfluxo.setValue(fluxoaux)
             fluxoCaixa.atualizado = false
             realm.commitTransaction()
+        salvarListaMovimentacoes(fluxoCaixa.list, fluxoCaixa.farmID)
 
     }
 

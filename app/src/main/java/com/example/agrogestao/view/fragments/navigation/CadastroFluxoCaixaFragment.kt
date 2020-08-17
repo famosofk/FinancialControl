@@ -1,5 +1,6 @@
 package com.example.agrogestao.view.fragments.navigation
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -68,9 +69,35 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
         switchsAndVisibility()
 
         val button: Button = root.findViewById(R.id.cadastrarItemFluxoCaixa)
-        button.setOnClickListener { salvarItem() }
+        button.setOnClickListener { confirmarItem() }
 
         return root
+    }
+
+    private fun confirmarItem() {
+
+        val mDialogView =
+            LayoutInflater.from(context).inflate(R.layout.observacao_dialog_layout, null)
+        val dontshowButton: Button = mDialogView.findViewById(R.id.dontshow_observacao)
+        val message: TextView = mDialogView.findViewById(R.id.message_farm)
+        val title: TextView = mDialogView.findViewById(R.id.title_dialog_view)
+        title.text = "Verificar movimentação?"
+        message.text =
+            "Você tem certeza que deseja cadastrar essa movimentação? Não será possível edita-la. Tenha certeza que todos os itens estão" +
+                    "certos. Para conferir, clique fora deste popup e verifique os campos preenchidos. Alterações não são permitidas."
+        dontshowButton.text = "Cadastrar movimentação!!"
+        val mBuilder = AlertDialog.Builder(context)
+            .setView(mDialogView)
+            .create()
+
+        mBuilder.show()
+
+        dontshowButton.setOnClickListener {
+            salvarItem()
+            mBuilder.dismiss()
+        }
+
+
     }
 
     private fun salvarItem() {
