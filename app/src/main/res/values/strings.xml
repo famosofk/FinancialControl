@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Agro+Gestao</string>
+    <string name="app_name">Gestão</string>
     <string name="account_type_consultant">Consultor</string>
     <string name="account_type_productor">Produtor</string>
     <string name="senhaConsultor">244466666</string>

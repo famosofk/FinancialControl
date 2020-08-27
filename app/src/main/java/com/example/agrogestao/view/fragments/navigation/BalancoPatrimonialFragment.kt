@@ -110,7 +110,7 @@ class BalancoPatrimonialFragment : Fragment() {
             entries.add(
                 PieEntry(
                     balanco.dinheiroBanco.toFloat(),
-                    "Dinheiro no banco"
+                    "Caixa"
                 )
             )
         }

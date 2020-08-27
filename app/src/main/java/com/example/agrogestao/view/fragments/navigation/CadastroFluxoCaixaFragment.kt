@@ -2,6 +2,7 @@ package com.example.agrogestao.view.fragments.navigation
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -107,29 +108,26 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
         item.atividade = atividade
         val nome: EditText = root.findViewById(R.id.nomeItemCadastrarFluxoCaixa)
         item.nome = nome.text.toString()
-
         val dataText: EditText = root.findViewById(R.id.dataCadastroItemFluxoCaixa)
         item.data = dataText.text.toString()
-
-
         val quantidadeInicial: EditText =
             root.findViewById(R.id.quantidadeInicialCadastroItemFluxoCaixa)
         if (quantidadeInicial.text.isNotEmpty()) {
             item.quantidadeInicial = quantidadeInicial.text.toString().toInt()
+        } else {
+            item.quantidadeInicial = 1
         }
-
         val valorInicial: EditText = root.findViewById(R.id.valorUnitarioCadastroItemFluxoCaixa)
         if (valorInicial.text.isNotEmpty()) {
             item.valorInicial = valorInicial.text.toString()
             item.valorAtual = item.valorInicial
+        } else {
+            item.valorInicial = "0"
+            item.valorAtual = "0"
         }
-
-
         val switchPrazo: Switch = root.findViewById(R.id.switchPrazo)
         if (switchPrazo.isChecked) {
-
             item.dataPagamentoPrazo = " $selectedDay/${selectedMonth}/$selectedYear"
-
             item.pagamentoPrazo = true
         }
 
@@ -153,7 +151,9 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
         }
 
         val switchInventario: Switch = root.findViewById(R.id.switchPropriedade)
+
         realizarTransacao(item, switchInventario.isChecked)
+        Log.e("aqui", item.toString())
 
 
     }
@@ -187,7 +187,8 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
                 itemInventario!!.valorAtual.toBigDecimal() * item.quantidadeInicial.toBigDecimal()
             realm.beginTransaction()
             if (exitingMoney) {
-                if (item.valorAtual != "0.00") {
+                Log.e("aqui:", "" + Integer.parseInt(item.valorAtual))
+                if (Integer.parseInt(item.valorAtual) != 0) {
                     //Se o valor do item for diferente de 0 na compra, calcula o preço médio. Caso seja igual a 0, o sistema considera que foi fabricado na fazenda e não calcula o preço médio.
                     itemInventario.valorUnitario =
                         itemInventario.quantidadeFinal.toDouble()
@@ -195,7 +196,10 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
                             .plus(item.quantidadeInicial.plus(item.valorAtual.toDouble()))
                             .div(itemInventario.quantidadeFinal.plus(item.quantidadeInicial))
                             .toString()
+                    itemInventario.valorAtual =
+                        (itemInventario.valorUnitario.toDouble() * itemInventario.quantidadeFinal).toString()
                 }
+
                 itemInventario.quantidadeFinal += item.quantidadeInicial
                 item.anoProducao = itemInventario.anoProducao
                 atividade.custoDeProducao += custoOperacao.toDouble()
@@ -212,6 +216,8 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
                         atividade.custoDeProducao += custoOperacao.toDouble()
                         atividade.arrayCustos[position] =
                             atividade.arrayCustos[position]!! - custoOperacao.toDouble()
+                        item.valorInicial = "0.00"
+                        item.valorAtual = item.valorInicial
                     } else {
                         atividade.vendasAtividade += custoOperacao.toDouble()
                         atividade.arrayCustos[position] =
@@ -220,6 +226,8 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
                     itemInventario.quantidadeFinal -= item.quantidadeInicial
                     item.anoProducao = itemInventario.anoProducao
                     bool = true
+
+
                 }
             }
             realm.commitTransaction()
@@ -293,6 +301,8 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
                     balancoPatrimonial.dinheiroBanco =
                         (balancoPatrimonial.dinheiroBanco.toDouble() + custoOperacao).toString()
                 } else {
+
+
                     balancoPatrimonial.dinheiroBanco =
                         (balancoPatrimonial.dinheiroBanco.toDouble() + custoOperacao).toString()
                 }

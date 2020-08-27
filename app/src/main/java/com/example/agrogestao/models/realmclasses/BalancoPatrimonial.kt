@@ -1,7 +1,6 @@
 package com.example.agrogestao.models.realmclasses
 
 import android.annotation.SuppressLint
-import android.util.Log
 import com.example.agrogestao.models.ItemBalancoPatrimonial
 import com.example.agrogestao.models.firebaseclasses.BalancoFirebase
 import com.google.firebase.database.Exclude
@@ -251,11 +250,8 @@ open class BalancoPatrimonial() : RealmObject() {
                 reformas += item.reforma.toFloat()
         }
 
-        Log.e("despesas:", totalDespesas)
         custoOperacionalEfetivo =
-            (totalDespesas.toFloat() +
-                    totalContasPagar.toFloat()
-                    - reformas).toString()
+            (totalDespesas.toFloat() + totalContasPagar.toFloat() - reformas).toString()
 
 
     }

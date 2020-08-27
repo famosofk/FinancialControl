@@ -1,5 +1,6 @@
 package com.example.agrogestao.view.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -22,7 +23,8 @@ class ItemPatrimonioAdapter :
         fun bind(item: ItemBalancoPatrimonial, position: Int) {
             binding.itemBalanco = item
             binding.textView4.text = "${item.quantidadeFinal} un"
-            binding.precoItemListagem.text = (item.valorInicial.toFloat()
+            Log.e("quantidade:", "" + item.valorAtual + " " + item.valorUnitario)
+            binding.precoItemListagem.text = (item.valorUnitario.toFloat()
                 .times(item.quantidadeFinal) + item.reforma.toFloat() - item.depreciacao.toFloat()).toString()
             binding.linearItemListener.setOnClickListener {
                 listener.onClick(position)

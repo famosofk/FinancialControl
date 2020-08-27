@@ -16,7 +16,6 @@ import com.example.agrogestao.R
 import com.example.agrogestao.models.realmclasses.Farm
 import com.example.agrogestao.viewmodel.navigation.ApresentacaoFazendaViewModel
 import io.realm.Realm
-import java.math.BigDecimal
 
 class ApresentacaoFazendaFragment : Fragment() {
 
@@ -87,7 +86,7 @@ class ApresentacaoFazendaFragment : Fragment() {
         })
         apresentacaoFazendaViewModel.myBalancoPatrimonial.observe(viewLifecycleOwner, Observer {
             if (it != null) {
-                lucroAtual = it.lucro
+                lucroAtual = it.lucro.substring(0, it.lucro.length - 2)
                 mLiquidaAtual = it.margemLiquida
                 mBrutaAtual = it.margemBruta
                 saldoAtual = it.dinheiroBanco
@@ -98,12 +97,15 @@ class ApresentacaoFazendaFragment : Fragment() {
                     view.findViewById<TextView>(R.id.textsRentabilidadeApresentacao)
 
 
-                textPagar.text = "Contas a pagar: ${it.totalContasPagar.toBigDecimal() + it.pendenciasPagamento.toBigDecimal()}"
-                textReceber.text = "Contas a receber: ${it.totalContasReceber.toBigDecimal() + it.pendenciasRecebimento.toBigDecimal()}"
+                textPagar.text =
+                    "Contas a pagar: ${it.totalContasPagar.toBigDecimal() + it.pendenciasPagamento.toBigDecimal()}"
+                textReceber.text =
+                    "Contas a receber: ${it.totalContasReceber.toBigDecimal() + it.pendenciasRecebimento.toBigDecimal()}"
                 atualPatrimonio = "Patrimônio Líquido: ${it.patrimonioLiquido}"
                 atualLGeral = "Liquidez geral:  ${it.liquidezGeral}"
                 atualLCorrente = "Liquidez corrente: ${it.liquidezCorrente}"
-                textRentabilidade.text = "Rentabilidade: ${it.rentabilidade.toBigDecimal().times(100.toBigDecimal())} %"
+                textRentabilidade.text =
+                    "Rentabilidade: ${it.rentabilidade.toBigDecimal().times(100.toBigDecimal())} %"
 
             }
         })
