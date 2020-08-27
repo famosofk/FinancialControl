@@ -16,18 +16,28 @@ import com.example.agrogestao.R
 import com.example.agrogestao.models.realmclasses.Farm
 import com.example.agrogestao.viewmodel.navigation.ApresentacaoFazendaViewModel
 import io.realm.Realm
+import java.math.BigDecimal
 
 class ApresentacaoFazendaFragment : Fragment() {
 
     private lateinit var id: String
     private lateinit var apresentacaoFazendaViewModel: ApresentacaoFazendaViewModel
     private lateinit var root: View
-    var lucroAtual: String = ""
-    var lucroMeta: String = ""
-    var mBrutaAtual: String = ""
-    var mBrutaMeta: String = ""
-    var mLiquidaAtual: String = ""
-    var mLiquidaMeta: String = ""
+    private var lucroAtual: String = ""
+    private var lucroMeta: String = ""
+    private var mBrutaAtual: String = ""
+    private var mBrutaMeta: String = ""
+    private var mLiquidaAtual: String = ""
+    private var mLiquidaMeta: String = ""
+    private var saldoAtual = ""
+    private var saldoMeta = ""
+    private var metaPatrimonio = ""
+    private var atualPatrimonio = ""
+    private var metaLGeral = ""
+    private var atualLGeral = ""
+    private var metaLCorrente= ""
+    private var atualLCorrente= ""
+
 
 
 
@@ -61,6 +71,12 @@ class ApresentacaoFazendaFragment : Fragment() {
                 lucroMeta = String.format("%.2f", it.metaLucro)
                 mLiquidaMeta = String.format("%.2f", it.metaMargemLiquida)
                 mBrutaMeta = String.format("%.2f", it.metaMargemBruta)
+
+                saldoMeta = String.format("%.2f", it.metasaldo)
+                metaPatrimonio = String.format("%.2f", it.metaPatrimonioLiquido)
+                metaLCorrente =  String.format("%.2f", it.metaLiquidezCorrente)
+                metaLGeral = String.format("%.2f", it.metaLiquidezGeral)
+
                 val textNomeFazenda = view.findViewById<TextView>(R.id.resultadosFazendaText)
                 textNomeFazenda.text = it.codigoFazenda
                 atualizarTextos(view)
@@ -74,34 +90,21 @@ class ApresentacaoFazendaFragment : Fragment() {
                 lucroAtual = it.lucro
                 mLiquidaAtual = it.margemLiquida
                 mBrutaAtual = it.margemBruta
+                saldoAtual = it.dinheiroBanco
                 atualizarTextos(view)
-                val textSaldo = view.findViewById<TextView>(R.id.textsSaldoApresentacao)
                 val textPagar = view.findViewById<TextView>(R.id.textsPagarApresentacao)
                 val textReceber = view.findViewById<TextView>(R.id.textReceberApresentacao)
-                val textPatrimonioLiquido =
-                    view.findViewById<TextView>(R.id.textsPatrimonioApresentacao)
-                val textSolvencia = view.findViewById<TextView>(R.id.textsSolvenciaApresentacao)
-                val textLiquidez = view.findViewById<TextView>(R.id.textsLiquidezApresentacao)
                 val textRentabilidade =
                     view.findViewById<TextView>(R.id.textsRentabilidadeApresentacao)
-                textSaldo.text = "Saldo: ${String.format("%.2f", it.dinheiroBanco.toFloat())}"
 
 
-                textPagar.text = "Contas a pagar: ${
-                it.totalContasPagar.toBigDecimal() + it.pendenciasPagamento.toBigDecimal()
-                }"
-                textReceber.text =
-                    "Contas a receber: ${
-                    it.totalContasReceber.toBigDecimal() + it.pendenciasRecebimento.toBigDecimal()
-                    }"
-                textPatrimonioLiquido.text =
-                    "Patrimônio Líquido: ${it.patrimonioLiquido}"
-                textSolvencia.text = "Liquidez geral:  ${it.liquidezGeral}"
-                textLiquidez.text =
-                    "Liquidez corrente: ${it.liquidezCorrente}"
-                textRentabilidade.text = "Rentabilidade: ${it.rentabilidade}"
+                textPagar.text = "Contas a pagar: ${it.totalContasPagar.toBigDecimal() + it.pendenciasPagamento.toBigDecimal()}"
+                textReceber.text = "Contas a receber: ${it.totalContasReceber.toBigDecimal() + it.pendenciasRecebimento.toBigDecimal()}"
+                atualPatrimonio = "Patrimônio Líquido: ${it.patrimonioLiquido}"
+                atualLGeral = "Liquidez geral:  ${it.liquidezGeral}"
+                atualLCorrente = "Liquidez corrente: ${it.liquidezCorrente}"
+                textRentabilidade.text = "Rentabilidade: ${it.rentabilidade.toBigDecimal().times(100.toBigDecimal())} %"
 
-                // ${String.format("%.2f", it.patrimonioLiquido.toFloat())
             }
         })
 
@@ -134,13 +137,25 @@ class ApresentacaoFazendaFragment : Fragment() {
         val textlucro = view.findViewById<TextView>(R.id.textLucroApresentacao)
         val textmBruta = view.findViewById<TextView>(R.id.textMargemBrutaApresentacao)
         val textmLiquida = view.findViewById<TextView>(R.id.textMargemLiquidaApresentacao)
+        val textSaldo = view.findViewById<TextView>(R.id.textsSaldoApresentacao)
+        val textPatrimonioLiquido = view.findViewById<TextView>(R.id.textsPatrimonioApresentacao)
+        val textgeral = view.findViewById<TextView>(R.id.textsSolvenciaApresentacao)
+        val textLiquidez = view.findViewById<TextView>(R.id.textsLiquidezApresentacao)
+
         val stringLucro = "Lucro: $lucroAtual / $lucroMeta"
         val stringmBruta = "Margem Bruta: $mBrutaAtual / $mBrutaMeta"
         val stringmLiquida = "Margem Liquida: $mLiquidaAtual / $mLiquidaMeta"
+        val stringsaldo = "Saldo: $saldoAtual / $saldoMeta"
+        val stringPatrimonio = "$atualPatrimonio / $metaPatrimonio";
+        val stringlcorrente = "$atualLCorrente / $metaLCorrente"
+        val stringlgeral = "$atualLGeral / $metaLGeral";
         textlucro.text = stringLucro
         textmBruta.text = stringmBruta
         textmLiquida.text = stringmLiquida
-
+        textSaldo.text = stringsaldo
+        textgeral.text = stringlgeral
+        textLiquidez.text = stringlcorrente
+        textPatrimonioLiquido.text = stringPatrimonio
     }
 
     private fun inicializarListeners(root: View) {

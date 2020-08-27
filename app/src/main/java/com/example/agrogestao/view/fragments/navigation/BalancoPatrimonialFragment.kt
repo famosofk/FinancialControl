@@ -74,14 +74,20 @@ class BalancoPatrimonialFragment : Fragment() {
         val textAtivo = view.findViewById<TextView>(R.id.textAtivoBalanco)
         textAtivo.text = "Ativo: " + it.ativo
         val textAtivoCirculante = view.findViewById<TextView>(R.id.textAtivoCirculanteBalanco)
+        val ativocirculante  = it.calcularValorAnimaisInsumosProdutos().toFloat() + it.dinheiroBanco.toFloat() + it.pendenciasRecebimento.toFloat()
         textAtivoCirculante.text =
             "Ativo circulante: " + String.format(
                 "%.2f",
-                (it.calcularValorAnimaisInsumosProdutos()
-                    .toFloat() + it.dinheiroBanco.toFloat() + it.pendenciasRecebimento.toFloat())
+                (ativocirculante)
             )
+        val textAtivoNaoCirculante = view.findViewById<TextView>(R.id.textAtivoNaoCirculanteBalanco)
+        textAtivoNaoCirculante.text = "Ativo não circulante: " + (it.ativo.toFloat() - ativocirculante)
         val textPassivo = view.findViewById<TextView>(R.id.textPassivoBalanco)
         textPassivo.text = "Passivo: " + it.passivo
+        val textPassivoCirculante = view.findViewById<TextView>(R.id.textPassivoCirculanteBalanco)
+        textPassivoCirculante.text = "Passivo circulante: " + it.totalContasPagar
+        val textPassivoNCirculante = view.findViewById<TextView>(R.id.textPassivoNaoCirculanteBalanco)
+        textPassivoNCirculante.text = "Passivo não circulante: " + it.dividasLongoPrazo
 
         criarGrafico(balanco = it)
 
@@ -99,6 +105,16 @@ class BalancoPatrimonialFragment : Fragment() {
                 )
             )
         }
+
+        if (balanco.dinheiroBanco.toFloat() >= 1) {
+            entries.add(
+                PieEntry(
+                    balanco.dinheiroBanco.toFloat(),
+                    "Dinheiro no banco"
+                )
+            )
+        }
+
         if (balanco.calcularValorInsumos() >= 1) {
             entries.add(
                 PieEntry(

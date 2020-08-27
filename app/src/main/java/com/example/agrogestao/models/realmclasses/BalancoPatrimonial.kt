@@ -139,7 +139,7 @@ open class BalancoPatrimonial() : RealmObject() {
             liquidezCorrente =
                 ((saldo.toBigDecimal() + calcularValorAnimaisInsumosProdutos().toBigDecimal()) / totalContasPagar.toBigDecimal()).toString()
         } else {
-            liquidezCorrente = "0.00"
+            liquidezCorrente = (saldo.toBigDecimal() + calcularValorAnimaisInsumosProdutos().toBigDecimal()).toString()
         }
 
     }
@@ -209,7 +209,7 @@ open class BalancoPatrimonial() : RealmObject() {
         for (item in listaItens) {
             if (item.tipo == ItemBalancoPatrimonial.ITEM_PRODUTOS && item.anoProducao == 2020
             ) {
-                valorProdutos += (item.quantidadeFinal.toBigDecimal() * item.valorUnitario.toBigDecimal())
+                valorProdutos += (item.quantidadeFinal.toBigDecimal() * item.valorAtual.toBigDecimal())
             }
         }
         return valorProdutos
@@ -267,7 +267,7 @@ open class BalancoPatrimonial() : RealmObject() {
             rentabilidade =
                 (margemBruta.toBigDecimal() / patrimonioLiquido.toBigDecimal()).toString()
         } catch (e: Exception) {
-            rentabilidade = "0.00"
+            rentabilidade = margemBruta
         }
 
     }
