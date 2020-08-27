@@ -73,8 +73,6 @@ open class BalancoPatrimonial() : RealmObject() {
 
     @Exclude
     var atualizado = false
-
-
     fun saveToDb() {
         attModificacao()
         val db = Firebase.database.reference.child("balancoPatrimonial").child(this.farmID)
