@@ -351,8 +351,6 @@ class AtividadesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
     }
 
 
-
-
     private fun downloadProgramas() {
         if (Usuario.isOnline(applicationContext)) {
             habilitarLoading()
@@ -362,15 +360,16 @@ class AtividadesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                 override fun onDataChange(snapshot: DataSnapshot) {
                     realm.beginTransaction()
                     val result = realm.where<FarmProgram>().findAll()
-                    if (snapshot.children.count() > result.size) {
-                        realm.delete(FarmProgram::class.java)
+
                         snapshot.children.forEach {
                             val programa = it.getValue(FarmProgram::class.java)
-                            if (programa != null) {
+                            if (programa != null && (result.where().contains("name", programa.name)
+                                    .count() == 0.toLong())
+                            ) {
                                 realm.copyToRealm(programa)
                             }
                         }
-                    }
+
                     realm.commitTransaction()
                     desabilitarLoading()
                 }
@@ -403,6 +402,7 @@ class AtividadesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
                 ).show()
 
             } else {
+                list.clear()
                 for (programas in query) {
                     list.add(programas.name)
                 }
@@ -418,10 +418,9 @@ class AtividadesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
         if (!user?.displayName.equals("professor")) {
             fabAddFazenda.visibility = View.GONE
             fabAddPrograma.visibility = View.GONE
-
-        } else {
-            downloadProgramas()
         }
+        downloadProgramas()
+
     }
 
     override fun onStop() {
@@ -455,6 +454,6 @@ class AtividadesActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
         atividadesLoadingLayout.visibility = View.GONE
     }
 
-
 }
+
 

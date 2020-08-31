@@ -13,6 +13,7 @@ import io.realm.kotlin.where
 
 class FluxoCaixaViewModel(application: Application) : AndroidViewModel(application) {
 
+    private lateinit var farmKey: String
     private val mBalancoPatrimonial = MutableLiveData<BalancoPatrimonial>()
     val myBalancoPatrimonial: LiveData<BalancoPatrimonial> = mBalancoPatrimonial
     private val mFluxoCaixa = MutableLiveData<FluxoCaixa>()
@@ -23,10 +24,17 @@ class FluxoCaixaViewModel(application: Application) : AndroidViewModel(applicati
     val listaVista = MutableLiveData<List<ItemFluxoCaixa>>()
     val listaPrazo = MutableLiveData<List<ItemFluxoCaixa>>()
     fun load(key: String) {
+        farmKey = key
         mAtividades.value = realm.where<AtividadesEconomicas>().contains("fazendaID", key).findAll()
         mFluxoCaixa.value = realm.where<FluxoCaixa>().contains("farmID", key).findFirst()
         mBalancoPatrimonial.value =
             realm.where<BalancoPatrimonial>().contains("farmID", key).findFirst()
+    }
+
+    fun atualizarBalanco() {
+        realm.beginTransaction()
+        mBalancoPatrimonial.value?.atualizarBalanco()
+        realm.commitTransaction()
     }
 
     fun loadLists(atividade: String) {
@@ -44,6 +52,7 @@ class FluxoCaixaViewModel(application: Application) : AndroidViewModel(applicati
 
         listaVista.value = listaVistaTemporaria
         listaPrazo.value = listaPrazoTemporaria
+
 
     }
 

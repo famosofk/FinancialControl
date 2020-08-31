@@ -27,6 +27,7 @@ class ResultadosFazendaViewModel(application: Application) : AndroidViewModel(ap
         get() = _carregarAtividade
 
     fun load(idFarm: String) {
+        list.clear()
         val realm = Realm.getDefaultInstance()
         val results = realm.where<AtividadesEconomicas>().contains("fazendaID", idFarm).findAll()
         list.addAll(results)

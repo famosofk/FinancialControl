@@ -123,7 +123,7 @@ open class BalancoPatrimonial() : RealmObject() {
         if (passivo.toBigDecimal() > 1.toBigDecimal()) {
             liquidezGeral = (ativo.toBigDecimal() / passivo.toBigDecimal()).toString()
         } else {
-            liquidezGeral = "0.00"
+            liquidezGeral = ativo
         }
     }
 

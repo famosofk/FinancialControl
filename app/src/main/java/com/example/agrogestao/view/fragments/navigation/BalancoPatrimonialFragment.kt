@@ -66,9 +66,9 @@ class BalancoPatrimonialFragment : Fragment() {
         val textPatrimonio = view.findViewById<TextView>(R.id.textPatrimonioBalanco)
         textPatrimonio.text = "Patrimônio líquido: " + it.patrimonioLiquido
         val textSolvencia = view.findViewById<TextView>(R.id.textSolvenciaBalanco)
-        textSolvencia.text = "Solvência: " + it.liquidezGeral
+        textSolvencia.text = "Liquidez Geral: " + it.liquidezGeral
         val textLiquidez = view.findViewById<TextView>(R.id.textLiquidezBalanco)
-        textLiquidez.text = "Liquidez: " + it.liquidezCorrente
+        textLiquidez.text = "Liquidez Corrente: " + it.liquidezCorrente
         val textRentabilidade = view.findViewById<TextView>(R.id.textRentabilidadeBalanco)
         textRentabilidade.text = "Rentabilidade: " + it.rentabilidade
         val textAtivo = view.findViewById<TextView>(R.id.textAtivoBalanco)

@@ -24,6 +24,7 @@ open class Farm(
     var metaLiquidezCorrente = 0.0
     var observacao: String = ""
     var modificacao: String = ""
+    var rentabilidade = 0.0
 
     @Exclude
     var atualizado = false
@@ -43,7 +44,8 @@ open class Farm(
             && metasaldo == farm.metasaldo
             && metaLiquidezGeral == farm.metaLiquidezGeral
             && metaLiquidezCorrente == farm.metaLiquidezCorrente
-            && observacao == farm.observacao
+            && observacao == farm.observacao &&
+            rentabilidade == farm.rentabilidade
         ) {
             return true
         }

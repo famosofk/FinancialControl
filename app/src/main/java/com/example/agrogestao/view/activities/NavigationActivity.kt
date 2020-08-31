@@ -59,7 +59,10 @@ class NavigationActivity : AppCompatActivity() {
                 R.id.fluxo_caixa,
                 R.id.balanco_patrimonial_frag
             ), drawerLayout
+
         )
+
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
@@ -226,5 +229,8 @@ class NavigationActivity : AppCompatActivity() {
     }
 
 
+
 }
+
+
 

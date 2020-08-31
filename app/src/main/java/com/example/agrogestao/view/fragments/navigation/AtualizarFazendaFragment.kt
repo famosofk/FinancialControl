@@ -70,6 +70,8 @@ class AtualizarFazendaFragment : Fragment() {
             metaLiquidezGeraltext.setText(it.metaLiquidezGeral.toString())
             val metaLiquidez = view.findViewById<EditText>(R.id.liquidezCorrenteFazendaEdit)
             metaLiquidez.setText(it.metaLiquidezCorrente.toString())
+            val metaRentabilidade = view.findViewById<EditText>(R.id.rentabilidadeFazendaEdit)
+            metaRentabilidade.setText(it.rentabilidade.toString())
         })
 
         atualizarFazendaViewModel.myBalanco.observe(viewLifecycleOwner, Observer {
@@ -117,6 +119,7 @@ class AtualizarFazendaFragment : Fragment() {
         val comentarioFazenda = root.findViewById<EditText>(R.id.comentariosFazendaEdit)
         val trabalhofamiliarnaoremunerado =
             root.findViewById<EditText>(R.id.custoTrabalhoFamiliarNaoRemuneradoFazendaEdit)
+        val metaRentabilidade = root.findViewById<EditText>(R.id.rentabilidadeFazendaEdit)
 
         realm.beginTransaction()
         farm.attModificacao()
@@ -124,6 +127,7 @@ class AtualizarFazendaFragment : Fragment() {
         balanco.atualizado = true
         farm.codigoFazenda = codigoFazenda.text.toString().trim()
         farm.observacao = comentarioFazenda.text.toString()
+        farm.rentabilidade = metaRentabilidade.text.toString().trim().toDouble()
 
         balanco.dividasLongoPrazo = dividasLP.text.toString().trim()
         balanco.taxaRemuneracaoCapital = remuneracaoCapital.text.toString().trim()

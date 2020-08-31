@@ -23,7 +23,11 @@ class ItemPatrimonioAdapter :
         fun bind(item: ItemBalancoPatrimonial, position: Int) {
             binding.itemBalanco = item
             binding.textView4.text = "${item.quantidadeFinal} un"
-            Log.e("quantidade:", "" + item.valorAtual + " " + item.valorUnitario)
+            Log.e("valor atual", item.valorAtual)
+            Log.e(
+                "quantidade:",
+                "${item.valorUnitario.toFloat()} ${item.quantidadeFinal} ${item.reforma.toFloat()} ${item.depreciacao.toFloat()}"
+            )
             binding.precoItemListagem.text = (item.valorUnitario.toFloat()
                 .times(item.quantidadeFinal) + item.reforma.toFloat() - item.depreciacao.toFloat()).toString()
             binding.linearItemListener.setOnClickListener {

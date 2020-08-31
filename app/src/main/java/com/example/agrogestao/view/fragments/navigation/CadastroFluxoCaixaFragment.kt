@@ -189,15 +189,16 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
             if (exitingMoney) {
                 Log.e("aqui:", "" + Integer.parseInt(item.valorAtual))
                 if (Integer.parseInt(item.valorAtual) != 0) {
-                    //Se o valor do item for diferente de 0 na compra, calcula o preço médio. Caso seja igual a 0, o sistema considera que foi fabricado na fazenda e não calcula o preço médio.
-                    itemInventario.valorUnitario =
-                        itemInventario.quantidadeFinal.toDouble()
-                            .times(itemInventario.valorAtual.toDouble())
-                            .plus(item.quantidadeInicial.plus(item.valorAtual.toDouble()))
-                            .div(itemInventario.quantidadeFinal.plus(item.quantidadeInicial))
-                            .toString()
-                    itemInventario.valorAtual =
-                        (itemInventario.valorUnitario.toDouble() * itemInventario.quantidadeFinal).toString()
+                    Toast.makeText(context, "Entrou", Toast.LENGTH_SHORT).show()
+
+                    itemInventario.valorUnitario = itemInventario.quantidadeFinal.toDouble()
+                        .times(itemInventario.valorAtual.toDouble())
+                        .plus(item.quantidadeInicial.times(item.valorInicial.toDouble()))
+                        .div(itemInventario.quantidadeFinal + item.quantidadeInicial)
+                        .toString()
+                    itemInventario.quantidadeInicial = itemInventario.quantidadeFinal
+                    itemInventario.valorInicial = itemInventario.valorUnitario
+                    itemInventario.valorAtual = itemInventario.valorInicial
                 }
 
                 itemInventario.quantidadeFinal += item.quantidadeInicial
@@ -213,6 +214,8 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
                 if (item.quantidadeInicial <= itemInventario.quantidadeFinal) {
                     val switchConsumo: Switch = root.findViewById(R.id.switchConsumo)
                     if (switchConsumo.isChecked) {
+                        balancoPatrimonial.totalDespesas =
+                            (balancoPatrimonial.totalDespesas.toBigDecimal() + custoOperacao).toString()
                         atividade.custoDeProducao += custoOperacao.toDouble()
                         atividade.arrayCustos[position] =
                             atividade.arrayCustos[position]!! - custoOperacao.toDouble()
@@ -415,6 +418,7 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
                 val otherSeriesList =
                     ArrayList<String>(Arrays.asList(*resources.getStringArray(R.array.bensCompraVenda)))
                 val listaItens = mutableListOf<ItemBalancoPatrimonial>()
+                listBens.clear()
                 for (item in balancoPatrimonial.listaItens) {
                     if (item.tipo.equals(otherSeriesList[position])) {
                         listaItens.add(item)

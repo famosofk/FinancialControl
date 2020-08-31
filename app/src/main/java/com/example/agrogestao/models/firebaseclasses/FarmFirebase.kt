@@ -17,7 +17,8 @@ data class FarmFirebase(
     var metaLiquidezGeral: Double = 0.0,
     var metaLiquidezCorrente: Double = 0.0,
     var observacao: String = "",
-    var modificacao: String = ""
+    var modificacao: String = "",
+    var rentabilidade: Double = 0.0
 
 ) {
     constructor(farm: Farm) : this() {
@@ -36,5 +37,7 @@ data class FarmFirebase(
         metaLiquidezCorrente = farm.metaLiquidezCorrente
         observacao = farm.observacao
         modificacao = farm.modificacao
+        rentabilidade = farm.rentabilidade
+
     }
 }
