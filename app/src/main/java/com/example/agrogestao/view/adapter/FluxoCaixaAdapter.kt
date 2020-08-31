@@ -66,7 +66,7 @@ class FluxoCaixaAdapter(val onClickListener: ItemFluxoCaixaListener) :
 
 class FluxoCaixaDiff : DiffUtil.ItemCallback<ItemFluxoCaixa>() {
     override fun areItemsTheSame(oldItem: ItemFluxoCaixa, newItem: ItemFluxoCaixa): Boolean {
-        return oldItem.itemID == newItem.itemID
+        return false
     }
 
     override fun areContentsTheSame(oldItem: ItemFluxoCaixa, newItem: ItemFluxoCaixa): Boolean {

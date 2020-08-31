@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.agrogestao.R
+import com.example.agrogestao.models.realmclasses.BalancoPatrimonial
 import com.example.agrogestao.models.realmclasses.Farm
 import com.example.agrogestao.viewmodel.navigation.ApresentacaoFazendaViewModel
 import io.realm.Realm
@@ -88,28 +89,7 @@ class ApresentacaoFazendaFragment : Fragment() {
         apresentacaoFazendaViewModel.myBalancoPatrimonial.observe(viewLifecycleOwner, Observer {
             if (it != null) {
 
-                if (lucroAtual != "0.00") {
-                    lucroAtual = it.lucro.substring(0, it.lucro.length - 2)
-                }
-                mLiquidaAtual = it.margemLiquida
-                mBrutaAtual = it.margemBruta
-                saldoAtual = it.dinheiroBanco
-
-                val textPagar = view.findViewById<TextView>(R.id.textsPagarApresentacao)
-                val textReceber = view.findViewById<TextView>(R.id.textReceberApresentacao)
-
-
-
-                textPagar.text =
-                    "Contas a pagar: ${it.totalContasPagar.toBigDecimal() + it.pendenciasPagamento.toBigDecimal()}"
-                textReceber.text =
-                    "Contas a receber: ${it.totalContasReceber.toBigDecimal() + it.pendenciasRecebimento.toBigDecimal()}"
-                atualPatrimonio = "Patrimônio Líquido: ${it.patrimonioLiquido}"
-                atualLGeral = "Liquidez geral:  ${it.liquidezGeral}"
-                atualLCorrente = "Liquidez corrente: ${it.liquidezCorrente}"
-                atualRentabilidade = it.rentabilidade
-
-                atualizarTextos(view)
+                atualizarTextosBalanco(it)
 
 
             }
@@ -224,6 +204,32 @@ class ApresentacaoFazendaFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         apresentacaoFazendaViewModel.recuperacaoDrawer()
+    }
+
+
+    fun atualizarTextosBalanco(balanco: BalancoPatrimonial) {
+        if (lucroAtual != "0.00") {
+            lucroAtual = balanco.lucro.substring(0, balanco.lucro.length - 2)
+        }
+        mLiquidaAtual = balanco.margemLiquida
+        mBrutaAtual = balanco.margemBruta
+        saldoAtual = balanco.dinheiroBanco
+
+        val textPagar = root.findViewById<TextView>(R.id.textsPagarApresentacao)
+        val textReceber = root.findViewById<TextView>(R.id.textReceberApresentacao)
+
+
+
+        textPagar.text =
+            "Contas a pagar: ${balanco.totalContasPagar.toBigDecimal() + balanco.pendenciasPagamento.toBigDecimal()}"
+        textReceber.text =
+            "Contas a receber: ${balanco.totalContasReceber.toBigDecimal() + balanco.pendenciasRecebimento.toBigDecimal()}"
+        atualPatrimonio = "Patrimônio Líquido: ${balanco.patrimonioLiquido}"
+        atualLGeral = "Liquidez geral:  ${balanco.liquidezGeral}"
+        atualLCorrente = "Liquidez corrente: ${balanco.liquidezCorrente}"
+        atualRentabilidade = balanco.rentabilidade
+
+        atualizarTextos(root)
     }
 
 

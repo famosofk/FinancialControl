@@ -2,7 +2,6 @@ package com.example.agrogestao.view.fragments.navigation
 
 import android.app.AlertDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -63,9 +62,7 @@ class FluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListener {
         val entries = ArrayList<BarEntry>()
         var contador = 0f
         val chart: BarChart = root.findViewById(R.id.fluxoCaixaChart)
-        Log.e("position", position.toString())
         if (position == 0) {
-            Log.e("array", geral.arrayCustos.toString())
             for (item in geral.arrayCustos)
                 if (contador < 6) {
                     entries.add(BarEntry(contador + 7f, item.toFloat()))
@@ -76,7 +73,6 @@ class FluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListener {
                 }
             atividadeSelecionada = geral
         } else {
-            Log.e("array", atividadeSelecionada.arrayCustos.toString())
             for (item in atividadeSelecionada.arrayCustos) {
                 if (contador < 6) {
                     entries.add(BarEntry(
@@ -180,20 +176,23 @@ class FluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListener {
             item?.pagamentoPrazo = false
             val balanco = fluxoCaixaViewModel.myBalancoPatrimonial.value!!
             if (item?.tipo!!) {
-
                 balanco.totalContasPagar =
                     (balanco.totalContasPagar.toDouble() - item.quantidadeInicial * item.valorInicial.toDouble()).toString()
                 balanco.dinheiroBanco =
                     (balanco.dinheiroBanco.toDouble() - item.quantidadeInicial * item.valorInicial.toDouble()).toString()
+                balanco.totalDespesas =
+                    (balanco.totalDespesas.toBigDecimal() + item.quantidadeInicial.toBigDecimal() * item.valorInicial.toBigDecimal()).toString()
             } else {
-
                 balanco.totalContasReceber =
                     (balanco.totalContasReceber.toDouble() - item.quantidadeInicial * item.valorInicial.toDouble()).toString()
                 balanco.dinheiroBanco =
                     (balanco.dinheiroBanco.toDouble() + item.quantidadeInicial * item.valorInicial.toDouble()).toString()
+                balanco.totalReceitas =
+                    (balanco.totalReceitas.toBigDecimal() + item.quantidadeInicial.toBigDecimal() * item.valorInicial.toBigDecimal()).toString()
             }
+            balanco.atualizarBalanco()
             realm.commitTransaction()
-            fluxoCaixaViewModel.atualizarBalanco()
+
             fluxoCaixaViewModel.loadLists(atividadeSelecionada.nome)
             mBuilder.dismiss()
 

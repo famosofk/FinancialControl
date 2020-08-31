@@ -21,8 +21,10 @@ class FluxoCaixaViewModel(application: Application) : AndroidViewModel(applicati
     private val mAtividades = MutableLiveData<List<AtividadesEconomicas>>()
     val myAtividades: LiveData<List<AtividadesEconomicas>> = mAtividades
     val realm = Realm.getDefaultInstance()
+
     val listaVista = MutableLiveData<List<ItemFluxoCaixa>>()
     val listaPrazo = MutableLiveData<List<ItemFluxoCaixa>>()
+
     fun load(key: String) {
         farmKey = key
         mAtividades.value = realm.where<AtividadesEconomicas>().contains("fazendaID", key).findAll()
@@ -31,11 +33,6 @@ class FluxoCaixaViewModel(application: Application) : AndroidViewModel(applicati
             realm.where<BalancoPatrimonial>().contains("farmID", key).findFirst()
     }
 
-    fun atualizarBalanco() {
-        realm.beginTransaction()
-        mBalancoPatrimonial.value?.atualizarBalanco()
-        realm.commitTransaction()
-    }
 
     fun loadLists(atividade: String) {
 
