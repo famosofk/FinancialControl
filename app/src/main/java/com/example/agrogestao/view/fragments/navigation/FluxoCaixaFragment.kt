@@ -2,6 +2,7 @@ package com.example.agrogestao.view.fragments.navigation
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,8 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.agrogestao.R
 import com.example.agrogestao.models.ItemFluxoCaixa
@@ -28,8 +31,8 @@ class FluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     private lateinit var fluxoCaixaViewModel: FluxoCaixaViewModel
     private val adapterVista = FluxoCaixaAdapter(ItemFluxoCaixaListener { })
-    private val adapterPrazo =
-        FluxoCaixaAdapter(ItemFluxoCaixaListener { criarAtividadeDialog(it) })
+    private val adapterPrazo = FluxoCaixaAdapter(ItemFluxoCaixaListener { criarAtividadeDialog(it) })
+    private val adapterPendencia = FluxoCaixaAdapter(ItemFluxoCaixaListener { criarAtividadeDialog(it) })
     private val arrayAtividades = ArrayList<String>()
     private lateinit var geral: AtividadesEconomicas
     private lateinit var atividadeSelecionada: AtividadesEconomicas
@@ -46,6 +49,11 @@ class FluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListener {
             ViewModelProvider(this).get(FluxoCaixaViewModel::class.java)
         root = inflater.inflate(R.layout.fluxo_caixa_atividade, container, false)
 
+        val button : Button = root.findViewById(R.id.createPendencia)
+        button.setOnClickListener {
+            root.findNavController().navigate(R.id.action_fluxo_caixa_to_pendenciasFragment)
+        }
+
         id = arguments?.getString("id")!!
         atualizarListas()
 
@@ -53,6 +61,8 @@ class FluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListener {
         recyclerVista.adapter = adapterVista
         val recyclerPrazo = root.findViewById<RecyclerView>(R.id.recyclerFluxoCaixaPrazo)
         recyclerPrazo.adapter = adapterPrazo
+        val recyclerPendencia = root.findViewById<RecyclerView>(R.id.recyclerFluxoCaixaPendencias)
+        recyclerPendencia.adapter = adapterPendencia
 
         observe(root)
         return root
@@ -108,7 +118,6 @@ class FluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListener {
     private fun observe(view: View) {
 
         fluxoCaixaViewModel.myAtividades.observe(viewLifecycleOwner, Observer {
-
             geral = fluxoCaixaViewModel.myAtividades.value!![0]
             for (item in fluxoCaixaViewModel.myAtividades.value!!) {
                 arrayAtividades.add(item.nome)
@@ -123,12 +132,9 @@ class FluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListener {
             val spinner: Spinner = root.findViewById(R.id.spinnerResultadoFluxoCaixa)
             spinner.adapter = adapter
             spinner.onItemSelectedListener = this
-
         })
 
         fluxoCaixaViewModel.myBalancoPatrimonial.observe(viewLifecycleOwner, Observer {
-
-
             val saldo = view.findViewById<TextView>(R.id.fcaixaSaldoText)
             saldo.text = "Saldo: ${it.saldo}"
             val receitas = view.findViewById<TextView>(R.id.fcaixaReceitasText)
@@ -141,7 +147,6 @@ class FluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListener {
             receber.text = "Contas a receber: ${it.totalContasReceber}"
             val lucro = view.findViewById<TextView>(R.id.fcaixaLucroText)
             lucro.text = "Lucro: ${it.lucro}"
-
         })
         fluxoCaixaViewModel.myFluxoCaixa.observe(viewLifecycleOwner, Observer {
             fluxoCaixaViewModel.loadLists("Geral")
@@ -152,11 +157,17 @@ class FluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListener {
         fluxoCaixaViewModel.listaPrazo.observe(viewLifecycleOwner, Observer {
             adapterPrazo.submitList(it)
         })
+        fluxoCaixaViewModel.listaPendencia.observe(viewLifecycleOwner, {
+            adapterPendencia.submitList(it)
+        })
+
     }
 
 
     private fun criarAtividadeDialog(id: String) {
 
+        val realm = Realm.getDefaultInstance()
+        val item = realm.where<ItemFluxoCaixa>().contains("itemID", id).findFirst()
         val mDialogView =
             LayoutInflater.from(context).inflate(R.layout.pagar_pendencia_dialog, null)
         val confirmarButton: Button = mDialogView.findViewById(R.id.pagarPendenciaButton)
@@ -165,42 +176,48 @@ class FluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListener {
             .setView(mDialogView)
             .setTitle("Pagar/Receber pendência?")
             .create()
-
+        if(!item!!.currentYear){
+            mBuilder.setTitle("Pagar/Receber pendência do ano anterior?")
+        }
         mBuilder.show()
-
         confirmarButton.setOnClickListener {
+            dismissDialog(realm, item)
             mBuilder.dismiss()
-            val realm = Realm.getDefaultInstance()
-            val item = realm.where<ItemFluxoCaixa>().contains("itemID", id).findFirst()
-            realm.beginTransaction()
-            item?.pagamentoPrazo = false
-            val balanco = fluxoCaixaViewModel.myBalancoPatrimonial.value!!
-            if (item?.tipo!!) {
-                balanco.totalContasPagar =
-                    (balanco.totalContasPagar.toDouble() - item.quantidadeInicial * item.valorInicial.toDouble()).toString()
-                balanco.dinheiroBanco =
-                    (balanco.dinheiroBanco.toDouble() - item.quantidadeInicial * item.valorInicial.toDouble()).toString()
-                balanco.totalDespesas =
-                    (balanco.totalDespesas.toBigDecimal() + item.quantidadeInicial.toBigDecimal() * item.valorInicial.toBigDecimal()).toString()
-            } else {
-                balanco.totalContasReceber =
-                    (balanco.totalContasReceber.toDouble() - item.quantidadeInicial * item.valorInicial.toDouble()).toString()
-                balanco.dinheiroBanco =
-                    (balanco.dinheiroBanco.toDouble() + item.quantidadeInicial * item.valorInicial.toDouble()).toString()
-                balanco.totalReceitas =
-                    (balanco.totalReceitas.toBigDecimal() + item.quantidadeInicial.toBigDecimal() * item.valorInicial.toBigDecimal()).toString()
-            }
-            balanco.atualizarBalanco()
-            realm.commitTransaction()
-
-            fluxoCaixaViewModel.loadLists(atividadeSelecionada.nome)
-            mBuilder.dismiss()
-
-
         }
         cancelButton.setOnClickListener { mBuilder.dismiss() }
+    }
 
-
+    private fun dismissDialog(realm: Realm, item: ItemFluxoCaixa) {
+        realm.beginTransaction()
+        item?.pagamentoPrazo = false
+        val balanco = fluxoCaixaViewModel.myBalancoPatrimonial.value!!
+        Log.e("Entrou", "zero")
+        if (item?.tipo!! && item.currentYear) {
+            Log.e("Entrou", "primeiro")
+            balanco.totalContasPagar =
+                (balanco.totalContasPagar.toDouble() - item.quantidadeInicial * item.valorInicial.toDouble()).toString()
+            balanco.dinheiroBanco =
+                (balanco.dinheiroBanco.toDouble() - item.quantidadeInicial * item.valorInicial.toDouble()).toString()
+            balanco.totalDespesas =
+                (balanco.totalDespesas.toBigDecimal() + item.quantidadeInicial.toBigDecimal() * item.valorInicial.toBigDecimal()).toString()
+        } else if (!item?.tipo!! && item.currentYear){
+            Log.e("Entrou", "segundo")
+            balanco.totalContasReceber =
+                (balanco.totalContasReceber.toDouble() - item.quantidadeInicial * item.valorInicial.toDouble()).toString()
+            balanco.dinheiroBanco =
+                (balanco.dinheiroBanco.toDouble() + item.quantidadeInicial * item.valorInicial.toDouble()).toString()
+            balanco.totalReceitas =
+                (balanco.totalReceitas.toBigDecimal() + item.quantidadeInicial.toBigDecimal() * item.valorInicial.toBigDecimal()).toString()
+        } else {
+            Log.e("Entrou", "terceiro")
+            val fluxo = fluxoCaixaViewModel.myFluxoCaixa.value!!
+            if (item.tipo!!) balanco.dinheiroBanco = (balanco.dinheiroBanco.toDouble() - item.valorAtual.toDouble()).toString()
+            else balanco.dinheiroBanco = (balanco.dinheiroBanco.toDouble() + item.valorAtual.toDouble()).toString()
+            fluxo.list.remove(item)
+        }
+        balanco.atualizarBalanco()
+        realm.commitTransaction()
+        fluxoCaixaViewModel.loadLists(atividadeSelecionada.nome)
     }
 
     override fun onNothingSelected(p0: AdapterView<*>?) {}

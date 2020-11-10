@@ -194,9 +194,8 @@ class NavigationActivity : AppCompatActivity() {
             item.tipo = it.tipo
             item.idFazenda = it.idFazenda
             item.idItem = it.idItem
-            item.quantidadeFinal = item.quantidadeFinal
-
-            item.quantidadeInicial = item.quantidadeInicial
+            item.quantidadeFinal = it.quantidadeFinal
+            item.quantidadeInicial = it.quantidadeInicial
             data.setValue(item)
             position++
         }

@@ -1,6 +1,7 @@
 package com.example.agrogestao.models.realmclasses
 
 import android.annotation.SuppressLint
+import android.util.Log
 import com.example.agrogestao.models.ItemBalancoPatrimonial
 import com.example.agrogestao.models.firebaseclasses.BalancoFirebase
 import com.google.firebase.database.Exclude
@@ -256,12 +257,13 @@ open class BalancoPatrimonial() : RealmObject() {
 
 
     private fun calcularRentabilidade() {
-        calcularMargemBruta()
+        calcularMargemLiquida()
         try {
-            rentabilidade =
-                (margemBruta.toBigDecimal() / patrimonioLiquido.toBigDecimal()).toString()
+            val rent =
+                ( (margemLiquida.toDouble() / patrimonioLiquido.toDouble()) * 100.0 ).toBigDecimal().toString()
+            rentabilidade = String.format("%.2f", rent.toFloat())
         } catch (e: Exception) {
-            rentabilidade = margemBruta
+            rentabilidade = margemLiquida
         }
 
     }

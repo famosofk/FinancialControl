@@ -59,8 +59,6 @@ class ApresentacaoFazendaFragment : Fragment() {
             id = apresentacaoFazendaViewModel.recuperacaoDrawer()
         }
 
-
-
         return root
     }
 

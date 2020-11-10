@@ -1,6 +1,7 @@
 package com.example.agrogestao.viewmodel.navigation
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -24,6 +25,7 @@ class FluxoCaixaViewModel(application: Application) : AndroidViewModel(applicati
 
     val listaVista = MutableLiveData<List<ItemFluxoCaixa>>()
     val listaPrazo = MutableLiveData<List<ItemFluxoCaixa>>()
+    val listaPendencia = MutableLiveData<List<ItemFluxoCaixa>>()
 
     fun load(key: String) {
         farmKey = key
@@ -35,22 +37,22 @@ class FluxoCaixaViewModel(application: Application) : AndroidViewModel(applicati
 
 
     fun loadLists(atividade: String) {
-
         val listaPrazoTemporaria = arrayListOf<ItemFluxoCaixa>()
         val listaVistaTemporaria = arrayListOf<ItemFluxoCaixa>()
-
+        val listaPendenciasTemporaria = arrayListOf<ItemFluxoCaixa>()
         for (item in mFluxoCaixa.value?.list!!) {
             if (item.pagamentoPrazo && item.atividade.equals(atividade)) {
                 listaPrazoTemporaria.add(item)
             } else if (!item.pagamentoPrazo && atividade.equals(atividade)) {
-                listaVistaTemporaria.add(item)
+                Log.e("teste: ", item.currentYear.toString())
+                if (item.currentYear)
+                    listaVistaTemporaria.add(item)
+                else listaPendenciasTemporaria.add(item)
             }
         }
-
         listaVista.value = listaVistaTemporaria
         listaPrazo.value = listaPrazoTemporaria
-
-
+        listaPendencia.value = listaPendenciasTemporaria
     }
 
 }

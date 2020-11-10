@@ -64,7 +64,6 @@ class CadastroFluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListene
             selectedDay = day
             selectedMonth = month + 1
             selectedYear = year
-
         }
 
         switchsAndVisibility()
