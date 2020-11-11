@@ -211,8 +211,17 @@ class FluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListener {
         } else {
             Log.e("Entrou", "terceiro")
             val fluxo = fluxoCaixaViewModel.myFluxoCaixa.value!!
-            if (item.tipo!!) balanco.dinheiroBanco = (balanco.dinheiroBanco.toDouble() - item.valorAtual.toDouble()).toString()
-            else balanco.dinheiroBanco = (balanco.dinheiroBanco.toDouble() + item.valorAtual.toDouble()).toString()
+            if (item.tipo!!) {
+                balanco.dinheiroBanco =
+                    (balanco.dinheiroBanco.toDouble() - item.valorAtual.toDouble()).toString()
+                balanco.pendenciasPagamento =
+                    (balanco.pendenciasPagamento.toDouble() - item.valorAtual.toDouble()).toString()
+            } else {
+                balanco.dinheiroBanco =
+                    (balanco.dinheiroBanco.toDouble() + item.valorAtual.toDouble()).toString()
+                balanco.pendenciasRecebimento =
+                    (balanco.pendenciasRecebimento.toDouble() - item.valorAtual.toDouble()).toString()
+            }
             fluxo.list.remove(item)
         }
         balanco.atualizarBalanco()

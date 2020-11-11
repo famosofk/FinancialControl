@@ -138,44 +138,6 @@
             android:inputType="numberDecimal"
             tools:ignore="LabelFor" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:fontFamily="@font/roboto"
-            android:text="@string/a_pagar"
-            android:textColor="@color/colorPrimary" />
-
-        <EditText
-            android:id="@+id/pagarFazendaEdit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:ems="10"
-            android:hint="@string/contas_receber"
-            android:importantForAutofill="no"
-            android:inputType="number|numberDecimal"
-            tools:ignore="LabelFor" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:fontFamily="@font/roboto"
-            android:text="@string/a_receber"
-            android:textColor="@color/colorPrimary" />
-
-        <EditText
-            android:id="@+id/receberFazendaEdit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:ems="10"
-            android:hint="@string/contas_receber_hint"
-            android:importantForAutofill="no"
-            android:inputType="number|numberDecimal"
-            tools:ignore="LabelFor" />
-
 
         <TextView
             android:text="@string/metas_fazenda"

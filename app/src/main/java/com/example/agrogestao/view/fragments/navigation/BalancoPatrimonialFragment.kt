@@ -74,20 +74,23 @@ class BalancoPatrimonialFragment : Fragment() {
         val textAtivo = view.findViewById<TextView>(R.id.textAtivoBalanco)
         textAtivo.text = "Ativo: " + it.ativo
         val textAtivoCirculante = view.findViewById<TextView>(R.id.textAtivoCirculanteBalanco)
-        val ativocirculante  = it.calcularValorAnimaisInsumosProdutos().toFloat() + it.dinheiroBanco.toFloat() + it.pendenciasRecebimento.toFloat()
+        val ativocirculante = it.calcularValorAnimaisInsumosProdutos().toFloat() +
+                it.dinheiroBanco.toFloat() + it.pendenciasRecebimento.toFloat() + it.totalContasReceber.toFloat()
         textAtivoCirculante.text =
             "Ativo circulante: " + String.format(
                 "%.2f",
                 (ativocirculante)
             )
         val textAtivoNaoCirculante = view.findViewById<TextView>(R.id.textAtivoNaoCirculanteBalanco)
-        textAtivoNaoCirculante.text = "Ativo não circulante: " + (it.ativo.toFloat() - ativocirculante)
+        textAtivoNaoCirculante.text =
+            "Ativo não circulante: " + (it.ativo.toFloat() - ativocirculante)
         val textPassivo = view.findViewById<TextView>(R.id.textPassivoBalanco)
-        textPassivo.text = "Passivo: " + it.passivo
+        textPassivo.text = "Passivo: ${it.passivo}"
         val textPassivoCirculante = view.findViewById<TextView>(R.id.textPassivoCirculanteBalanco)
-        textPassivoCirculante.text = "Passivo circulante: " + it.totalContasPagar
+        textPassivoCirculante.text =
+            "Passivo circulante: ${it.totalContasPagar + it.pendenciasPagamento}"
         val textPassivoNCirculante = view.findViewById<TextView>(R.id.textPassivoNaoCirculanteBalanco)
-        textPassivoNCirculante.text = "Passivo não circulante: " + it.dividasLongoPrazo
+        textPassivoNCirculante.text = "Passivo não circulante: ${it.dividasLongoPrazo}"
 
         criarGrafico(balanco = it)
 

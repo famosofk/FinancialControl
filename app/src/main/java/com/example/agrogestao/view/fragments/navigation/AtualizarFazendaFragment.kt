@@ -86,10 +86,6 @@ class AtualizarFazendaFragment : Fragment() {
             if (it.dinheiroBanco != "0.00") {
                 saldoAtual.setText(it.dinheiroBanco)
             }
-            val metapagar = view.findViewById<EditText>(R.id.pagarFazendaEdit)
-            metapagar.setText(it.pendenciasPagamento)
-            val metareceber = view.findViewById<EditText>(R.id.receberFazendaEdit)
-            metareceber.setText(it.pendenciasRecebimento)
 
 
         })
@@ -110,8 +106,6 @@ class AtualizarFazendaFragment : Fragment() {
         val margemBrutaFazenda = root.findViewById<EditText>(R.id.margemBrutaFazendaEdit)
         val rendaBrutaFazenda = root.findViewById<EditText>(R.id.rendaBrutaFazendaEdit)
         val saldoFazenda = root.findViewById<EditText>(R.id.saldoFazendaEdit)
-        val pagarFazenda = root.findViewById<EditText>(R.id.pagarFazendaEdit)
-        val receberFazenda = root.findViewById<EditText>(R.id.receberFazendaEdit)
         val patrimonioLiquidoFazenda =
             root.findViewById<EditText>(R.id.patrimonioLiquidoFazendaEdit)
         val liquidezGeralFazenda = root.findViewById<EditText>(R.id.liquidezGeralFazendaEdit)
@@ -132,8 +126,6 @@ class AtualizarFazendaFragment : Fragment() {
         balanco.dividasLongoPrazo = dividasLP.text.toString().trim()
         balanco.taxaRemuneracaoCapital = remuneracaoCapital.text.toString().trim()
         balanco.custoOportunidadeTrabalho = custoOportunidade.text.toString().trim()
-        balanco.pendenciasPagamento = pagarFazenda.text.toString().trim()
-        balanco.pendenciasRecebimento = receberFazenda.text.toString().trim()
         if (trabalhofamiliarnaoremunerado.text.trim().isNotEmpty()) {
             balanco.trabalhoFamiliarNaoRemunerado =
                 trabalhofamiliarnaoremunerado.text.toString().trim()

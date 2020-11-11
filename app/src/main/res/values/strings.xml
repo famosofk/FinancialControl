@@ -152,5 +152,6 @@
     <string name="trocar_fazenda_menu">Trocar fazenda</string>
     <string name="senha_fazenda_hint">Insira senha da fazenda</string>
     <string name="trabalho_familiar_remunerado">Trabalho familiar não remunerado.</string>
+    <string name="listagem_termo">Listagem</string>
 
 </resources>

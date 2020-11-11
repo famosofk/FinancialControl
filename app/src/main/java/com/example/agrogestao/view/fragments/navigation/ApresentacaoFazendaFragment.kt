@@ -15,8 +15,10 @@ import androidx.navigation.findNavController
 import com.example.agrogestao.R
 import com.example.agrogestao.models.realmclasses.BalancoPatrimonial
 import com.example.agrogestao.models.realmclasses.Farm
+import com.example.agrogestao.models.realmclasses.FluxoCaixa
 import com.example.agrogestao.viewmodel.navigation.ApresentacaoFazendaViewModel
 import io.realm.Realm
+import io.realm.kotlin.where
 
 class ApresentacaoFazendaFragment : Fragment() {
 
@@ -55,9 +57,8 @@ class ApresentacaoFazendaFragment : Fragment() {
         if (arguments?.get("id") != null) {
             id = arguments?.getString("id")!!
             apresentacaoFazendaViewModel.verificarRegistro(id)
-        } else {
-            id = apresentacaoFazendaViewModel.recuperacaoDrawer()
-        }
+        } else id = apresentacaoFazendaViewModel.recuperacaoDrawer()
+
 
         return root
     }
@@ -96,7 +97,6 @@ class ApresentacaoFazendaFragment : Fragment() {
     }
 
     private fun createAlertDialog(farm: Farm) {
-
         val mDialogView =
             LayoutInflater.from(context).inflate(R.layout.observacao_dialog_layout, null)
         val dontshowButton: Button = mDialogView.findViewById(R.id.dontshow_observacao)
@@ -105,7 +105,6 @@ class ApresentacaoFazendaFragment : Fragment() {
         val mBuilder = AlertDialog.Builder(context)
             .setView(mDialogView)
             .create()
-
         mBuilder.show()
 
         dontshowButton.setOnClickListener {
@@ -216,12 +215,23 @@ class ApresentacaoFazendaFragment : Fragment() {
         val textPagar = root.findViewById<TextView>(R.id.textsPagarApresentacao)
         val textReceber = root.findViewById<TextView>(R.id.textReceberApresentacao)
 
-
+        //colocar aqui o realm e recuperar as contas novas
+        var pendenciasRecebimento = 0f
+        var pendenciasPagamento = 0f
+        val realm = Realm.getDefaultInstance()
+        val fluxoCaixa = realm.where<FluxoCaixa>().contains("farmID", balanco.farmID).findFirst()!!
+        fluxoCaixa.list.forEach {
+            if (!it.currentYear) {
+                if (it.tipo)
+                    pendenciasPagamento += it.valorAtual.toFloat()
+                else pendenciasRecebimento += it.valorAtual.toFloat()
+            }
+        }
 
         textPagar.text =
-            "Contas a pagar: ${balanco.totalContasPagar.toBigDecimal() + balanco.pendenciasPagamento.toBigDecimal()}"
+            "Contas a pagar: ${balanco.totalContasPagar.toBigDecimal() + pendenciasPagamento.toBigDecimal()}"
         textReceber.text =
-            "Contas a receber: ${balanco.totalContasReceber.toBigDecimal() + balanco.pendenciasRecebimento.toBigDecimal()}"
+            "Contas a receber: ${balanco.totalContasReceber.toBigDecimal() + pendenciasRecebimento.toBigDecimal()}"
         atualPatrimonio = "Patrimônio Líquido: ${balanco.patrimonioLiquido}"
         atualLGeral = "Liquidez geral:  ${balanco.liquidezGeral}"
         atualLCorrente = "Liquidez corrente: ${balanco.liquidezCorrente}"

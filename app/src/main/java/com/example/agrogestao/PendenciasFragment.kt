@@ -1,7 +1,6 @@
 package com.example.agrogestao
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +8,7 @@ import android.widget.Button
 import android.widget.CalendarView
 import android.widget.EditText
 import android.widget.ToggleButton
+import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.example.agrogestao.models.ItemFluxoCaixa
 import com.example.agrogestao.models.RegistradorFarm
@@ -52,11 +52,17 @@ class PendenciasFragment : Fragment() {
             item.dataPagamentoPrazo = "$selectedDay / $selectedMonth / $selectedYear"
             val realm = Realm.getDefaultInstance()
             val registradorFarm = realm.where<RegistradorFarm>().findFirst()!!
-            val fluxoCaixa = realm.where<FluxoCaixa>().contains("farmID", registradorFarm.id).findFirst()!!
-            val balanco = realm.where<BalancoPatrimonial>().contains("farmID", registradorFarm.id).findFirst()!!
+            val fluxoCaixa =
+                realm.where<FluxoCaixa>().contains("farmID", registradorFarm.id).findFirst()!!
+            val balanco = realm.where<BalancoPatrimonial>().contains("farmID", registradorFarm.id)
+                .findFirst()!!
             realm.beginTransaction()
             fluxoCaixa.list.add(item)
-            balanco
+            if (item.tipo)
+                balanco.pendenciasPagamento =
+                    (balanco.pendenciasPagamento.toDouble() + item.valorAtual.toDouble()).toString()
+            else balanco.pendenciasRecebimento =
+                (balanco.pendenciasRecebimento.toDouble() + item.valorAtual.toDouble()).toString()
             realm.commitTransaction()
             view.findNavController().navigate(R.id.action_pendenciasFragment_to_nav_fazenda)
 
