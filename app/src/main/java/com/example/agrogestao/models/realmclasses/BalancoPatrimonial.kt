@@ -1,7 +1,6 @@
 package com.example.agrogestao.models.realmclasses
 
 import android.annotation.SuppressLint
-import android.util.Log
 import com.example.agrogestao.models.ItemBalancoPatrimonial
 import com.example.agrogestao.models.firebaseclasses.BalancoFirebase
 import com.google.firebase.database.Exclude
@@ -117,7 +116,8 @@ open class BalancoPatrimonial() : RealmObject() {
             (calcularPatrimonioBens().toBigDecimal() +
                     pendenciasRecebimento.toBigDecimal() +
                     dinheiroBanco.toBigDecimal() +
-                    totalContasReceber.toBigDecimal()).toString()
+                    totalContasReceber.toBigDecimal()
+                    ).toString()
     }
 
     private fun calcularLiquidezGeral() {
@@ -172,7 +172,10 @@ open class BalancoPatrimonial() : RealmObject() {
 
     fun calcularPatrimonioLiquido() {
         if (passivo.toBigDecimal() != BigDecimal.ZERO) {
-            patrimonioLiquido = (ativo.toBigDecimal() - passivo.toBigDecimal()).toString()
+
+            val ativoBigDecimal = ativo.toBigDecimal()
+            val passivobd = passivo.toBigDecimal()
+            patrimonioLiquido = (ativoBigDecimal - passivobd).toString()
         } else {
             patrimonioLiquido = ativo
         }

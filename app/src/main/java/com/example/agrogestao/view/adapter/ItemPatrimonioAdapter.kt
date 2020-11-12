@@ -1,6 +1,6 @@
 package com.example.agrogestao.view.adapter
 
-import android.util.Log
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -23,15 +23,17 @@ class ItemPatrimonioAdapter :
         fun bind(item: ItemBalancoPatrimonial, position: Int) {
             binding.itemBalanco = item
             binding.textView4.text = "${item.quantidadeFinal} un"
-            Log.e("valor atual", item.valorAtual)
-            Log.e(
-                "quantidade:",
-                "${item.valorUnitario.toFloat()} ${item.quantidadeFinal} ${item.reforma.toFloat()} ${item.depreciacao.toFloat()}"
-            )
             binding.precoItemListagem.text = (item.valorUnitario.toFloat()
                 .times(item.quantidadeFinal) + item.reforma.toFloat() - item.depreciacao.toFloat()).toString()
             binding.linearItemListener.setOnClickListener {
                 listener.onClick(position)
+            }
+
+            if (item.tipo == "Dívidas de longo prazo") {
+                binding.linearItemListener.setBackgroundColor(Color.parseColor("#80ff0000"))
+                binding.precoItemListagem.setBackgroundColor(Color.WHITE)
+                binding.textView3.setBackgroundColor(Color.WHITE)
+                binding.textView4.setBackgroundColor(Color.WHITE)
             }
             binding.executePendingBindings()
         }

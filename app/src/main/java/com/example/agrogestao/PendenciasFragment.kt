@@ -63,6 +63,7 @@ class PendenciasFragment : Fragment() {
                     (balanco.pendenciasPagamento.toDouble() + item.valorAtual.toDouble()).toString()
             else balanco.pendenciasRecebimento =
                 (balanco.pendenciasRecebimento.toDouble() + item.valorAtual.toDouble()).toString()
+            balanco.atualizarBalanco()
             realm.commitTransaction()
             view.findNavController().navigate(R.id.action_pendenciasFragment_to_nav_fazenda)
 
