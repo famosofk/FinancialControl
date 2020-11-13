@@ -87,10 +87,7 @@ class ApresentacaoFazendaFragment : Fragment() {
         })
         apresentacaoFazendaViewModel.myBalancoPatrimonial.observe(viewLifecycleOwner, Observer {
             if (it != null) {
-
                 atualizarTextosBalanco(it)
-
-
             }
         })
 

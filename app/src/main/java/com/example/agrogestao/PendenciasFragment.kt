@@ -60,9 +60,9 @@ class PendenciasFragment : Fragment() {
             fluxoCaixa.list.add(item)
             if (item.tipo)
                 balanco.pendenciasPagamento =
-                    (balanco.pendenciasPagamento.toDouble() + item.valorAtual.toDouble()).toString()
+                    (balanco.pendenciasPagamento.toBigDecimal() + item.valorAtual.toBigDecimal()).toString()
             else balanco.pendenciasRecebimento =
-                (balanco.pendenciasRecebimento.toDouble() + item.valorAtual.toDouble()).toString()
+                (balanco.pendenciasRecebimento.toBigDecimal() + item.valorAtual.toBigDecimal()).toString()
             balanco.atualizarBalanco()
             realm.commitTransaction()
             view.findNavController().navigate(R.id.action_pendenciasFragment_to_nav_fazenda)

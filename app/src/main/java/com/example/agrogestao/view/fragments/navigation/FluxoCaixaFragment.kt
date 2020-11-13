@@ -136,7 +136,7 @@ class FluxoCaixaFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
         fluxoCaixaViewModel.myBalancoPatrimonial.observe(viewLifecycleOwner, Observer {
             val saldo = view.findViewById<TextView>(R.id.fcaixaSaldoText)
-            saldo.text = "Saldo: ${it.saldo}"
+            saldo.text = "Saldo: ${it.dinheiroBanco}"
             val receitas = view.findViewById<TextView>(R.id.fcaixaReceitasText)
             receitas.text = "Receitas: ${it.totalReceitas}"
             val despesas = view.findViewById<TextView>(R.id.fcaixaDespesasText)

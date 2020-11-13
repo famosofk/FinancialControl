@@ -1,6 +1,7 @@
 package com.example.agrogestao.models.realmclasses
 
 import android.annotation.SuppressLint
+import android.util.Log
 import com.example.agrogestao.models.ItemBalancoPatrimonial
 import com.example.agrogestao.models.firebaseclasses.BalancoFirebase
 import com.google.firebase.database.Exclude
@@ -31,7 +32,6 @@ open class BalancoPatrimonial() : RealmObject() {
         patrimonioLiquido = firebase.patrimonioLiquido
         rentabilidade = firebase.rentabilidade
         lucro = firebase.lucro
-        saldo = firebase.saldo
         dividasLongoPrazo = firebase.dividasLongoPrazo
         dinheiroBanco = firebase.dinheiroBanco
         custoOportunidadeTrabalho = firebase.custoOportunidadeTrabalho
@@ -60,7 +60,6 @@ open class BalancoPatrimonial() : RealmObject() {
     var patrimonioLiquido = "0.00"
     var rentabilidade = "0.00"
     var lucro = "0.00"
-    var saldo = "0.00"
     var dividasLongoPrazo = "0.00"
     var dinheiroBanco = "0.00"
     var custoOportunidadeTrabalho = "0.00"
@@ -84,7 +83,6 @@ open class BalancoPatrimonial() : RealmObject() {
         calcularAtivo()
         calcularPassivo()
         calcularPatrimonioLiquido()
-        calcularSaldo()
         calcularLiquidezGeral()
         calcularLiquidezCorrente()
         calcularCustoOperacionalEfetivo()
@@ -111,35 +109,24 @@ open class BalancoPatrimonial() : RealmObject() {
     }
 
     private fun calcularAtivo() {
-
-        ativo =
-            (calcularPatrimonioBens().toBigDecimal() +
-                    pendenciasRecebimento.toBigDecimal() +
-                    dinheiroBanco.toBigDecimal() +
-                    totalContasReceber.toBigDecimal()
-                    ).toString()
+        ativo = (calcularPatrimonioBens().toBigDecimal() + pendenciasRecebimento.toBigDecimal() +
+                dinheiroBanco.toBigDecimal() + totalContasReceber.toBigDecimal()).toString()
     }
 
     private fun calcularLiquidezGeral() {
-        if (passivo.toBigDecimal() > 1.toBigDecimal()) {
-            liquidezGeral = (ativo.toBigDecimal() / passivo.toBigDecimal()).toString()
-        } else {
-            liquidezGeral = ativo
-        }
-    }
-
-    private fun calcularSaldo() {
-        saldo = dinheiroBanco
+        liquidezGeral = ativo
+        if (passivo.toBigDecimal() > 1.toBigDecimal())
+            liquidezGeral = (liquidezGeral.toBigDecimal() / passivo.toBigDecimal()).toString()
     }
 
     fun calcularLiquidezCorrente() {
-        if (totalContasPagar.toBigDecimal() > 1.toBigDecimal()) {
-            liquidezCorrente =
-                ((saldo.toBigDecimal() + calcularValorAnimaisInsumosProdutos().toBigDecimal()) / totalContasPagar.toBigDecimal()).toString()
-        } else {
-            liquidezCorrente = (saldo.toBigDecimal() + calcularValorAnimaisInsumosProdutos().toBigDecimal()).toString()
-        }
-
+        liquidezCorrente = (dinheiroBanco.toBigDecimal() +
+                calcularValorAnimaisInsumosProdutos().toBigDecimal() +
+                pendenciasRecebimento.toBigDecimal() +
+                totalContasReceber.toBigDecimal()).toString()
+        val passivoCirculante = totalContasPagar.toBigDecimal() + pendenciasPagamento.toBigDecimal()
+        if (passivoCirculante > BigDecimal.ONE)
+            liquidezCorrente = (liquidezCorrente.toBigDecimal() / passivoCirculante).toString()
     }
 
     fun calcularValorAnimaisInsumosProdutos(): String {
@@ -158,7 +145,6 @@ open class BalancoPatrimonial() : RealmObject() {
     }
 
     fun calcularPatrimonioBens(): String {
-
         var total = BigDecimal.ZERO
         for (item in listaItens) {
             item.calcularDepreciacao()
@@ -166,19 +152,16 @@ open class BalancoPatrimonial() : RealmObject() {
                 total += (item.quantidadeFinal.toBigDecimal() * item.valorAtual.toBigDecimal())
             }
         }
+        Log.e("bens", "$total")
         return total.toString()
     }
 
 
     fun calcularPatrimonioLiquido() {
-        if (passivo.toBigDecimal() != BigDecimal.ZERO) {
-
-            val ativoBigDecimal = ativo.toBigDecimal()
-            val passivobd = passivo.toBigDecimal()
-            patrimonioLiquido = (ativoBigDecimal - passivobd).toString()
-        } else {
-            patrimonioLiquido = ativo
-        }
+        patrimonioLiquido = ativo
+        if (passivo.toBigDecimal() > BigDecimal.ONE)
+            patrimonioLiquido =
+                (patrimonioLiquido.toBigDecimal() - passivo.toBigDecimal()).toString()
     }
 
     fun calcularLucro() {
@@ -190,7 +173,6 @@ open class BalancoPatrimonial() : RealmObject() {
     }
 
     fun calcularMargemLiquida() {
-
         margemLiquida =
             (receitaBruta.toBigDecimal() - custoOperacionalTotal.toBigDecimal()).toString()
     }
@@ -223,7 +205,6 @@ open class BalancoPatrimonial() : RealmObject() {
 
 
     fun calcularCustoOperacionalTotal() {
-
         var depreciacao = BigDecimal.ZERO
         for (item in listaItens) {
             if (item.tipo.equals(ItemBalancoPatrimonial.ITEM_BENFEITORIA) || item.tipo.equals(
@@ -236,7 +217,6 @@ open class BalancoPatrimonial() : RealmObject() {
         if (depreciacao < 1.toBigDecimal()) {
             depreciacao = 0.toBigDecimal()
         }
-
         custoOperacionalTotal =
             (custoOperacionalEfetivo.toBigDecimal() + depreciacao + trabalhoFamiliarNaoRemunerado.toBigDecimal()).toString()
     }
@@ -251,7 +231,6 @@ open class BalancoPatrimonial() : RealmObject() {
             )
                 reformas += item.reforma.toFloat()
         }
-
         custoOperacionalEfetivo =
             (totalDespesas.toFloat() + totalContasPagar.toFloat() - reformas).toString()
 
@@ -261,14 +240,9 @@ open class BalancoPatrimonial() : RealmObject() {
 
     private fun calcularRentabilidade() {
         calcularMargemLiquida()
-        try {
-            val rent =
-                ( (margemLiquida.toDouble() / patrimonioLiquido.toDouble()) * 100.0 ).toBigDecimal().toString()
-            rentabilidade = String.format("%.2f", rent.toFloat())
-        } catch (e: Exception) {
-            rentabilidade = margemLiquida
-        }
-
+        rentabilidade =
+            (margemLiquida.toBigDecimal() / patrimonioLiquido.toBigDecimal() * 100.toBigDecimal()).toString()
+        rentabilidade = String.format("%.2f", rentabilidade.toFloat())
     }
 
 

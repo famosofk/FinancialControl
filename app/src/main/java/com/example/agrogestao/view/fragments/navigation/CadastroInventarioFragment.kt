@@ -1,6 +1,7 @@
 package com.example.agrogestao.view.fragments.navigation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -79,8 +80,6 @@ class CadastroInventarioFragment : Fragment(), AdapterView.OnItemSelectedListene
     private fun processamentoDados(root: View, balanco: BalancoPatrimonial, realm: Realm) {
 
         val button: Button = root.findViewById(R.id.salvarItemInventario)
-
-
         button.setOnClickListener {
             var item = ItemBalancoPatrimonial()
             item.idFazenda = balanco.farmID
@@ -89,6 +88,7 @@ class CadastroInventarioFragment : Fragment(), AdapterView.OnItemSelectedListene
             val quantidadeInicial: EditText =
                 root.findViewById(R.id.quantidadeInicialItemInventario)
             item.quantidadeInicial = quantidadeInicial.text.toString().trim().toInt()
+            item.quantidadeFinal = item.quantidadeInicial
             val valorUnitario: EditText = root.findViewById(R.id.valorUnitarioItemInventario)
             item.valorUnitario = BigDecimal(valorUnitario.text.toString().trim()).toString()
             item.valorInicial = item.valorUnitario
@@ -122,8 +122,10 @@ class CadastroInventarioFragment : Fragment(), AdapterView.OnItemSelectedListene
 
 
                 realm.beginTransaction()
-                item.quantidadeFinal = item.quantidadeInicial
-                item.valorAtual = item.valorInicial
+                Log.e(
+                    "item", " ${item.valorInicial}  ${item.valorUnitario}  ${item.valorAtual} " +
+                            " ${item.quantidadeFinal} ${item.quantidadeInicial} "
+                )
                 balanco.listaItens.add(item)
 
                 balanco.atualizado = true

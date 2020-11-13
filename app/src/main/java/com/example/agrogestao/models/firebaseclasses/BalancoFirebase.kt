@@ -22,7 +22,6 @@ data class BalancoFirebase(
     var patrimonioLiquido: String = "0.00",
     var rentabilidade: String = "0.00",
     var lucro: String = "0.00",
-    var saldo: String = "0.00",
     var dividasLongoPrazo: String = "0.00",
     var dinheiroBanco: String = "0.00",
     var custoOportunidadeTrabalho: String = "0.00",
@@ -50,7 +49,6 @@ data class BalancoFirebase(
         patrimonioLiquido = balanco.patrimonioLiquido
         rentabilidade = balanco.rentabilidade
         lucro = balanco.lucro
-        saldo = balanco.saldo
         dividasLongoPrazo = balanco.dividasLongoPrazo
         dinheiroBanco = balanco.dinheiroBanco
         custoOportunidadeTrabalho = balanco.custoOportunidadeTrabalho
